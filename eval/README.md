@@ -15,18 +15,44 @@ pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.m
 
 ## Results
 
-**Scored 2026-11-01 15:26 UTC at commit `f1fc090`** (clean tree) with `muse-spark-1.3` and
-Llama Prompt Guard 2, on detonations re-run the same day. `results.json` carries the same
-stamp.
+**Scored 2026-11-01 16:13 UTC at commit `00b06f7`** (clean tree, the deployed Brain) with
+`muse-spark-1.3` and Llama Prompt Guard 2, on 42 detonations re-run the same day with the
+Chamber's DNS sinkhole on. `results.json` carries the same stamp.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
 |---|---|---|---|---|
 | benign (26) | rules | 21 | 5 | **0** |
 | benign (26) | rules + Intent Contract | 23 | 3 | **0** |
-| benign (26) | full (contract + Prompt Guard + analysis) | 23 | 3 | **0** |
-| malicious (14) | rules | 0 | 1 | 13 |
-| malicious (14) | rules + Intent Contract | 0 | 1 | 13 |
-| malicious (14) | full | 0 | 0 | **14** |
+| benign (26) | full (contract + Prompt Guard + analysis) | 22 | 4 | **0** |
+| simulated attacks (14) | rules | 0 | 1 | 13 |
+| simulated attacks (14) | rules + Intent Contract | 0 | 1 | 13 |
+| simulated attacks (14) | full | 0 | 0 | **14** |
+| real-incident reconstructions (2) | rules / contract / full | 0 | 0 | **2** |
+
+**Real-incident reconstructions** (defanged, delivered as Dependabot-style dependency bumps,
+see `INCIDENTS` in [cases.py](cases.py)):
+- **ua-parser-js 0.7.29 (Oct 2021):** preinstall → OS check → `preinstall.sh` → geolocation
+  lookup → curl/wget the `jsextension` miner from a raw IP. Blocked before and after today's
+  rules (`EXEC_NET_TOOL`, `NET_RAW_IP`, now also `NET_EXFIL_SERVICE`).
+- **Shai-Hulud (npm worm, Sept 2025):** postinstall → `node bundle.js` → downloads the real
+  TruffleHog from GitHub releases → runs it from `/tmp` → POSTs results to webhook.site.
+  **With the rules as they were before this reconstruction, it was only ⚠️ (one low
+  finding):** GitHub is allowlisted and webhook.site was just an unlisted domain. Two rules
+  came out of it, `EXEC_DROPPED_BINARY` (no benign install ran a binary from temp/home) and
+  `NET_EXFIL_SERVICE` (no benign install contacted one); now it is blocked by rules alone.
+- Both are blamed on the bumped `package.json` line, naming the dependency.
+- Not reconstructed: **event-stream (2018)**. Its payload ran when the package was
+  `require`d inside one specific app (the Copay wallet), not at install, so install-time
+  detonation would not see it. That is a scope limit, stated rather than faked.
+
+Sources for the incident behavior: [Sysdig](https://sysdig.com/blog/shai-hulud-the-novel-self-replicating-worm-infecting-hundreds-of-npm-packages),
+[Truesec](https://truesec.com/hub/blog/500-npm-packages-compromised-in-ongoing-supply-chain-attack-shai-hulud),
+[MITRE ATT&CK S9008](https://attack.mitre.org/software/S9008/),
+[BleepingComputer](https://www.bleepingcomputer.com/news/security/popular-npm-library-hijacked-to-install-password-stealers-miners/),
+[CERT-EU 2021-057](https://cert.europa.eu/publications/security-advisories/2021-057/),
+[ua-parser-js#536](https://github.com/faisalman/ua-parser-js/issues/536),
+[Hayden Parker on event-stream](https://medium.com/@hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac).
+The ua-parser-js geolocation service is a stand-in: our sources don't name it.
 
 What each layer contributes:
 - **Rules** never blocked a benign package, and catch 13/14 attacks on kernel facts alone.
@@ -37,6 +63,8 @@ What each layer contributes:
   there, the same as S3.
 - **The analysis model** catches the attack rules can't: exfil to a *resolvable domain*
   (only a low-severity unlisted-domain hit for rules). It also flagged the injection case.
+  It varies on cypress: "suspicious" in this run and the first, benign in the second, so the
+  full row's ⚠️ count moves between 3 and 4.
 - **Prompt Guard 2** scored every benign case ≤ 0.002, and the m13 injection 0.01: it targets
   explicit jailbreaks, not injections embedded in PR text (see brain/prompt_guard.py for
   its validation), so it never decides a verdict here.

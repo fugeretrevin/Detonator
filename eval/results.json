@@ -1,7 +1,7 @@
 {
- "commit": "f1fc090",
+ "commit": "00b06f7",
  "dirty": false,
- "scored_at": "2026-11-01 15:26 UTC",
+ "scored_at": "2026-11-01 16:13 UTC",
  "rows": [
   {
    "id": "lodash",
@@ -153,13 +153,10 @@
     "NET_UNLISTED_DOMAIN"
    ],
    "cleared": [
-    "cdn.playwright.dev",
-    "playwright.download.prss.microsoft.com"
+    "cdn.playwright.dev"
    ],
    "predicted_domains": [
-    "cdn.playwright.dev",
-    "playwright.download.prss.microsoft.com",
-    "playwright.azureedge.net"
+    "cdn.playwright.dev"
    ],
    "prediction_error": null,
    "llm_verdict": "benign",
@@ -423,7 +420,7 @@
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
-    "full": "Clean"
+    "full": "Needs review"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -435,7 +432,7 @@
     "download.cypress.io"
    ],
    "prediction_error": null,
-   "llm_verdict": "benign",
+   "llm_verdict": "suspicious",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
@@ -495,7 +492,6 @@
    "rules_fired": [],
    "cleared": [],
    "predicted_domains": [
-    "johnvansickle.com",
     "evermeet.cx"
    ],
    "prediction_error": null,
@@ -1210,6 +1206,78 @@
    ],
    "domains": [
     "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "r01-ua-parser-js",
+   "kind": "incident",
+   "note": "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_EXFIL_SERVICE",
+    "NET_RAW_IP",
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0041,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "ua-parser-js"
+   ],
+   "domains": [
+    "RAW 203.0.113.10",
+    "ipinfo.io"
+   ]
+  },
+  {
+   "id": "r02-shai-hulud",
+   "kind": "incident",
+   "note": "Shai-Hulud (Sept 2025): real TruffleHog from GitHub, secrets to webhook.site",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_DROPPED_BINARY",
+    "NET_EXFIL_SERVICE",
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0038,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "tinycolor-recon"
+   ],
+   "domains": [
+    "github.com",
+    "release-assets.githubusercontent.com",
+    "webhook.site"
    ]
   }
  ]

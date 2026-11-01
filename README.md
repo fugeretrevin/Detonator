@@ -97,13 +97,14 @@ flowchart LR
 
 ## Results
 
-**Evaluation (40 real detonations, scored 2026-11-01 at commit `f1fc090`,
+**Evaluation (42 real detonations, scored 2026-11-01 at commit `00b06f7`,
 [details](eval/README.md)):** 0 of 26 popular packages with install-time downloads blocked
-(puppeteer, electron, prisma, cypress, ...), and 14 of 14 simulated install-time attacks
-blocked. Rules alone block 13 of 14; the model catches the remaining one (exfil to a
-resolvable domain). The Intent Contract cuts benign "needs review" from 5 to 3; the 3 left
-download from Google Cloud Storage, which is never auto-cleared because anyone can host
-files there.
+(puppeteer, electron, prisma, cypress, ...); 14 of 14 simulated install-time attacks
+blocked; and **defanged reconstructions of two real incidents, ua-parser-js (2021) and the
+Shai-Hulud npm worm (2025), both blocked and blamed on the version-bump line**. Rebuilding
+Shai-Hulud exposed a real gap (it was only "needs review"), closed by two new kernel-level
+rules. Rules alone block 13 of 14 simulated attacks; the model catches the remaining one
+(exfil to a resolvable domain).
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 
