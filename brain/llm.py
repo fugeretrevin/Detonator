@@ -225,11 +225,15 @@ def compact_telemetry(result: DetonateResult) -> str:
                 "pid": c.pid,
                 "bin": c.binary,
                 "dst": f"{c.daddr}:{c.dport}",
+                **({"proto": f"{c.protocol} (blocked)"} if c.protocol != "tcp" else {}),
                 "domain": c.resolved_domain or "NO DNS LOOKUP",
             }
             for c in result.connect_events
         ],
         "dns": [{"ts": d.ts, "q": d.domain, "a": d.answers} for d in result.dns_queries],
+        "bait_credential_opens": [
+            {"ts": f.ts, "pid": f.pid, "bin": f.binary, "path": f.path} for f in result.file_events
+        ],
     }
     text = json.dumps(data, separators=(",", ":"))
     return _clip(text, MAX_TELEMETRY_CHARS)

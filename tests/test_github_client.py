@@ -7,6 +7,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 
 from brain.github_client import (
+    COMMENT_MARKER,
     MAX_DIFF_CHARS,
     ChangedFile,
     GitHubClient,
@@ -200,3 +201,60 @@ def test_create_review_puts_inline_comments_on_the_head_side(keypair):
         "event": "COMMENT",
         "comments": [{"path": "package.json", "line": 5, "body": "x", "side": "RIGHT"}],
     }
+
+
+def _comments_route(existing):
+    calls = []
+
+    def list_comments(request):
+        calls.append(("GET", request.url.params.get("page")))
+        return httpx.Response(200, json=existing)
+
+    def patch(request):
+        calls.append(("PATCH", request.url.path))
+        return httpx.Response(200, json={"id": 7})
+
+    def post(request):
+        calls.append(("POST", request.url.path))
+        return httpx.Response(201, json={"id": 99})
+
+    routes = {
+        ("GET", "/repos/o/r/issues/5/comments"): list_comments,
+        ("PATCH", "/repos/o/r/issues/comments/7"): patch,
+        ("POST", "/repos/o/r/issues/5/comments"): post,
+    }
+    return routed(routes), calls
+
+
+def test_upsert_edits_our_own_report_comment(keypair):
+    pem, _ = keypair
+    ours = {"id": 7, "body": f"old\n{COMMENT_MARKER}", "performed_via_github_app": {"id": 4242}}
+    handler, calls = _comments_route([ours])
+    assert make_client(pem, handler).upsert_comment(1, "o", "r", 5, "new report") == 7
+    assert ("PATCH", "/repos/o/r/issues/comments/7") in calls and not any(
+        c[0] == "POST" for c in calls
+    )
+
+
+def test_upsert_never_edits_someone_elses_comment_with_our_marker(keypair):
+    pem, _ = keypair
+    spoof = {"id": 7, "body": f"fake {COMMENT_MARKER}", "performed_via_github_app": None}
+    other_app = {"id": 8, "body": COMMENT_MARKER, "performed_via_github_app": {"id": 1}}
+    handler, calls = _comments_route([spoof, other_app])
+    assert make_client(pem, handler).upsert_comment(1, "o", "r", 5, "new report") == 99
+    assert not any(c[0] == "PATCH" for c in calls)
+
+
+def test_repo_read_token_is_scoped_to_one_repo_and_read_only(keypair):
+    pem, _ = keypair
+    seen = {}
+
+    def handler(request):
+        assert request.headers["Authorization"].startswith("Bearer ")  # app JWT, not a token
+        seen.update(json.loads(request.content))
+        return httpx.Response(
+            201, json={"token": "ghs_scoped", "expires_at": "2999-01-01T00:00:00Z"}
+        )
+
+    assert make_client(pem, handler).repo_read_token(1, "r") == "ghs_scoped"
+    assert seen == {"repositories": ["r"], "permissions": {"contents": "read"}}

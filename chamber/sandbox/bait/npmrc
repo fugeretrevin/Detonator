@@ -1,0 +1,4 @@
+# PR Detonator bait: not a real credential. Scoped to GitHub Packages so npm never sends it
+# to registry.npmjs.org. Any install script that opens this file is reported.
+@detonator-bait:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=DETONATOR-BAIT-NOT-A-REAL-TOKEN

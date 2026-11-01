@@ -20,19 +20,25 @@ Analyzer = Callable[..., LlmOutcome]
 
 PRIVATE_REPO_TITLE = "Could not verify"
 PRIVATE_REPO_SUMMARY = (
-    "Private repos need HTTPS on the Chamber. The Brain-to-Chamber link is plain HTTP "
-    "(HMAC-signed, not encrypted), so no clone token is sent over it. Until TLS is added, "
-    "only public repositories are detonated."
+    "Private repos need TLS on the Brain-to-Chamber link, which is not configured here "
+    "(HMAC-signed, not encrypted), so no clone token is sent over it."
 )
 
 
-def detonate_request(event: PullRequestEvent, job_id: str) -> DetonateRequest | None:
-    """None means: don't detonate (private repo would need a token over plain HTTP)."""
-    if event.repo_private:
+def detonate_request(
+    event: PullRequestEvent, job_id: str, *, private_token: str | None = None
+) -> DetonateRequest | None:
+    """None means: don't detonate (a private repo without a token we may send).
+
+    Public repos are cloned anonymously. A private repo gets `private_token` (read-only, this
+    repo only), which the caller supplies only when the Chamber link is TLS."""
+    if event.repo_private and not private_token:
         return None
-    # Public repo: clone anonymously. No token ever travels over the unencrypted link.
     return DetonateRequest(
-        job_id=job_id, clone_url=event.head_clone_url, head_sha=event.head_sha, clone_token=None
+        job_id=job_id,
+        clone_url=event.head_clone_url,
+        head_sha=event.head_sha,
+        clone_token=private_token if event.repo_private else None,
     )
 
 

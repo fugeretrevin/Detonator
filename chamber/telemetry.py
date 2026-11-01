@@ -7,13 +7,15 @@ carry process.docker = first 31 chars of the container ID; host processes have n
 import json
 import os
 from collections.abc import Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from shared.contract import (
     MAX_CONNECT_EVENTS,
     MAX_EXEC_EVENTS,
+    MAX_FILE_EVENTS,
     ConnectEvent,
     ExecEvent,
+    FileEvent,
 )
 
 LOOPBACK_PREFIXES = ("127.", "::1")
@@ -24,6 +26,7 @@ class ParsedTelemetry:
     exec_events: list[ExecEvent]
     connect_events: list[ConnectEvent]
     truncated: bool
+    file_events: list[FileEvent] = field(default_factory=list)
 
 
 def _in_container(process: dict, container_id: str) -> bool:
@@ -39,6 +42,8 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
     # identical compiler execs) so legitimate noise can't push a payload past the caps.
     seen_execs: set[tuple[str, str]] = set()
     seen_connects: set[tuple[str, str, int]] = set()
+    files: list[FileEvent] = []
+    seen_files: set[tuple[int, str]] = set()
 
     for line in lines:
         line = line.strip()
@@ -77,7 +82,24 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
         elif "process_kprobe" in event:
             body = event["process_kprobe"]
             proc = body.get("process", {})
-            if body.get("function_name") != "tcp_connect" or not _in_container(proc, container_id):
+            if not _in_container(proc, container_id):
+                continue
+            if body.get("function_name") == "security_file_open":
+                # credential-files policy: only bait paths are reported (shape verified on the
+                # Chamber: args[0].file_arg.path).
+                path = next((a["file_arg"].get("path", "") for a in body.get("args", [])
+                             if "file_arg" in a), "")  # fmt: skip
+                key_f = (int(proc.get("pid", 0)), path)
+                if path and key_f not in seen_files:
+                    seen_files.add(key_f)
+                    if len(files) >= MAX_FILE_EVENTS:
+                        truncated = True
+                    else:
+                        binary = proc.get("binary", "")
+                        ts = event.get("time", "")
+                        files.append(FileEvent(ts=ts, pid=key_f[0], binary=binary, path=path))
+                continue
+            if body.get("function_name") != "tcp_connect":
                 continue
             sock = next((a["sock_arg"] for a in body.get("args", []) if "sock_arg" in a), None)
             if not sock or str(sock.get("daddr", "")).startswith(LOOPBACK_PREFIXES):
@@ -101,7 +123,7 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
                 )
             )
 
-    return ParsedTelemetry(execs, connects, truncated)
+    return ParsedTelemetry(execs, connects, truncated, files)
 
 
 class LogTail:

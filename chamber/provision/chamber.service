@@ -10,7 +10,9 @@ Wants=network-online.target tetragon.service
 User=root
 WorkingDirectory=/opt/pr-detonator
 EnvironmentFile=/etc/pr-detonator/env
-ExecStart=/opt/pr-detonator/venv/bin/uvicorn chamber.server:app --host 0.0.0.0 --port 8443 --no-access-log
+# TLS with a self-signed cert (setup.sh) that the Brain pins: private-repo clone tokens only
+# ever travel encrypted.
+ExecStart=/opt/pr-detonator/venv/bin/uvicorn chamber.server:app --host 0.0.0.0 --port 8443 --no-access-log --ssl-keyfile /etc/pr-detonator/tls/key.pem --ssl-certfile /etc/pr-detonator/tls/cert.pem
 Restart=on-failure
 RestartSec=3
 

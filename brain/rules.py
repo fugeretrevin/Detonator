@@ -10,6 +10,7 @@ import shlex
 from dataclasses import dataclass
 from enum import IntEnum
 
+from brain.process_tree import lifecycle_exec
 from shared import exfil_services
 from shared.contract import ConnectEvent, DetonateResult, DnsQuery, ExecEvent
 
@@ -150,6 +151,22 @@ def _connect_hits(
     allowed_domains: tuple[str, ...],
     allowed_networks: tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...],
 ) -> list[RuleHit]:
+    if event.protocol != "tcp":
+        # The Chamber rejects all non-TCP egress (DNS reaches its resolver another way), so
+        # this is a payload trying a side channel: UDP exfil, ICMP, DNS to a public resolver.
+        port = f":{event.dport}" if event.dport else ""
+        name = f" ({event.resolved_domain})" if event.resolved_domain else ""
+        return [
+            RuleHit(
+                "NET_NON_TCP_EGRESS",
+                Severity.HIGH,
+                f"{event.protocol.upper()} packet to {event.daddr}{port}{name} from the "
+                "sandbox (blocked by the Chamber firewall)",
+                event.ts,
+                event.pid,
+                target=event.daddr,
+            )
+        ]
     if not is_external(event.daddr):
         return _internal_hit(event)
     if any(ipaddress.ip_address(event.daddr) in net for net in allowed_networks):
@@ -225,6 +242,22 @@ def _exfil_service_hits(result: DetonateResult) -> list[RuleHit]:
     return list(hits.values())
 
 
+def _credential_hits(result: DetonateResult) -> list[RuleHit]:
+    """Bait credential files opened by an install script (npm itself reads ~/.npmrc at
+    startup, so only processes descended from a lifecycle script count)."""
+    hits: list[RuleHit] = []
+    seen: set[str] = set()
+    for f in result.file_events:
+        if f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
+            continue
+        seen.add(f.path)
+        where = f.path.replace("/home/runner", "~")
+        why = f"{_basename(f.binary)} (pid {f.pid}) opened {where} (a planted fake credential)"
+        hits.append(RuleHit("CRED_FILE_ACCESS", Severity.HIGH, f"{why} from an install script",
+                            f.ts, f.pid, target=f.path))  # fmt: skip
+    return hits
+
+
 # --- exec rules ---
 
 
@@ -285,6 +318,7 @@ def evaluate(
     for query in result.dns_queries:
         hits.extend(_dns_hits(query))
     hits.extend(_exfil_service_hits(result))
+    hits.extend(_credential_hits(result))
     if result.truncated:
         # Events past the caps were dropped; a flood could be hiding a payload.
         hits.append(

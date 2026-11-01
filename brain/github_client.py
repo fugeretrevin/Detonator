@@ -125,6 +125,17 @@ class GitHubClient:
         self._tokens[installation_id] = (data["token"], expires_at)
         return data["token"]
 
+    def repo_read_token(self, installation_id: int, repo: str) -> str:
+        """A fresh token that can only read this one repository's contents (for cloning a
+        private repo on the Chamber host; never cached, never reaches the sandbox)."""
+        resp = self._http.post(
+            f"/app/installations/{installation_id}/access_tokens",
+            headers={"Authorization": f"Bearer {self.app_jwt()}"},
+            json={"repositories": [repo], "permissions": {"contents": "read"}},
+        )
+        resp.raise_for_status()
+        return resp.json()["token"]
+
     def _request(self, installation_id: int, method: str, path: str, **kwargs) -> httpx.Response:
         headers = dict(kwargs.pop("headers", None) or {})
         headers["Authorization"] = f"token {self.installation_token(installation_id)}"
@@ -251,6 +262,32 @@ class GitHubClient:
             json={"body": body},
         )
         return int(resp.json()["id"])
+
+    def upsert_comment(
+        self, installation_id: int, owner: str, repo: str, number: int, body: str
+    ) -> int:
+        """Edit this App's existing report comment on the PR, or post one. Only a comment
+        made by this App counts: anyone can paste our marker into their own comment."""
+        if COMMENT_MARKER not in body:
+            body = f"{body}\n\n{COMMENT_MARKER}"
+        page = 1
+        while page <= 10:
+            comments = self._request(
+                installation_id, "GET", f"/repos/{owner}/{repo}/issues/{number}/comments",
+                params={"per_page": 100, "page": page},
+            ).json()  # fmt: skip
+            for c in comments:
+                app = c.get("performed_via_github_app") or {}
+                if str(app.get("id")) == self.app_id and COMMENT_MARKER in (c.get("body") or ""):
+                    self._request(
+                        installation_id, "PATCH",
+                        f"/repos/{owner}/{repo}/issues/comments/{c['id']}", json={"body": body},
+                    )  # fmt: skip
+                    return int(c["id"])
+            if len(comments) < 100:
+                break
+            page += 1
+        return self.post_comment(installation_id, owner, repo, number, body)
 
     def create_review(
         self,

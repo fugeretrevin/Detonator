@@ -135,3 +135,12 @@ def test_docker_args_are_hardened():
     # HOME must be writable by the sandbox user (puppeteer etc. cache browsers there)
     assert "/home/runner:rw,exec,size=1g,uid=10001,gid=10001" in joined
     assert "--privileged" not in joined and "docker.sock" not in joined
+
+
+def test_bait_credentials_mounted_read_only(tmp_path):
+    (tmp_path / "npmrc").write_text("bait")
+    cfg = detonate.Config(bait_dir=str(tmp_path))
+    req = DetonateRequest(job_id="j", clone_url="https://github.com/o/r", head_sha=SHA)
+    joined = " ".join(detonate.docker_run_args(req, cfg, "det-j", Path("/jobs/j/src")))
+    assert f"{tmp_path / 'npmrc'}:/home/runner/.npmrc:ro" in joined
+    assert ".aws" not in joined  # only files that exist are mounted

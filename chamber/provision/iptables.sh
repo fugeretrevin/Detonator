@@ -18,9 +18,12 @@ fi
 
 iptables -N "$CHAIN" 2>/dev/null || iptables -F "$CHAIN"
 iptables -A "$CHAIN" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
-# DNS only through the logging resolver on the host. Tetragon traces TCP connects, not UDP,
-# so a direct query to a public resolver would be an invisible channel.
-iptables -A "$CHAIN" -p udp --dport 53 -j REJECT --reject-with icmp-port-unreachable
+# Tetragon traces TCP connects only, so nothing else may leave: UDP (including DNS to public
+# resolvers: the logging resolver on the host is reached via INPUT, not here), ICMP, and any
+# other protocol are logged (chamber/egress.py reads them back) and rejected.
+iptables -A "$CHAIN" ! -p tcp -m limit --limit 100/sec --limit-burst 400 \
+  -j LOG --log-prefix "DETONATOR-NONTCP " --log-level 4
+iptables -A "$CHAIN" ! -p tcp -j REJECT --reject-with icmp-admin-prohibited
 iptables -A "$CHAIN" -p tcp --dport 53 -j REJECT --reject-with tcp-reset
 for cidr in 169.254.0.0/16 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 0.0.0.0/8; do
   iptables -A "$CHAIN" -d "$cidr" -j REJECT --reject-with icmp-net-prohibited

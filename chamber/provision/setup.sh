@@ -22,6 +22,7 @@ systemctl enable --now docker >/dev/null
 echo "== tetragon"
 bash "$REPO/chamber/provision/install_tetragon.sh"
 install -m 0644 "$REPO/chamber/policies/tcp-connect.yaml" /etc/tetragon/tetragon.tp.d/
+install -m 0644 "$REPO/chamber/policies/credential-files.yaml" /etc/tetragon/tetragon.tp.d/
 # Bigger export file so a rotation mid-detonation is very unlikely.
 echo 200 > /etc/tetragon/tetragon.conf.d/export-file-max-size-mb
 systemctl restart tetragon
@@ -43,6 +44,24 @@ if [[ ! -s "$ENV_FILE" ]]; then
 fi
 chmod 600 "$ENV_FILE"
 
+echo "== tls"
+# Self-signed, for this VM's public IP; the Brain trusts exactly this certificate
+# (CHAMBER_CA_PEM in the Modal 'chamber' secret). Regenerated only if missing.
+TLS_DIR=/etc/pr-detonator/tls
+if [[ ! -s "$TLS_DIR/cert.pem" ]]; then
+  install -d -m 0700 "$TLS_DIR"
+  IMDS_TOKEN=$(curl -fsS -X PUT http://169.254.169.254/latest/api/token \
+    -H "X-aws-ec2-metadata-token-ttl-seconds: 60")
+  PUBLIC_IP=$(curl -fsS -H "X-aws-ec2-metadata-token: $IMDS_TOKEN" \
+    http://169.254.169.254/latest/meta-data/public-ipv4)
+  openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes -days 365 \
+    -subj "/CN=pr-detonator-chamber" -addext "subjectAltName=IP:$PUBLIC_IP,IP:127.0.0.1" \
+    -keyout "$TLS_DIR/key.pem" -out "$TLS_DIR/cert.pem" 2>/dev/null
+  chmod 600 "$TLS_DIR/key.pem"
+  chmod 644 "$TLS_DIR/cert.pem"
+  echo "generated TLS cert for $PUBLIC_IP (put $TLS_DIR/cert.pem in the Modal 'chamber' secret)"
+fi
+
 echo "== sandbox image"
 docker build -q -t detonator-sandbox:latest "$REPO/chamber/sandbox" >/dev/null
 
@@ -63,4 +82,4 @@ systemctl restart chamber
 sleep 3
 
 echo "== health"
-curl -fsS http://127.0.0.1:8443/health && echo
+curl -fsS --cacert /etc/pr-detonator/tls/cert.pem https://127.0.0.1:8443/health && echo

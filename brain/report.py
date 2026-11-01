@@ -75,9 +75,10 @@ def _network_rows(result: DetonateResult) -> list[str]:
     rows = ["| Time | Process | Destination | Name |", "|---|---|---|---|"]
     for c in result.connect_events[:MAX_ROWS]:
         name = esc(c.resolved_domain) if c.resolved_domain else "**no DNS lookup preceded this**"
+        who = f"{esc(_basename(c.binary), 40)} ({c.pid})" if c.binary else "unknown (firewall log)"
+        proto = "" if c.protocol == "tcp" else f" {esc(c.protocol.upper(), 8)}, blocked"
         rows.append(
-            f"| {esc(c.ts, 40)} | {esc(_basename(c.binary), 40)} ({c.pid}) "
-            f"| {esc(c.daddr, 60)}&#58;{c.dport} | {name} |"
+            f"| {esc(c.ts, 40)} | {who} | {esc(c.daddr, 60)}&#58;{c.dport}{proto} | {name} |"
         )
     if len(result.connect_events) > MAX_ROWS:
         rows.append(f"| | | …and {len(result.connect_events) - MAX_ROWS} more | |")

@@ -314,3 +314,33 @@ def test_exfil_service_lookup_alone_flagged():
 @pytest.mark.parametrize("domain", ["notwebhook.site", "webhook.site.example.com", "ipinfo.iox"])
 def test_exfil_service_match_is_exact_or_subdomain(domain):
     assert evaluate(dns_result(domain)) == []
+
+
+# --- planted credential bait (file events from the credential-files Tetragon policy) ---
+
+from shared.contract import FileEvent  # noqa: E402
+
+
+def bait_result(opener_pid: int) -> DetonateResult:
+    execs = [
+        exec_event("/usr/local/bin/node", "/usr/local/bin/npm install", pid=10, parent=None),
+        ExecEvent(ts="t", pid=20, ppid=10, binary="/usr/bin/sh", args='-c "node bundle.js"',
+                  parent_binary="/usr/local/bin/node", uid=10001),
+        ExecEvent(ts="t", pid=30, ppid=20, binary="/usr/local/bin/node", args="bundle.js",
+                  parent_binary="/usr/bin/sh", uid=10001),
+    ]  # fmt: skip
+    files = [FileEvent(ts="t", pid=opener_pid, binary="/usr/local/bin/node",
+                       path="/home/runner/.npmrc")]  # fmt: skip
+    return result(execs=execs).model_copy(update={"file_events": files})
+
+
+def test_install_script_opening_bait_is_high():
+    hits = evaluate(bait_result(30))
+    assert [(h.rule_id, h.severity, h.pid) for h in hits] == [
+        ("CRED_FILE_ACCESS", Severity.HIGH, 30)
+    ]
+    assert "~/.npmrc" in hits[0].evidence
+
+
+def test_npm_itself_reading_npmrc_is_normal():
+    assert evaluate(bait_result(10)) == []

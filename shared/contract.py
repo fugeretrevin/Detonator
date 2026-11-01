@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 MAX_EXEC_EVENTS = 500
 MAX_CONNECT_EVENTS = 200
 MAX_DNS_QUERIES = 200
+MAX_FILE_EVENTS = 100
 MAX_TAIL_CHARS = 4000
 
 
@@ -41,6 +42,18 @@ class ConnectEvent(BaseModel):
     dport: int
     family: str  # AF_INET / AF_INET6
     resolved_domain: str | None  # from DNS log, None = no lookup seen
+    # "tcp" from Tetragon's tcp_connect; "udp"/"icmp"/… from the Chamber firewall log, which
+    # rejects all non-TCP egress (those carry pid 0 and no binary). Added Nov 1.
+    protocol: str = "tcp"
+
+
+class FileEvent(BaseModel):
+    """An open of a bait credential file planted in the sandbox (Tetragon). Added Nov 1."""
+
+    ts: str
+    pid: int
+    binary: str
+    path: str
 
 
 class DnsQuery(BaseModel):
@@ -57,6 +70,7 @@ class DetonateResult(BaseModel):
     exec_events: list[ExecEvent] = Field(max_length=MAX_EXEC_EVENTS)
     connect_events: list[ConnectEvent] = Field(max_length=MAX_CONNECT_EVENTS)
     dns_queries: list[DnsQuery] = Field(max_length=MAX_DNS_QUERIES)
+    file_events: list[FileEvent] = Field(default_factory=list, max_length=MAX_FILE_EVENTS)
     stdout_tail: str = Field(max_length=MAX_TAIL_CHARS)
     stderr_tail: str = Field(max_length=MAX_TAIL_CHARS)
     truncated: bool = False  # true if events were capped

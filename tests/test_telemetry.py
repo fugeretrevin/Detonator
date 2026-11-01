@@ -107,3 +107,26 @@ def test_log_tail_missing_file(tmp_path):
     tail = LogTail(str(tmp_path / "nope.log"))
     tail.start()
     assert tail.read_new() == ([], True)
+
+
+def _file_open(path: str, pid: int = 4242) -> str:
+    # Shape verified on the Chamber (credential-files policy, Tetragon v1.7.1).
+    return json.dumps({"time": "2026-11-01T16:39:08.063489180Z", "process_kprobe": {
+        "process": {"pid": pid, "binary": "/usr/local/bin/node", "docker": CONTAINER[:31],
+                    "cwd": "/work"},
+        "function_name": "security_file_open", "action": "KPROBE_ACTION_POST",
+        "args": [{"file_arg": {"path": path, "permission": "-rw-rw-r--"}}]}})  # fmt: skip
+
+
+def test_bait_file_opens_parsed_and_deduplicated():
+    parsed = parse_events([_file_open("/home/runner/.npmrc")] * 3
+                          + [_file_open("/home/runner/.aws/credentials")], CONTAINER)  # fmt: skip
+    assert [(f.pid, f.path) for f in parsed.file_events] == [
+        (4242, "/home/runner/.npmrc"),
+        (4242, "/home/runner/.aws/credentials"),
+    ]
+    assert parsed.connect_events == [] and not parsed.truncated
+
+
+def test_bait_opens_from_other_containers_ignored():
+    assert parse_events([_file_open("/home/runner/.npmrc")], "f" * 64).file_events == []

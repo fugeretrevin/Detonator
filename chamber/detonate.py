@@ -15,8 +15,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from chamber.dns import name_connects, parse_dns_log
+from chamber.egress import parse_kernel_log, read_kernel_log
 from chamber.telemetry import LogTail, parse_events
-from shared.contract import MAX_TAIL_CHARS, DetonateRequest, DetonateResult
+from shared.contract import MAX_CONNECT_EVENTS, MAX_TAIL_CHARS, DetonateRequest, DetonateResult
 
 JOB_ID_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -38,6 +39,26 @@ class Config:
     dns_log: str = os.environ.get("DNS_LOG", "/var/log/pr-detonator/dns.log")
     # Fixed address (one job at a time) so DNS log lines can be attributed to this sandbox.
     sandbox_ip: str = os.environ.get("SANDBOX_IP", "10.250.0.10")
+    # Fake credentials mounted read-only into the sandbox's home; the credential-files
+    # Tetragon policy reports any open of them.
+    bait_dir: str = os.environ.get("BAIT_DIR", "/opt/pr-detonator/chamber/sandbox/bait")
+
+
+# bait file -> where a victim's real one would live
+BAIT_FILES = {
+    "npmrc": "/home/runner/.npmrc",
+    "aws_credentials": "/home/runner/.aws/credentials",
+    "ssh_id_ed25519": "/home/runner/.ssh/id_ed25519",
+    "git-credentials": "/home/runner/.git-credentials",
+}
+
+
+def bait_mounts(bait_dir: str) -> list[str]:
+    args: list[str] = []
+    for name, target in BAIT_FILES.items():
+        if (Path(bait_dir) / name).is_file():
+            args += ["-v", f"{Path(bait_dir) / name}:{target}:ro"]
+    return args
 
 
 class InvalidRequest(ValueError):
@@ -108,7 +129,7 @@ def docker_run_args(req: DetonateRequest, cfg: Config, name: str, src: Path) -> 
         # package (or payload) writing to ~ fails and the run proves nothing.
         "--tmpfs", "/tmp:rw,exec,size=512m,mode=1777",
         "--tmpfs", f"/home/runner:rw,exec,size=1g,uid={SANDBOX_UID},gid={SANDBOX_UID},mode=0755",
-        "-v", f"{src}:/work:rw", "-w", "/work",
+        "-v", f"{src}:/work:rw", "-w", "/work", *bait_mounts(cfg.bait_dir),
         "-e", "HOME=/home/runner", "-e", "npm_config_cache=/tmp/.npm",
         "-e", "npm_config_update_notifier=false",
         cfg.image, *req.command,
@@ -128,14 +149,15 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
     started = time.monotonic()
     status, exit_code, error = "completed", None, None
     stdout = stderr = ""
-    execs, connects, queries, truncated = [], [], [], False
+    execs, connects, queries, files, truncated = [], [], [], [], False
 
     def result() -> DetonateResult:
         return DetonateResult(
             job_id=req.job_id, status=status, exit_code=exit_code,
             duration_s=round(time.monotonic() - started, 2), exec_events=execs,
-            connect_events=connects, dns_queries=queries, stdout_tail=_tail(stdout),
-            stderr_tail=_tail(stderr), truncated=truncated, error=error,
+            connect_events=connects, dns_queries=queries, file_events=files,
+            stdout_tail=_tail(stdout), stderr_tail=_tail(stderr), truncated=truncated,
+            error=error,
         )  # fmt: skip
 
     try:
@@ -151,6 +173,7 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         tail.start()
         dns_tail.start()
         started = time.monotonic()  # duration measures the detonation itself
+        wall_start = time.time()
         proc = _docker(*docker_run_args(req, cfg, name, src)[1:])
         if proc.returncode != 0:
             status, error = "error", f"docker run failed: {proc.stderr.strip()[:300]}"
@@ -173,8 +196,11 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         parsed = parse_events(lines, container_id)
         dns_lines, dns_rotated = dns_tail.read_new()
         dns = parse_dns_log(dns_lines, cfg.sandbox_ip)
-        execs, queries = parsed.exec_events, dns.queries
-        connects = name_connects(parsed.connect_events, dns)
+        execs, queries, files = parsed.exec_events, dns.queries, parsed.file_events
+        room = MAX_CONNECT_EVENTS - len(parsed.connect_events)
+        blocked = parse_kernel_log(read_kernel_log(wall_start - 1, time.time()),
+                                   cfg.sandbox_ip, room)  # fmt: skip
+        connects = name_connects(parsed.connect_events + blocked, dns)
         truncated = parsed.truncated or rotated or dns.truncated or dns_rotated
         if rotated or dns_rotated:
             error = "telemetry log rotated during run; early events may be missing"

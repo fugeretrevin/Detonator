@@ -1,6 +1,7 @@
 """Brain -> Chamber client. Mock mode replays a recorded DetonateResult fixture."""
 
 import os
+import ssl
 import time
 from pathlib import Path
 from typing import Protocol
@@ -36,12 +37,18 @@ class HttpChamberClient:
         busy_retries: int = 20,
         busy_backoff_s: float = 10.0,
         max_backoff_s: float = 20.0,
+        ca_pem: str | None = None,
     ) -> None:
         # One detonation at a time on the Chamber: queued PRs wait ~6.5 min in total
         # (10 s, then 20 s steps), inside detonate_job's 10 min timeout. A PR that still
         # can't get a slot fails closed ("Could not verify"), never passes.
         self._secret = secret
-        self._http = http or httpx.Client(base_url=base_url.rstrip("/"), timeout=600.0)
+        # TLS: trust exactly the Chamber's self-signed cert, nothing else.
+        self.tls = base_url.startswith("https://") and bool(ca_pem)
+        verify = ssl.create_default_context(cadata=ca_pem) if ca_pem else True
+        self._http = http or httpx.Client(
+            base_url=base_url.rstrip("/"), timeout=600.0, verify=verify
+        )
         self._busy_retries = busy_retries
         self._busy_backoff_s = busy_backoff_s
         self._max_backoff_s = max_backoff_s
@@ -74,5 +81,9 @@ def chamber_client_from_env() -> ChamberClient:
             _find_fixture(os.environ.get("MOCK_CHAMBER_FIXTURE", "detonate_result_e4.json"))
         )
     if mode == "http":
-        return HttpChamberClient(os.environ["CHAMBER_URL"], os.environ["CHAMBER_SECRET"])
+        return HttpChamberClient(
+            os.environ["CHAMBER_URL"],
+            os.environ["CHAMBER_SECRET"],
+            ca_pem=os.environ.get("CHAMBER_CA_PEM") or None,
+        )
     raise ValueError(f"unknown CHAMBER_MODE {mode!r}")

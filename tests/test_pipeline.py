@@ -39,10 +39,17 @@ def test_public_repo_detonates_without_clone_token():
     assert req.clone_url == "https://github.com/o/r.git" and req.head_sha == "a" * 40
 
 
-def test_private_repo_is_not_detonated_and_reports_https_needed():
+def test_private_repo_without_tls_token_is_not_detonated():
     assert detonate_request(event(private=True), "job-1") is None
-    assert "Private repos need HTTPS on the Chamber" in PRIVATE_REPO_SUMMARY
+    assert "Private repos need TLS" in PRIVATE_REPO_SUMMARY
     assert PRIVATE_REPO_TITLE == "Could not verify"
+
+
+def test_private_repo_with_token_carries_it_public_never_does():
+    req = detonate_request(event(private=True), "job-1", private_token="ghs_scoped")
+    assert req is not None and req.clone_token == "ghs_scoped"
+    # A token handed in for a public repo is never forwarded.
+    assert detonate_request(event(private=False), "j", private_token="ghs_x").clone_token is None
 
 
 def no_enrich(result: DetonateResult) -> DetonateResult:

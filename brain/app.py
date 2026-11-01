@@ -121,7 +121,17 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
     gh = github()
     loc = (event.installation_id, event.owner, event.repo)
     job_id = str(uuid.uuid4())
-    request = detonate_request(event, job_id)
+    try:
+        chamber = chamber_client_from_env()
+        private_token = None
+        if event.repo_private and getattr(chamber, "tls", False):
+            # Read-only, this repo only; used by git on the Chamber host, never the sandbox.
+            private_token = gh.repo_read_token(event.installation_id, event.repo)
+    except Exception as exc:
+        summary = f"Detonator setup error (`{type(exc).__name__}`), job `{job_id}`."
+        gh.complete_check_run(*loc, check_run_id, "failure", "Could not verify this PR", summary)
+        raise
+    request = detonate_request(event, job_id, private_token=private_token)
     if request is None:
         logger.info(
             "job=%s %s/%s#%s private repo: not detonated",
@@ -142,7 +152,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         # The model commits to its prediction while the sandbox runs, before any telemetry.
         prediction_future = pool.submit(_predict, metadata)
         guard_future = pool.submit(_guard, metadata, diff)
-        result = chamber_client_from_env().detonate(request)
+        result = chamber.detonate(request)
         prediction = prediction_future.result(timeout=150)
         try:
             guard = guard_future.result(timeout=60)
@@ -193,7 +203,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
 
     # The check already carries the verdict; a failed comment must not overwrite it.
     try:
-        gh.post_comment(*loc, event.number, analysis.report)
+        gh.upsert_comment(*loc, event.number, analysis.report)
     except Exception:
         logger.exception("job=%s failed to post PR comment", job_id)
 

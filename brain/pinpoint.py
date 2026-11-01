@@ -19,13 +19,11 @@ from collections.abc import Iterable
 from dataclasses import dataclass, replace
 
 from brain.github_client import ChangedFile
+from brain.process_tree import base, is_lifecycle_shell, lifecycle_exec
 from brain.rules import RuleHit, Severity
 from shared.contract import DetonateResult, ExecEvent
 
 MAX_GUILTY_LINES = 3
-MAX_CHAIN_DEPTH = 12
-SHELLS = frozenset({"sh", "bash", "dash"})
-NPM_PROCESSES = frozenset({"node", "npm", "npx"})
 
 _HUNK_RE = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@")
 _LIFECYCLE_RE = re.compile(
@@ -84,38 +82,6 @@ def added_lines(patch: str | None) -> list[tuple[int, str]]:
     return out
 
 
-def _base(path: str | None) -> str:
-    return (path or "").rsplit("/", 1)[-1]
-
-
-def _ancestors(pid: int, execs: list[ExecEvent]) -> list[ExecEvent]:
-    by_pid = {e.pid: e for e in execs}  # last exec per pid: its final image
-    chain, seen = [], set()
-    current = by_pid.get(pid)
-    while current and current.pid not in seen and len(chain) < MAX_CHAIN_DEPTH:
-        chain.append(current)
-        seen.add(current.pid)
-        current = by_pid.get(current.ppid) if current.ppid is not None else None
-    return chain
-
-
-def _is_lifecycle_shell(e: ExecEvent) -> bool:
-    return (
-        _base(e.binary) in SHELLS
-        and _base(e.parent_binary) in NPM_PROCESSES
-        and e.args.startswith("-c ")
-    )
-
-
-def lifecycle_exec(pid: int, execs: list[ExecEvent]) -> ExecEvent | None:
-    """npm's `sh -c <script>` that the process at pid descends from (the outermost one)."""
-    found = None
-    for e in _ancestors(pid, execs):
-        if _is_lifecycle_shell(e):
-            found = e  # keep walking: a payload's own `sh -c` sits below npm's
-    return found
-
-
 def script_text(e: ExecEvent) -> str:
     script = e.args[3:].strip()
     if len(script) >= 2 and script[0] == script[-1] == '"':
@@ -165,7 +131,7 @@ def script_runs(hits: list[RuleHit], result: DetonateResult) -> list[ScriptRun]:
     runs: dict[tuple[str | None, str], ScriptRun] = {}
     for e in result.exec_events:
         # Only npm's own shells: a payload's `sh -c` under node also matches the shape.
-        if not _is_lifecycle_shell(e) or (
+        if not is_lifecycle_shell(e) or (
             e.ppid is not None and lifecycle_exec(e.ppid, result.exec_events)
         ):
             continue
@@ -212,7 +178,7 @@ def _dependency_lines(
         hits = [
             (path, number, text, reason)
             for path, f in by_path.items()
-            if _base(path) == wanted
+            if base(path) == wanted
             for number, text in added_lines(f.patch)
             if pattern.match(text)
         ]
@@ -250,7 +216,7 @@ def find_guilty_lines(
         elif npm_shell:
             script = script_text(npm_shell)
             for path, f in by_path.items():
-                if _base(path) != "package.json":
+                if base(path) != "package.json":
                     continue
                 for number, text in added_lines(f.patch):
                     m = _LIFECYCLE_RE.match(text)
