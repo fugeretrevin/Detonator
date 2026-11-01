@@ -45,6 +45,27 @@ def no_llm(*_, **__) -> LlmOutcome:
     return LlmOutcome("none", error="skipped")
 
 
+def _score_explanation(case: Case, full) -> tuple[bool | None, bool | None]:
+    """P1.5: did Muse decode the payload and name the right source? None when no ground truth."""
+    truth = case.truth
+    if not truth:
+        return None, None
+    v = full.llm.verdict
+    blob = " ".join(
+        [v.explanation, *[e.explanation for e in v.line_explanations]] if v else []
+    ).lower()
+    decoded = None
+    if "decoded" in truth:
+        decoded = all(tok.lower() in blob for tok in truth["decoded"]) if v else False
+    attributed = None
+    if "attributes_to" in truth:
+        want = truth["attributes_to"].lower()
+        in_guilty = any(want in (g.package or "").lower() or want in g.path.lower()
+                        for g in full.guilty)  # fmt: skip
+        attributed = in_guilty or want in blob
+    return decoded, attributed
+
+
 def guard_scan(meta, diff) -> pg.GuardOutcome:
     """The deployed Prompt Guard 2 class, exactly as the GitHub App calls it."""
     try:
@@ -68,6 +89,7 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
     }
     full = runs["full"]
     prompt_tok, completion_tok = full.model_tokens
+    explain_decoded, explain_attributed = _score_explanation(case, full)
     return {
         "id": case.id,
         "kind": case.kind,
@@ -91,6 +113,8 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         "injection_flagged": bool(full.llm.verdict and full.llm.verdict.injection_attempt),
         "prompt_guard_max": guard.top.score if guard.top else None,
         "prompt_guard_error": guard.error,
+        "explain_decoded": explain_decoded,
+        "explain_attributed": explain_attributed,
         "guilty_lines": [f"{g.path}:{g.line}" for g in full.guilty],
         "script_runs": sorted(
             {r.package or "(project)" for r in script_runs(full.hits, full.result)}
@@ -134,6 +158,28 @@ def cost_latency(rows: list[dict]) -> list[str]:
         f"$4.25/1M out); ${sum(costs):.3f} for all {len(rows)} cases",
         "",
     ]
+
+
+def explanation_quality(rows: list[dict]) -> list[str]:
+    dec = [r for r in rows if r.get("explain_decoded") is not None]
+    att = [r for r in rows if r.get("explain_attributed") is not None]
+    if not dec and not att:
+        return []
+    out = ["### What Muse explained (P1.5 ground truth)", ""]
+    if dec:
+        ok = sum(bool(r["explain_decoded"]) for r in dec)
+        miss = [r["id"] for r in dec if not r["explain_decoded"]]
+        out.append(f"- Decoded the payload correctly in **{ok}/{len(dec)}** obfuscated attacks"
+                   + (f" (missed: {', '.join(miss)})" if miss else ""))  # fmt: skip
+    if att:
+        ok = sum(bool(r["explain_attributed"]) for r in att)
+        miss = [r["id"] for r in att if not r["explain_attributed"]]
+        tail = f" (missed: {', '.join(miss)})" if miss else ""
+        out.append(
+            f"- Attributed to the right package/file in **{ok}/{len(att)}** "
+            f"dependency-delivered attacks{tail}"
+        )
+    return out + [""]
 
 
 def details(rows: list[dict]) -> list[str]:
@@ -187,7 +233,8 @@ def main(results_dir: str, out_prefix: str = "eval/results") -> None:
               f"{' (UNCOMMITTED CHANGES)' if stamp['dirty'] else ''} with {client.model}; "
               f"detonations from `{Path(results_dir).name}`.")  # fmt: skip
     md = ["# Evaluation results", "", header, "", *summarize(rows), "",
-          *cost_latency(rows), "## Per case", "", *details(rows), ""]  # fmt: skip
+          *explanation_quality(rows), *cost_latency(rows),
+          "## Per case", "", *details(rows), ""]  # fmt: skip
     Path(f"{out_prefix}.md").write_text("\n".join(md), encoding="utf-8")
     print("\n".join(summarize(rows)))
 

