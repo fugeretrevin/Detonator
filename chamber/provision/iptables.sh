@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Egress controls for sandbox containers (BUILD_PLAN B3). Idempotent; run as root after docker.
+# Observe, don't block: internet egress is allowed and traced. Only metadata and private
+# ranges are refused, and only for traffic *leaving* the dedicated det0 bridge, so replies
+# to the container and the host's own traffic are untouched.
+set -euo pipefail
+
+NET=detonator
+BRIDGE=det0
+SUBNET=10.250.0.0/24
+CHAIN=DETONATOR-EGRESS
+
+if ! docker network inspect "$NET" >/dev/null 2>&1; then
+  docker network create --driver bridge --subnet "$SUBNET" \
+    --opt com.docker.network.bridge.name="$BRIDGE" \
+    --opt com.docker.network.bridge.enable_icc=false "$NET" >/dev/null
+fi
+
+iptables -N "$CHAIN" 2>/dev/null || iptables -F "$CHAIN"
+iptables -A "$CHAIN" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+for cidr in 169.254.0.0/16 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 0.0.0.0/8; do
+  iptables -A "$CHAIN" -d "$cidr" -j REJECT --reject-with icmp-net-prohibited
+done
+iptables -A "$CHAIN" -j RETURN
+
+iptables -N DOCKER-USER 2>/dev/null || true
+iptables -C DOCKER-USER -i "$BRIDGE" -j "$CHAIN" 2>/dev/null \
+  || iptables -I DOCKER-USER 1 -i "$BRIDGE" -j "$CHAIN"
+
+# Traffic to the host itself (sshd, the chamber API) hits INPUT, not DOCKER-USER. Sandboxes
+# use public resolvers via Docker's in-namespace DNS, so they never need the host.
+HOST_CHAIN=DETONATOR-HOST
+iptables -N "$HOST_CHAIN" 2>/dev/null || iptables -F "$HOST_CHAIN"
+iptables -A "$HOST_CHAIN" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+iptables -A "$HOST_CHAIN" -j REJECT --reject-with icmp-host-prohibited
+iptables -C INPUT -i "$BRIDGE" -j "$HOST_CHAIN" 2>/dev/null \
+  || iptables -I INPUT 1 -i "$BRIDGE" -j "$HOST_CHAIN"
+
+# No IPv6 on det0 (docker default), so nothing to filter there.
+iptables -S "$CHAIN"
+iptables -S "$HOST_CHAIN"
