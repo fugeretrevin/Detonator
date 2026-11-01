@@ -72,6 +72,9 @@ SECRETS = [
 ]
 
 deliveries = modal.Dict.from_name("pr-detonator-deliveries", create_if_missing=True)
+# Chamber health history, written every 10 minutes (HARDENING_PLAN P0.5).
+health_log = modal.Dict.from_name("pr-detonator-health", create_if_missing=True)
+HEALTH_HISTORY = 144  # 24 h at one check per 10 min
 
 
 class ModalDictDeduper:
@@ -250,6 +253,24 @@ class PromptGuard:
             out.append({"scores": scores,
                         "tokens": self.tokenizer.convert_ids_to_tokens(ids)[:12]})  # fmt: skip
         return out
+
+
+@app.function(image=image, secrets=SECRETS, schedule=modal.Period(minutes=10), timeout=60)
+def chamber_health() -> dict:
+    """Is the Chamber up? Recorded so an outage during judging is visible, not silent."""
+    import datetime
+
+    try:
+        status = chamber_client_from_env().health()
+    except Exception as exc:  # missing secret etc.: still record it
+        status = {"ok": False, "detail": f"check failed ({type(exc).__name__})"}
+    status["ts"] = datetime.datetime.now(datetime.UTC).isoformat(timespec="seconds")
+    history = (health_log.get("history") or [])[-(HEALTH_HISTORY - 1) :] + [status]
+    health_log["latest"] = status
+    health_log["history"] = history
+    if not status["ok"]:
+        logger.warning("chamber health: DOWN (%s)", status["detail"])
+    return status
 
 
 def _guard(metadata: PrMetadata, diff: str) -> pg.GuardOutcome:

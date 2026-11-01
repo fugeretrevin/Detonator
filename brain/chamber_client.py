@@ -70,6 +70,22 @@ class HttpChamberClient:
             return self._verified(request, resp)
         raise RuntimeError("unreachable")
 
+    def health(self) -> dict:
+        """{"ok": bool, "detail": str}; ok only if every Chamber service reports up."""
+        try:
+            resp = self._http.get("/health", timeout=10.0)
+            resp.raise_for_status()
+            data = resp.json()
+        except (httpx.HTTPError, ValueError) as exc:
+            return {"ok": False, "detail": f"unreachable ({type(exc).__name__})"}
+        down = [k for k in ("tetragon", "docker", "dns") if data.get(k) is not True]
+        if down:
+            return {"ok": False, "detail": "down: " + ", ".join(down)}
+        return {
+            "ok": True,
+            "detail": f"busy={data.get('busy')} disk_free_gb={data.get('disk_free_gb')}",
+        }
+
     def _verified(self, request: DetonateRequest, resp: httpx.Response) -> DetonateResult:
         """The result must be signed for this job and fresh; anything else fails the job
         closed (detonate_job turns the exception into "Could not verify")."""

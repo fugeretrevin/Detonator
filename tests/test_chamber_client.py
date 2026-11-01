@@ -116,3 +116,25 @@ def test_tls_only_with_https_and_a_pinned_cert():
     assert not C("https://1.2.3.4:8443", "s").tls  # no pinned cert: not trusted for tokens
     pem = (Path(__file__).parent / "fixtures/selfsigned_test_cert.pem").read_text()
     assert C("https://1.2.3.4:8443", "s", ca_pem=pem).tls
+
+
+def health_client(response) -> HttpChamberClient:
+    def handler(request):
+        if isinstance(response, Exception):
+            raise response
+        return response
+
+    http = httpx.Client(base_url="http://chamber.test", transport=httpx.MockTransport(handler))
+    return HttpChamberClient("http://chamber.test", SECRET, http=http)
+
+
+def test_health_ok_only_when_every_service_is_up():
+    up = {"tetragon": True, "docker": True, "dns": True, "disk_free_gb": 24.7, "busy": False}
+    assert health_client(httpx.Response(200, json=up)).health()["ok"]
+    down = health_client(httpx.Response(200, json={**up, "dns": False})).health()
+    assert down == {"ok": False, "detail": "down: dns"}
+
+
+def test_health_unreachable_is_down():
+    status = health_client(httpx.ConnectError("refused")).health()
+    assert not status["ok"] and "unreachable" in status["detail"]
