@@ -53,6 +53,51 @@ Three things judges should remember:
   post a GitHub **review comment on that line**; the model decodes obfuscation into a
   one-line plain-English "what this line does". Deterministic mapping first; model explains.
 
+### P1b: "The dependency did it" (dependency attribution)
+
+**Why:** most real supply-chain attacks come through a dependency update (event-stream,
+ua-parser-js, chalk/debug 2025), often a bot's version bump with an innocent author.
+
+**Validated Nov 1** (`dep-probe` branch: local tarball dependency `color-helper@1.0.1` whose
+postinstall opens a socket to TEST-NET):
+- Detection already works: `NET_RAW_IP` fires, so the PR would be blocked.
+- Attribution doesn't: npm ran `sh -c "node install.js"`, which isn't in the PR's
+  package.json, so no guilty line is posted. npm prints no banner for dependency scripts, so
+  neither the report nor the model can name the package.
+- The kernel knows: Tetragon's `process.cwd` for that `sh -c` is
+  `/work/dep-probe/node_modules/color-helper`. npm sets it *before* package code runs, so a
+  payload can't forge it (unlike files in node_modules or the lockfile it writes).
+
+**Design** (trusted sources only: kernel cwd for *who*, the PR diff for *where*):
+1. **Contract (flagged change, backward compatible):** `ExecEvent.cwd: str | None = None`.
+   Chamber parser fills it from `process.cwd`. Old Brains ignore it; old Chambers send None.
+2. **Brain `pinpoint`:** when the walk reaches npm's `sh -c`, take the package from its cwd
+   (last `node_modules/<name>` or `node_modules/@scope/<name>` segment). Map to a line:
+   a. the changed `"<name>": ...` line in package.json (direct bump) → inline comment there;
+   b. else a changed `"node_modules/.../<name>"` entry in package-lock.json (transitive) →
+      comment on that lockfile line;
+   c. else (lockfile diff missing or too big, or dep unchanged) → report-only attribution:
+      "ran from dependency `<name>`, not changed directly in this PR".
+   Never trust versions or dependency trees read from the post-install filesystem.
+3. **Report:** a "Packages that ran install scripts" list for *every* run (benign too, e.g.
+   esbuild, puppeteer): the seed of the behavioral SBOM. Flagged ones are marked.
+4. **Model:** pass `cwd` in the compact telemetry and the package name in `guilty_lines`, so
+   the explanation reads "color-helper 1.0.1's postinstall opens a raw socket to ...".
+5. **Demo E8, "Bump color-helper from 1.0.0 to 1.0.1"** (Dependabot-style title and body):
+   main gets the harmless 1.0.0 (local tarball, no scripts); the PR swaps in 1.0.1. Uses
+   `file:` tarballs in the repo so nothing is published to npm (say so in the demo).
+
+**Tests:** fixture from the real dep-probe run (raw Tetragon lines with cwd), plus unit tests:
+scoped names, nested `node_modules/a/node_modules/b`, a payload that `chdir`s before
+spawning (attribution still comes from npm's `sh -c`), the PR's own script (unchanged
+behavior), a dependency not changed in the PR (report-only), and a lockfile patch missing.
+
+**Gate:** E8 on real GitHub is Blocked, with an inline comment on the bumped line naming
+`color-helper`. E1–E7 unchanged. Re-run the 40-case eval: no benign regressions.
+
+**Estimate:** ~4–5 h. Chamber redeploy (parser only) + Brain deploy; one change to demo
+repo main (adds the harmless 1.0.0 dependency).
+
 ### P2: Meta-stack depth
 - **Prompt Guard 2** (agent, blocked on HF access to `meta-llama/Llama-Prompt-Guard-2-86M`):
   CPU Modal function scoring PR title/body/diff chunks (512-token windows). Alone it is
