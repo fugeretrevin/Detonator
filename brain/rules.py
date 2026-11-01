@@ -166,7 +166,7 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
 
     def hit(rule_id: str, severity: Severity, why: str) -> None:
         hits.append(
-            RuleHit(rule_id, severity, f"{why}: `{cmd}` (pid {event.pid})", event.ts, event.pid)
+            RuleHit(rule_id, severity, f"{why}: {cmd} (pid {event.pid})", event.ts, event.pid)
         )
 
     if name in NET_TOOLS:
