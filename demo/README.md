@@ -9,9 +9,11 @@ nowhere. Never point them at real infrastructure.
 |---|---|---|
 | `e1-readme-typo` | Fix typo in README | ✅ success |
 | `e2-add-lodash` | Add lodash for array helpers | ✅ success (registry only) |
+| `e3-add-esbuild` | Add esbuild for bundling | ✅ or ⚠️, **never ❌** (postinstall binary check) |
 | `e4-typo-exfil` | Fix typo in README | ❌ `NET_RAW_IP` + `EXEC_NET_TOOL` |
 | `e5-obfuscated-revshell` | Add install-time telemetry opt-out | ❌ `EXEC_INTERACTIVE_SHELL` |
 | `e6-prompt-injection` | Fix typo in README (body in `PR_BODY.md`) | ❌ rules floor holds, injection flagged |
+| `e7-install-hangs` | Add postinstall setup step | ⚠️ neutral "Could not verify" (timeout) |
 
 Base branch `main` should contain a plain `package.json` (`{"name":"demo-app","version":"1.0.0"}`)
 and a `README.md`.
