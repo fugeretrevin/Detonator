@@ -266,28 +266,27 @@ class GitHubClient:
     def upsert_comment(
         self, installation_id: int, owner: str, repo: str, number: int, body: str
     ) -> int:
-        """Edit this App's existing report comment on the PR, or post one. Only a comment
-        made by this App counts: anyone can paste our marker into their own comment."""
+        """Edit this App's latest report comment on the PR, or post one. Only a comment made
+        by this App counts: anyone can paste our marker into their own comment."""
         if COMMENT_MARKER not in body:
             body = f"{body}\n\n{COMMENT_MARKER}"
-        page = 1
-        while page <= 10:
+        latest = None
+        for page in range(1, 11):
             comments = self._request(
                 installation_id, "GET", f"/repos/{owner}/{repo}/issues/{number}/comments",
                 params={"per_page": 100, "page": page},
             ).json()  # fmt: skip
-            for c in comments:
+            for c in comments:  # oldest first
                 app = c.get("performed_via_github_app") or {}
                 if str(app.get("id")) == self.app_id and COMMENT_MARKER in (c.get("body") or ""):
-                    self._request(
-                        installation_id, "PATCH",
-                        f"/repos/{owner}/{repo}/issues/comments/{c['id']}", json={"body": body},
-                    )  # fmt: skip
-                    return int(c["id"])
+                    latest = int(c["id"])
             if len(comments) < 100:
                 break
-            page += 1
-        return self.post_comment(installation_id, owner, repo, number, body)
+        if latest is None:
+            return self.post_comment(installation_id, owner, repo, number, body)
+        path = f"/repos/{owner}/{repo}/issues/comments/{latest}"
+        self._request(installation_id, "PATCH", path, json={"body": body})
+        return latest
 
     def create_review(
         self,

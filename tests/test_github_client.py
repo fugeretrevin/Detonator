@@ -226,10 +226,11 @@ def _comments_route(existing):
     return routed(routes), calls
 
 
-def test_upsert_edits_our_own_report_comment(keypair):
+def test_upsert_edits_our_latest_report_comment(keypair):
     pem, _ = keypair
+    older = {"id": 3, "body": f"older\n{COMMENT_MARKER}", "performed_via_github_app": {"id": 4242}}
     ours = {"id": 7, "body": f"old\n{COMMENT_MARKER}", "performed_via_github_app": {"id": 4242}}
-    handler, calls = _comments_route([ours])
+    handler, calls = _comments_route([older, ours])
     assert make_client(pem, handler).upsert_comment(1, "o", "r", 5, "new report") == 7
     assert ("PATCH", "/repos/o/r/issues/comments/7") in calls and not any(
         c[0] == "POST" for c in calls
