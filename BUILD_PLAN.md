@@ -7,7 +7,7 @@
 
 ## 0. Situation
 
-- **Event:** Meta Global AI Developer Hackathon, code window Oct 26 – Nov 4, 2026. Plan written Oct 31, 23:30 ET. **~3.5 days remain.** Confirm the exact submission time on Nov 4 and write it here: `SUBMISSION DEADLINE: ________`
+- **Event:** Meta Global AI Developer Hackathon, code window Oct 26 – Nov 4, 2026. Plan written Oct 31, 23:30 ET. **~3.5 days remain.** Confirm the exact submission time on Nov 4 and write it here: `SUBMISSION DEADLINE: Nov 4, 2026, 9:00 PM` (timezone assumed ET like the rest of this plan; confirm)
 - **Team:** Currently **1 developer (solo)**. AI coding tools are allowed. "Dev A" and "Dev B" below are two *agent sessions* run by the same person. See **Section 0.1 Solo Mode**, which overrides the schedule in Section 6.
 
 ### 0.1 Solo Mode (overrides Section 6)
