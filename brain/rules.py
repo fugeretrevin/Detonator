@@ -196,6 +196,17 @@ def evaluate(
         hits.extend(_exec_hits(exec_event))
     for connect_event in result.connect_events:
         hits.extend(_connect_hits(connect_event, allowed_domains, networks))
+    if result.truncated:
+        # Events past the caps were dropped; a flood could be hiding a payload.
+        hits.append(
+            RuleHit(
+                "TELEMETRY_TRUNCATED",
+                Severity.LOW,
+                "event caps were hit; some runtime behavior was not captured",
+                "",
+                0,
+            )
+        )
     hits.sort(key=lambda h: (-h.severity, h.ts))
     return hits[:MAX_HITS]
 

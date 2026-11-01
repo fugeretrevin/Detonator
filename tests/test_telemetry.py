@@ -55,10 +55,24 @@ def test_garbage_and_partial_lines_skipped():
     assert len(parsed.exec_events) == 3
 
 
+def _variant(line: str, i: int) -> str:
+    event = json.loads(line)
+    event["process_exec"]["process"]["arguments"] = f"-c step {i}"
+    return json.dumps(event)
+
+
 def test_exec_cap_sets_truncated():
     one = next(line for line in lines() if "process_exec" in line and 'docker":"5b' in line)
-    parsed = parse_events([one] * (MAX_EXEC_EVENTS + 5), CONTAINER)
+    parsed = parse_events([_variant(one, i) for i in range(MAX_EXEC_EVENTS + 5)], CONTAINER)
     assert len(parsed.exec_events) == MAX_EXEC_EVENTS and parsed.truncated
+
+
+def test_duplicates_collapsed_so_noise_cannot_hide_payload():
+    registry = next(line for line in lines() if '172.66.147.243","sport' in line)
+    payload = next(line for line in lines() if '203.0.113.10","sport' in line)
+    parsed = parse_events([registry] * 1000 + [payload], CONTAINER)
+    assert [c.daddr for c in parsed.connect_events] == ["172.66.147.243", "203.0.113.10"]
+    assert not parsed.truncated
 
 
 def test_loopback_connect_dropped():

@@ -91,6 +91,12 @@ def test_empty_result_is_none():
     assert max_severity(evaluate(result())) == Severity.NONE
 
 
+def test_truncated_telemetry_is_never_clean():
+    res = result().model_copy(update={"truncated": True})
+    hits = evaluate(res)
+    assert [(h.rule_id, h.severity) for h in hits] == [("TELEMETRY_TRUNCATED", Severity.LOW)]
+
+
 # --- network ---
 
 

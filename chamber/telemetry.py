@@ -35,6 +35,10 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
     execs: list[ExecEvent] = []
     connects: list[ConnectEvent] = []
     truncated = False
+    # Collapse repeats (npm opens many identical registry connections; builds spawn many
+    # identical compiler execs) so legitimate noise can't push a payload past the caps.
+    seen_execs: set[tuple[str, str]] = set()
+    seen_connects: set[tuple[str, str, int]] = set()
 
     for line in lines:
         line = line.strip()
@@ -50,6 +54,10 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
             proc, parent = body.get("process", {}), body.get("parent") or {}
             if not _in_container(proc, container_id):
                 continue
+            key = (proc.get("binary", ""), proc.get("arguments", ""))
+            if key in seen_execs:
+                continue
+            seen_execs.add(key)
             if len(execs) >= MAX_EXEC_EVENTS:
                 truncated = True
                 continue
@@ -73,6 +81,10 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
             sock = next((a["sock_arg"] for a in body.get("args", []) if "sock_arg" in a), None)
             if not sock or str(sock.get("daddr", "")).startswith(LOOPBACK_PREFIXES):
                 continue
+            key = (proc.get("binary", ""), str(sock.get("daddr", "")), int(sock.get("dport", 0)))
+            if key in seen_connects:
+                continue
+            seen_connects.add(key)
             if len(connects) >= MAX_CONNECT_EVENTS:
                 truncated = True
                 continue
