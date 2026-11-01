@@ -1,0 +1,34 @@
+{
+  "action": "opened",
+  "number": 7,
+  "pull_request": {
+    "number": 7,
+    "title": "Fix typo in README",
+    "body": "Small typo fix.",
+    "user": {"login": "attacker"},
+    "head": {
+      "ref": "fix-typo",
+      "sha": "0123456789abcdef0123456789abcdef01234567",
+      "repo": {
+        "full_name": "demo-org/demo-repo",
+        "clone_url": "https://github.com/demo-org/demo-repo.git"
+      }
+    },
+    "base": {
+      "ref": "main",
+      "sha": "fedcba9876543210fedcba9876543210fedcba98",
+      "repo": {
+        "full_name": "demo-org/demo-repo",
+        "clone_url": "https://github.com/demo-org/demo-repo.git"
+      }
+    }
+  },
+  "repository": {
+    "name": "demo-repo",
+    "full_name": "demo-org/demo-repo",
+    "owner": {"login": "demo-org"},
+    "clone_url": "https://github.com/demo-org/demo-repo.git"
+  },
+  "installation": {"id": 12345678, "node_id": "MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uMTIzNDU2Nzg="},
+  "sender": {"login": "attacker"}
+}
