@@ -62,7 +62,13 @@ flowchart LR
    observed behavior and writes the explanation.
 5. **Verdict** = `max(rule severity, model severity)` → check conclusion + PR comment. Branch
    protection turns a failing check into a blocked merge.
-6. **Guilty line**: when a PR is blocked, code walks the flagged process up to the npm
+6. **The dependency did it**: the kernel records the directory npm runs each install script
+   in (`node_modules/<pkg>`, set before any package code runs), so a Dependabot-style bump
+   whose new version is malicious gets blamed on the bumped line, naming the package (E8).
+7. **Prompt screening**: Llama Prompt Guard 2 scores the PR text in parallel. In our
+   validation it caught explicit jailbreaks but not injections embedded in PR text, so it
+   only stops the Intent Contract from trusting flagged text and never decides a verdict.
+8. **Guilty line**: when a PR is blocked, code walks the flagged process up to the npm
    lifecycle script that started it and posts an inline review comment on the exact diff line
    (and, if that script ran a file from the PR, on the line there that spawned the payload).
    The model only adds a one-sentence "what it does", decoding obfuscation: for the E5
@@ -91,11 +97,13 @@ flowchart LR
 
 ## Results
 
-**Evaluation (40 real detonations, [details](eval/README.md)):** 0 of 26 popular packages
-with install-time downloads blocked (puppeteer, electron, prisma, cypress, ...), and 14 of
-14 simulated install-time attacks blocked. Rules alone block 13 of 14; the model catches the
-remaining one (exfil to a resolvable domain). The Intent Contract cuts benign "needs review"
-from 5 to 1.
+**Evaluation (40 real detonations, scored 2026-11-01 at commit `f1fc090`,
+[details](eval/README.md)):** 0 of 26 popular packages with install-time downloads blocked
+(puppeteer, electron, prisma, cypress, ...), and 14 of 14 simulated install-time attacks
+blocked. Rules alone block 13 of 14; the model catches the remaining one (exfil to a
+resolvable domain). The Intent Contract cuts benign "needs review" from 5 to 3; the 3 left
+download from Google Cloud Storage, which is never auto-cleared because anyone can host
+files there.
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 

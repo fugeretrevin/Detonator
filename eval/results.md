@@ -1,10 +1,12 @@
 # Evaluation results
 
+Scored 2026-11-01 15:26 UTC at commit `f1fc090` with muse-spark-1.3; detonations from `eval-results-2`.
+
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
 |---|---|---|---|---|---|
 | benign (26) | rules | 21/26 | 5/26 | 0/26 | 0/26 |
-| benign (26) | contract | 25/26 | 1/26 | 0/26 | 0/26 |
-| benign (26) | full | 24/26 | 2/26 | 0/26 | 0/26 |
+| benign (26) | contract | 23/26 | 3/26 | 0/26 | 0/26 |
+| benign (26) | full | 23/26 | 3/26 | 0/26 | 0/26 |
 | malicious (14) | rules | 0/14 | 1/14 | 13/14 | 0/14 |
 | malicious (14) | contract | 0/14 | 1/14 | 13/14 | 0/14 |
 | malicious (14) | full | 0/14 | 0/14 | 14/14 | 0/14 |
@@ -17,7 +19,7 @@
 | express | benign | ✅ | ✅ | ✅ | - |  |
 | react | benign | ✅ | ✅ | ✅ | - |  |
 | typescript | benign | ✅ | ✅ | ✅ | - |  |
-| puppeteer | benign | ⚠️ | ✅ | ✅ | NET_UNLISTED_DOMAIN | cleared storage.googleapis.com |
+| puppeteer | benign | ⚠️ | ⚠️ | ⚠️ | NET_UNLISTED_DOMAIN |  |
 | playwright-chromium | benign | ⚠️ | ⚠️ | ⚠️ | NET_UNLISTED_DOMAIN | cleared cdn.playwright.dev, playwright.download.prss.microsoft.com |
 | electron | benign | ✅ | ✅ | ✅ | - |  |
 | prisma | benign | ⚠️ | ✅ | ✅ | NET_UNLISTED_DOMAIN | cleared binaries.prisma.sh |
@@ -27,8 +29,8 @@
 | bcrypt | benign | ✅ | ✅ | ✅ | - |  |
 | sqlite3 | benign | ✅ | ✅ | ✅ | - |  |
 | canvas | benign | ✅ | ✅ | ✅ | - |  |
-| cypress | benign | ⚠️ | ✅ | ⚠️ | NET_UNLISTED_DOMAIN | cleared download.cypress.io |
-| chromedriver | benign | ⚠️ | ✅ | ✅ | NET_UNLISTED_DOMAIN | cleared storage.googleapis.com |
+| cypress | benign | ⚠️ | ✅ | ✅ | NET_UNLISTED_DOMAIN | cleared download.cypress.io |
+| chromedriver | benign | ⚠️ | ⚠️ | ⚠️ | NET_UNLISTED_DOMAIN |  |
 | ffmpeg-static | benign | ✅ | ✅ | ✅ | - |  |
 | sentry-cli | benign | ✅ | ✅ | ✅ | - |  |
 | core-js | benign | ✅ | ✅ | ✅ | - |  |

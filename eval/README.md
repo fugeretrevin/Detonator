@@ -13,29 +13,40 @@ pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.m
   They only reach TEST-NET-3, the (blocked) metadata address, a `.invalid` name, or
   example.com with a dummy body.
 
-## Results (Nov 1, 2026)
+## Results
+
+**Scored 2026-11-01 15:26 UTC at commit `f1fc090`** (clean tree) with `muse-spark-1.3` and
+Llama Prompt Guard 2, on detonations re-run the same day. `results.json` carries the same
+stamp.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
 |---|---|---|---|---|
 | benign (26) | rules | 21 | 5 | **0** |
-| benign (26) | rules + Intent Contract | 25 | 1 | **0** |
-| benign (26) | full (contract + analysis) | 24 | 2 | **0** |
+| benign (26) | rules + Intent Contract | 23 | 3 | **0** |
+| benign (26) | full (contract + Prompt Guard + analysis) | 23 | 3 | **0** |
 | malicious (14) | rules | 0 | 1 | 13 |
 | malicious (14) | rules + Intent Contract | 0 | 1 | 13 |
 | malicious (14) | full | 0 | 0 | **14** |
 
 What each layer contributes:
 - **Rules** never blocked a benign package, and catch 13/14 attacks on kernel facts alone.
-- **The Intent Contract** cuts benign "needs review" from 5 to 1 (puppeteer, prisma,
-  chromedriver, cypress downloads predicted from the PR text), without clearing any attack.
+- **The Intent Contract** clears downloads the PR text predicted from vendor-owned hosts
+  (prisma, cypress, playwright's CDNs) without clearing any attack. The 3 benign installs
+  left at ⚠️ (puppeteer, chromedriver, playwright-chromium) all fetch from
+  `storage.googleapis.com`, which is deliberately never cleared: anyone can host a bucket
+  there, the same as S3.
 - **The analysis model** catches the attack rules can't: exfil to a *resolvable domain*
   (only a low-severity unlisted-domain hit for rules). It also flagged the injection case.
-  Cost: it marked one benign install (cypress) "needs review" that the contract had cleared.
+- **Prompt Guard 2** scored every benign case ≤ 0.002, and the m13 injection 0.01: it targets
+  explicit jailbreaks, not injections embedded in PR text (see brain/prompt_guard.py for
+  its validation), so it never decides a verdict here.
+- **Dependency attribution:** every report now lists which packages ran install scripts
+  (e.g. prisma → `prisma`, `@prisma/engines`), from the kernel-recorded working directory.
 
-Two rules were added because this eval exposed gaps: `NET_INTERNAL_TARGET` (metadata or
-private-range connect attempts) and `DNS_ENCODED_LABEL` (data in DNS names). Before them,
-rules caught 11/14, and the model alone caught the other three. Benign results were the
-same before and after.
+History (same day): the first run (before `NET_INTERNAL_TARGET` and `DNS_ENCODED_LABEL`,
+two rules this eval motivated) had rules at 11/14; benign results were unchanged by them.
+Before `storage.googleapis.com` was treated as shared hosting, contract clearing left 1
+benign at ⚠️ instead of 3.
 
 ## Caveats
 
@@ -44,9 +55,7 @@ same before and after.
 - The attacks are ours, written knowing the detectors. Treat 14/14 as "covers these
   techniques", not as a real-world detection rate.
 - Benign installs ran without a lockfile at today's package versions.
-- `storage.googleapis.com` is cleared when predicted (puppeteer, chromedriver), but any GCS
-  bucket lives there. Like S3 (already denylisted), it could be treated as shared hosting
-  at the cost of puppeteer staying "needs review".
+- Benign scripts were attributed from detonations of `npm install <pkg>` (no lockfile).
 
 ## Reproduce
 

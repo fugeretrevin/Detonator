@@ -1,1034 +1,1216 @@
-[
- {
-  "id": "lodash",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+{
+ "commit": "f1fc090",
+ "dirty": false,
+ "scored_at": "2026-11-01 15:26 UTC",
+ "rows": [
+  {
+   "id": "lodash",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "express",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "express",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0017,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "react",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "react",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "typescript",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "typescript",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "puppeteer",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "puppeteer",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Needs review",
+    "full": "Needs review"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "puppeteer"
+   ],
+   "domains": [
+    "registry.npmjs.org",
+    "storage.googleapis.com"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [
-   "storage.googleapis.com"
-  ],
-  "predicted_domains": [
-   "storage.googleapis.com"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org",
-   "storage.googleapis.com"
-  ]
- },
- {
-  "id": "playwright-chromium",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Needs review",
-   "full": "Needs review"
+  {
+   "id": "playwright-chromium",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Needs review",
+    "full": "Needs review"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [
+    "cdn.playwright.dev",
+    "playwright.download.prss.microsoft.com"
+   ],
+   "predicted_domains": [
+    "cdn.playwright.dev",
+    "playwright.download.prss.microsoft.com",
+    "playwright.azureedge.net"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "playwright-chromium"
+   ],
+   "domains": [
+    "cdn.playwright.dev",
+    "playwright.download.prss.microsoft.com",
+    "registry.npmjs.org",
+    "storage.googleapis.com"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [
-   "cdn.playwright.dev",
-   "playwright.download.prss.microsoft.com"
-  ],
-  "predicted_domains": [
-   "cdn.playwright.dev",
-   "playwright.azureedge.net",
-   "playwright.download.prss.microsoft.com"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "cdn.playwright.dev",
-   "playwright.download.prss.microsoft.com",
-   "registry.npmjs.org",
-   "storage.googleapis.com"
-  ]
- },
- {
-  "id": "electron",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "electron",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "electron"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "github.com",
-   "registry.npmjs.org",
-   "release-assets.githubusercontent.com"
-  ]
- },
- {
-  "id": "prisma",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "prisma",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [
+    "binaries.prisma.sh"
+   ],
+   "predicted_domains": [
+    "binaries.prisma.sh"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@prisma/engines",
+    "prisma"
+   ],
+   "domains": [
+    "binaries.prisma.sh",
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [
-   "binaries.prisma.sh"
-  ],
-  "predicted_domains": [
-   "binaries.prisma.sh"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "binaries.prisma.sh",
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "esbuild",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "esbuild",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "esbuild"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "swc",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "swc",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@swc/core"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "sharp",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "sharp",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0014,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "bcrypt",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "bcrypt",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0011,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "bcrypt"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "sqlite3",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "sqlite3",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0004,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "sqlite3"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "github.com",
-   "registry.npmjs.org",
-   "release-assets.githubusercontent.com"
-  ]
- },
- {
-  "id": "canvas",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "canvas",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0011,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "canvas"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "github.com",
-   "registry.npmjs.org",
-   "release-assets.githubusercontent.com"
-  ]
- },
- {
-  "id": "cypress",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Clean",
-   "full": "Needs review"
+  {
+   "id": "cypress",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [
+    "download.cypress.io"
+   ],
+   "predicted_domains": [
+    "download.cypress.io"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "cypress"
+   ],
+   "domains": [
+    "download.cypress.io",
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [
-   "download.cypress.io"
-  ],
-  "predicted_domains": [
-   "download.cypress.io"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "suspicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "download.cypress.io",
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "chromedriver",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "chromedriver",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Needs review",
+    "full": "Needs review"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "chromedriver"
+   ],
+   "domains": [
+    "googlechromelabs.github.io",
+    "registry.npmjs.org",
+    "storage.googleapis.com"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [
-   "storage.googleapis.com"
-  ],
-  "predicted_domains": [
-   "storage.googleapis.com",
-   "chromedriver.storage.googleapis.com"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "googlechromelabs.github.io",
-   "registry.npmjs.org",
-   "storage.googleapis.com"
-  ]
- },
- {
-  "id": "ffmpeg-static",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "ffmpeg-static",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [
+    "johnvansickle.com",
+    "evermeet.cx"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "ffmpeg-static"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "github.com",
-   "registry.npmjs.org",
-   "release-assets.githubusercontent.com"
-  ]
- },
- {
-  "id": "sentry-cli",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "sentry-cli",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [
+    "downloads.sentry-cdn.com"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@sentry/cli"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [
-   "downloads.sentry-cdn.com"
-  ],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "core-js",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "core-js",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0004,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "core-js"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "protobufjs",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "protobufjs",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "es5-ext",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "es5-ext",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "es5-ext"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "nodemon",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "nodemon",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "husky",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "husky",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "msw",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "msw",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "msw"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "biome",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "biome",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "lefthook",
-  "kind": "benign",
-  "note": "",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Clean",
-   "contract": "Clean",
-   "full": "Clean"
+  {
+   "id": "lefthook",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "lefthook"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
   },
-  "rules_fired": [],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "benign",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "registry.npmjs.org"
-  ]
- },
- {
-  "id": "m01-curl-env",
-  "kind": "malicious",
-  "note": "E4: curl exfil of env to a raw IP",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m01-curl-env",
+   "kind": "malicious",
+   "note": "E4: curl exfil of env to a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "EXEC_NET_TOOL",
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m02-wget-sh",
-  "kind": "malicious",
-  "note": "download-and-execute via wget | sh",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m02-wget-sh",
+   "kind": "malicious",
+   "note": "download-and-execute via wget | sh",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "EXEC_NET_TOOL",
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m03-devtcp",
-  "kind": "malicious",
-  "note": "bash /dev/tcp reverse shell",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m03-devtcp",
+   "kind": "malicious",
+   "note": "bash /dev/tcp reverse shell",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_INTERACTIVE_SHELL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "EXEC_INTERACTIVE_SHELL",
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m04-b64-sh",
-  "kind": "malicious",
-  "note": "base64-decoded command piped to sh",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m04-b64-sh",
+   "kind": "malicious",
+   "note": "base64-decoded command piped to sh",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_DECODE_PIPE",
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "EXEC_DECODE_PIPE",
-   "EXEC_NET_TOOL",
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m05-node-net",
-  "kind": "malicious",
-  "note": "pure-JS raw socket, no external tools",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m05-node-net",
+   "kind": "malicious",
+   "note": "pure-JS raw socket, no external tools",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0017,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5",
-   "scripts/setup.js:2"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m06-node-https-env",
-  "kind": "malicious",
-  "note": "env exfil over HTTPS from node",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m06-node-https-env",
+   "kind": "malicious",
+   "note": "env exfil over HTTPS from node",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.4147,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5",
-   "scripts/setup.js:2"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m07-charcode",
-  "kind": "malicious",
-  "note": "address built from char codes, module name split",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m07-charcode",
+   "kind": "malicious",
+   "note": "address built from char codes, module name split",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m08-npmrc",
-  "kind": "malicious",
-  "note": "credential-file read + exfil",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m08-npmrc",
+   "kind": "malicious",
+   "note": "credential-file read + exfil",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0248,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:4"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5",
-   "scripts/setup.js:4"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m09-perl",
-  "kind": "malicious",
-  "note": "non-node interpreter opens the socket",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m09-perl",
+   "kind": "malicious",
+   "note": "non-node interpreter opens the socket",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m10-imds",
-  "kind": "malicious",
-  "note": "cloud metadata credential probe (blocked by Chamber iptables)",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m10-imds",
+   "kind": "malicious",
+   "note": "cloud metadata credential probe (blocked by Chamber iptables)",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_INTERNAL_TARGET"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.1811,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 169.254.169.254"
+   ]
   },
-  "rules_fired": [
-   "NET_INTERNAL_TARGET"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5"
-  ],
-  "domains": [
-   "RAW 169.254.169.254"
-  ]
- },
- {
-  "id": "m11-dns-exfil",
-  "kind": "malicious",
-  "note": "data encoded into DNS labels; no TCP connection at all",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m11-dns-exfil",
+   "kind": "malicious",
+   "note": "data encoded into DNS labels; no TCP connection at all",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "DNS_ENCODED_LABEL"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0055,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
   },
-  "rules_fired": [
-   "DNS_ENCODED_LABEL"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": []
- },
- {
-  "id": "m12-domain-exfil",
-  "kind": "malicious",
-  "note": "exfil to a resolvable domain (dummy body) instead of a raw IP",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Needs review",
-   "contract": "Needs review",
-   "full": "Blocked"
+  {
+   "id": "m12-domain-exfil",
+   "kind": "malicious",
+   "note": "exfil to a resolvable domain (dummy body) instead of a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Needs review",
+    "contract": "Needs review",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "example.com"
+   ]
   },
-  "rules_fired": [
-   "NET_UNLISTED_DOMAIN"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [],
-  "domains": [
-   "example.com"
-  ]
- },
- {
-  "id": "m13-injection",
-  "kind": "malicious",
-  "note": "exfil + prompt injection in body and package.json",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
+  {
+   "id": "m13-injection",
+   "kind": "malicious",
+   "note": "exfil + prompt injection in body and package.json",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": true,
+   "prompt_guard_max": 0.0098,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:6"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
   },
-  "rules_fired": [
-   "EXEC_NET_TOOL",
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": true,
-  "guilty_lines": [
-   "package.json:6"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- },
- {
-  "id": "m14-delayed",
-  "kind": "malicious",
-  "note": "payload fires 4 s after the script starts",
-  "status": "completed",
-  "exit_code": 0,
-  "outcomes": {
-   "rules": "Blocked",
-   "contract": "Blocked",
-   "full": "Blocked"
-  },
-  "rules_fired": [
-   "NET_RAW_IP"
-  ],
-  "cleared": [],
-  "predicted_domains": [],
-  "prediction_error": null,
-  "llm_verdict": "malicious",
-  "llm_error": null,
-  "injection_flagged": false,
-  "guilty_lines": [
-   "package.json:5",
-   "scripts/setup.js:2"
-  ],
-  "domains": [
-   "RAW 203.0.113.10"
-  ]
- }
-]
+  {
+   "id": "m14-delayed",
+   "kind": "malicious",
+   "note": "payload fires 4 s after the script starts",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0013,
+   "prompt_guard_error": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  }
+ ]
+}
