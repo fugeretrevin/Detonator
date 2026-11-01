@@ -1,0 +1,45 @@
+Nov  1 13:53:25 dnsmasq[30320]: started, version 2.92 cache disabled
+Nov  1 13:53:25 dnsmasq[30320]: compile time options: IPv6 GNU-getopt DBus no-UBus i18n IDN2 DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth DNSSEC loop-detect inotify dumpfile
+Nov  1 13:53:25 dnsmasq[30320]: using nameserver 1.1.1.1#53
+Nov  1 13:53:25 dnsmasq[30320]: using nameserver 8.8.8.8#53
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 query[A] registry.npmjs.org from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 forwarded registry.npmjs.org to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 forwarded registry.npmjs.org to 8.8.8.8
+Nov  1 13:53:26 dnsmasq[30320]: 2 10.250.0.10/44003 query[AAAA] registry.npmjs.org from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 2 10.250.0.10/44003 forwarded registry.npmjs.org to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 2 10.250.0.10/44003 forwarded registry.npmjs.org to 8.8.8.8
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.2.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.6.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.1.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.5.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.9.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.10.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.3.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.11.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.4.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.0.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.7.34
+Nov  1 13:53:26 dnsmasq[30320]: 1 10.250.0.10/55265 reply registry.npmjs.org is 104.16.8.34
+Nov  1 13:53:26 dnsmasq[30320]: 2 10.250.0.10/44003 reply registry.npmjs.org is 2606:4700::6810:822
+Nov  1 13:53:26 dnsmasq[30320]: 2 10.250.0.10/44003 reply registry.npmjs.org is 2606:4700::6810:a22
+Nov  1 13:53:26 dnsmasq[30320]: 3 10.250.0.10/37830 query[A] storage.googleapis.com from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 3 10.250.0.10/37830 forwarded storage.googleapis.com to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 4 10.250.0.10/38316 query[AAAA] storage.googleapis.com from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 4 10.250.0.10/38316 forwarded storage.googleapis.com to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 3 10.250.0.10/37830 reply storage.googleapis.com is 172.253.122.207
+Nov  1 13:53:26 dnsmasq[30320]: 3 10.250.0.10/37830 reply storage.googleapis.com is 192.179.18.207
+Nov  1 13:53:26 dnsmasq[30320]: 4 10.250.0.10/38316 reply storage.googleapis.com is 2607:f8b0:4004:c23::cf
+Nov  1 13:53:26 dnsmasq[30320]: 5 10.250.0.10/54012 query[A] nonexistent-zz9.example from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 5 10.250.0.10/54012 forwarded nonexistent-zz9.example to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 6 10.250.0.10/38227 query[AAAA] nonexistent-zz9.example from 10.250.0.10
+Nov  1 13:53:26 dnsmasq[30320]: 6 10.250.0.10/38227 forwarded nonexistent-zz9.example to 1.1.1.1
+Nov  1 13:53:26 dnsmasq[30320]: 5 10.250.0.10/54012 reply nonexistent-zz9.example is NXDOMAIN
+Nov  1 13:53:26 dnsmasq[30320]: 6 10.250.0.10/38227 reply nonexistent-zz9.example is NXDOMAIN
+Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 query[A] www.github.com from 10.250.0.10
+Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 forwarded www.github.com to 1.1.1.1
+Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 query[AAAA] www.github.com from 10.250.0.10
+Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 forwarded www.github.com to 1.1.1.1
+Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 reply www.github.com is <CNAME>
+Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 reply github.com is NODATA-IPv6
+Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 reply www.github.com is <CNAME>
+Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 reply github.com is 140.82.114.4

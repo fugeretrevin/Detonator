@@ -39,6 +39,7 @@ def health() -> dict:
     return {
         "tetragon": _active("tetragon"),
         "docker": _active("docker"),
+        "dns": _active("detonator-dns"),
         "disk_free_gb": round(disk.free / 1e9, 1),
         "busy": LOCK.locked(),
     }

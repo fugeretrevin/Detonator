@@ -1,0 +1,13 @@
+[Unit]
+Description=PR Detonator sandbox resolver (dnsmasq on det0, query logging)
+After=detonator-egress.service
+Requires=detonator-egress.service
+
+[Service]
+# dns.py turns the log's year-less timestamps into UTC.
+Environment=TZ=UTC
+ExecStart=/usr/sbin/dnsmasq --keep-in-foreground --conf-file=/etc/pr-detonator/dnsmasq.conf --pid-file=/run/detonator-dns.pid
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

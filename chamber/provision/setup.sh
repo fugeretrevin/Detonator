@@ -14,7 +14,8 @@ ENV_FILE=/etc/pr-detonator/env
 echo "== packages"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
-apt-get install -y -qq --no-install-recommends python3-venv git jq curl ca-certificates >/dev/null
+apt-get install -y -qq --no-install-recommends python3-venv git jq curl ca-certificates \
+  dnsmasq-base >/dev/null
 command -v docker >/dev/null || apt-get install -y -qq docker.io >/dev/null
 systemctl enable --now docker >/dev/null
 
@@ -47,10 +48,15 @@ docker build -q -t detonator-sandbox:latest "$REPO/chamber/sandbox" >/dev/null
 
 echo "== services"
 install -m 0644 "$REPO/chamber/provision/detonator-egress.service" /etc/systemd/system/
+install -m 0644 "$REPO/chamber/provision/detonator-dns.service" /etc/systemd/system/
 install -m 0644 "$REPO/chamber/provision/chamber.service" /etc/systemd/system/
+install -m 0644 "$REPO/chamber/provision/dnsmasq.conf" /etc/pr-detonator/dnsmasq.conf
+install -m 0644 "$REPO/chamber/provision/detonator-dns.logrotate" /etc/logrotate.d/detonator-dns
+install -d -m 0755 /var/log/pr-detonator
 systemctl daemon-reload
-systemctl enable detonator-egress chamber >/dev/null
+systemctl enable detonator-egress detonator-dns chamber >/dev/null
 systemctl restart detonator-egress
+systemctl restart detonator-dns
 systemctl restart chamber
 sleep 3
 

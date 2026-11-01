@@ -17,7 +17,7 @@
 **Run two agent sessions in parallel, but only one gets your attention at a time.** Session B (Chamber) works on the VM via Remote-SSH; Session A (Brain) works locally. While one runs a long task, review the other.
 
 **Scope cuts for solo (do not build these unless E1–E6 pass with time left):**
-- B4 dnsmasq → replaced by reverse DNS lookups in the Brain (`resolved_domain = "rdns:<name>"` or None). Keep the `NET_RAW_IP` rule but base it on "no rDNS name and not in allowlist CIDRs".
+- B4 dnsmasq → originally replaced by reverse DNS lookups in the Brain (`resolved_domain = "rdns:<name>"` or None). **Reinstated Nov 1** (CDN answers differ by region, so Brain-side lookups false-alarmed on puppeteer): dnsmasq on det0 is the sandbox's only resolver and the Chamber fills `resolved_domain`/`dns_queries`; Brain enrichment is the fallback.
 - E8 fork PRs, E9 comment editing → skip; post a new comment each run.
 - Differential detonation, HTTPS, dashboard → skip.
 - Rules: implement `NET_RAW_IP`, `NET_UNLISTED_DOMAIN`, `EXEC_NET_TOOL`, `EXEC_INTERACTIVE_SHELL`, `EXEC_DECODE_PIPE` only.

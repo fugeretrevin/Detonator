@@ -42,6 +42,7 @@ flowchart LR
         API["FastAPI"] --> CLONE["clone on host<br/>(no token in sandbox)"]
         CLONE --> SB["hardened container<br/>npm install"]
         TET["Tetragon eBPF<br/>process_exec + tcp_connect"] -. traces .-> SB
+        DNS["dnsmasq on det0<br/>logs every lookup"] -. resolves .-> SB
     end
     API -- "telemetry JSON" --> JOB
     V -- "check run + forensic comment" --> GH
@@ -52,7 +53,9 @@ flowchart LR
 2. **Chamber** (VM): clones the exact head SHA on the host, runs `npm install` in a container
    with no capabilities, a read-only root, uid 10001, and egress rules that block cloud metadata, private
    ranges, and the host. Tetragon records every exec and TCP connect attempt; events are
-   attributed to the container by ID.
+   attributed to the container by ID. The sandbox's only resolver is a logging dnsmasq on
+   the bridge (direct port-53 traffic is rejected), so each connect is named with the answer
+   the sandbox actually got.
 3. **Rules** turn kernel facts into findings (`NET_RAW_IP`, `EXEC_NET_TOOL`,
    `EXEC_INTERACTIVE_SHELL`, `EXEC_DECODE_PIPE`, ...).
 4. **The model** (Meta `muse-spark-1.3`, structured JSON output) compares stated intent with
@@ -71,8 +74,10 @@ flowchart LR
   an unreachable address is captured.
 - **No secrets in the blast radius.** The sandbox gets no tokens and no host environment;
   public repos are cloned anonymously. The VM has no IAM role and IMDSv2 with hop limit 1.
-- **Spoof-resistant naming.** Reverse DNS names only count if they forward-confirm, so an
-  attacker can't name their IP `registry.npmjs.org` via a PTR record.
+- **Spoof-resistant naming.** An IP is named only by the sandbox's own lookups, under the
+  name it *asked for*: `evil.example` CNAME'd to `registry.npmjs.org` is still reported as
+  `evil.example`. With no lookup, it's a raw-IP connect. A Brain-side fallback only accepts
+  reverse DNS names that forward-confirm, so a PTR record can't claim `registry.npmjs.org`.
 - **Flood-resistant telemetry.** Repeated events are collapsed, and if caps are still hit
   the result can never be "Clean".
 - **Every rendered string is escaped.** Process args, domains, and model output are rendered
@@ -88,10 +93,11 @@ End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.
 | README change | ✅ Clean |
 | Add `lodash` | ✅ Clean (registry traffic only) |
 | Add `esbuild` (postinstall binary check) | ✅ Clean, no false positive |
+| Add `puppeteer` (downloads Chrome from a Google CDN) | ✅ Clean: CDN named by DNS capture, explained by the Intent Contract |
 | "Typo fix" that exfiltrates `env` to a raw IP | 🛑 Blocked: `EXEC_NET_TOOL`, `NET_RAW_IP` |
 | Base64-obfuscated reverse shell | 🛑 Blocked (critical): `EXEC_INTERACTIVE_SHELL` |
 | Exfil + prompt injection in PR body and `package.json` | 🛑 Blocked, injection flagged |
-| Install that hangs forever | ⚠️ Could not verify (timeout, never success) |
+| Install that hangs forever | 🛑 Could not verify (timeout fails closed) |
 
 Detonations take 3–8 s; a full check completes in well under a minute. Demo payloads target
 only TEST-NET-3 (`203.0.113.10`), so connect attempts are traced and go nowhere.

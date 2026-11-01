@@ -1,0 +1,7 @@
+/var/log/pr-detonator/dns.log {
+    size 50M
+    rotate 2
+    missingok
+    notifempty
+    copytruncate
+}

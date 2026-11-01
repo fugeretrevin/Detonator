@@ -1,5 +1,7 @@
-"""Fill ConnectEvent.resolved_domain without a DNS log (solo-mode replacement for dnsmasq, B4).
+"""Fallback naming for connects the Chamber's DNS log left unnamed (B4).
 
+The Chamber names IPs from the sandbox's own lookups (chamber/dns.py); this only touches
+events still at None, e.g. from an older Chamber or a lost DNS log.
 1. Forward-resolve allowlisted domains plus KNOWN_CDN_DOMAINS: their IPs map straight to the
    domain. Known CDNs are named but *not* allowlisted, so at worst they hit the low
    NET_UNLISTED_DOMAIN rule (neutral) instead of NET_RAW_IP (failure). Keeps E3 off red.
@@ -8,8 +10,8 @@
    own IP and could otherwise claim to be registry.npmjs.org.
 Unresolvable or unconfirmed IPs stay None, which is what NET_RAW_IP keys on.
 
-Limitation: CDN answers vary by region, and this runs on Modal, not the Chamber VM. Moving
-the lookups to the Chamber (B7) would make the IP match exact.
+Limitation: CDN answers vary by region, and this runs on Modal, not the Chamber VM, which
+is why the Chamber's DNS log is the primary source.
 """
 
 import socket

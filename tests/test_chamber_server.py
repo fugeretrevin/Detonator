@@ -111,7 +111,7 @@ def test_concurrent_request_gets_409(client, monkeypatch):
 
 def test_health_shape(client):
     data = client.get("/health").json()
-    assert set(data) == {"tetragon", "docker", "disk_free_gb", "busy"}
+    assert set(data) == {"tetragon", "docker", "dns", "disk_free_gb", "busy"}
 
 
 def test_docker_args_are_hardened():
@@ -127,6 +127,8 @@ def test_docker_args_are_hardened():
         "--user 10001:10001",
         "--network detonator",
         "--pids-limit 256",
+        "--ip 10.250.0.10",  # DNS log lines are attributed by this address
+        "--dns 10.250.0.1",  # the logging resolver, not a public one
     ):
         assert flag in joined
     assert "ghs_secret" not in joined  # token never reaches the container

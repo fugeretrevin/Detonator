@@ -96,7 +96,7 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
                     daddr=sock.get("daddr", ""),
                     dport=int(sock.get("dport", 0)),
                     family=sock.get("family", ""),
-                    resolved_domain=None,  # filled by the Brain's enrichment (no DNS log)
+                    resolved_domain=None,  # filled from the DNS log (chamber.dns)
                 )
             )
 

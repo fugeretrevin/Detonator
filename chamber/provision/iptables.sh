@@ -18,6 +18,10 @@ fi
 
 iptables -N "$CHAIN" 2>/dev/null || iptables -F "$CHAIN"
 iptables -A "$CHAIN" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+# DNS only through the logging resolver on the host. Tetragon traces TCP connects, not UDP,
+# so a direct query to a public resolver would be an invisible channel.
+iptables -A "$CHAIN" -p udp --dport 53 -j REJECT --reject-with icmp-port-unreachable
+iptables -A "$CHAIN" -p tcp --dport 53 -j REJECT --reject-with tcp-reset
 for cidr in 169.254.0.0/16 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16 100.64.0.0/10 0.0.0.0/8; do
   iptables -A "$CHAIN" -d "$cidr" -j REJECT --reject-with icmp-net-prohibited
 done
@@ -27,11 +31,14 @@ iptables -N DOCKER-USER 2>/dev/null || true
 iptables -C DOCKER-USER -i "$BRIDGE" -j "$CHAIN" 2>/dev/null \
   || iptables -I DOCKER-USER 1 -i "$BRIDGE" -j "$CHAIN"
 
-# Traffic to the host itself (sshd, the chamber API) hits INPUT, not DOCKER-USER. Sandboxes
-# use public resolvers via Docker's in-namespace DNS, so they never need the host.
+# Traffic to the host itself (sshd, the chamber API) hits INPUT, not DOCKER-USER. The only
+# host service sandboxes may reach is the dnsmasq resolver on the bridge address.
 HOST_CHAIN=DETONATOR-HOST
+RESOLVER=10.250.0.1
 iptables -N "$HOST_CHAIN" 2>/dev/null || iptables -F "$HOST_CHAIN"
 iptables -A "$HOST_CHAIN" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN
+iptables -A "$HOST_CHAIN" -d "$RESOLVER" -p udp --dport 53 -j RETURN
+iptables -A "$HOST_CHAIN" -d "$RESOLVER" -p tcp --dport 53 -j RETURN
 iptables -A "$HOST_CHAIN" -j REJECT --reject-with icmp-host-prohibited
 iptables -C INPUT -i "$BRIDGE" -j "$HOST_CHAIN" 2>/dev/null \
   || iptables -I INPUT 1 -i "$BRIDGE" -j "$HOST_CHAIN"

@@ -14,6 +14,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from chamber.dns import name_connects, parse_dns_log
 from chamber.telemetry import LogTail, parse_events
 from shared.contract import MAX_TAIL_CHARS, DetonateRequest, DetonateResult
 
@@ -32,6 +33,11 @@ class Config:
     network: str = os.environ.get("SANDBOX_NETWORK", "detonator")
     tetragon_log: str = os.environ.get("TETRAGON_LOG", "/var/log/tetragon/tetragon.log")
     jobs_dir: str = os.environ.get("JOBS_DIR", "/var/lib/pr-detonator/jobs")
+    # dnsmasq on det0 is the sandbox's only resolver; iptables rejects any other port 53.
+    resolver: str = os.environ.get("SANDBOX_RESOLVER", "10.250.0.1")
+    dns_log: str = os.environ.get("DNS_LOG", "/var/log/pr-detonator/dns.log")
+    # Fixed address (one job at a time) so DNS log lines can be attributed to this sandbox.
+    sandbox_ip: str = os.environ.get("SANDBOX_IP", "10.250.0.10")
 
 
 class InvalidRequest(ValueError):
@@ -92,7 +98,8 @@ def _chown_tree(root: Path, uid: int) -> None:
 def docker_run_args(req: DetonateRequest, cfg: Config, name: str, src: Path) -> list[str]:
     return [
         "docker", "run", "-d", "--name", name,
-        "--network", cfg.network, "--dns", "1.1.1.1", "--dns", "8.8.8.8",
+        "--network", cfg.network, "--ip", cfg.sandbox_ip,
+        "--dns", cfg.resolver, "--dns-search", ".",
         "--user", f"{SANDBOX_UID}:{SANDBOX_UID}",
         "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
         "--pids-limit", "256", "--memory", "2g", "--cpus", "1.5",
@@ -121,13 +128,13 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
     started = time.monotonic()
     status, exit_code, error = "completed", None, None
     stdout = stderr = ""
-    execs, connects, truncated = [], [], False
+    execs, connects, queries, truncated = [], [], [], False
 
     def result() -> DetonateResult:
         return DetonateResult(
             job_id=req.job_id, status=status, exit_code=exit_code,
             duration_s=round(time.monotonic() - started, 2), exec_events=execs,
-            connect_events=connects, dns_queries=[], stdout_tail=_tail(stdout),
+            connect_events=connects, dns_queries=queries, stdout_tail=_tail(stdout),
             stderr_tail=_tail(stderr), truncated=truncated, error=error,
         )  # fmt: skip
 
@@ -140,8 +147,9 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
             return result()
         _chown_tree(src, SANDBOX_UID)
 
-        tail = LogTail(cfg.tetragon_log)
+        tail, dns_tail = LogTail(cfg.tetragon_log), LogTail(cfg.dns_log)
         tail.start()
+        dns_tail.start()
         started = time.monotonic()  # duration measures the detonation itself
         proc = _docker(*docker_run_args(req, cfg, name, src)[1:])
         if proc.returncode != 0:
@@ -163,10 +171,13 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         time.sleep(FLUSH_WAIT_S)  # let Tetragon flush the last events
         lines, rotated = tail.read_new()
         parsed = parse_events(lines, container_id)
-        execs, connects = parsed.exec_events, parsed.connect_events
-        truncated = parsed.truncated or rotated
-        if rotated:
-            error = "tetragon log rotated during run; early events may be missing"
+        dns_lines, dns_rotated = dns_tail.read_new()
+        dns = parse_dns_log(dns_lines, cfg.sandbox_ip)
+        execs, queries = parsed.exec_events, dns.queries
+        connects = name_connects(parsed.connect_events, dns)
+        truncated = parsed.truncated or rotated or dns.truncated or dns_rotated
+        if rotated or dns_rotated:
+            error = "telemetry log rotated during run; early events may be missing"
         return result()
     finally:
         subprocess.run(["docker", "rm", "-f", name], capture_output=True, timeout=30)
