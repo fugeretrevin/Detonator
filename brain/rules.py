@@ -10,7 +10,7 @@ import shlex
 from dataclasses import dataclass
 from enum import IntEnum
 
-from shared.contract import ConnectEvent, DetonateResult, ExecEvent
+from shared.contract import ConnectEvent, DetonateResult, DnsQuery, ExecEvent
 
 DEFAULT_ALLOWED_DOMAINS: tuple[str, ...] = (
     "registry.npmjs.org",
@@ -35,6 +35,12 @@ BASE64_DECODE_RE = re.compile(r"\bbase64\s+(?:-\w*d\w*|--decode)\b")
 PIPE_TO_SHELL_RE = re.compile(r"\|\s*(?:/\S*/)?(?:ba|da|z|k)?sh\b")
 EVAL_DECODED_RE = re.compile(r"\beval\b.*(?:base64|atob\(|Buffer\.from\()")
 
+SANDBOX_RESOLVER = ("10.250.0.1", 53)  # chamber/provision/dnsmasq.conf
+METADATA_ADDRS = frozenset({"169.254.169.254", "fd00:ec2::254", "169.254.170.2"})
+# Data smuggled out in DNS names: long labels that look like encoding, not words. Benign
+# installs in the eval topped out at 17-char labels; DNS allows 63.
+MIN_ENCODED_LABEL = 40
+ENCODED_LABEL_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 # Destinations that are not "the internet". Everything else counts as external, including
 # documentation ranges like TEST-NET-3 (203.0.113.0/24) used for safe demo payloads, which
@@ -109,13 +115,37 @@ def domain_allowed(domain: str, allowed: tuple[str, ...]) -> bool:
 # --- network rules ---
 
 
+def _internal_hit(event: ConnectEvent) -> list[RuleHit]:
+    """An install has no business on link-local or private ranges (metadata, the VPC, the
+    host). The Chamber's iptables refuse these, but the attempt itself is the signal."""
+    if (event.daddr, event.dport) == SANDBOX_RESOLVER:
+        return []  # DNS over TCP to the Chamber's logging resolver
+    try:
+        if ipaddress.ip_address(event.daddr).is_loopback:
+            return []  # install-time tests talking to their own localhost server
+    except ValueError:
+        return []
+    what = "the cloud metadata service" if event.daddr in METADATA_ADDRS else "an internal address"
+    return [
+        RuleHit(
+            "NET_INTERNAL_TARGET",
+            Severity.HIGH,
+            f"{_basename(event.binary)} (pid {event.pid}) tried to reach {what} "
+            f"{event.daddr}:{event.dport}",
+            event.ts,
+            event.pid,
+            target=event.daddr,
+        )
+    ]
+
+
 def _connect_hits(
     event: ConnectEvent,
     allowed_domains: tuple[str, ...],
     allowed_networks: tuple[ipaddress.IPv4Network | ipaddress.IPv6Network, ...],
 ) -> list[RuleHit]:
     if not is_external(event.daddr):
-        return []
+        return _internal_hit(event)
     if any(ipaddress.ip_address(event.daddr) in net for net in allowed_networks):
         return []
 
@@ -143,6 +173,30 @@ def _connect_hits(
             )
         ]
     return []
+
+
+def _looks_encoded(label: str) -> bool:
+    if len(label) < MIN_ENCODED_LABEL or not ENCODED_LABEL_RE.match(label):
+        return False
+    digits = sum(ch.isdigit() for ch in label)
+    hexish = all(ch in "0123456789abcdefABCDEF" for ch in label)
+    return hexish or digits / len(label) >= 0.2
+
+
+def _dns_hits(query: DnsQuery) -> list[RuleHit]:
+    if not any(_looks_encoded(label) for label in query.domain.split(".")):
+        return []
+    return [
+        RuleHit(
+            "DNS_ENCODED_LABEL",
+            Severity.HIGH,
+            f"DNS lookup with an encoded-looking label (data exfiltration via DNS): "
+            f"{_clip(query.domain)}",
+            query.ts,
+            0,
+            target=query.domain,
+        )
+    ]
 
 
 # --- exec rules ---
@@ -198,6 +252,8 @@ def evaluate(
         hits.extend(_exec_hits(exec_event))
     for connect_event in result.connect_events:
         hits.extend(_connect_hits(connect_event, allowed_domains, networks))
+    for query in result.dns_queries:
+        hits.extend(_dns_hits(query))
     if result.truncated:
         # Events past the caps were dropped; a flood could be hiding a payload.
         hits.append(

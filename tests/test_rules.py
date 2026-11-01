@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 
 from brain.rules import Severity, domain_allowed, evaluate, is_external, max_severity
-from shared.contract import ConnectEvent, DetonateResult, ExecEvent
+from shared.contract import ConnectEvent, DetonateResult, DnsQuery, ExecEvent
 
 FIXTURES = Path(__file__).parent / "fixtures"
 NPM = "/usr/local/bin/node"
@@ -108,10 +108,56 @@ def test_raw_ip_fires_for_test_net_demo_address():
 
 @pytest.mark.parametrize(
     "addr",
-    ["127.0.0.1", "10.0.0.5", "172.17.0.1", "192.168.1.1", "169.254.169.254", "::1", "fe80::1"],
+    ["10.0.0.5", "172.17.0.1", "192.168.1.1", "169.254.169.254", "fe80::1"],
 )
-def test_internal_destinations_ignored(addr):
+def test_internal_destinations_flagged(addr):
+    hits = evaluate(result(connects=[connect(addr)]))
+    assert [(h.rule_id, h.severity) for h in hits] == [("NET_INTERNAL_TARGET", Severity.HIGH)]
+
+
+def test_metadata_probe_named_in_evidence():
+    hit = evaluate(result(connects=[connect("169.254.169.254", 80)]))[0]
+    assert "cloud metadata service" in hit.evidence
+
+
+@pytest.mark.parametrize("addr", ["127.0.0.1", "::1"])
+def test_loopback_ignored(addr):
     assert evaluate(result(connects=[connect(addr)])) == []
+
+
+def test_tcp_dns_to_the_chamber_resolver_ignored():
+    assert evaluate(result(connects=[connect("10.250.0.1", 53)])) == []
+    assert rule_ids(result(connects=[connect("10.250.0.1", 22)])) == {"NET_INTERNAL_TARGET"}
+
+
+def dns_result(*domains: str) -> DetonateResult:
+    res = result()
+    queries = [DnsQuery(ts="t", domain=d, answers=[]) for d in domains]
+    return res.model_copy(update={"dns_queries": queries})
+
+
+def test_hex_encoded_dns_label_flagged():
+    # Real m11 eval payload: npm user agent hex-encoded into labels.
+    domain = (
+        "6e706d2f31302e382e32206e6f64652f7632302e32302e32206c696e7578"
+        ".2078363420776f726b7370616365732f66616c7365.exfil.invalid"
+    )
+    hits = evaluate(dns_result(domain))
+    assert [(h.rule_id, h.severity) for h in hits] == [("DNS_ENCODED_LABEL", Severity.HIGH)]
+
+
+@pytest.mark.parametrize(
+    "domain",
+    [
+        "registry.npmjs.org",
+        "release-assets.githubusercontent.com",
+        "playwright.download.prss.microsoft.com",
+        "d1a2b3c4d5e6f7.cloudfront.net",  # short CDN hash label
+        "my-internal-load-balancer-for-the-staging-env.example.com",  # long but words
+    ],
+)
+def test_ordinary_dns_names_not_flagged(domain):
+    assert evaluate(dns_result(domain)) == []
 
 
 def test_ipv4_mapped_ipv6_is_classified_by_ipv4():

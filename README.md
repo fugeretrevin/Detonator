@@ -91,6 +91,12 @@ flowchart LR
 
 ## Results
 
+**Evaluation (40 real detonations, [details](eval/README.md)):** 0 of 26 popular packages
+with install-time downloads blocked (puppeteer, electron, prisma, cypress, ...), and 14 of
+14 simulated install-time attacks blocked. Rules alone block 13 of 14; the model catches the
+remaining one (exfil to a resolvable domain). The Intent Contract cuts benign "needs review"
+from 5 to 1.
+
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 
 | Scenario | Result |
