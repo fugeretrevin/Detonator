@@ -172,5 +172,27 @@ def test_fork_detected_and_deleted_fork_falls_back():
     assert event.head_clone_url == "https://github.com/demo-org/demo-repo.git"
 
 
+def test_public_repo_flag_parsed():
+    assert call(json.dumps(payload()).encode()).event.repo_private is False
+
+
+def test_private_repo_flag_parsed():
+    data = payload()
+    data["repository"]["private"] = True
+    assert call(json.dumps(data).encode()).event.repo_private is True
+
+
+def test_missing_private_flag_fails_closed():
+    data = payload()
+    del data["repository"]["private"]
+    assert call(json.dumps(data).encode()).event.repo_private is True
+
+
+def test_private_head_repo_counts_as_private():
+    data = payload()
+    data["pull_request"]["head"]["repo"]["private"] = True
+    assert call(json.dumps(data).encode()).event.repo_private is True
+
+
 def test_malformed_json_is_400():
     assert call(b"not json").status_code == 400

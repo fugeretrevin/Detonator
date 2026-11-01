@@ -26,6 +26,7 @@
   "repository": {
     "name": "demo-repo",
     "full_name": "demo-org/demo-repo",
+    "private": false,
     "owner": {"login": "demo-org"},
     "clone_url": "https://github.com/demo-org/demo-repo.git"
   },

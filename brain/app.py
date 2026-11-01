@@ -18,9 +18,13 @@ from brain.chamber_client import chamber_client_from_env
 from brain.enrich import github_meta_cidrs
 from brain.github_client import GitHubClient
 from brain.llm import LlmOutcome, llm_client_from_env
-from brain.pipeline import analyze
+from brain.pipeline import (
+    PRIVATE_REPO_SUMMARY,
+    PRIVATE_REPO_TITLE,
+    analyze,
+    detonate_request,
+)
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
-from shared.contract import DetonateRequest
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -37,11 +41,11 @@ image = (
     .add_local_dir(str(ROOT / "tests/fixtures"), "/root/fixtures")
 )
 
-# Add modal.Secret.from_name("chamber") here once B8 is wired (CHAMBER_MODE=http).
 SECRETS = [
     modal.Secret.from_name("github-app"),
     modal.Secret.from_name("detonator-config"),
     modal.Secret.from_name("llama"),
+    modal.Secret.from_name("chamber"),
 ]
 
 deliveries = modal.Dict.from_name("pr-detonator-deliveries", create_if_missing=True)
@@ -90,17 +94,23 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
     gh = github()
     loc = (event.installation_id, event.owner, event.repo)
     job_id = str(uuid.uuid4())
+    request = detonate_request(event, job_id)
+    if request is None:
+        logger.info(
+            "job=%s %s/%s#%s private repo: not detonated",
+            job_id,
+            event.owner,
+            event.repo,
+            event.number,
+        )
+        gh.complete_check_run(
+            *loc, check_run_id, "neutral", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY
+        )
+        return
     try:
         metadata = gh.get_pr_metadata(*loc, event.number)
         diff = gh.get_pr_diff(*loc, event.number)
-        result = chamber_client_from_env().detonate(
-            DetonateRequest(
-                job_id=job_id,
-                clone_url=event.head_clone_url,
-                head_sha=event.head_sha,
-                clone_token=gh.installation_token(event.installation_id),
-            )
-        )
+        result = chamber_client_from_env().detonate(request)
         analysis = analyze(
             result,
             metadata,

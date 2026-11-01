@@ -3,7 +3,8 @@ from pathlib import Path
 
 from brain.github_client import PrMetadata
 from brain.llm import LlmOutcome, LlmVerdict, parse_response
-from brain.pipeline import analyze
+from brain.pipeline import PRIVATE_REPO_SUMMARY, PRIVATE_REPO_TITLE, analyze, detonate_request
+from brain.webhook import PullRequestEvent
 from shared.contract import DetonateResult
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -20,6 +21,28 @@ META = PrMetadata(
 
 def e4() -> DetonateResult:
     return DetonateResult.model_validate_json((FIXTURES / "detonate_result_e4.json").read_text())
+
+
+def event(private: bool) -> PullRequestEvent:
+    return PullRequestEvent(
+        delivery_id="d", action="opened", installation_id=1, account_login="o", owner="o",
+        repo="r", number=1, head_sha="a" * 40, head_clone_url="https://github.com/o/r.git",
+        is_fork=False, repo_private=private,
+    )  # fmt: skip
+
+
+def test_public_repo_detonates_without_clone_token():
+    req = detonate_request(event(private=False), "job-1")
+    assert req is not None
+    assert req.clone_token is None
+    assert "token" not in req.model_dump_json().lower().replace('"clone_token":null', "")
+    assert req.clone_url == "https://github.com/o/r.git" and req.head_sha == "a" * 40
+
+
+def test_private_repo_is_not_detonated_and_reports_https_needed():
+    assert detonate_request(event(private=True), "job-1") is None
+    assert "Private repos need HTTPS on the Chamber" in PRIVATE_REPO_SUMMARY
+    assert PRIVATE_REPO_TITLE == "Could not verify"
 
 
 def no_enrich(result: DetonateResult) -> DetonateResult:
