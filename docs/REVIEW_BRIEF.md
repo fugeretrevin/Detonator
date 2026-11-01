@@ -183,6 +183,14 @@ fired.
   whose value equals the script; if the script runs a file changed in the PR, also blame the
   first line there that spawns a process, evaluates code, opens a connection, or decodes data.
 - A raw-IP literal appearing on an added line is also blamed.
+- **Inside the dependency** (Nov 1): the Chamber copies out the files install-time processes
+  executed (paths from exec args resolved against the kernel cwd; must resolve inside the job
+  directory, so planted symlinks to host files are refused; binaries skipped; ≤ 5 files of
+  20 KB, each with sha256). Code picks the line in the dependency's file that names what the
+  finding involved (its host, IP, bait file or program), else the strongest suspicious
+  pattern, skipping comment lines; Muse explains it from a numbered excerpt. These lines are
+  report-only (not in the diff). [Live: E8 `node_modules/color-helper/install.js:1`; real
+  reconstructions: ua-parser-js `preinstall.sh:4,6`, Shai-Hulud `bundle.js:11,23`]
 - Every report lists **"Packages that ran install scripts"** (benign ones too), flagged ones
   marked: the seed of a behavioral SBOM.
 

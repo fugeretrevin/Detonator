@@ -16,6 +16,7 @@ from pathlib import Path
 
 from chamber.dns import name_connects, parse_dns_log
 from chamber.egress import parse_kernel_log, read_kernel_log
+from chamber.scripts import collect_executed_scripts
 from chamber.telemetry import LogTail, parse_events
 from shared.contract import MAX_CONNECT_EVENTS, MAX_TAIL_CHARS, DetonateRequest, DetonateResult
 
@@ -149,13 +150,14 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
     started = time.monotonic()
     status, exit_code, error = "completed", None, None
     stdout = stderr = ""
-    execs, connects, queries, files, truncated = [], [], [], [], False
+    execs, connects, queries, files, scripts, truncated = [], [], [], [], [], False
 
     def result() -> DetonateResult:
         return DetonateResult(
             job_id=req.job_id, status=status, exit_code=exit_code,
             duration_s=round(time.monotonic() - started, 2), exec_events=execs,
             connect_events=connects, dns_queries=queries, file_events=files,
+            executed_scripts=scripts,
             stdout_tail=_tail(stdout), stderr_tail=_tail(stderr), truncated=truncated,
             error=error,
         )  # fmt: skip
@@ -201,6 +203,8 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         blocked = parse_kernel_log(read_kernel_log(wall_start - 1, time.time()),
                                    cfg.sandbox_ip, room)  # fmt: skip
         connects = name_connects(parsed.connect_events + blocked, dns)
+        active = {c.pid for c in connects if c.pid} | {f.pid for f in files}
+        scripts = collect_executed_scripts(execs, src, active)
         truncated = parsed.truncated or rotated or dns.truncated or dns_rotated
         if rotated or dns_rotated:
             error = "telemetry log rotated during run; early events may be missing"

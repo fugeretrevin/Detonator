@@ -124,8 +124,12 @@ def _guilty_section(guilty: list[GuiltyLine], llm: LlmOutcome) -> list[str]:
     lines = ["### Where it came from", ""]
     for i, g in enumerate(guilty):
         # Paths are PR-controlled: escaped, so never inside a code span (entities show raw).
-        lines.append(f"- **{esc(g.path, 120)}** line {g.line} ({esc(g.reason, 60)}): "
-                     f"{esc(g.code.strip(), 200)}")  # fmt: skip
+        where = f"**{esc(g.path, 120)}** line {g.line}"
+        if not g.in_diff:
+            digest = esc((g.sha256 or "")[:16], 16)
+            where = (f"inside dependency **{esc(g.package, 100)}**: {where} "
+                     f"(sha256 {digest}…, captured from the sandbox)")  # fmt: skip
+        lines.append(f"- {where} ({esc(g.reason, 60)}): {esc(g.code.strip(), 200)}")
         if what := _line_explanation(llm, i):
             lines.append(f"  - *What it does:* {esc(what, 300)}")
     return lines + [""]

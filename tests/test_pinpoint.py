@@ -282,4 +282,29 @@ def test_shai_hulud_reconstruction_blocked_by_rules_and_attributed():
     assert {"EXEC_DROPPED_BINARY", "NET_EXFIL_SERVICE"} <= {h.rule_id for h in hits}
     bump = BUMP.replace("color-helper", "tinycolor-recon").replace("1.0.1", "4.1.1")
     lines = find_guilty_lines(hits, res, dep_files(bump))
-    assert [(g.line, g.package) for g in lines] == [(5, "tinycolor-recon")]
+    assert [(g.path, g.line, g.package, g.in_diff) for g in lines if g.in_diff] == [
+        ("package.json", 5, "tinycolor-recon", True)
+    ]
+    inside = [g for g in lines if not g.in_diff]
+    assert inside and all(g.path.endswith("node_modules/tinycolor-recon/bundle.js") for g in inside)
+    assert all(g.sha256 and g.excerpt and "| " in g.excerpt for g in inside)
+    assert not any(g.code.lstrip().startswith("//") for g in inside)  # never a comment line
+
+
+def test_ua_parser_reconstruction_points_into_preinstall_sh():
+    from eval.cases import CASES
+
+    res = result("r01")
+    lines = find_guilty_lines(evaluate(res), res, CASES["r01-ua-parser-js"].changed_files())
+    inside = [(g.path.rsplit("/", 1)[-1], g.code.strip()) for g in lines if not g.in_diff]
+    assert any(name == "preinstall.sh" and "203.0.113.10/download/jsextension" in code
+               for name, code in inside)  # fmt: skip
+
+
+def test_dependency_file_lines_are_never_inline_review_comments():
+    # in_diff=False lines go in the report only (app.py filters them out of the review).
+    res = result("r02")
+    bump = BUMP.replace("color-helper", "tinycolor-recon").replace("1.0.1", "4.1.1")
+    lines = find_guilty_lines(evaluate(res), res, dep_files(bump))
+    review = [g for g in lines if g.in_diff]
+    assert all(g.path == "package.json" for g in review)

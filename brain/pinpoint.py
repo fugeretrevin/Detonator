@@ -31,7 +31,11 @@ _LIFECYCLE_RE = re.compile(
 )
 # Most to least specific: where the payload runs beats where it is decoded or imported.
 SUSPICIOUS = (
-    ("runs a process", re.compile(r"\b(spawn|spawnSync|exec|execSync|execFile|fork)\s*\(")),
+    ("uses a network tool", re.compile(r"\b(curl|wget|ncat|socat)\b|\bnc\s+-")),
+    (
+        "runs a process",
+        re.compile(r"\b(spawn|spawnSync|exec|execSync|execFile|execFileSync|fork)\s*\("),
+    ),  # fmt: skip
     ("evaluates code", re.compile(r"\beval\s*\(|\bnew\s+Function\s*\(")),
     (
         "opens a connection",
@@ -54,6 +58,26 @@ class GuiltyLine:
     rule_ids: tuple[str, ...]
     pid: int  # the flagged process, for the chain in the comment
     package: str | None = None  # dependency whose install script ran (None: the project's)
+    # False: a line inside a dependency's file captured from the sandbox, not in the PR diff
+    # (shown in the report, never posted as an inline review comment).
+    in_diff: bool = True
+    sha256: str | None = None  # of the captured file, so the finding is reproducible
+    excerpt: str | None = None  # numbered lines of that file, for the model (untrusted)
+
+
+MAX_EXCERPT_CHARS = 8_000
+EXCERPT_WINDOW = 60
+
+
+def numbered_excerpt(content: str, line: int) -> str:
+    """The whole file if small, else a window around `line`; each line prefixed `N| `."""
+    lines = content.splitlines()
+    whole = "\n".join(f"{i}| {t}" for i, t in enumerate(lines, start=1))
+    if len(whole) <= MAX_EXCERPT_CHARS:
+        return whole
+    lo, hi = max(1, line - EXCERPT_WINDOW), min(len(lines), line + EXCERPT_WINDOW)
+    part = "\n".join(f"{i}| {lines[i - 1]}" for i in range(lo, hi + 1))
+    return part[:MAX_EXCERPT_CHARS]
 
 
 def for_prompt(lines: list[GuiltyLine]) -> list[dict]:
@@ -61,7 +85,10 @@ def for_prompt(lines: list[GuiltyLine]) -> list[dict]:
     return [
         {"id": i, "path": g.path, "line": g.line, "code": g.code.strip()[:400],
          "why_flagged": g.reason, "rules": list(g.rule_ids),
-         **({"dependency_that_ran_the_script": g.package} if g.package else {})}
+         **({"dependency_that_ran_the_script": g.package} if g.package else {}),
+         **({"location": "inside the dependency's own file, captured from the sandbox",
+             "sha256": g.sha256, "file_excerpt": g.excerpt}
+            if not g.in_diff else {})}
         for i, g in enumerate(lines)
     ]  # fmt: skip
 
@@ -166,6 +193,50 @@ def _first_suspicious(lines: Iterable[tuple[int, str]]) -> tuple[int, str, str] 
     return None
 
 
+GENERIC_BINARIES = frozenset({"node", "npm", "npx", "sh", "bash", "dash", "env"})
+
+
+def _hints(hit: RuleHit, result: DetonateResult) -> list[str]:
+    """Concrete strings the flagged behavior involved: its destination, file or program."""
+    hints = []
+    if hit.target:
+        hints.append(hit.target.rsplit("/", 1)[-1] if hit.target.startswith("/") else hit.target)
+    hints += [c.daddr for c in result.connect_events if c.pid == hit.pid and c.pid]
+    binary = next((e.binary for e in result.exec_events if e.pid == hit.pid), "")
+    if base(binary) not in GENERIC_BINARIES:
+        hints.append(base(binary))
+    return [h for h in dict.fromkeys(hints) if len(h) >= 4]
+
+
+def _best_in_scripts(package: str, result: DetonateResult, hit: RuleHit):
+    """(script, line, text, reason) across all of the package's captured files: first a line
+    naming what this finding involved (its host, IP, file or program), else the
+    highest-priority suspicious pattern (a .js that only shells out loses to the .sh that
+    downloads)."""
+    mine = [s for s in result.executed_scripts if s.package == package]
+    scripts = [(s, _code_lines(s.content)) for s in mine]
+    for hint in _hints(hit, result):
+        for script, lines in scripts:
+            for number, text in lines:
+                if hint in text:
+                    return script, number, text, f"names {hint}, which this finding involved"
+    for reason, pattern in SUSPICIOUS:
+        for script, lines in scripts:
+            for number, text in lines:
+                if pattern.search(text):
+                    return script, number, text, reason
+    return None
+
+
+_COMMENT_RE = re.compile(r"^\s*(//|#|/\*|\*)")
+
+
+def _code_lines(content: str) -> list[tuple[int, str]]:
+    """Numbered lines, minus comment-only ones (a comment can't run, so it can't be guilty)."""
+    return [(i, t) for i, t in enumerate(content.splitlines(), start=1)
+            if t.strip() and not _COMMENT_RE.match(t)]  # fmt: skip
+
+
 def _dependency_lines(
     package: str, by_path: dict[str, ChangedFile]
 ) -> list[tuple[str, int, str, str]]:
@@ -194,14 +265,16 @@ def find_guilty_lines(
     found: dict[tuple[str, int], GuiltyLine] = {}
 
     def add(path: str, line: int, code: str, reason: str, hit: RuleHit,
-            package: str | None = None) -> None:  # fmt: skip
+            package: str | None = None, *, in_diff: bool = True,
+            sha256: str | None = None, excerpt: str | None = None) -> None:  # fmt: skip
         key = (path, line)
         if key in found:
             g = found[key]
             if hit.rule_id not in g.rule_ids:
                 found[key] = replace(g, rule_ids=(*g.rule_ids, hit.rule_id))
         elif len(found) < MAX_GUILTY_LINES:
-            found[key] = GuiltyLine(path, line, code, reason, (hit.rule_id,), hit.pid, package)
+            found[key] = GuiltyLine(path, line, code, reason, (hit.rule_id,), hit.pid, package,
+                                    in_diff, sha256, excerpt)  # fmt: skip
 
     for hit in hits:
         if hit.severity < Severity.HIGH or not hit.pid:
@@ -213,6 +286,12 @@ def find_guilty_lines(
             # the project's own scripts (a dependency's `node install.js` could coincide).
             for path, number, text, reason in _dependency_lines(package, by_path):
                 add(path, number, text, reason, hit, package)
+            # ...and the line that did it, inside the dependency's own executed files.
+            if spot := _best_in_scripts(package, result, hit):
+                script, number, text, reason = spot
+                add(script.path.removeprefix("/work/"), number, text, reason, hit, package,
+                    in_diff=False, sha256=script.sha256,
+                    excerpt=numbered_excerpt(script.content, number))  # fmt: skip
         elif npm_shell:
             script = script_text(npm_shell)
             for path, f in by_path.items():

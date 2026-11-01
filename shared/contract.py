@@ -8,6 +8,11 @@ MAX_EXEC_EVENTS = 500
 MAX_CONNECT_EVENTS = 200
 MAX_DNS_QUERIES = 200
 MAX_FILE_EVENTS = 100
+MAX_EXECUTED_SCRIPTS = 5
+MAX_SCRIPT_CHARS = 20_000
+# 2 (Nov 1): + ExecEvent.cwd, ConnectEvent.protocol, file_events, executed_scripts. Every
+# addition is optional, so a v1 Chamber's results still validate.
+CONTRACT_VERSION = 2
 MAX_TAIL_CHARS = 4000
 
 
@@ -56,6 +61,17 @@ class FileEvent(BaseModel):
     path: str
 
 
+class ExecutedScript(BaseModel):
+    """A file an install-time process executed, copied out of the sandbox after the run.
+    Untrusted content: fence it in prompts, escape it in comments."""
+
+    path: str  # as seen in the sandbox, e.g. /work/node_modules/color-helper/install.js
+    package: str | None  # node_modules/<pkg> it belongs to; None for the project's own files
+    sha256: str  # of the whole file
+    content: str = Field(max_length=MAX_SCRIPT_CHARS)
+    truncated: bool = False
+
+
 class DnsQuery(BaseModel):
     ts: str
     domain: str
@@ -71,6 +87,9 @@ class DetonateResult(BaseModel):
     connect_events: list[ConnectEvent] = Field(max_length=MAX_CONNECT_EVENTS)
     dns_queries: list[DnsQuery] = Field(max_length=MAX_DNS_QUERIES)
     file_events: list[FileEvent] = Field(default_factory=list, max_length=MAX_FILE_EVENTS)
+    executed_scripts: list[ExecutedScript] = Field(
+        default_factory=list, max_length=MAX_EXECUTED_SCRIPTS
+    )
     stdout_tail: str = Field(max_length=MAX_TAIL_CHARS)
     stderr_tail: str = Field(max_length=MAX_TAIL_CHARS)
     truncated: bool = False  # true if events were capped

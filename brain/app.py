@@ -218,9 +218,11 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             {"path": g.path, "line": g.line,
              "body": render_line_comment(g, i, analysis.llm, analysis.result)}
             for i, g in enumerate(analysis.guilty)
+            if g.in_diff  # lines inside a dependency's file aren't in the diff: report only
         ]  # fmt: skip
         try:
-            gh.create_review(*loc, event.number, event.head_sha, comments)
+            if comments:  # GitHub rejects an empty review
+                gh.create_review(*loc, event.number, event.head_sha, comments)
         except Exception:
             logger.exception("job=%s failed to post guilty-line review", job_id)
 
