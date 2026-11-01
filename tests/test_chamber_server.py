@@ -130,4 +130,6 @@ def test_docker_args_are_hardened():
     ):
         assert flag in joined
     assert "ghs_secret" not in joined  # token never reaches the container
+    # HOME must be writable by the sandbox user (puppeteer etc. cache browsers there)
+    assert "/home/runner:rw,exec,size=1g,uid=10001,gid=10001" in joined
     assert "--privileged" not in joined and "docker.sock" not in joined

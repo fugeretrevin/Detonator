@@ -97,8 +97,10 @@ def docker_run_args(req: DetonateRequest, cfg: Config, name: str, src: Path) -> 
         "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
         "--pids-limit", "256", "--memory", "2g", "--cpus", "1.5",
         "--read-only",
-        "--tmpfs", "/tmp:rw,exec,size=512m",
-        "--tmpfs", "/home/runner:rw,size=256m",
+        # tmpfs mounts default to root-owned; the sandbox user must own its HOME, or any
+        # package (or payload) writing to ~ fails and the run proves nothing.
+        "--tmpfs", "/tmp:rw,exec,size=512m,mode=1777",
+        "--tmpfs", f"/home/runner:rw,exec,size=1g,uid={SANDBOX_UID},gid={SANDBOX_UID},mode=0755",
         "-v", f"{src}:/work:rw", "-w", "/work",
         "-e", "HOME=/home/runner", "-e", "npm_config_cache=/tmp/.npm",
         "-e", "npm_config_update_notifier=false",
