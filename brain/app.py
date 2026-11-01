@@ -15,7 +15,10 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 
 from brain.chamber_client import chamber_client_from_env
+from brain.enrich import github_meta_cidrs
 from brain.github_client import GitHubClient
+from brain.llm import LlmOutcome, llm_client_from_env
+from brain.pipeline import analyze
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
 from shared.contract import DetonateRequest
 
@@ -23,6 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # Modal captures stdout/stderr; make INFO-level webhook decisions visible in its logs.
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s", force=True)
+logger = logging.getLogger("brain.app")
 
 app = modal.App("pr-detonator")
 
@@ -33,10 +37,11 @@ image = (
     .add_local_dir(str(ROOT / "tests/fixtures"), "/root/fixtures")
 )
 
-# Add modal.Secret.from_name("llama") / ("chamber") here once A4 / B8 are wired.
+# Add modal.Secret.from_name("chamber") here once B8 is wired (CHAMBER_MODE=http).
 SECRETS = [
     modal.Secret.from_name("github-app"),
     modal.Secret.from_name("detonator-config"),
+    modal.Secret.from_name("llama"),
 ]
 
 deliveries = modal.Dict.from_name("pr-detonator-deliveries", create_if_missing=True)
@@ -96,17 +101,28 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
                 clone_token=gh.installation_token(event.installation_id),
             )
         )
-        # TODO(A3-A6): rules -> LLM -> verdict -> report. Until then, report raw counts.
-        summary = (
-            f"**Pipeline stub** (rules/LLM not wired yet)\n\n"
-            f"- job `{job_id}`, chamber status `{result.status}`, {result.duration_s:.1f}s\n"
-            f"- {len(result.exec_events)} exec, {len(result.connect_events)} connect, "
-            f"{len(result.dns_queries)} dns events\n"
-            f"- {len(metadata.changed_files)} files changed, diff {len(diff)} chars, "
-            f"scripts changed: {metadata.scripts_changed}"
+        analysis = analyze(
+            result,
+            metadata,
+            diff,
+            _llm_analyzer(),
+            job_id=job_id,
+            allowed_cidrs=github_meta_cidrs(),
+        )
+        final = analysis.final
+        logger.info(
+            "job=%s %s/%s#%s -> %s (rules=%s llm=%s llm_error=%s)",
+            job_id,
+            event.owner,
+            event.repo,
+            event.number,
+            final.conclusion,
+            final.rule_level.name,
+            final.llm_level.name if final.llm_level else None,
+            analysis.llm.error,
         )
         gh.complete_check_run(
-            *loc, check_run_id, "neutral", "Pipeline stub: telemetry received", summary
+            *loc, check_run_id, final.conclusion, f"PR Detonator: {final.title}", analysis.report
         )
     except Exception as exc:
         # Never leave the check hanging, and never report success on failure.
@@ -118,3 +134,17 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             f"Detonator internal error (`{type(exc).__name__}`), job `{job_id}`.",
         )
         raise
+
+    # The check already carries the verdict; a failed comment must not overwrite it.
+    try:
+        gh.post_comment(*loc, event.number, analysis.report)
+    except Exception:
+        logger.exception("job=%s failed to post PR comment", job_id)
+
+
+def _llm_analyzer():
+    try:
+        return llm_client_from_env().analyze
+    except KeyError as exc:  # secret missing: degrade to a rules-only verdict
+        missing = exc.args[0]
+        return lambda *_: LlmOutcome(os.environ.get("LLAMA_MODEL", "llm"), error=f"{missing} unset")

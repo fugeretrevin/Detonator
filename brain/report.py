@@ -1,0 +1,148 @@
+"""Markdown forensic report for the PR comment and check-run summary (BUILD_PLAN A6).
+
+Every string that came from the PR, the sandbox, or the LLM is attacker-influenced, so it
+goes through esc(): punctuation becomes HTML entities, which GitHub renders literally and
+never parses as markdown, links, @mentions, or HTML.
+"""
+
+import unicodedata
+
+from brain.github_client import COMMENT_MARKER
+from brain.llm import LlmOutcome
+from brain.rules import RuleHit, Severity
+from brain.verdict import FinalVerdict
+from shared.contract import DetonateResult, ExecEvent
+
+HEADERS = {
+    "Blocked": "🛑 Blocked",
+    "Needs review": "⚠️ Needs review",
+    "Could not verify": "⚠️ Could not verify",
+    "Clean": "✅ Clean",
+}
+MAX_CELL = 160
+MAX_ROWS = 15
+MAX_CHAIN_DEPTH = 8
+
+
+def esc(text: str | None, limit: int = MAX_CELL) -> str:
+    if not text:
+        return ""
+    text = " ".join(text.split())
+    clipped = len(text) > limit
+    out = []
+    for ch in text[:limit]:
+        if unicodedata.category(ch) in ("Cc", "Cf"):  # control chars, bidi overrides
+            continue
+        out.append(ch if ch.isalnum() or ch == " " else f"&#{ord(ch)};")
+    return "".join(out) + ("…" if clipped else "")
+
+
+def _basename(path: str) -> str:
+    return path.rsplit("/", 1)[-1]
+
+
+def process_chain(pid: int, execs: list[ExecEvent]) -> str:
+    """e.g. `npm install → sh -c curl ... → curl -s ...`, newest last."""
+    by_pid = {e.pid: e for e in execs}
+    chain: list[ExecEvent] = []
+    seen: set[int] = set()
+    current = by_pid.get(pid)
+    while current and current.pid not in seen and len(chain) < MAX_CHAIN_DEPTH:
+        chain.append(current)
+        seen.add(current.pid)
+        current = by_pid.get(current.ppid) if current.ppid is not None else None
+    steps = [esc(f"{_basename(e.binary)} {e.args}", 80) for e in reversed(chain)]
+    return " → ".join(steps)
+
+
+def _rule_rows(hits: list[RuleHit]) -> list[str]:
+    icon = {Severity.CRITICAL: "🔴", Severity.HIGH: "🟠", Severity.LOW: "🟡"}
+    rows = ["| Severity | Rule | Evidence |", "|---|---|---|"]
+    for h in hits[:MAX_ROWS]:
+        rows.append(
+            f"| {icon.get(h.severity, '')} {h.severity.name.lower()} | `{h.rule_id}` "
+            f"| {esc(h.evidence, 240)} |"
+        )
+    if len(hits) > MAX_ROWS:
+        rows.append(f"| | | …and {len(hits) - MAX_ROWS} more |")
+    return rows
+
+
+def _network_rows(result: DetonateResult) -> list[str]:
+    rows = ["| Time | Process | Destination | Name |", "|---|---|---|---|"]
+    for c in result.connect_events[:MAX_ROWS]:
+        name = esc(c.resolved_domain) if c.resolved_domain else "**no DNS lookup preceded this**"
+        rows.append(
+            f"| {esc(c.ts, 40)} | {esc(_basename(c.binary), 40)} ({c.pid}) "
+            f"| {esc(c.daddr, 60)}&#58;{c.dport} | {name} |"
+        )
+    if len(result.connect_events) > MAX_ROWS:
+        rows.append(f"| | | …and {len(result.connect_events) - MAX_ROWS} more | |")
+    return rows
+
+
+def render(
+    final: FinalVerdict,
+    hits: list[RuleHit],
+    llm: LlmOutcome,
+    result: DetonateResult,
+    *,
+    job_id: str,
+) -> str:
+    lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
+
+    if not final.verified:
+        lines += [
+            f"> The sandboxed install did not finish (`{result.status}`), so this PR could "
+            "not be fully verified. Behavior observed before it stopped is shown below.",
+            "",
+        ]
+
+    v = llm.verdict
+    if v:
+        lines += [
+            "| | |",
+            "|---|---|",
+            f"| **Stated intent** | {esc(v.stated_intent, 300)} |",
+            f"| **Observed behavior** | {esc(v.observed_behavior, 300)} |",
+            f"| **Mismatch** | {'yes' if v.mismatch else 'no'} |",
+            "",
+            esc(v.explanation, 900),
+            "",
+        ]
+        if v.injection_attempt:
+            lines += [
+                "> ⚠️ **Prompt-injection attempt detected.** The PR content tries to instruct "
+                "the AI reviewer. It was treated as data; deterministic rules still apply.",
+                "",
+            ]
+
+    if hits:
+        lines += ["### Rule findings", "", *_rule_rows(hits), ""]
+        chains = []
+        for h in hits:
+            if h.rule_id.startswith("EXEC_") or h.rule_id == "NET_RAW_IP":
+                chain = process_chain(h.pid, result.exec_events)
+                if chain and chain not in chains:
+                    chains.append(chain)
+        if chains:
+            lines += ["### Process tree", ""]
+            lines += [f"- {c}" for c in chains[:5]]
+            lines += [""]
+    else:
+        lines += ["No deterministic rule fired.", ""]
+
+    if result.connect_events:
+        lines += ["### Network activity", "", *_network_rows(result), ""]
+
+    model_note = llm.model if v else f"{llm.model} (unavailable: {esc(llm.error, 80)}; rules only)"
+    lines += [
+        "---",
+        f"<sub>Detonated `npm install` in {result.duration_s:.1f}s · "
+        f"{len(result.exec_events)} exec / {len(result.connect_events)} connect events"
+        f"{' (truncated)' if result.truncated else ''} · model {model_note} · job `{job_id}`"
+        "</sub>",
+        "",
+        COMMENT_MARKER,
+    ]
+    return "\n".join(lines)
