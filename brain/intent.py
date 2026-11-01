@@ -39,6 +39,7 @@ SHARED_HOSTING_SUFFIXES = (
     "trycloudflare.com", "webhook.site", "pipedream.net", "requestbin.com", "amazonaws.com",
     "cloudfront.net", "azurewebsites.net", "blob.core.windows.net", "firebaseapp.com",
     "web.app", "appspot.com", "onrender.com", "fly.dev", "deno.dev", "surge.sh",
+    "storage.googleapis.com", "storage.cloud.google.com", "r2.dev", "digitaloceanspaces.com",
 )  # fmt: skip
 
 INTENT_SCHEMA: dict = {

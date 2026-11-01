@@ -100,7 +100,8 @@ def test_added_dependencies_extracts_names_not_scripts():
 @pytest.mark.parametrize(
     "raw, kept",
     [
-        ("storage.googleapis.com", "storage.googleapis.com"),
+        ("binaries.prisma.sh", "binaries.prisma.sh"),
+        ("storage.googleapis.com", None),  # anyone can host a GCS bucket
         ("https://cdn.playwright.dev/builds/x", "cdn.playwright.dev"),
         ("203.0.113.10", None),
         ("2001:db8::1", None),
@@ -137,8 +138,8 @@ def test_raw_ip_can_never_be_explained():
 
 
 def test_predicted_cdn_is_explained():
-    res = result([connect("142.250.1.1", domain="storage.googleapis.com")])
-    contract = evaluate_contract(outcome(domains=["storage.googleapis.com"]), res)
+    res = result([connect("142.250.1.1", domain="binaries.prisma.sh")])
+    contract = evaluate_contract(outcome(domains=["binaries.prisma.sh"]), res)
     assert [i.status for i in contract.items] == ["explained"]
 
 
@@ -158,19 +159,19 @@ def test_no_prediction_means_empty_contract():
 
 
 def test_predicted_unlisted_domain_low_hit_is_cleared():
-    res = result([connect("142.250.1.1", domain="storage.googleapis.com")])
+    res = result([connect("142.250.1.1", domain="binaries.prisma.sh")])
     hits = evaluate(res)
     assert [h.rule_id for h in hits] == ["NET_UNLISTED_DOMAIN"]
     kept, cleared = apply_contract(
-        hits, evaluate_contract(outcome(["storage.googleapis.com"]), res), meta()
+        hits, evaluate_contract(outcome(["binaries.prisma.sh"]), res), meta()
     )
-    assert kept == [] and [h.target for h in cleared] == ["storage.googleapis.com"]
+    assert kept == [] and [h.target for h in cleared] == ["binaries.prisma.sh"]
 
 
 def test_unpredicted_domain_is_not_cleared():
     res = result([connect("93.184.1.1", domain="evil.example")])
     kept, cleared = apply_contract(
-        evaluate(res), evaluate_contract(outcome(["storage.googleapis.com"]), res), meta()
+        evaluate(res), evaluate_contract(outcome(["binaries.prisma.sh"]), res), meta()
     )
     assert [h.rule_id for h in kept] == ["NET_UNLISTED_DOMAIN"] and cleared == []
 
@@ -190,10 +191,10 @@ def test_no_clearing_when_pr_adds_install_scripts():
 
 
 def test_truncation_hit_never_cleared():
-    res = result([connect("142.250.1.1", domain="storage.googleapis.com")]).model_copy(
+    res = result([connect("142.250.1.1", domain="binaries.prisma.sh")]).model_copy(
         update={"truncated": True}
     )
-    contract = evaluate_contract(outcome(["storage.googleapis.com"]), res)
+    contract = evaluate_contract(outcome(["binaries.prisma.sh"]), res)
     kept, _ = apply_contract(evaluate(res), contract, meta())
     assert [h.rule_id for h in kept] == ["TELEMETRY_TRUNCATED"]
 
@@ -205,13 +206,13 @@ def benign_llm(*_, **__):
     return LlmOutcome("m", error="x")  # rules + contract only
 
 
-def test_pipeline_puppeteer_like_install_goes_clean_with_contract():
+def test_pipeline_prisma_like_install_goes_clean_with_contract():
     res = result([connect("104.16.1.34", domain="registry.npmjs.org"),
-                  connect("142.250.1.1", domain="storage.googleapis.com")])  # fmt: skip
+                  connect("142.250.1.1", domain="binaries.prisma.sh")])  # fmt: skip
     without = analyze(res, meta(), "", benign_llm, job_id="j", enrich=lambda r: r)
     assert without.final.conclusion == "neutral"
     with_contract = analyze(res, meta(), "", benign_llm, job_id="j", enrich=lambda r: r,
-                            prediction=outcome(["storage.googleapis.com"]))  # fmt: skip
+                            prediction=outcome(["binaries.prisma.sh"]))  # fmt: skip
     assert with_contract.final.conclusion == "success"
     assert "Cleared low-severity findings" in with_contract.report
     assert [h.rule_id for h in with_contract.rule_hits] == ["NET_UNLISTED_DOMAIN"]
@@ -259,3 +260,12 @@ def test_predict_calls_model_with_intent_schema():
     assert out.prediction.summary == "Docs only." and out.error is None
     assert seen["response_format"]["json_schema"]["schema"] == INTENT_SCHEMA
     assert "untrusted_diff" not in json.dumps(seen["messages"])
+
+
+def test_pipeline_puppeteer_gcs_download_stays_needs_review():
+    # storage.googleapis.com hosts anyone's bucket: a prediction can never explain it.
+    res = result([connect("104.16.1.34", domain="registry.npmjs.org"),
+                  connect("142.250.1.1", domain="storage.googleapis.com")])  # fmt: skip
+    out = analyze(res, meta(), "", benign_llm, job_id="j", enrich=lambda r: r,
+                  prediction=outcome(["storage.googleapis.com"]))  # fmt: skip
+    assert out.final.conclusion == "neutral" and out.cleared == []
