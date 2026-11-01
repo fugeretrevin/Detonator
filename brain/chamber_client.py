@@ -9,9 +9,13 @@ from typing import Protocol
 import httpx
 
 from shared.contract import DetonateRequest, DetonateResult
-from shared.signing import signed_headers
+from shared.signing import SIGNATURE_HEADER, TIMESTAMP_HEADER, signed_headers, verify_response
 
 FIXTURE_DIRS = (Path("/root/fixtures"), Path(__file__).resolve().parent.parent / "tests/fixtures")
+
+
+class ChamberIntegrityError(RuntimeError):
+    """The Chamber's answer can't be trusted: fail the PR closed."""
 
 
 class ChamberClient(Protocol):
@@ -63,8 +67,26 @@ class HttpChamberClient:
                 time.sleep(min(self._busy_backoff_s * (attempt + 1), self._max_backoff_s))
                 continue
             resp.raise_for_status()
-            return DetonateResult.model_validate_json(resp.content)
+            return self._verified(request, resp)
         raise RuntimeError("unreachable")
+
+    def _verified(self, request: DetonateRequest, resp: httpx.Response) -> DetonateResult:
+        """The result must be signed for this job and fresh; anything else fails the job
+        closed (detonate_job turns the exception into "Could not verify")."""
+        if not verify_response(
+            self._secret,
+            resp.headers.get(TIMESTAMP_HEADER),
+            resp.headers.get(SIGNATURE_HEADER),
+            request.job_id,
+            resp.content,
+        ):
+            raise ChamberIntegrityError(
+                "Chamber response signature invalid, stale or for another job"
+            )
+        result = DetonateResult.model_validate_json(resp.content)
+        if result.job_id != request.job_id:
+            raise ChamberIntegrityError("Chamber response is for a different job")
+        return result
 
 
 def _find_fixture(name: str) -> Path:

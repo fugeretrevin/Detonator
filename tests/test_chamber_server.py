@@ -36,11 +36,14 @@ def fake_run(req: DetonateRequest, cfg=None) -> DetonateResult:
     return result.model_copy(update={"job_id": req.job_id})
 
 
-def test_signed_request_runs(client, monkeypatch):
+def test_signed_request_runs_and_the_response_is_signed_for_that_job(client, monkeypatch):
     monkeypatch.setattr(detonate, "run", fake_run)
     resp = client.post("/detonate", content=body(), headers=signed(body()))
     assert resp.status_code == 200
     assert DetonateResult.model_validate(resp.json()).job_id == "job-1"
+    ts, sig = resp.headers[signing.TIMESTAMP_HEADER], resp.headers[signing.SIGNATURE_HEADER]
+    assert signing.verify_response(SECRET, ts, sig, "job-1", resp.content)
+    assert not signing.verify_response(SECRET, ts, sig, "job-2", resp.content)
 
 
 def test_unsigned_rejected(client):

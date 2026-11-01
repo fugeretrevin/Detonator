@@ -214,6 +214,9 @@ fired.
   verified against the GitHub API; an end-to-end private-repo PR is not yet tested]
 - Fail closed: timeouts, Chamber errors, internal exceptions, private repos all → failure.
   [Test, Live: E7]
+- Signed in both directions: requests are HMAC-signed; **responses are HMAC-signed for the
+  request's job id** (`"{ts}.{job_id}." + body`). A result that was altered, is older than
+  300 s, is unsigned, or belongs to another job is rejected and the PR fails closed. [Test]
 - Flood resistance: repeated events collapse; caps set `TELEMETRY_TRUNCATED`, which blocks a
   "Clean" result. [Test]
 - Spoof-resistant naming: IPs are named only from the sandbox's own lookups, under the name it

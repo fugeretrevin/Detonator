@@ -7,12 +7,12 @@ import threading
 
 from fastapi import FastAPI, Request
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from pydantic import ValidationError
 
 from chamber import detonate
 from shared.contract import DetonateRequest
-from shared.signing import SIGNATURE_HEADER, TIMESTAMP_HEADER, verify
+from shared.signing import SIGNATURE_HEADER, TIMESTAMP_HEADER, response_headers, verify
 
 app = FastAPI(title="PR Detonator Chamber", docs_url=None, redoc_url=None, openapi_url=None)
 # One detonation at a time: keeps event attribution trivial and the VM from being overrun.
@@ -68,4 +68,7 @@ async def detonate_endpoint(request: Request) -> JSONResponse:
         result = await run_in_threadpool(detonate.run, req)
     finally:
         LOCK.release()
-    return JSONResponse(result.model_dump(mode="json"))
+    # Signed for this job: the Brain rejects a result that was altered or belongs elsewhere.
+    raw = result.model_dump_json().encode()
+    headers = response_headers(_secret(), req.job_id, raw)
+    return Response(content=raw, media_type="application/json", headers=headers)

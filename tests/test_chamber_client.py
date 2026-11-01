@@ -1,10 +1,12 @@
+import time
 from pathlib import Path
 
 import httpx
+import pytest
 
-from brain.chamber_client import HttpChamberClient, MockChamberClient
+from brain.chamber_client import ChamberIntegrityError, HttpChamberClient, MockChamberClient
 from shared import signing
-from shared.contract import DetonateRequest
+from shared.contract import DetonateRequest, DetonateResult
 
 FIXTURES = Path(__file__).parent / "fixtures"
 REQ = DetonateRequest(job_id="job-1", clone_url="https://x/y.git", head_sha="abc")
@@ -16,8 +18,62 @@ def test_mock_returns_fixture_with_job_id():
     assert any(e.resolved_domain is None for e in result.connect_events)
 
 
+SECRET = "chamber-secret"
+
+
+def result_body(job_id: str = "job-1") -> bytes:
+    result = DetonateResult.model_validate_json((FIXTURES / "detonate_result_e4.json").read_text())
+    return result.model_copy(update={"job_id": job_id}).model_dump_json().encode()
+
+
+def signed_response(body: bytes, job_id: str = "job-1", now: int | None = None) -> httpx.Response:
+    return httpx.Response(200, content=body,
+                          headers=signing.response_headers(SECRET, job_id, body, now))  # fmt: skip
+
+
+def client_returning(response: httpx.Response) -> HttpChamberClient:
+    http = httpx.Client(base_url="http://chamber.test",
+                        transport=httpx.MockTransport(lambda r: response))  # fmt: skip
+    return HttpChamberClient("http://chamber.test", SECRET, http=http)
+
+
+def test_signed_response_for_this_job_is_accepted():
+    assert client_returning(signed_response(result_body())).detonate(REQ).job_id == "job-1"
+
+
+def test_tampered_body_fails_closed():
+    good = signed_response(result_body())
+    clean = result_body().replace(b'"203.0.113.10"', b'"104.16.1.34"')  # rewrite the evidence
+    tampered = httpx.Response(200, content=clean, headers=good.headers)
+    with pytest.raises(ChamberIntegrityError):
+        client_returning(tampered).detonate(REQ)
+
+
+def test_replayed_response_from_another_job_fails_closed():
+    old_clean = signed_response(result_body("job-0"), job_id="job-0")  # validly signed, old job
+    with pytest.raises(ChamberIntegrityError):
+        client_returning(old_clean).detonate(REQ)
+
+
+def test_stale_response_fails_closed():
+    stale = signed_response(result_body(), now=int(time.time()) - 301)
+    with pytest.raises(ChamberIntegrityError):
+        client_returning(stale).detonate(REQ)
+
+
+def test_unsigned_response_fails_closed():
+    with pytest.raises(ChamberIntegrityError):
+        client_returning(httpx.Response(200, content=result_body())).detonate(REQ)
+
+
+def test_signature_for_this_job_but_body_for_another_fails_closed():
+    mixed = signed_response(result_body("job-0"), job_id="job-1")
+    with pytest.raises(ChamberIntegrityError):
+        client_returning(mixed).detonate(REQ)
+
+
 def test_http_client_signs_and_retries_on_409():
-    fixture = (FIXTURES / "detonate_result_e4.json").read_bytes()
+    fixture = result_body()
     attempts = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -30,7 +86,7 @@ def test_http_client_signs_and_retries_on_409():
         )
         if len(attempts) == 1:
             return httpx.Response(409, json={"detail": "busy"})
-        return httpx.Response(200, content=fixture)
+        return signed_response(fixture)
 
     http = httpx.Client(base_url="http://chamber.test", transport=httpx.MockTransport(handler))
     client = HttpChamberClient("http://chamber.test", "chamber-secret", http=http, busy_backoff_s=0)
