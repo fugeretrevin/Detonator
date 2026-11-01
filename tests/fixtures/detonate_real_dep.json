@@ -1,0 +1,74 @@
+{
+  "job_id": "9098b900-2c6e-4ca6-a512-702ef7f8547a",
+  "status": "completed",
+  "exit_code": 0,
+  "duration_s": 6.22,
+  "exec_events": [
+    {
+      "ts": "2026-11-01T15:01:08.850355339Z",
+      "pid": 43965,
+      "ppid": 43942,
+      "binary": "/usr/local/bin/docker-entrypoint.sh",
+      "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund --prefix dep-probe",
+      "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+      "uid": 10001,
+      "cwd": "/work"
+    },
+    {
+      "ts": "2026-11-01T15:01:08.851863455Z",
+      "pid": 43965,
+      "ppid": 43965,
+      "binary": "/usr/local/bin/npm",
+      "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix dep-probe",
+      "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+      "uid": 10001,
+      "cwd": "/work"
+    },
+    {
+      "ts": "2026-11-01T15:01:08.852552816Z",
+      "pid": 43965,
+      "ppid": 43965,
+      "binary": "/usr/local/bin/node",
+      "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix dep-probe",
+      "parent_binary": "/usr/local/bin/npm",
+      "uid": 10001,
+      "cwd": "/work"
+    },
+    {
+      "ts": "2026-11-01T15:01:09.366310628Z",
+      "pid": 44022,
+      "ppid": 43965,
+      "binary": "/usr/bin/sh",
+      "args": "-c \"node install.js\"",
+      "parent_binary": "/usr/local/bin/node",
+      "uid": 10001,
+      "cwd": "/work/dep-probe/node_modules/color-helper"
+    },
+    {
+      "ts": "2026-11-01T15:01:09.367829137Z",
+      "pid": 44023,
+      "ppid": 44022,
+      "binary": "/usr/local/bin/node",
+      "args": "install.js",
+      "parent_binary": "/usr/bin/sh",
+      "uid": 10001,
+      "cwd": "/work/dep-probe/node_modules/color-helper"
+    }
+  ],
+  "connect_events": [
+    {
+      "ts": "2026-11-01T15:01:09.403917924Z",
+      "pid": 44023,
+      "binary": "/usr/local/bin/node",
+      "daddr": "203.0.113.10",
+      "dport": 4444,
+      "family": "AF_INET",
+      "resolved_domain": null
+    }
+  ],
+  "dns_queries": [],
+  "stdout_tail": "\nadded 1 package in 3s\n",
+  "stderr_tail": "",
+  "truncated": false,
+  "error": null
+}

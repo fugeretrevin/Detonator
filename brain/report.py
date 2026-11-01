@@ -10,7 +10,7 @@ import unicodedata
 from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
 from brain.llm import LlmOutcome
-from brain.pinpoint import GuiltyLine
+from brain.pinpoint import GuiltyLine, ScriptRun
 from brain.rules import RuleHit, Severity
 from brain.verdict import FinalVerdict
 from shared.contract import DetonateResult, ExecEvent
@@ -130,16 +130,33 @@ def _guilty_section(guilty: list[GuiltyLine], llm: LlmOutcome) -> list[str]:
 def render_line_comment(g: GuiltyLine, index: int, llm: LlmOutcome, result: DetonateResult) -> str:
     """Body of the review comment placed on the guilty line itself."""
     rules = ", ".join(f"`{r}`" for r in g.rule_ids)  # our own rule ids, not PR data
-    lines = [
-        f"🛑 **PR Detonator:** this line ran during `npm install` and triggered {rules}.",
-        "",
-    ]
+    if g.package:
+        head = (
+            f"🛑 **PR Detonator:** this line brings in the dependency "
+            f"**{esc(g.package, 100)}**, whose install script ran during `npm install` "
+            f"and triggered {rules}."
+        )
+    else:
+        head = f"🛑 **PR Detonator:** this line ran during `npm install` and triggered {rules}."
+    lines = [head, ""]
     if what := _line_explanation(llm, index):
         lines += [f"**What it does:** {esc(what, 300)}", ""]
     if chain := process_chain(g.pid, result.exec_events):
         lines += [f"**Observed process chain:** {chain}", ""]
     lines.append("<sub>Kernel-traced in a sandbox. Full report in the PR comment.</sub>")
     return "\n".join(lines)
+
+
+def _script_runs_section(runs: list[ScriptRun]) -> list[str]:
+    """Every install-time script, benign or not: who ran code on this machine."""
+    lines = ["### Packages that ran install scripts", ""]
+    for r in runs[:MAX_ROWS]:
+        who = f"dependency **{esc(r.package, 100)}**" if r.package else "this project"
+        mark = "🛑 " if r.flagged else ""
+        lines.append(f"- {mark}{who}: {esc(r.script, 120)}")
+    if len(runs) > MAX_ROWS:
+        lines.append(f"- …and {len(runs) - MAX_ROWS} more")
+    return lines + [""]
 
 
 def render(
@@ -152,6 +169,7 @@ def render(
     contract: IntentContract | None = None,
     cleared: list[RuleHit] | None = None,
     guilty: list[GuiltyLine] | None = None,
+    script_runs: list[ScriptRun] | None = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -183,6 +201,9 @@ def render(
 
     if guilty:
         lines += _guilty_section(guilty, llm)
+
+    if script_runs:
+        lines += _script_runs_section(script_runs)
 
     if contract is not None:
         lines += _contract_section(contract, cleared or [])

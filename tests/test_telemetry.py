@@ -38,6 +38,7 @@ def test_exec_fields_mapped():
     assert wget.args == "-q -T 5 -O- http://example.com"
     assert wget.ppid == 19649 and wget.parent_binary == "/bin/sh"
     assert wget.uid == 0 and wget.ts.startswith("2026-11-01T05:51:29")
+    assert wget.cwd == "/"
 
 
 def test_connect_fields_mapped():

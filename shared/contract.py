@@ -27,6 +27,10 @@ class ExecEvent(BaseModel):
     args: str
     parent_binary: str | None
     uid: int | None
+    # Working directory at exec, from the kernel. For npm's lifecycle `sh -c` it is the
+    # package's own directory (set by npm before any package code runs), which is how a
+    # script is attributed to node_modules/<pkg>. Added Nov 1; None from older Chambers.
+    cwd: str | None = None
 
 
 class ConnectEvent(BaseModel):

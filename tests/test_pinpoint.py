@@ -166,3 +166,99 @@ def test_inline_comment_is_escaped_and_names_the_rules():
 def test_old_model_output_without_line_explanations_still_parses():
     v = verdict()
     assert v.line_explanations == [] and v.line_explanation(0) is None
+
+
+# --- dependency attribution (real dep-probe run: color-helper@1.0.1 postinstall) ---
+
+import pytest  # noqa: E402
+
+from brain.pinpoint import package_from_cwd, script_runs  # noqa: E402
+from chamber.telemetry import parse_events  # noqa: E402
+
+BUMP = (
+    '@@ -2,6 +2,6 @@\n   "name": "demo-target",\n   "version": "1.0.0",\n   "dependencies": {\n'
+    '-    "color-helper": "file:vendor/color-helper-1.0.0.tgz"\n'
+    '+    "color-helper": "file:vendor/color-helper-1.0.1.tgz"\n   }\n }'
+)
+
+
+def dep_files(patch: str = BUMP, name: str = "package.json") -> list[ChangedFile]:
+    return [ChangedFile(filename=name, status="modified", patch=patch)]
+
+
+def test_tetragon_cwd_parsed_from_real_events():
+    raw = (FIXTURES / "tetragon_dep.jsonl").read_text().splitlines()
+    container = json.loads(raw[0])["process_exec"]["process"]["docker"].ljust(64, "0")
+    shells = [e for e in parse_events(raw, container).exec_events if e.binary == "/usr/bin/sh"]
+    assert shells[0].cwd == "/work/dep-probe/node_modules/color-helper"
+
+
+@pytest.mark.parametrize(
+    ("cwd", "package"),
+    [
+        ("/work/node_modules/color-helper", "color-helper"),
+        ("/work/node_modules/@scope/pkg", "@scope/pkg"),
+        ("/work/node_modules/@scope/pkg/lib", "@scope/pkg"),
+        ("/work/node_modules/a/node_modules/b", "b"),  # nested: the innermost ran
+        ("/work", None),
+        ("/work/node_modules", None),
+        (None, None),
+    ],
+)
+def test_package_from_cwd(cwd, package):
+    assert package_from_cwd(cwd) == package
+
+
+def test_dependency_bump_line_is_blamed_and_named():
+    res = result("dep")
+    lines = find_guilty_lines(evaluate(res), res, dep_files())
+    assert [(g.path, g.line, g.package) for g in lines] == [("package.json", 5, "color-helper")]
+    assert "color-helper" in lines[0].reason
+
+
+def test_lockfile_line_when_package_json_does_not_name_it():
+    lock = ('@@ -10,3 +10,3 @@\n+    "node_modules/color-helper": {\n'
+            '+      "version": "1.0.1",')  # fmt: skip
+    res = result("dep")
+    lines = find_guilty_lines(evaluate(res), res, dep_files(lock, "package-lock.json"))
+    assert [(g.path, g.line) for g in lines] == [("package-lock.json", 10)]
+
+
+def test_dependency_script_never_blames_the_projects_own_identical_script():
+    own = '@@ -1,3 +1,4 @@\n+  "scripts": {\n+    "postinstall": "node install.js"\n+  },'
+    res = result("dep")
+    assert find_guilty_lines(evaluate(res), res, dep_files(own)) == []
+
+
+def test_attribution_survives_a_payload_that_changes_directory():
+    res = result("dep")
+    node = next(e for e in res.exec_events if e.args == "install.js")
+    moved = node.model_copy(update={"cwd": "/work"})  # payload chdir'd: irrelevant
+    execs = [moved if e is node else e for e in res.exec_events]
+    res = res.model_copy(update={"exec_events": execs})
+    lines = find_guilty_lines(evaluate(res), res, dep_files())
+    assert lines[0].package == "color-helper"
+
+
+def test_script_runs_lists_dependency_and_flags_it():
+    res = result("dep")
+    runs = script_runs(evaluate(res), res)
+    assert [(r.package, r.script, r.flagged) for r in runs] == [
+        ("color-helper", "node install.js", True)
+    ]
+
+
+def test_project_script_run_has_no_package():
+    res = result("e4")
+    assert [(r.package, r.flagged) for r in script_runs(evaluate(res), res)] == [(None, True)]
+
+
+def test_dependency_report_and_inline_comment():
+    res = result("dep")
+    out = analyze(res, META, "", lambda *a, **k: LlmOutcome("m", error="x"), job_id="j",
+                  enrich=lambda r: r, files=dep_files())  # fmt: skip
+    assert out.final.title == "Blocked"
+    assert "### Packages that ran install scripts" in out.report
+    assert "🛑 dependency **color&#45;helper**" in out.report
+    body = render_line_comment(out.guilty[0], 0, out.llm, out.result)
+    assert "brings in the dependency **color&#45;helper**" in body

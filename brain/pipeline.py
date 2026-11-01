@@ -7,7 +7,7 @@ from brain.enrich import enrich_connects
 from brain.github_client import ChangedFile, PrMetadata
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
 from brain.llm import LlmOutcome
-from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt
+from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
 from brain.report import render
 from brain.rules import RuleHit, evaluate
 from brain.verdict import FinalVerdict, combine
@@ -69,5 +69,6 @@ def analyze(
                   guilty=for_prompt(guilty) or None)  # fmt: skip
     final = combine(hits, outcome, result)
     report = render(final, hits, outcome, result, job_id=job_id, contract=contract,
-                    cleared=cleared, guilty=guilty)  # fmt: skip
+                    cleared=cleared, guilty=guilty,
+                    script_runs=script_runs(hits, result))  # fmt: skip
     return Analysis(final, hits, outcome, result, report, contract, cleared, rule_hits, guilty)

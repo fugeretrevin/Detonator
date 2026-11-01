@@ -26,6 +26,7 @@ from probe_llama import api_key  # noqa: E402
 from brain.enrich import github_meta_cidrs  # noqa: E402
 from brain.intent import predict  # noqa: E402
 from brain.llm import LlmClient, LlmOutcome  # noqa: E402
+from brain.pinpoint import script_runs  # noqa: E402
 from brain.pipeline import Analysis, analyze  # noqa: E402
 from eval.cases import CASES, Case  # noqa: E402
 from shared.contract import DetonateResult  # noqa: E402
@@ -65,6 +66,9 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         "llm_error": full.llm.error,
         "injection_flagged": bool(full.llm.verdict and full.llm.verdict.injection_attempt),
         "guilty_lines": [f"{g.path}:{g.line}" for g in full.guilty],
+        "script_runs": sorted(
+            {r.package or "(project)" for r in script_runs(full.hits, full.result)}
+        ),
         "domains": sorted({c.resolved_domain or f"RAW {c.daddr}" for c in result.connect_events}),
     }
 

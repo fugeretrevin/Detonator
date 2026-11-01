@@ -117,7 +117,9 @@ the decoded command or address. Use an empty array when there are no guilty line
 
 Common legitimate behaviors during npm install: downloading packages from the npm registry, \
 `sh -c` wrappers that npm uses to run lifecycle scripts, node-gyp builds, prebuilt binary \
-downloads from GitHub releases or well-known CDNs.
+downloads from GitHub releases or well-known CDNs. An exec whose cwd is under \
+node_modules/<pkg> is that dependency's install script, not the project's own; name the \
+package when it is the source of the suspicious behavior.
 
 Base your verdict on behaviors that the stated intent does not explain. A README or typo \
 fix that spawns network tools or connects to raw IPs is a mismatch. Respond only with JSON \
@@ -213,6 +215,7 @@ def compact_telemetry(result: DetonateResult) -> str:
                 "bin": e.binary,
                 "args": _clip(e.args, MAX_ARG_CHARS),
                 "parent": e.parent_binary,
+                **({"cwd": e.cwd} if e.cwd else {}),
             }
             for e in result.exec_events
         ],

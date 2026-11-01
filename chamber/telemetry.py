@@ -70,6 +70,7 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
                     args=proc.get("arguments", ""),
                     parent_binary=parent.get("binary"),
                     uid=proc.get("uid"),
+                    cwd=proc.get("cwd"),
                 )
             )
 

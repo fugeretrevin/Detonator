@@ -6,14 +6,17 @@ Deterministic, from kernel facts:
 2. If that script runs a file the PR adds or changes (`node scripts/x.js`), also point at
    the first added line there that spawns processes, evaluates code, opens connections, or
    decodes data.
-3. Any added line containing the raw IP a flagged process connected to.
+3. If npm ran that script from node_modules/<pkg> (the kernel-recorded cwd), the culprit is
+   a dependency: point at the PR line that adds or bumps <pkg> (package.json, else the
+   lockfile) instead of the project's own scripts.
+4. Any added line containing the raw IP a flagged process connected to.
 The model may explain a line afterwards; it never chooses one.
 """
 
 import json
 import re
 from collections.abc import Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from brain.github_client import ChangedFile
 from brain.rules import RuleHit, Severity
@@ -52,13 +55,15 @@ class GuiltyLine:
     reason: str
     rule_ids: tuple[str, ...]
     pid: int  # the flagged process, for the chain in the comment
+    package: str | None = None  # dependency whose install script ran (None: the project's)
 
 
 def for_prompt(lines: list[GuiltyLine]) -> list[dict]:
     """Ids are list positions; the model's line_explanations refer back to them."""
     return [
         {"id": i, "path": g.path, "line": g.line, "code": g.code.strip()[:400],
-         "why_flagged": g.reason, "rules": list(g.rule_ids)}
+         "why_flagged": g.reason, "rules": list(g.rule_ids),
+         **({"dependency_that_ran_the_script": g.package} if g.package else {})}
         for i, g in enumerate(lines)
     ]  # fmt: skip
 
@@ -94,19 +99,77 @@ def _ancestors(pid: int, execs: list[ExecEvent]) -> list[ExecEvent]:
     return chain
 
 
-def lifecycle_script(pid: int, execs: list[ExecEvent]) -> str | None:
-    """The script npm ran (`sh -c <script>` whose parent is npm), for the process at pid."""
-    script = None
+def _is_lifecycle_shell(e: ExecEvent) -> bool:
+    return (
+        _base(e.binary) in SHELLS
+        and _base(e.parent_binary) in NPM_PROCESSES
+        and e.args.startswith("-c ")
+    )
+
+
+def lifecycle_exec(pid: int, execs: list[ExecEvent]) -> ExecEvent | None:
+    """npm's `sh -c <script>` that the process at pid descends from (the outermost one)."""
+    found = None
     for e in _ancestors(pid, execs):
-        if (
-            _base(e.binary) in SHELLS
-            and _base(e.parent_binary) in NPM_PROCESSES
-            and e.args.startswith("-c ")
-        ):
-            script = e.args[3:].strip()  # keep walking: the outermost one is npm's
-    if script and len(script) >= 2 and script[0] == script[-1] == '"':
+        if _is_lifecycle_shell(e):
+            found = e  # keep walking: a payload's own `sh -c` sits below npm's
+    return found
+
+
+def script_text(e: ExecEvent) -> str:
+    script = e.args[3:].strip()
+    if len(script) >= 2 and script[0] == script[-1] == '"':
         script = script[1:-1]  # Tetragon wraps the argument in quotes, inner ones untouched
     return script
+
+
+def lifecycle_script(pid: int, execs: list[ExecEvent]) -> str | None:
+    e = lifecycle_exec(pid, execs)
+    return script_text(e) if e else None
+
+
+def package_from_cwd(cwd: str | None) -> str | None:
+    """`.../node_modules/@scope/name` -> `@scope/name`; None for the project's own scripts.
+
+    npm sets this cwd before any package code runs, so a payload can't forge it.
+    """
+    parts = (cwd or "").rstrip("/").split("/")
+    if "node_modules" not in parts:
+        return None
+    i = len(parts) - 1 - parts[::-1].index("node_modules")  # innermost: nested deps
+    rest = parts[i + 1 :]
+    if not rest:
+        return None
+    if rest[0].startswith("@") and len(rest) > 1:
+        return f"{rest[0]}/{rest[1]}"
+    return rest[0]
+
+
+@dataclass(frozen=True)
+class ScriptRun:
+    """One install-time script npm ran: the project's own (package None) or a dependency's."""
+
+    package: str | None
+    script: str  # untrusted
+    pid: int
+    flagged: bool
+
+
+def script_runs(hits: list[RuleHit], result: DetonateResult) -> list[ScriptRun]:
+    flagged = {
+        e.pid
+        for h in hits
+        if h.severity >= Severity.HIGH and h.pid
+        if (e := lifecycle_exec(h.pid, result.exec_events))
+    }
+    runs: dict[tuple[str | None, str], ScriptRun] = {}
+    for e in result.exec_events:
+        if not _is_lifecycle_shell(e):
+            continue
+        key = (package_from_cwd(e.cwd), script_text(e))
+        prior = runs.get(key)
+        runs[key] = ScriptRun(*key, e.pid, e.pid in flagged or bool(prior and prior.flagged))
+    return list(runs.values())
 
 
 def _norm(text: str) -> str:
@@ -134,27 +197,55 @@ def _first_suspicious(lines: Iterable[tuple[int, str]]) -> tuple[int, str, str] 
     return None
 
 
+def _dependency_lines(
+    package: str, by_path: dict[str, ChangedFile]
+) -> list[tuple[str, int, str, str]]:
+    """The PR's own lines that add or change `package`: package.json first, else the lockfile."""
+    name = re.escape(package)
+    direct = re.compile(rf'^\s*"{name}"\s*:\s*"')
+    locked = re.compile(rf'^\s*"(?:[^"]*/)?node_modules/{name}"\s*:')
+    reason = f"brings in {package}, whose install script ran"
+    for wanted, pattern in (("package.json", direct), ("package-lock.json", locked)):
+        hits = [
+            (path, number, text, reason)
+            for path, f in by_path.items()
+            if _base(path) == wanted
+            for number, text in added_lines(f.patch)
+            if pattern.match(text)
+        ]
+        if hits:
+            return hits
+    return []
+
+
 def find_guilty_lines(
     hits: list[RuleHit], result: DetonateResult, files: list[ChangedFile]
 ) -> list[GuiltyLine]:
     by_path = {f.filename: f for f in files if f.patch}
     found: dict[tuple[str, int], GuiltyLine] = {}
 
-    def add(path: str, line: int, code: str, reason: str, hit: RuleHit) -> None:
+    def add(path: str, line: int, code: str, reason: str, hit: RuleHit,
+            package: str | None = None) -> None:  # fmt: skip
         key = (path, line)
         if key in found:
             g = found[key]
             if hit.rule_id not in g.rule_ids:
-                found[key] = GuiltyLine(path, line, g.code, g.reason, (*g.rule_ids, hit.rule_id),
-                                        g.pid)  # fmt: skip
+                found[key] = replace(g, rule_ids=(*g.rule_ids, hit.rule_id))
         elif len(found) < MAX_GUILTY_LINES:
-            found[key] = GuiltyLine(path, line, code, reason, (hit.rule_id,), hit.pid)
+            found[key] = GuiltyLine(path, line, code, reason, (hit.rule_id,), hit.pid, package)
 
     for hit in hits:
         if hit.severity < Severity.HIGH or not hit.pid:
             continue
-        script = lifecycle_script(hit.pid, result.exec_events)
-        if script:
+        npm_shell = lifecycle_exec(hit.pid, result.exec_events)
+        package = package_from_cwd(npm_shell.cwd) if npm_shell else None
+        if package:
+            # A dependency's script: blame the line that brought that dependency in, never
+            # the project's own scripts (a dependency's `node install.js` could coincide).
+            for path, number, text, reason in _dependency_lines(package, by_path):
+                add(path, number, text, reason, hit, package)
+        elif npm_shell:
+            script = script_text(npm_shell)
             for path, f in by_path.items():
                 if _base(path) != "package.json":
                     continue
