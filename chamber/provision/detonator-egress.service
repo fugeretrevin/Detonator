@@ -1,0 +1,12 @@
+[Unit]
+Description=PR Detonator sandbox egress rules (det0 network + iptables)
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash /opt/pr-detonator/chamber/provision/iptables.sh
+
+[Install]
+WantedBy=multi-user.target

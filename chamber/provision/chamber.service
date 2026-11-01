@@ -1,0 +1,18 @@
+[Unit]
+Description=PR Detonator Chamber API
+After=network-online.target docker.service tetragon.service detonator-egress.service
+Requires=docker.service detonator-egress.service
+Wants=network-online.target tetragon.service
+
+[Service]
+# Root: needs docker and the root-only Tetragon export log. Untrusted code never runs here,
+# only inside the hardened container.
+User=root
+WorkingDirectory=/opt/pr-detonator
+EnvironmentFile=/etc/pr-detonator/env
+ExecStart=/opt/pr-detonator/venv/bin/uvicorn chamber.server:app --host 0.0.0.0 --port 8443 --no-access-log
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
