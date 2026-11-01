@@ -15,6 +15,7 @@ import modal
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
+from brain import prompt_guard as pg
 from brain.chamber_client import chamber_client_from_env
 from brain.enrich import github_meta_cidrs
 from brain.github_client import GitHubClient, PrMetadata
@@ -42,6 +43,25 @@ image = (
     .pip_install_from_requirements(str(ROOT / "brain/requirements.txt"))
     .add_local_python_source("shared", "brain")
     .add_local_dir(str(ROOT / "tests/fixtures"), "/root/fixtures")
+)
+
+# Llama Prompt Guard 2 on CPU. The weights are baked in at build time; HF_TOKEN is only in
+# that build step, never in the running function.
+guard_image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .pip_install("torch==2.5.1", index_url="https://download.pytorch.org/whl/cpu")
+    .pip_install(
+        "transformers==4.46.3",
+        "huggingface_hub[cli]==0.26.2",
+        "sentencepiece==0.2.0",
+        "protobuf==5.28.3",
+    )  # fmt: skip
+    .pip_install_from_requirements(str(ROOT / "brain/requirements.txt"))
+    .run_commands(
+        f"huggingface-cli download {pg.MODEL_ID} --local-dir {pg.MODEL_DIR}",
+        secrets=[modal.Secret.from_name("huggingface")],
+    )
+    .add_local_python_source("shared", "brain")
 )
 
 SECRETS = [
@@ -114,15 +134,20 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             *loc, check_run_id, "failure", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY
         )
         return
-    pool = ThreadPoolExecutor(max_workers=1)
+    pool = ThreadPoolExecutor(max_workers=2)
     try:
         files = gh.list_pr_files(*loc, event.number)
         metadata = gh.get_pr_metadata(*loc, event.number, files=files)
         diff = gh.get_pr_diff(*loc, event.number)
         # The model commits to its prediction while the sandbox runs, before any telemetry.
         prediction_future = pool.submit(_predict, metadata)
+        guard_future = pool.submit(_guard, metadata, diff)
         result = chamber_client_from_env().detonate(request)
         prediction = prediction_future.result(timeout=150)
+        try:
+            guard = guard_future.result(timeout=60)
+        except TimeoutError:
+            guard = pg.GuardOutcome(error="timeout")
         analysis = analyze(
             result,
             metadata,
@@ -132,6 +157,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             prediction=prediction,
             allowed_cidrs=github_meta_cidrs(),
             files=files,
+            guard=guard,
         )
         final = analysis.final
         logger.info(
@@ -181,6 +207,47 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             gh.create_review(*loc, event.number, event.head_sha, comments)
         except Exception:
             logger.exception("job=%s failed to post guilty-line review", job_id)
+
+
+@app.cls(image=guard_image, cpu=2.0, memory=2048, scaledown_window=300, timeout=120)
+class PromptGuard:
+    @modal.enter()
+    def load(self) -> None:
+        import torch
+        from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+        torch.set_num_threads(2)
+        self.tokenizer = AutoTokenizer.from_pretrained(pg.MODEL_DIR)
+        self.model = AutoModelForSequenceClassification.from_pretrained(pg.MODEL_DIR).eval()
+        label = self.model.config.id2label.get(pg.MALICIOUS_LABEL, "")
+        if label != "LABEL_1":
+            raise RuntimeError(f"unexpected Prompt Guard labels: {self.model.config.id2label}")
+
+    @modal.method()
+    def scan(self, texts: dict[str, str]) -> pg.GuardOutcome:
+        return pg.scan_texts(self.tokenizer, self.model, texts)
+
+    @modal.method()
+    def reference(self, texts: list[str]) -> list[dict]:
+        """Diagnostics: Hugging Face's own pipeline + tokens, to check scan_texts against."""
+        from transformers import pipeline
+
+        clf = pipeline("text-classification", model=self.model, tokenizer=self.tokenizer,
+                       truncation=True, max_length=pg.WINDOW_TOKENS, top_k=None)  # fmt: skip
+        out = []
+        for text, scores in zip(texts, clf(texts), strict=True):
+            ids = self.tokenizer(text, add_special_tokens=False)["input_ids"]
+            out.append({"scores": scores,
+                        "tokens": self.tokenizer.convert_ids_to_tokens(ids)[:12]})  # fmt: skip
+        return out
+
+
+def _guard(metadata: PrMetadata, diff: str) -> pg.GuardOutcome:
+    try:
+        return PromptGuard().scan.remote(pg.guard_inputs(metadata, diff))
+    except Exception as exc:  # screening is advisory: never fail the job on it
+        logger.exception("prompt guard failed")
+        return pg.GuardOutcome(error=type(exc).__name__)
 
 
 def _predict(metadata: PrMetadata) -> PredictionOutcome:

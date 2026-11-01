@@ -8,6 +8,7 @@ from brain.github_client import ChangedFile, PrMetadata
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
 from brain.llm import LlmOutcome
 from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
+from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
 from brain.rules import RuleHit, evaluate
 from brain.verdict import FinalVerdict, combine
@@ -59,16 +60,21 @@ def analyze(
     allowed_cidrs: tuple[str, ...] = (),
     enrich: Callable[[DetonateResult], DetonateResult] = enrich_connects,
     files: list[ChangedFile] = (),
+    guard: GuardOutcome | None = None,
 ) -> Analysis:
     result = enrich(result)
     rule_hits = evaluate(result, allowed_cidrs=allowed_cidrs)
     contract = evaluate_contract(prediction, result)
-    hits, cleared = apply_contract(rule_hits, contract, metadata)
+    if flagged(guard):
+        # The prediction came from text Prompt Guard flags as an injection: trust none of it.
+        hits, cleared = list(rule_hits), []
+    else:
+        hits, cleared = apply_contract(rule_hits, contract, metadata)
     guilty = find_guilty_lines(hits, result, list(files))
     outcome = llm(metadata, hits, result, diff, contract.for_prompt(),
                   guilty=for_prompt(guilty) or None)  # fmt: skip
     final = combine(hits, outcome, result)
     report = render(final, hits, outcome, result, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty,
-                    script_runs=script_runs(hits, result))  # fmt: skip
+                    script_runs=script_runs(hits, result), guard=guard)  # fmt: skip
     return Analysis(final, hits, outcome, result, report, contract, cleared, rule_hits, guilty)

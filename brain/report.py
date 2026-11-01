@@ -11,6 +11,7 @@ from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
 from brain.llm import LlmOutcome
 from brain.pinpoint import GuiltyLine, ScriptRun
+from brain.prompt_guard import GuardOutcome, flagged
 from brain.rules import RuleHit, Severity
 from brain.verdict import FinalVerdict
 from shared.contract import DetonateResult, ExecEvent
@@ -147,6 +148,15 @@ def render_line_comment(g: GuiltyLine, index: int, llm: LlmOutcome, result: Deto
     return "\n".join(lines)
 
 
+def _guard_note(guard: GuardOutcome | None) -> str:
+    if guard is None:
+        return ""
+    if guard.error:
+        return f" · Prompt Guard 2 unavailable ({esc(guard.error, 40)})"
+    score = guard.top.score if guard.top else 0.0
+    return f" · Prompt Guard 2 max {score:.2f}"
+
+
 def _script_runs_section(runs: list[ScriptRun]) -> list[str]:
     """Every install-time script, benign or not: who ran code on this machine."""
     lines = ["### Packages that ran install scripts", ""]
@@ -170,6 +180,7 @@ def render(
     cleared: list[RuleHit] | None = None,
     guilty: list[GuiltyLine] | None = None,
     script_runs: list[ScriptRun] | None = None,
+    guard: GuardOutcome | None = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -198,6 +209,14 @@ def render(
                 "the AI reviewer. It was treated as data; deterministic rules still apply.",
                 "",
             ]
+
+    if top := flagged(guard):
+        lines += [
+            f"> ⚠️ **Llama Prompt Guard 2 flagged the PR {esc(top.source, 10)}** "
+            f"({top.score:.2f}) as a jailbreak attempt: "
+            f"“{esc(top.snippet, 160)}”. The Intent Contract cleared nothing for this PR.",
+            "",
+        ]
 
     if guilty:
         lines += _guilty_section(guilty, llm)
@@ -231,7 +250,8 @@ def render(
         "---",
         f"<sub>Detonated `npm install` in {result.duration_s:.1f}s · "
         f"{len(result.exec_events)} exec / {len(result.connect_events)} connect events"
-        f"{' (truncated)' if result.truncated else ''} · model {model_note} · job `{job_id}`"
+        f"{' (truncated)' if result.truncated else ''} · model {model_note}"
+        f"{_guard_note(guard)} · job `{job_id}`"
         "</sub>",
         "",
         COMMENT_MARKER,

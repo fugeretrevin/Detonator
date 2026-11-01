@@ -2,27 +2,33 @@
 
   rules     deterministic rules only
   contract  rules + Intent Contract (model predicts from title/body/file names)
-  full      rules + contract + model analysis (what the GitHub App runs)
+  full      rules + contract + Prompt Guard 2 + model analysis (what the GitHub App runs)
 
   python -m eval.run_brain <results-dir> [out-prefix]    # writes <out>.md and <out>.json
 
-Needs LLAMA_API_KEY (or the probe_llama key lookup) for the contract and full columns.
+Needs LLAMA_API_KEY (or the probe_llama key lookup) and the deployed Modal app. The output
+records the commit and time it was scored at, and whether the tree had uncommitted changes.
 """
 
 import json
+import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime
 from pathlib import Path
 
 import truststore
 
 truststore.inject_into_ssl()  # local machine only: Norton re-signs TLS
 
+import modal  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from probe_llama import api_key  # noqa: E402
 
+from brain import prompt_guard as pg  # noqa: E402
 from brain.enrich import github_meta_cidrs  # noqa: E402
 from brain.intent import predict  # noqa: E402
 from brain.llm import LlmClient, LlmOutcome  # noqa: E402
@@ -39,14 +45,26 @@ def no_llm(*_, **__) -> LlmOutcome:
     return LlmOutcome("none", error="skipped")
 
 
+def guard_scan(meta, diff) -> pg.GuardOutcome:
+    """The deployed Prompt Guard 2 class, exactly as the GitHub App calls it."""
+    try:
+        cls = modal.Cls.from_name("pr-detonator", "PromptGuard")
+        return cls().scan.remote(pg.guard_inputs(meta, diff))
+    except Exception as exc:  # noqa: BLE001 - recorded, like production
+        return pg.GuardOutcome(error=type(exc).__name__)
+
+
 def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
     meta, diff, files = case.metadata(), case.diff(), case.changed_files()
     prediction = predict(client, meta)
+    guard = guard_scan(meta, diff)
     common = dict(job_id=case.id, allowed_cidrs=cidrs, files=files)
     runs: dict[str, Analysis] = {
         "rules": analyze(result, meta, diff, no_llm, **common),
         "contract": analyze(result, meta, diff, no_llm, prediction=prediction, **common),
-        "full": analyze(result, meta, diff, client.analyze, prediction=prediction, **common),
+        "full": analyze(
+            result, meta, diff, client.analyze, prediction=prediction, guard=guard, **common
+        ),  # fmt: skip
     }
     full = runs["full"]
     return {
@@ -65,6 +83,8 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         "llm_verdict": full.llm.verdict.verdict if full.llm.verdict else None,
         "llm_error": full.llm.error,
         "injection_flagged": bool(full.llm.verdict and full.llm.verdict.injection_attempt),
+        "prompt_guard_max": guard.top.score if guard.top else None,
+        "prompt_guard_error": guard.error,
         "guilty_lines": [f"{g.path}:{g.line}" for g in full.guilty],
         "script_runs": sorted(
             {r.package or "(project)" for r in script_runs(full.hits, full.result)}
@@ -106,6 +126,20 @@ def details(rows: list[dict]) -> list[str]:
     return out
 
 
+def provenance() -> dict:
+    """Which code produced these numbers. A dirty tree is recorded, never hidden."""
+
+    def git(*args: str) -> str:
+        return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True,
+                              check=True).stdout.strip()  # fmt: skip
+
+    return {
+        "commit": git("rev-parse", "--short", "HEAD"),
+        "dirty": bool(git("status", "--porcelain", "--", "brain", "shared", "chamber", "eval")),
+        "scored_at": datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC"),
+    }
+
+
 def main(results_dir: str, out_prefix: str = "eval/results") -> None:
     client = LlmClient(api_key(), base_url="https://api.meta.ai/v1")
     cidrs = github_meta_cidrs()
@@ -114,10 +148,15 @@ def main(results_dir: str, out_prefix: str = "eval/results") -> None:
         path = Path(results_dir) / f"{case.id}.json"
         if path.exists():
             jobs.append((case, DetonateResult.model_validate_json(path.read_text())))
+    stamp = provenance()
     with ThreadPoolExecutor(max_workers=4) as pool:
         rows = list(pool.map(lambda job: score(*job, client, cidrs), jobs))
-    Path(f"{out_prefix}.json").write_text(json.dumps(rows, indent=1))
-    md = ["# Evaluation results", "", *summarize(rows), "", "## Per case", "", *details(rows), ""]
+    Path(f"{out_prefix}.json").write_text(json.dumps({**stamp, "rows": rows}, indent=1))
+    header = (f"Scored {stamp['scored_at']} at commit `{stamp['commit']}`"
+              f"{' (UNCOMMITTED CHANGES)' if stamp['dirty'] else ''} with {client.model}; "
+              f"detonations from `{Path(results_dir).name}`.")  # fmt: skip
+    md = ["# Evaluation results", "", header, "", *summarize(rows), "", "## Per case", "",
+          *details(rows), ""]  # fmt: skip
     Path(f"{out_prefix}.md").write_text("\n".join(md), encoding="utf-8")
     print("\n".join(summarize(rows)))
 
