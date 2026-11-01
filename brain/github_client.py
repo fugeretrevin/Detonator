@@ -2,6 +2,7 @@
 
 import re
 import time
+from collections.abc import Callable
 from datetime import datetime
 from typing import Literal
 
@@ -264,13 +265,18 @@ class GitHubClient:
         return int(resp.json()["id"])
 
     def upsert_comment(
-        self, installation_id: int, owner: str, repo: str, number: int, body: str
+        self,
+        installation_id: int,
+        owner: str,
+        repo: str,
+        number: int,
+        body: str,
+        merge: Callable[[str | None], str] | None = None,
     ) -> int:
         """Edit this App's latest report comment on the PR, or post one. Only a comment made
-        by this App counts: anyone can paste our marker into their own comment."""
-        if COMMENT_MARKER not in body:
-            body = f"{body}\n\n{COMMENT_MARKER}"
-        latest = None
+        by this App counts: anyone can paste our marker into their own comment. `merge`
+        builds the new body from the previous one (run history)."""
+        latest, previous = None, None
         for page in range(1, 11):
             comments = self._request(
                 installation_id, "GET", f"/repos/{owner}/{repo}/issues/{number}/comments",
@@ -279,9 +285,13 @@ class GitHubClient:
             for c in comments:  # oldest first
                 app = c.get("performed_via_github_app") or {}
                 if str(app.get("id")) == self.app_id and COMMENT_MARKER in (c.get("body") or ""):
-                    latest = int(c["id"])
+                    latest, previous = int(c["id"]), c.get("body")
             if len(comments) < 100:
                 break
+        if merge:
+            body = merge(previous)
+        if COMMENT_MARKER not in body:
+            body = f"{body}\n\n{COMMENT_MARKER}"
         if latest is None:
             return self.post_comment(installation_id, owner, repo, number, body)
         path = f"/repos/{owner}/{repo}/issues/comments/{latest}"

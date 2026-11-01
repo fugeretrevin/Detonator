@@ -259,3 +259,17 @@ def test_repo_read_token_is_scoped_to_one_repo_and_read_only(keypair):
 
     assert make_client(pem, handler).repo_read_token(1, "r") == "ghs_scoped"
     assert seen == {"repositories": ["r"], "permissions": {"contents": "read"}}
+
+
+def test_upsert_merge_sees_the_previous_body(keypair):
+    pem, _ = keypair
+    ours = {"id": 7, "body": f"old\n{COMMENT_MARKER}", "performed_via_github_app": {"id": 4242}}
+    handler, _ = _comments_route([ours])
+    seen = []
+
+    def merge(prev):
+        seen.append(prev)
+        return "merged"
+
+    make_client(pem, handler).upsert_comment(1, "o", "r", 5, "new", merge=merge)
+    assert seen == [ours["body"]]

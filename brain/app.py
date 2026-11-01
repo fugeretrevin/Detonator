@@ -27,7 +27,7 @@ from brain.pipeline import (
     analyze,
     detonate_request,
 )
-from brain.report import render_line_comment
+from brain.report import render_line_comment, with_run_history
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -206,7 +206,10 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
 
     # The check already carries the verdict; a failed comment must not overwrite it.
     try:
-        gh.upsert_comment(*loc, event.number, analysis.report)
+        title = analysis.final.title
+        gh.upsert_comment(*loc, event.number, analysis.report,
+                          merge=lambda prev: with_run_history(analysis.report, prev,
+                                                              event.head_sha, title))  # fmt: skip
     except Exception:
         logger.exception("job=%s failed to post PR comment", job_id)
 

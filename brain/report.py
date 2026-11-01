@@ -5,6 +5,8 @@ goes through esc(): punctuation becomes HTML entities, which GitHub renders lite
 never parses as markdown, links, @mentions, or HTML.
 """
 
+import json
+import re
 import unicodedata
 
 from brain.github_client import COMMENT_MARKER
@@ -147,6 +149,42 @@ def render_line_comment(g: GuiltyLine, index: int, llm: LlmOutcome, result: Deto
         lines += [f"**Observed process chain:** {chain}", ""]
     lines.append("<sub>Kernel-traced in a sandbox. Full report in the PR comment.</sub>")
     return "\n".join(lines)
+
+
+RUNS_MARKER = "pr-detonator-runs:"
+MAX_RUNS = 10
+_RUNS_RE = re.compile(r"<!-- " + re.escape(RUNS_MARKER) + r" (\[.*?\]) -->")
+_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def parse_runs(previous_body: str | None) -> list[tuple[str, str]]:
+    """(sha, verdict title) pairs from our own earlier comment, strictly validated. PR content
+    in that comment is entity-encoded, so it can't forge the marker; this checks anyway."""
+    m = _RUNS_RE.search(previous_body or "")
+    if not m:
+        return []
+    try:
+        raw = json.loads(m.group(1))
+    except ValueError:
+        return []
+    return [
+        (r["sha"], r["v"])
+        for r in raw
+        if isinstance(r, dict) and _SHA_RE.match(str(r.get("sha", ""))) and r.get("v") in HEADERS
+    ][:MAX_RUNS]
+
+
+def with_run_history(body: str, previous_body: str | None, sha: str, title: str) -> str:
+    """Append "Previous runs" (newest first, excluding this one) and the hidden history."""
+    runs = [(sha, title)] + [r for r in parse_runs(previous_body) if r[0] != sha]
+    runs = runs[:MAX_RUNS]
+    earlier = runs[1:]
+    lines = [body]
+    if earlier:
+        shown = " · ".join(f"`{s[:7]}` {HEADERS[v]}" for s, v in earlier)
+        lines.append(f"<sub>Previous runs: {shown}</sub>")
+    lines.append(f"<!-- {RUNS_MARKER} {json.dumps([{'sha': s, 'v': v} for s, v in runs])} -->")
+    return "\n\n".join(lines)
 
 
 def _guard_note(guard: GuardOutcome | None) -> str:

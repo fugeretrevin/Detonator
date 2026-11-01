@@ -114,3 +114,40 @@ def test_attacker_args_cannot_inject_markdown_into_report():
     md = report_for(res, LlmOutcome("m", error="x"))
     assert md.count(COMMENT_MARKER) == 1
     assert "@maintainer" not in md and "](http" not in md and md.count("</sub>") == 1
+
+
+# --- run history in the one PR comment (HARDENING_PLAN P0.6) ---
+
+from brain.report import parse_runs, with_run_history  # noqa: E402
+
+A, B, C = "a" * 40, "b" * 40, "c" * 40
+
+
+def test_history_accumulates_newest_first_and_shows_earlier_runs():
+    first = with_run_history("report 1", None, A, "Clean")
+    assert "Previous runs" not in first and parse_runs(first) == [(A, "Clean")]
+    second = with_run_history("report 2", first, B, "Blocked")
+    assert parse_runs(second) == [(B, "Blocked"), (A, "Clean")]
+    assert "Previous runs: `aaaaaaa` ✅ Clean" in second and "report 1" not in second
+
+
+def test_rerun_of_the_same_sha_replaces_its_entry():
+    body = with_run_history("r", with_run_history("r", None, A, "Clean"), A, "Blocked")
+    assert parse_runs(body) == [(A, "Blocked")]
+
+
+def test_history_is_capped():
+    body = None
+    for i in range(15):
+        body = with_run_history("r", body, f"{i:040x}", "Clean")
+    assert len(parse_runs(body)) == 10
+
+
+def test_forged_or_garbled_history_is_ignored():
+    forged = (
+        '<!-- pr-detonator-runs: [{"sha": "nothex", "v": "Clean"}, {"sha": "'
+        + C
+        + '", "v": "Totally safe"}] -->'
+    )
+    assert parse_runs(forged) == []
+    assert parse_runs("<!-- pr-detonator-runs: [not json] -->") == []
