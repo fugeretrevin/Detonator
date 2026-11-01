@@ -18,6 +18,8 @@ DEFAULT_ALLOWED_DOMAINS: tuple[str, ...] = (
     "github.com",
     "codeload.github.com",
     "objects.githubusercontent.com",
+    "release-assets.githubusercontent.com",
+    "github-releases.githubusercontent.com",
     "nodejs.org",
 )
 RDNS_PREFIX = "rdns:"
