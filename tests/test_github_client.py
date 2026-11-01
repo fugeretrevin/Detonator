@@ -108,9 +108,10 @@ def test_create_and_complete_check_run(keypair):
             }
         ),
     )
-    check_id = client.create_check_run(1, "o", "r", "abc")
+    check_id = client.create_check_run(1, "o", "r", "abc", details_url="https://x/pull/7")
     assert check_id == 99
     assert seen["create"]["name"] == "PR Detonator"
+    assert seen["create"]["details_url"] == "https://x/pull/7"
     assert seen["create"]["status"] == "in_progress"
     assert seen["create"]["head_sha"] == "abc"
 

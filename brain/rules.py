@@ -24,7 +24,7 @@ DEFAULT_ALLOWED_DOMAINS: tuple[str, ...] = (
 )
 RDNS_PREFIX = "rdns:"
 MAX_HITS = 50
-MAX_EVIDENCE_ARGS = 300
+MAX_EVIDENCE_ARGS = 160
 
 NET_TOOLS = frozenset(
     {"curl", "wget", "nc", "ncat", "netcat", "nc.openbsd", "nc.traditional", "socat", "telnet"}

@@ -75,7 +75,11 @@ def _handle(headers: dict[str, str], body: bytes) -> JSONResponse:
 
     event = decision.event
     check_run_id = github().create_check_run(
-        event.installation_id, event.owner, event.repo, event.head_sha
+        event.installation_id,
+        event.owner,
+        event.repo,
+        event.head_sha,
+        details_url=f"https://github.com/{event.owner}/{event.repo}/pull/{event.number}",
     )
     detonate_job.spawn(event, check_run_id)
     return JSONResponse({"status": "accepted", "check_run_id": check_run_id}, status_code=202)

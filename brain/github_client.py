@@ -112,13 +112,23 @@ class GitHubClient:
 
     # --- check runs ---
 
-    def create_check_run(self, installation_id: int, owner: str, repo: str, head_sha: str) -> int:
+    def create_check_run(
+        self,
+        installation_id: int,
+        owner: str,
+        repo: str,
+        head_sha: str,
+        details_url: str | None = None,
+    ) -> int:
+        # Without details_url, GitHub links "Details" to the App's homepage.
+        extra = {"details_url": details_url} if details_url else {}
         resp = self._request(
             installation_id,
             "POST",
             f"/repos/{owner}/{repo}/check-runs",
             json={
                 "name": CHECK_NAME,
+                **extra,
                 "head_sha": head_sha,
                 "status": "in_progress",
                 "output": {
