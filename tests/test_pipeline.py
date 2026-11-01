@@ -53,7 +53,7 @@ def test_e4_end_to_end_with_recorded_llm_is_failure():
     body = json.loads((FIXTURES / "llm/e4_muse_spark_1_3.json").read_text())
     seen = {}
 
-    def fake_llm(metadata, hits, result, diff):
+    def fake_llm(metadata, hits, result, diff, contract=None):
         seen["rules"] = {h.rule_id for h in hits}
         return LlmOutcome("muse-spark-1.3", verdict=parse_response(body))
 

@@ -1,5 +1,6 @@
 """GitHub App auth, check runs, PR diff/metadata and comments (BUILD_PLAN A2)."""
 
+import re
 import time
 from datetime import datetime
 from typing import Literal
@@ -51,6 +52,27 @@ class PrMetadata(BaseModel):
     package_json_changed: bool
     scripts_changed: bool
     lockfile_changed: bool
+    added_dependencies: list[str] = []
+
+
+# `+    "esbuild": "^0.25.0",` (also scoped names, ranges, tags, npm: aliases, git/https specs)
+_DEP_LINE_RE = re.compile(
+    r'^\+\s*"(@?[a-z0-9][\w.-]*(?:/[\w.-]+)?)"\s*:\s*"([\^~<>=*\dvx]|latest|next|npm:|git|https?:)'
+)
+_NOT_DEPS = frozenset({"name", "version", "main", "type", "license", "node", "npm"})
+
+
+def added_dependencies(files: list[ChangedFile]) -> list[str]:
+    """Dependency names added in package.json patches (names only, never script bodies)."""
+    names: list[str] = []
+    for f in files:
+        if _basename(f.filename) != "package.json" or not f.patch:
+            continue
+        for line in f.patch.splitlines():
+            m = _DEP_LINE_RE.match(line)
+            if m and m.group(1) not in _NOT_DEPS and m.group(1) not in names:
+                names.append(m.group(1))
+    return names[:30]
 
 
 def scripts_changed(files: list[ChangedFile]) -> bool:
@@ -206,6 +228,7 @@ class GitHubClient:
             package_json_changed=any(_basename(n) == "package.json" for n in names),
             scripts_changed=scripts_changed(files),
             lockfile_changed=any(_basename(n) in LOCKFILES for n in names),
+            added_dependencies=added_dependencies(files),
         )
 
     # --- comments ---

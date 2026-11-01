@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 from brain.enrich import enrich_connects
 from brain.github_client import PrMetadata
+from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
 from brain.llm import LlmOutcome
 from brain.report import render
 from brain.rules import RuleHit, evaluate
@@ -12,7 +13,7 @@ from brain.verdict import FinalVerdict, combine
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateRequest, DetonateResult
 
-Analyzer = Callable[[PrMetadata, list[RuleHit], DetonateResult, str], LlmOutcome]
+Analyzer = Callable[[PrMetadata, list[RuleHit], DetonateResult, str, dict | None], LlmOutcome]
 
 PRIVATE_REPO_TITLE = "Could not verify"
 PRIVATE_REPO_SUMMARY = (
@@ -39,6 +40,9 @@ class Analysis:
     llm: LlmOutcome
     result: DetonateResult
     report: str
+    contract: IntentContract
+    cleared: list[RuleHit]
+    rule_hits: list[RuleHit]  # before the contract cleared anything (for evaluation)
 
 
 def analyze(
@@ -48,12 +52,16 @@ def analyze(
     llm: Analyzer,
     *,
     job_id: str,
+    prediction: PredictionOutcome | None = None,
     allowed_cidrs: tuple[str, ...] = (),
     enrich: Callable[[DetonateResult], DetonateResult] = enrich_connects,
 ) -> Analysis:
     result = enrich(result)
-    hits = evaluate(result, allowed_cidrs=allowed_cidrs)
-    outcome = llm(metadata, hits, result, diff)
+    rule_hits = evaluate(result, allowed_cidrs=allowed_cidrs)
+    contract = evaluate_contract(prediction, result)
+    hits, cleared = apply_contract(rule_hits, contract, metadata)
+    outcome = llm(metadata, hits, result, diff, contract.for_prompt())
     final = combine(hits, outcome, result)
-    report = render(final, hits, outcome, result, job_id=job_id)
-    return Analysis(final, hits, outcome, result, report)
+    report = render(final, hits, outcome, result, job_id=job_id, contract=contract,
+                    cleared=cleared)  # fmt: skip
+    return Analysis(final, hits, outcome, result, report, contract, cleared, rule_hits)

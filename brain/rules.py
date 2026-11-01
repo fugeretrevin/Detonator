@@ -83,6 +83,7 @@ class RuleHit:
     evidence: str
     ts: str
     pid: int
+    target: str = ""  # destination host/IP for network hits
 
 
 def _basename(path: str) -> str:
@@ -138,6 +139,7 @@ def _connect_hits(
                 f"{who} connected to {event.resolved_domain} ({target}), not in allowlist",
                 event.ts,
                 event.pid,
+                target=event.resolved_domain,
             )
         ]
     return []

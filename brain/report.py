@@ -8,6 +8,7 @@ never parses as markdown, links, @mentions, or HTML.
 import unicodedata
 
 from brain.github_client import COMMENT_MARKER
+from brain.intent import IntentContract
 from brain.llm import LlmOutcome
 from brain.rules import RuleHit, Severity
 from brain.verdict import FinalVerdict
@@ -81,6 +82,35 @@ def _network_rows(result: DetonateResult) -> list[str]:
     return rows
 
 
+STATUS_ICON = {"explained": "✅ predicted", "unexplained": "❌ **unexplained**"}
+
+
+def _contract_section(contract: IntentContract, cleared: list[RuleHit]) -> list[str]:
+    lines = ["### Intent contract", ""]
+    p = contract.prediction
+    if not p:
+        return lines + [f"Prediction unavailable ({esc(contract.error, 80)}).", ""]
+    lines += [
+        "*Predicted from the PR's title, description and file list, before the sandbox ran:* "
+        + esc(p.summary, 300),
+        "",
+    ]
+    shown = [i for i in contract.items if i.status != "baseline"]
+    baseline = len(contract.items) - len(shown)
+    if shown:
+        lines += ["| Observed at runtime | Contract |", "|---|---|"]
+        for i in shown[:MAX_ROWS]:
+            note = f" ({esc(i.note, 40)})" if i.note and i.status == "unexplained" else ""
+            lines.append(f"| {i.kind} {esc(i.observed, 80)} | {STATUS_ICON[i.status]}{note} |")
+        lines.append("")
+    summary = f"{len(contract.unexplained)} unexplained, {len(contract.explained)} predicted"
+    lines += [f"{summary}, {baseline} normal npm behavior.", ""]
+    if cleared:
+        hosts = ", ".join(esc(h.target, 60) for h in cleared)
+        lines += [f"Cleared low-severity findings explained by the stated intent: {hosts}.", ""]
+    return lines
+
+
 def render(
     final: FinalVerdict,
     hits: list[RuleHit],
@@ -88,6 +118,8 @@ def render(
     result: DetonateResult,
     *,
     job_id: str,
+    contract: IntentContract | None = None,
+    cleared: list[RuleHit] | None = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -116,6 +148,9 @@ def render(
                 "the AI reviewer. It was treated as data; deterministic rules still apply.",
                 "",
             ]
+
+    if contract is not None:
+        lines += _contract_section(contract, cleared or [])
 
     if hits:
         lines += ["### Rule findings", "", *_rule_rows(hits), ""]

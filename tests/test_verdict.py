@@ -79,9 +79,9 @@ def test_llm_cannot_clear_rule_hit_e6():
 
 
 @pytest.mark.parametrize("status", ["timeout", "error"])
-def test_unfinished_detonation_never_success(status):
+def test_unfinished_detonation_fails_closed(status):
     final = combine([], llm("benign"), result(status))
-    assert final.conclusion == "neutral" and final.title == "Could not verify"
+    assert final.conclusion == "failure" and final.title == "Could not verify"
     assert not final.verified
 
 

@@ -8,6 +8,7 @@ import functools
 import logging
 import os
 import uuid
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import modal
@@ -16,7 +17,8 @@ from fastapi.responses import JSONResponse
 
 from brain.chamber_client import chamber_client_from_env
 from brain.enrich import github_meta_cidrs
-from brain.github_client import GitHubClient
+from brain.github_client import GitHubClient, PrMetadata
+from brain.intent import PredictionOutcome, predict
 from brain.llm import LlmOutcome, llm_client_from_env
 from brain.pipeline import (
     PRIVATE_REPO_SUMMARY,
@@ -108,24 +110,30 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             event.number,
         )
         gh.complete_check_run(
-            *loc, check_run_id, "neutral", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY
+            *loc, check_run_id, "failure", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY
         )
         return
+    pool = ThreadPoolExecutor(max_workers=1)
     try:
         metadata = gh.get_pr_metadata(*loc, event.number)
         diff = gh.get_pr_diff(*loc, event.number)
+        # The model commits to its prediction while the sandbox runs, before any telemetry.
+        prediction_future = pool.submit(_predict, metadata)
         result = chamber_client_from_env().detonate(request)
+        prediction = prediction_future.result(timeout=150)
         analysis = analyze(
             result,
             metadata,
             diff,
             _llm_analyzer(),
             job_id=job_id,
+            prediction=prediction,
             allowed_cidrs=github_meta_cidrs(),
         )
         final = analysis.final
         logger.info(
-            "job=%s %s/%s#%s -> %s (rules=%s llm=%s llm_error=%s)",
+            "job=%s %s/%s#%s -> %s (rules=%s llm=%s llm_error=%s unexplained=%d cleared=%d "
+            "prediction_error=%s)",
             job_id,
             event.owner,
             event.repo,
@@ -134,26 +142,38 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             final.rule_level.name,
             final.llm_level.name if final.llm_level else None,
             analysis.llm.error,
+            len(analysis.contract.unexplained),
+            len(analysis.cleared),
+            prediction.error,
         )
         gh.complete_check_run(
             *loc, check_run_id, final.conclusion, f"PR Detonator: {final.title}", analysis.report
         )
     except Exception as exc:
-        # Never leave the check hanging, and never report success on failure.
+        # Never leave the check hanging; fail closed (neutral would pass branch protection).
         gh.complete_check_run(
             *loc,
             check_run_id,
-            "neutral",
+            "failure",
             "Could not verify this PR",
             f"Detonator internal error (`{type(exc).__name__}`), job `{job_id}`.",
         )
         raise
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
 
     # The check already carries the verdict; a failed comment must not overwrite it.
     try:
         gh.post_comment(*loc, event.number, analysis.report)
     except Exception:
         logger.exception("job=%s failed to post PR comment", job_id)
+
+
+def _predict(metadata: PrMetadata) -> PredictionOutcome:
+    try:
+        return predict(llm_client_from_env(), metadata)
+    except KeyError as exc:
+        return PredictionOutcome(os.environ.get("LLAMA_MODEL", "llm"), error=f"{exc.args[0]} unset")
 
 
 def _llm_analyzer():
