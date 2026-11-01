@@ -1,0 +1,29 @@
+{
+  "id": "chatcmpl-01a1959d-9d8d-77af-a459-a4cab7235b55",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "{\"reason\": \"postinstall hook automatically executes on npm install and downloads unknown remote content over plaintext HTTP from a hardcoded external IP - classic supply-chain dropper / arbitrary remote code execution behavior.\", \"verdict\": \"malicious\"}",
+        "refusal": null,
+        "role": "assistant"
+      },
+      "logprobs": null
+    }
+  ],
+  "created": 1793511497,
+  "model": "muse-wonder-1.0",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 710,
+    "prompt_tokens": 33,
+    "total_tokens": 743,
+    "completion_tokens_details": {
+      "reasoning_tokens": 655
+    },
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    }
+  }
+}

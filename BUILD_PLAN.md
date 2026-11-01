@@ -206,7 +206,7 @@ class DetonateResult(BaseModel):
 - [ ] Register GitHub App (private). Permissions: **Checks: Read & write**, **Pull requests: Read & write**, **Issues: Read & write** (PR comments go through the issues API), **Contents: Read**, **Metadata: Read**. Subscribe to event: **Pull request**.
 - [ ] Generate private key (.pem), note App ID, set a webhook secret.
 - [ ] Create demo org or repo, install the App on it.
-- [ ] Get Meta Llama API key. Call the models endpoint and record available model IDs here: `MODEL: ________`
+- [ ] Get Meta Llama API key. Call the models endpoint and record available model IDs here: `MODEL: muse-spark-1.3` (Meta Model API, `https://api.meta.ai/v1`, OpenAI-compatible: JSON is in `choices[0].message.content`; no Llama models are listed for dev.meta.ai keys; `muse-wonder-1.0` also works)
 - [ ] Modal account. Create secrets: `github-app` (`GITHUB_APP_ID`, `GITHUB_PRIVATE_KEY`, `GITHUB_WEBHOOK_SECRET`), `llama` (`LLAMA_API_KEY`, `LLAMA_MODEL`), `chamber` (`CHAMBER_URL`, `CHAMBER_SECRET`), config `ALLOWED_ACCOUNTS`.
 
 **Acceptance:** a scratch script can mint an installation token and list the demo repo's PRs.
