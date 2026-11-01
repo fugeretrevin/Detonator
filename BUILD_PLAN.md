@@ -327,10 +327,13 @@ Markdown comment + check-run summary:
 
 ### B1 spike (do this before writing telemetry.py — 1 hour max)
 Record answers here; telemetry parsing depends on them:
-- [ ] Exact JSON shape of `process_exec` (where are binary, arguments, pid, parent?)
-- [ ] Exact JSON shape of `process_kprobe` for `tcp_connect` (where are daddr/dport in the `sock_arg`?)
-- [ ] **How to attribute events to our container.** In non-K8s mode, check whether events carry a `docker` / container ID field and whether it's truncated. Fallbacks if it isn't reliable: (a) one detonation at a time + time window + exclude host PIDs known before the run, (b) filter by the container's PID namespace / cgroup.
-- [ ] Save a raw log of the smoke test to `tests/fixtures/tetragon_smoke.jsonl`.
+**Spike results (Nov 1, Tetragon v1.7.1 on Ubuntu 26.04 / kernel 7.0.0-1014-aws, t3.medium):**
+- [x] `process_exec`: `{"process_exec": {"process": {...}, "parent": {...}}, "time": ...}`. `process` has `pid`, `uid`, `binary`, `arguments` (one string; original quoting kept, e.g. `-c "wget ..."`), `start_time`, `exec_id`, `parent_exec_id`, `docker`. `parent` has the same shape (`binary`, `pid`, ...).
+- [x] `process_kprobe` / `tcp_connect`: `{"process_kprobe": {"process": {...}, "parent": {...}, "function_name": "tcp_connect", "args": [{"sock_arg": {"family": "AF_INET", "saddr", "daddr", "sport", "dport", "state": "TCP_SYN_SENT", ...}}], "policy_name": "detonator-connect"}}`. Fires on SYN, so the TEST-NET 203.0.113.10 attempt is captured.
+- [x] **Attribution:** container processes carry `process.docker` = **first 31 chars** of the container ID. Host noise (dockerd image pulls, docker CLI) has no `docker` field. Filter = `full_container_id.startswith(process.docker)`. One-at-a-time lock stays as a second guard.
+- [x] Fixture: `tests/fixtures/tetragon_smoke.jsonl` (8 container events + 3 host-noise lines).
+- Install: `chamber/provision/install_tetragon.sh` (pinned v1.7.1, sha256-verified). Export file `/var/log/tetragon/tetragon.log` (mode 600, rotates at 10 MB → compressed backups; telemetry must handle rotation). Policies in `/etc/tetragon/tetragon.tp.d/`. `tetragon` has no `version` subcommand (it starts a second daemon); use `tetra status`.
+- No DNS visibility from Tetragon (UDP to Docker's resolver); reverse-DNS enrichment in the Brain stays.
 
 ### B2. TracingPolicy (`policies/tcp-connect.yaml`)
 Start from Tetragon's own example (kprobe on `tcp_connect` with a `sock` arg). Add a selector to drop loopback:
