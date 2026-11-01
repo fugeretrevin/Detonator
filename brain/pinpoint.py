@@ -164,7 +164,10 @@ def script_runs(hits: list[RuleHit], result: DetonateResult) -> list[ScriptRun]:
     }
     runs: dict[tuple[str | None, str], ScriptRun] = {}
     for e in result.exec_events:
-        if not _is_lifecycle_shell(e):
+        # Only npm's own shells: a payload's `sh -c` under node also matches the shape.
+        if not _is_lifecycle_shell(e) or (
+            e.ppid is not None and lifecycle_exec(e.ppid, result.exec_events)
+        ):
             continue
         key = (package_from_cwd(e.cwd), script_text(e))
         prior = runs.get(key)

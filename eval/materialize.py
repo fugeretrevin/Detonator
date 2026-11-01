@@ -7,15 +7,15 @@ import json
 import sys
 from pathlib import Path
 
-from eval.cases import CASES, MALICIOUS
+from eval.cases import CASES, INCIDENTS, MALICIOUS
 
 
 def main(checkout: Path, manifest: Path) -> None:
-    for case in MALICIOUS:
-        for name, text in case.files.items():
+    for case in MALICIOUS + INCIDENTS:
+        for name, data in case.payload_files().items():
             dest = checkout / "payloads" / case.id / name
             dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_text(text, encoding="utf-8", newline="\n")
+            dest.write_bytes(data)
     manifest.write_text(
         json.dumps([{"id": c.id, "command": c.command} for c in CASES.values()], indent=1)
     )

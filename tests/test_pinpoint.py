@@ -262,3 +262,24 @@ def test_dependency_report_and_inline_comment():
     assert "🛑 dependency **color&#45;helper**" in out.report
     body = render_line_comment(out.guilty[0], 0, out.llm, out.result)
     assert "brings in the dependency **color&#45;helper**" in body
+
+
+# --- real-incident reconstructions (recorded Chamber runs) ---
+
+
+def test_payload_shell_under_node_is_not_listed_as_an_npm_script():
+    # ua-parser-js: npm runs `node preinstall.js`, which itself runs `sh -c "sh preinstall.sh"`.
+    res = result("r01")
+    runs = script_runs(evaluate(res), res)
+    assert [(r.package, r.script, r.flagged) for r in runs] == [
+        ("ua-parser-js", "node preinstall.js", True)
+    ]
+
+
+def test_shai_hulud_reconstruction_blocked_by_rules_and_attributed():
+    res = result("r02")
+    hits = evaluate(res)
+    assert {"EXEC_DROPPED_BINARY", "NET_EXFIL_SERVICE"} <= {h.rule_id for h in hits}
+    bump = BUMP.replace("color-helper", "tinycolor-recon").replace("1.0.1", "4.1.1")
+    lines = find_guilty_lines(hits, res, dep_files(bump))
+    assert [(g.line, g.package) for g in lines] == [(5, "tinycolor-recon")]

@@ -10,6 +10,7 @@ import shlex
 from dataclasses import dataclass
 from enum import IntEnum
 
+from shared import exfil_services
 from shared.contract import ConnectEvent, DetonateResult, DnsQuery, ExecEvent
 
 DEFAULT_ALLOWED_DOMAINS: tuple[str, ...] = (
@@ -39,6 +40,11 @@ SANDBOX_RESOLVER = ("10.250.0.1", 53)  # chamber/provision/dnsmasq.conf
 METADATA_ADDRS = frozenset({"169.254.169.254", "fd00:ec2::254", "169.254.170.2"})
 # Data smuggled out in DNS names: long labels that look like encoding, not words. Benign
 # installs in the eval topped out at 17-char labels; DNS allows 63.
+# Writable places a payload drops a downloaded binary into. Packages' own binaries run from
+# node_modules (esbuild, lefthook, prebuild-install in the eval), never from these. npm's
+# cache (npx) lives under /tmp/.npm in the sandbox.
+DROP_DIRS = ("/tmp/", "/var/tmp/", "/dev/shm/", "/home/", "/root/")
+NPM_CACHE_DIR = "/tmp/.npm/"
 MIN_ENCODED_LABEL = 40
 ENCODED_LABEL_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
@@ -199,6 +205,26 @@ def _dns_hits(query: DnsQuery) -> list[RuleHit]:
     ]
 
 
+def _exfil_service_hits(result: DetonateResult) -> list[RuleHit]:
+    """One hit per service: by the connecting process if it connected, else by the lookup.
+    The Chamber sinkholes these names, so the attempt is recorded but nothing leaves."""
+    hits: dict[str, RuleHit] = {}
+    for c in result.connect_events:
+        if c.resolved_domain and (m := exfil_services.match(c.resolved_domain)):
+            service, kind = m
+            hits.setdefault(service, RuleHit(
+                "NET_EXFIL_SERVICE", Severity.HIGH,
+                f"{_basename(c.binary)} (pid {c.pid}) connected to {c.resolved_domain} "
+                f"({kind})", c.ts, c.pid, target=service))  # fmt: skip
+    for q in result.dns_queries:
+        if (m := exfil_services.match(q.domain)) and m[0] not in hits:
+            service, kind = m
+            hits[service] = RuleHit(
+                "NET_EXFIL_SERVICE", Severity.HIGH,
+                f"looked up {_clip(q.domain)} ({kind})", q.ts, 0, target=service)  # fmt: skip
+    return list(hits.values())
+
+
 # --- exec rules ---
 
 
@@ -228,6 +254,10 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     if name in NET_TOOLS:
         hit("EXEC_NET_TOOL", Severity.HIGH, f"network tool {name} executed during install")
 
+    if event.binary.startswith(DROP_DIRS) and not event.binary.startswith(NPM_CACHE_DIR):
+        hit("EXEC_DROPPED_BINARY", Severity.HIGH,
+            "ran a program from a temp/home directory (dropped at install time)")  # fmt: skip
+
     if DEV_SOCKET_RE.search(args):
         hit("EXEC_INTERACTIVE_SHELL", Severity.CRITICAL, "/dev/tcp or /dev/udp socket redirect")
     elif name in SHELLS and _interactive_shell_flag(_tokens(args)):
@@ -254,6 +284,7 @@ def evaluate(
         hits.extend(_connect_hits(connect_event, allowed_domains, networks))
     for query in result.dns_queries:
         hits.extend(_dns_hits(query))
+    hits.extend(_exfil_service_hits(result))
     if result.truncated:
         # Events past the caps were dropped; a flood could be hiding a payload.
         hits.append(

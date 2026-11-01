@@ -271,3 +271,46 @@ def test_e5_chain_sorted_most_severe_first():
     assert hits[0].rule_id == "EXEC_INTERACTIVE_SHELL"
     assert {h.rule_id for h in hits} == {"EXEC_INTERACTIVE_SHELL", "NET_RAW_IP"}
     assert max_severity(hits) == Severity.CRITICAL
+
+
+# --- dropped binaries and exfil services (motivated by real-incident reconstructions) ---
+
+
+@pytest.mark.parametrize(
+    "binary",
+    ["/tmp/th/trufflehog", "/home/runner/.cache/x/miner", "/dev/shm/a", "/var/tmp/b"],
+)
+def test_binary_run_from_temp_or_home_flagged(binary):
+    hits = evaluate(result(execs=[exec_event(binary, "filesystem /work --json")]))
+    assert [(h.rule_id, h.severity) for h in hits] == [("EXEC_DROPPED_BINARY", Severity.HIGH)]
+
+
+@pytest.mark.parametrize(
+    "binary",
+    [
+        "/work/node_modules/esbuild/bin/esbuild",  # shipped in the package (eval: esbuild)
+        "/work/node_modules/.bin/prebuild-install",
+        "/tmp/.npm/_npx/abc/node_modules/.bin/tool",  # npx from npm's own cache
+        "/usr/bin/tar",
+    ],
+)
+def test_package_and_system_binaries_not_flagged(binary):
+    assert evaluate(result(execs=[exec_event(binary, "")])) == []
+
+
+def test_exfil_service_connect_flagged_once_with_pid():
+    res = result(connects=[connect("198.51.100.66", 443, domain="webhook.site"),
+                           connect("198.51.100.66", 80, domain="webhook.site")])  # fmt: skip
+    exfil = [h for h in evaluate(res) if h.rule_id == "NET_EXFIL_SERVICE"]
+    assert len(exfil) == 1 and exfil[0].pid == 300 and exfil[0].severity == Severity.HIGH
+    assert "request catcher" in exfil[0].evidence
+
+
+def test_exfil_service_lookup_alone_flagged():
+    hits = evaluate(dns_result("abc123.oast.fun"))
+    assert [(h.rule_id, h.target) for h in hits] == [("NET_EXFIL_SERVICE", "oast.fun")]
+
+
+@pytest.mark.parametrize("domain", ["notwebhook.site", "webhook.site.example.com", "ipinfo.iox"])
+def test_exfil_service_match_is_exact_or_subdomain(domain):
+    assert evaluate(dns_result(domain)) == []

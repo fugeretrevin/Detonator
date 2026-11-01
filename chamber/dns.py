@@ -20,7 +20,7 @@ MAX_ANSWERS_PER_DOMAIN = 32
 LINE_RE = re.compile(
     r"^(?P<ts>\w{3} +\d{1,2} \d\d:\d\d:\d\d) dnsmasq\[\d+\]: (?P<serial>\d+) "
     r"(?P<client>[0-9a-fA-F.:]+)/\d+ (?:query\[\w+\] (?P<qname>\S+) from \S+"
-    r"|reply \S+ is (?P<answer>\S+))$"
+    r"|(?:reply|config) \S+ is (?P<answer>\S+))$"  # config: answered locally (sinkhole)
 )
 
 

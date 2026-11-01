@@ -51,6 +51,8 @@ install -m 0644 "$REPO/chamber/provision/detonator-egress.service" /etc/systemd/
 install -m 0644 "$REPO/chamber/provision/detonator-dns.service" /etc/systemd/system/
 install -m 0644 "$REPO/chamber/provision/chamber.service" /etc/systemd/system/
 install -m 0644 "$REPO/chamber/provision/dnsmasq.conf" /etc/pr-detonator/dnsmasq.conf
+(cd "$APP" && venv/bin/python -m shared.exfil_services) > /etc/pr-detonator/sinkhole.conf
+chmod 0644 /etc/pr-detonator/sinkhole.conf
 install -m 0644 "$REPO/chamber/provision/detonator-dns.logrotate" /etc/logrotate.d/detonator-dns
 install -d -m 0755 /var/log/pr-detonator
 systemctl daemon-reload

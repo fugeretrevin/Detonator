@@ -27,6 +27,7 @@ def test_fixture_queries_merge_a_and_aaaa():
         "storage.googleapis.com",
         "nonexistent-zz9.example",
         "www.github.com",
+        "abc.oast.fun",  # sinkholed (second probe, appended)
     ]
     npm = queries[0]
     assert npm.ts == "2026-11-01T13:53:26Z"
@@ -105,3 +106,9 @@ def test_answers_per_domain_capped():
     assert len(parse_dns_log([head, *replies], SANDBOX).queries[0].answers) == (
         MAX_ANSWERS_PER_DOMAIN
     )
+
+
+def test_sinkholed_answer_is_recorded():
+    # dnsmasq logs locally answered (sinkhole) lookups as `config`, not `reply`.
+    oast = next(q for q in parsed().queries if q.domain == "abc.oast.fun")
+    assert oast.answers == ["198.51.100.66"]

