@@ -7,6 +7,7 @@ Only needs the `shared` package that setup.sh installs in /opt/pr-detonator.
 """
 
 import json
+import ssl
 import sys
 import time
 import urllib.error
@@ -18,7 +19,8 @@ sys.path.insert(0, "/opt/pr-detonator")
 from shared.contract import DetonateRequest  # noqa: E402
 from shared.signing import signed_headers  # noqa: E402
 
-API = "http://127.0.0.1:8443/detonate"
+API = "https://127.0.0.1:8443/detonate"
+TLS_CERT = "/etc/pr-detonator/tls/cert.pem"  # the Chamber's self-signed cert (setup.sh)
 TIMEOUT_S = 240
 
 
@@ -37,7 +39,8 @@ def detonate(key: str, repo: str, sha: str, command: list[str]) -> dict:
         API, data=body, method="POST",
         headers={"Content-Type": "application/json", **signed_headers(key, body)},
     )  # fmt: skip
-    with urllib.request.urlopen(http, timeout=TIMEOUT_S + 60) as resp:
+    ctx = ssl.create_default_context(cafile=TLS_CERT)
+    with urllib.request.urlopen(http, timeout=TIMEOUT_S + 60, context=ctx) as resp:
         return json.loads(resp.read())
 
 
