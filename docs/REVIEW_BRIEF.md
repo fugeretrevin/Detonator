@@ -1,7 +1,7 @@
 # PR Detonator: complete project brief for review
 
 **Purpose of this document.** It describes everything in the PR Detonator project as of
-**Nov 1, 2026 (repo commit `892c168`, eval scored at `00b06f7`)**: what it is, how it works,
+**Nov 1, 2026 (eval scored at commit `b45e980`; updated after fixing the open issues)**: what it is, how it works,
 what has been verified and how, what is open or weak, and what is planned before the
 submission deadline. It is written to be handed to a reviewer (human or model) whose job is
 to judge the project as a hackathon entry and say what to improve, cut, or emphasize.
@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (276 tests, all passing).
+- **[Test]** covered by the automated test suite (290 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -72,25 +72,33 @@ Two components plus GitHub:
    review with comments on the guilty lines.
 
 **Chamber (one disposable EC2 VM, Ubuntu, no IAM role)**
-1. FastAPI service on port 8443 (plain HTTP, HMAC-authenticated, 300 s replay window), one
+1. FastAPI service on port 8443 over **TLS** (self-signed cert for the VM's IP, pinned by the
+   Brain; plain HTTP is not served), HMAC-authenticated with a 300 s replay window, one
    detonation at a time (409 when busy).
 2. Validates the request (job id, 40-hex SHA, `https://github.com/<o>/<r>` URL only,
    command must start with `npm install`/`npm ci`, timeout 1–300 s).
-3. Clones the exact SHA **on the host** (`.git` removed afterwards); no token is ever sent
-   for public repos, and no token or host environment enters the sandbox.
+3. Clones the exact SHA **on the host** (`.git` removed afterwards). Public repos: no token.
+   Private repos: a fresh installation token scoped to that one repository, contents
+   read-only (verified: sees only that repo, writes get 403). No token or host environment
+   ever enters the sandbox.
 4. Runs `npm install` in a Docker container: `--cap-drop ALL`, `no-new-privileges`,
    read-only root, uid 10001, pids/memory/CPU limits, tmpfs `/tmp` and `$HOME`, a dedicated
    bridge network `det0` (10.250.0.0/24) with a fixed sandbox IP.
-5. **Tetragon v1.7.1 (eBPF)** records `process_exec` (binary, args, parent, uid, **cwd**) and
-   a `tcp_connect` kprobe (fires on SYN). Events are attributed to the container by ID,
-   deduplicated (so noise can't push a payload past the event caps), and capped.
+5. **Tetragon v1.7.1 (eBPF)** records `process_exec` (binary, args, parent, uid, **cwd**), a
+   `tcp_connect` kprobe (fires on SYN), and `security_file_open` on **planted bait
+   credentials** (fake `~/.npmrc`, `~/.aws/credentials`, `~/.ssh/id_ed25519`,
+   `~/.git-credentials`, mounted read-only into the sandbox's home). Events are attributed
+   to the container by ID, deduplicated (so noise can't push a payload past the caps), and
+   capped.
 6. **dnsmasq on det0** is the sandbox's only resolver and logs every query; the Chamber
    attributes queries to the sandbox IP and names each connect with the answer the sandbox
    actually received. **Exfiltration, tunnel and IP-lookup services are sinkholed** to TEST-NET
    addresses (IPv4 and IPv6), so a working payload leaks nothing.
-7. **iptables:** sandbox traffic to cloud metadata (169.254.0.0/16), private ranges and CGNAT
-   is rejected; DNS (UDP/TCP 53) is rejected except to the logging resolver; the only host
-   service the sandbox can reach is that resolver. IMDSv2 with hop limit 1 on the VM.
+7. **iptables:** **only TCP may leave the sandbox**. Every other protocol (UDP, ICMP, DNS to
+   public resolvers, …) is logged to the kernel log and rejected; the Chamber reads those
+   log lines back for the run window and reports them as blocked egress attempts. Traffic
+   to cloud metadata, private ranges and CGNAT is rejected; the only host service the
+   sandbox can reach is the logging resolver. IMDSv2 with hop limit 1 on the VM.
 8. Returns telemetry JSON: exec events, connect events (with resolved domain or none), DNS
    queries, stdout/stderr tails, status (`completed`/`timeout`/`error`), truncation flag.
 
@@ -113,13 +121,17 @@ Chamber sinkhole.
 | `NET_INTERNAL_TARGET` | high | connect attempt to link-local/private/metadata (loopback and the resolver's port 53 excluded) |
 | `NET_EXFIL_SERVICE` | high | DNS lookup of, or connect to, a known exfil/tunnel/IP-lookup service (webhook.site, pipedream, interact.sh/oast, ngrok, trycloudflare, pastebin, transfer.sh, Telegram/Discord APIs, ipinfo, ipify, …) |
 | `DNS_ENCODED_LABEL` | high | a DNS label ≥ 40 chars that looks encoded (all hex, or ≥ 20% digits) |
+| `NET_NON_TCP_EGRESS` | high | any UDP/ICMP/other non-TCP packet leaving the sandbox (blocked; from the firewall log) |
+| `CRED_FILE_ACCESS` | high | a process descended from an install script opens a planted bait credential (npm itself reading `~/.npmrc` doesn't count) |
 | `NET_UNLISTED_DOMAIN` | low | connect to a named domain not on the allowlist (npm/yarn registries, GitHub and its release/object hosts, nodejs.org) |
 | `TELEMETRY_TRUNCATED` | low | event caps hit or log rotated: a flood could be hiding something |
 
-Four rules were added because the evaluation exposed gaps: `NET_INTERNAL_TARGET` and
-`DNS_ENCODED_LABEL` (simulated metadata probe and DNS-label exfil got past rules), and
-`EXEC_DROPPED_BINARY` and `NET_EXFIL_SERVICE` (the Shai-Hulud reconstruction got past rules).
-Each was checked against the 26 benign installs before adoption: none fired.
+Six rules were added because evaluation or review exposed gaps: `NET_INTERNAL_TARGET` and
+`DNS_ENCODED_LABEL` (simulated metadata probe and DNS-label exfil got past rules),
+`EXEC_DROPPED_BINARY` and `NET_EXFIL_SERVICE` (the Shai-Hulud reconstruction got past
+rules), `NET_NON_TCP_EGRESS` (UDP exfil was an untraced channel) and `CRED_FILE_ACCESS`
+(credential reads were invisible). Each was checked against the 26 benign installs: none
+fired.
 
 ### 4.2 Verdict [Test]
 
@@ -197,8 +209,9 @@ Each was checked against the 26 benign installs before adoption: none fired.
   @mentions, images or fake bot markers). [Test]
 - No secrets in the blast radius: the sandbox gets no tokens or host env; public repos are
   cloned anonymously; the Chamber VM has no IAM role; IMDSv2 hop limit 1.
-- Private repos: **not detonated**. The Brain→Chamber link is HMAC-authenticated but not
-  encrypted, so no clone token is sent; private repos fail closed with an explanation. [Test]
+- Private repos: detonated only over the TLS link, with a single-repo, read-only token used
+  by git on the Chamber host. Without TLS configured they fail closed. [Test; token scope
+  verified against the GitHub API; an end-to-end private-repo PR is not yet tested]
 - Fail closed: timeouts, Chamber errors, internal exceptions, private repos all → failure.
   [Test, Live: E7]
 - Flood resistance: repeated events collapse; caps set `TELEMETRY_TRUNCATED`, which blocks a
@@ -210,7 +223,9 @@ Each was checked against the 26 benign installs before adoption: none fired.
 ## 6. Verified end to end on GitHub [Live]
 
 All on `pr-detonator-demo/demo-target`, real Chamber, real models. Re-run after each major
-change (DNS capture, guilty line, dependency attribution, Prompt Guard); results unchanged.
+change (DNS capture, guilty line, dependency attribution, Prompt Guard, TLS cutover and
+the open-issue fixes); results unchanged. Each re-run now edits the bot's latest report
+comment instead of adding a new one.
 
 | Scenario | PR | Result |
 |---|---|---|
@@ -228,19 +243,19 @@ Typical detonation 3–20 s; a full check completes in well under a minute.
 
 ## 7. Evaluation [Eval]
 
-42 real detonations, re-run on Nov 1 with the current Chamber (DNS capture and sinkhole on),
-**scored at commit `00b06f7` (clean tree, same code as deployed)** with `muse-spark-1.3` and
-Prompt Guard 2. Three setups: rules only; rules + Intent Contract; full (contract + Prompt
-Guard + Muse analysis, i.e. production).
+43 real detonations, re-run on Nov 1 on the current Chamber (TLS, DNS capture and sinkhole,
+non-TCP egress blocked, credential bait), **scored at commit `b45e980` (clean tree, same
+code as deployed)** with `muse-spark-1.3` and Prompt Guard 2. Three setups: rules only;
+rules + Intent Contract; full (contract + Prompt Guard + Muse analysis, i.e. production).
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
 |---|---|---|---|---|
 | Benign (26) | rules | 21 | 5 | **0** |
 | Benign (26) | + contract | 23 | 3 | **0** |
-| Benign (26) | full | 22 | 4 | **0** |
-| Simulated attacks (14) | rules | 0 | 1 | 13 |
-| Simulated attacks (14) | + contract | 0 | 1 | 13 |
-| Simulated attacks (14) | full | 0 | 0 | **14** |
+| Benign (26) | full | 23 | 3 | **0** |
+| Simulated attacks (15) | rules | 0 | 1 | 14 |
+| Simulated attacks (15) | + contract | 0 | 1 | 14 |
+| Simulated attacks (15) | full | 0 | 0 | **15** |
 | Real-incident reconstructions (2) | all three | 0 | 0 | **2** |
 
 - **Benign set:** lodash, express, react, typescript, puppeteer, playwright-chromium,
@@ -248,15 +263,17 @@ Guard + Muse analysis, i.e. production).
   cypress, chromedriver, ffmpeg-static, @sentry/cli, core-js, protobufjs, es5-ext, nodemon,
   husky, msw, @biomejs/biome, lefthook. Each as an "Add <pkg>" PR, current versions, no
   lockfile. 17 of them ran install scripts.
-- The 4 benign "needs review" in full: puppeteer, chromedriver, playwright-chromium (all
-  download from storage.googleapis.com, deliberately never auto-cleared), and cypress (Muse
-  said "suspicious" in two of three runs).
+- The 3 benign "needs review" in full: puppeteer, chromedriver, playwright-chromium (all
+  download from storage.googleapis.com, deliberately never auto-cleared). Cypress varies with
+  the model: "suspicious" in two earlier runs, clean in this one.
+- Every benign install opened the bait `~/.npmrc`, always from npm's own process; the
+  credential rule fired on none of them.
 - **Simulated attacks** (written for this eval, all targeting TEST-NET-3 or our own blocked
   addresses): curl env exfil, wget|sh, /dev/tcp reverse shell, base64→sh, pure-JS raw socket,
   HTTPS env exfil from node, char-code obfuscation, .npmrc theft, perl socket, cloud metadata
   probe, DNS-label exfil, exfil to a resolvable domain (example.com, dummy body), exfil +
-  prompt injection, delayed (4 s) payload.
-- **What each layer adds:** rules block 13/14 attacks with zero benign blocks; the contract
+  prompt injection, delayed (4 s) payload, env exfil over UDP.
+- **What each layer adds:** rules block 14/15 attacks with zero benign blocks; the contract
   cuts benign "needs review" 5 → 3 without clearing any attack; Muse catches the one attack
   rules can't (m12: exfil to a resolvable domain, only a low "unlisted domain" for rules).
 - **Real-incident reconstructions** (defanged; delivered as Dependabot-style dependency
@@ -265,10 +282,12 @@ Guard + Muse analysis, i.e. production).
   - **ua-parser-js 0.7.29 (2021):** preinstall → OS check → preinstall.sh → geolocation lookup
     → curl/wget the `jsextension` miner from a raw IP. Blocked by rules before and after the
     new rules. (The geolocation service is a stand-in: sources don't name it.)
-  - **Shai-Hulud (2025):** postinstall → `node bundle.js` → downloads the **real TruffleHog**
-    from GitHub releases → runs it from `/tmp` → POSTs results to webhook.site (sinkholed).
-    **Under the rules before this reconstruction, it was only "needs review" (mergeable).**
-    Now blocked by rules alone; Muse independently called it credential-stealing.
+  - **Shai-Hulud (2025):** postinstall → `node bundle.js` → reads `~/.npmrc` (bait) →
+    downloads the **real TruffleHog** from GitHub releases → runs it from `/tmp` → POSTs
+    results to webhook.site (sinkholed). **Under the rules before this reconstruction, it
+    was only "needs review" (mergeable).** Now blocked by rules alone
+    (`CRED_FILE_ACCESS`, `EXEC_DROPPED_BINARY`, `NET_EXFIL_SERVICE`); Muse independently
+    called it credential-stealing.
   - Both blamed on the bumped `package.json` line, naming the package.
   - **Not reconstructed:** event-stream (2018). Its payload ran when one specific app
     `require`d the package, not at install; install-time detonation cannot see it (scope
@@ -290,50 +309,31 @@ Guard + Muse analysis, i.e. production).
 
 ## 9. Open issues and known limitations
 
-Ordered roughly by importance. Items marked **(fixable before deadline)** are small.
+The first version of this brief listed 15 open issues. Status after the fix pass (Nov 1):
 
-1. **Non-DNS UDP and ICMP egress are neither traced nor blocked.** Tetragon hooks only
-   `tcp_connect`; iptables rejects only UDP/TCP 53, metadata and private ranges. A payload
-   could exfiltrate over UDP to a public IP unseen. **(fixable before deadline:** reject all
-   non-TCP egress from the sandbox; optionally trace `udp_sendmsg`/count rejected packets as
-   a rule.)
-2. **No file-access tracing.** Reading `~/.npmrc`, SSH keys or env files is invisible; only the
-   subsequent exfiltration is caught. The sandbox holds no secrets, so this limits
-   explanation, not safety.
-3. **Install-time only.** Payloads that run on `require`/import, at runtime, or only in a
-   specific consumer app (event-stream) are out of scope. Running tests or importing changed
-   packages in the sandbox would extend coverage.
-4. **Sandbox-aware or delayed malware.** A payload can check for CI/containers/eBPF and stay
-   dormant, or wait longer than the timeout (180 s default). Mitigations are not implemented.
-5. **Private repos unsupported** (no TLS between Brain and Chamber). Planned: TLS/mTLS.
-6. **Single Chamber VM, one job at a time.** Queued PRs wait ~6.5 min, then fail closed. Not
-   load-tested. The VM is a single point of failure; `setup.sh` is idempotent but a rebuild
-   on a fresh VM has never been tested; no AMI snapshot yet.
-7. **Fork PRs untested** (should work by design: allowlist checks the base repo owner; the
-   fork's public clone URL is used).
-8. **Allowlist:** only `pr-detonator-demo` is enabled, so judges can't install the App on their
-   own repos without a config change.
-9. **Exfil to an arbitrary resolvable domain** is only low severity for rules; blocking depends
-   on the model (m12). A stricter policy (unlisted domain from a non-package-manager process
-   = high) has not been evaluated for false positives.
-10. **Evaluation scale and authorship:** 26 benign packages, 14 self-written attacks, 2
-    reconstructions, single run each. Not a real-world detection rate.
-11. **Benign "needs review" (4/26)**, mostly Google Cloud Storage downloads (a deliberate
-    trade-off) and cypress (model variance). "Needs review" is mergeable.
-12. **Demo dependency attacks use `file:` tarballs** in the repo instead of a registry (to avoid
-    publishing malware-like packages). Real registry flows (lockfile `resolved` URLs,
-    `npm ci`) are not exercised.
-13. **Each PR update posts a new comment** (no comment editing/deduplication across runs).
-14. **Secrets exposed during development:** the Meta API key and webhook secret appeared in
-    the development chat and must be rotated before the demo (never committed: verified by
-    scanning all git history for the actual values).
-15. **IPv6:** the sandbox has none, so v6 paths are untested.
+| # | Issue | Status |
+|---|---|---|
+| 1 | Non-DNS UDP and ICMP egress untraced and unblocked | **Fixed.** Only TCP may leave; everything else is logged and rejected, reported as `NET_NON_TCP_EGRESS`. Before the fix, a test UDP datagram really left the sandbox. New eval case m15 (UDP exfil) is blocked. |
+| 2 | No file-access tracing | **Fixed for credentials.** Planted bait credentials, traced opens, `CRED_FILE_ACCESS`. Other file reads are still untraced. |
+| 3 | Install-time only (require/runtime payloads, event-stream) | **Open (scope).** Running tests or importing changed packages in the sandbox would extend coverage. |
+| 4 | Sandbox-aware or delayed malware | **Partly addressed.** The bait makes the sandbox look like a developer machine with credentials to steal. No fake env tokens or `CI=true`: real installers read `GITHUB_TOKEN` and could break. Timeout-evading payloads (> 180 s) are still possible. |
+| 5 | Private repos unsupported | **Fixed, pending one live test.** TLS with a pinned cert; single-repo, read-only token, verified against the GitHub API. An end-to-end PR on a private repo still needs a private repo added to the App. |
+| 6 | Single VM, untested rebuild, no AMI | **Open; mitigation pending.** AMI snapshot to be taken by the owner (no AWS CLI access from the dev machine, by design). Fresh-VM rebuild untested. |
+| 7 | Fork PRs untested | **Open.** Should work by design; needs a fork to test. |
+| 8 | Allowlist limits who can try it | **Open by choice.** "Try it yourself" deliberately not offered (strangers' code on the VM). |
+| 9 | Exfil to an arbitrary resolvable domain is low for rules | **Open (by design).** A stricter rule would block puppeteer-style legitimate downloads; the model catches it (m12). |
+| 10 | Evaluation scale and authorship | **Open.** 26 benign, 15 self-written attacks, 2 reconstructions, one run each. Not a real-world detection rate. |
+| 11 | Benign "needs review" | **Accepted trade-off.** 3/26: Google Cloud Storage downloads are never auto-cleared. "Needs review" is mergeable. |
+| 12 | Demo dependency attacks use `file:` tarballs | **Open (deliberate).** Avoids publishing malware-like packages; registry flows (`npm ci`, lockfile `resolved` URLs) are not exercised. |
+| 13 | Each PR update posted a new comment | **Fixed.** The bot edits its latest report comment; only comments made by this App (by app id) are ever edited, never one that merely contains the marker. |
+| 14 | Secrets exposed during development | **Open (owner action).** Rotate the Meta API key and webhook secret before the demo. Never committed (verified across all git history). |
+| 15 | IPv6 untested | **Open (low risk).** The sandbox has no IPv6; the sinkhole answers AAAA with a documentation address. |
 
 ## 10. Plan to the deadline
 
-- **Nov 1–2:** architecture slide (done), this brief (done), submission write-up; optional
-  quick fixes (UDP egress); AMI snapshot of the Chamber; fork-PR test; code freeze evening of
-  Nov 2.
+- **Nov 1–2:** architecture slide (done), this brief (done), open-issue fix pass (done:
+  #1, #2, #5, #13; #4 partly), submission write-up; AMI snapshot of the Chamber; private-repo
+  and fork-PR live tests; code freeze evening of Nov 2.
 - **Nov 3:** rotate secrets, redeploy, re-run E1–E8; record the 3-minute demo
   (`demo/DEMO_SCRIPT.md`: E8 dependency bump → Shai-Hulud reconstruction → E5 decoded line →
   E6 injection → eval table → vision) plus a backup recording.
@@ -359,8 +359,8 @@ Ordered roughly by importance. Items marked **(fixable before deadline)** are sm
    would you cut?
 2. Is the "model predicts, kernel verifies, rules set the floor" story clear and convincing?
    Is the Meta-model usage substantial enough, or does it read as bolted on?
-3. Which open issue (Section 9) would a security-savvy judge attack first, and should it be
-   fixed (e.g., UDP egress) or just disclosed?
+3. Which remaining open issue (Section 9) would a security-savvy judge attack first, and
+   should it be fixed or just disclosed? What attack class is missing entirely?
 4. Is the evaluation credible as presented? What would make it more convincing in the time
    left (more benign packages, more reconstructions, repeated runs)?
 5. Is honest reporting of Prompt Guard 2's miss a strength or a liability in judging?
@@ -381,7 +381,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            276 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, Muse,
+tests/            290 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

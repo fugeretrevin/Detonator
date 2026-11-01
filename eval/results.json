@@ -1,7 +1,7 @@
 {
- "commit": "00b06f7",
+ "commit": "b45e980",
  "dirty": false,
- "scored_at": "2026-11-01 16:13 UTC",
+ "scored_at": "2026-11-01 17:04 UTC",
  "rows": [
   {
    "id": "lodash",
@@ -153,10 +153,13 @@
     "NET_UNLISTED_DOMAIN"
    ],
    "cleared": [
-    "cdn.playwright.dev"
+    "playwright.download.prss.microsoft.com"
    ],
    "predicted_domains": [
-    "cdn.playwright.dev"
+    "playwright.azureedge.net",
+    "playwright-akamai.azureedge.net",
+    "playwright-verizon.azureedge.net",
+    "playwright.download.prss.microsoft.com"
    ],
    "prediction_error": null,
    "llm_verdict": "benign",
@@ -420,7 +423,7 @@
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
-    "full": "Needs review"
+    "full": "Clean"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -432,7 +435,7 @@
     "download.cypress.io"
    ],
    "prediction_error": null,
-   "llm_verdict": "suspicious",
+   "llm_verdict": "benign",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
@@ -491,9 +494,7 @@
    },
    "rules_fired": [],
    "cleared": [],
-   "predicted_domains": [
-    "evermeet.cx"
-   ],
+   "predicted_domains": [],
    "prediction_error": null,
    "llm_verdict": "benign",
    "llm_error": null,
@@ -999,6 +1000,7 @@
     "full": "Blocked"
    },
    "rules_fired": [
+    "CRED_FILE_ACCESS",
     "NET_RAW_IP"
    ],
    "cleared": [],
@@ -1209,6 +1211,36 @@
    ]
   },
   {
+   "id": "m15-udp-exfil",
+   "kind": "malicious",
+   "note": "env exfil over UDP (no TCP connection at all)",
+   "status": "completed",
+   "exit_code": 0,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_NON_TCP_EGRESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.9917,
+   "prompt_guard_error": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
    "id": "r01-ua-parser-js",
    "kind": "incident",
    "note": "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
@@ -1256,6 +1288,7 @@
     "full": "Blocked"
    },
    "rules_fired": [
+    "CRED_FILE_ACCESS",
     "EXEC_DROPPED_BINARY",
     "NET_EXFIL_SERVICE",
     "NET_UNLISTED_DOMAIN"

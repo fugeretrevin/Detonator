@@ -58,7 +58,7 @@ package.json tell the AI reviewer the PR is approved.
 ## 2:25 – 2:45 · And it doesn't cry wolf
 
 Show the eval table: 26 popular packages with install-time downloads (puppeteer, electron,
-prisma, cypress, …): **0 blocked**. 14 of 14 simulated attacks and both real-incident
+prisma, cypress, …): **0 blocked**. 15 of 15 simulated attacks and both real-incident
 reconstructions blocked.
 
 > "Muse predicts what the PR should do *before* it runs, from the title and description

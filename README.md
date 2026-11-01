@@ -85,6 +85,12 @@ flowchart LR
   an unreachable address is captured.
 - **No secrets in the blast radius.** The sandbox gets no tokens and no host environment;
   public repos are cloned anonymously. The VM has no IAM role and IMDSv2 with hop limit 1.
+  Private repos are cloned on the host with a token that can only read that one repo, sent
+  over TLS to a certificate the Brain pins.
+- **Bait, not secrets.** The sandbox's home holds fake credentials (`~/.npmrc`, AWS, SSH,
+  git); an install script that opens one is flagged.
+- **Only TCP leaves, and all of it is traced.** UDP, ICMP and DNS to public resolvers are
+  blocked and logged; exfil services resolve to a sinkhole.
 - **Spoof-resistant naming.** An IP is named only by the sandbox's own lookups, under the
   name it *asked for*: `evil.example` CNAME'd to `registry.npmjs.org` is still reported as
   `evil.example`. With no lookup, it's a raw-IP connect. A Brain-side fallback only accepts
@@ -97,13 +103,13 @@ flowchart LR
 
 ## Results
 
-**Evaluation (42 real detonations, scored 2026-11-01 at commit `00b06f7`,
+**Evaluation (43 real detonations, scored 2026-11-01 at commit `b45e980`,
 [details](eval/README.md)):** 0 of 26 popular packages with install-time downloads blocked
-(puppeteer, electron, prisma, cypress, ...); 14 of 14 simulated install-time attacks
+(puppeteer, electron, prisma, cypress, ...); 15 of 15 simulated install-time attacks
 blocked; and **defanged reconstructions of two real incidents, ua-parser-js (2021) and the
 Shai-Hulud npm worm (2025), both blocked and blamed on the version-bump line**. Rebuilding
 Shai-Hulud exposed a real gap (it was only "needs review"), closed by two new kernel-level
-rules. Rules alone block 13 of 14 simulated attacks; the model catches the remaining one
+rules. Rules alone block 14 of 15 simulated attacks; the model catches the remaining one
 (exfil to a resolvable domain).
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
