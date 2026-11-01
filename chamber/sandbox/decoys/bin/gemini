@@ -1,0 +1,3 @@
+#!/bin/sh
+# PR Detonator decoy tool: does nothing. Tetragon records the exec and its arguments.
+exit 0

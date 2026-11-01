@@ -31,6 +31,7 @@ echo "== app code -> $APP"
 install -d -m 0755 "$APP" /var/lib/pr-detonator/jobs
 rm -rf "$APP/shared" "$APP/chamber"
 cp -r "$REPO/shared" "$REPO/chamber" "$APP/"
+chmod 0755 "$APP"/chamber/sandbox/decoys/bin/*  # decoy CLIs must be executable in the sandbox
 [[ -x "$APP/venv/bin/python" ]] || python3 -m venv "$APP/venv"
 "$APP/venv/bin/pip" install -q --upgrade pip
 "$APP/venv/bin/pip" install -q -r "$APP/chamber/requirements.txt"

@@ -14,6 +14,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+from chamber.decoys import DECOY_BIN, decoy_env, make_decoys, write_bait_files
 from chamber.dns import name_connects, parse_dns_log
 from chamber.egress import parse_kernel_log, read_kernel_log
 from chamber.scripts import collect_executed_scripts
@@ -43,6 +44,8 @@ class Config:
     # Fake credentials mounted read-only into the sandbox's home; the credential-files
     # Tetragon policy reports any open of them.
     bait_dir: str = os.environ.get("BAIT_DIR", "/opt/pr-detonator/chamber/sandbox/bait")
+    # Decoy CLIs (gh, aws, claude, gemini, trufflehog) that do nothing; their exec is the signal.
+    decoy_bin: str = os.environ.get("DECOY_BIN", "/opt/pr-detonator/chamber/sandbox/decoys/bin")
 
 
 # bait file -> where a victim's real one would live
@@ -54,11 +57,22 @@ BAIT_FILES = {
 }
 
 
-def bait_mounts(bait_dir: str) -> list[str]:
+def bait_mounts(bait_dir: str, per_run: dict[str, Path] | None = None) -> list[str]:
+    """Static bait from bait_dir; per-run files (carrying this run's decoys) win."""
     args: list[str] = []
     for name, target in BAIT_FILES.items():
-        if (Path(bait_dir) / name).is_file():
-            args += ["-v", f"{Path(bait_dir) / name}:{target}:ro"]
+        source = (per_run or {}).get(name) or Path(bait_dir) / name
+        if source.is_file():
+            args += ["-v", f"{source}:{target}:ro"]
+    return args
+
+
+def decoy_args(cfg: "Config", decoys: dict[str, str] | None) -> list[str]:
+    if not decoys:
+        return []
+    args = [a for k, v in decoy_env(decoys).items() for a in ("-e", f"{k}={v}")]
+    if Path(cfg.decoy_bin).is_dir():
+        args += ["-v", f"{cfg.decoy_bin}:{DECOY_BIN}:ro"]
     return args
 
 
@@ -117,7 +131,14 @@ def _chown_tree(root: Path, uid: int) -> None:
             os.lchown(os.path.join(dirpath, name), uid, uid)
 
 
-def docker_run_args(req: DetonateRequest, cfg: Config, name: str, src: Path) -> list[str]:
+def docker_run_args(
+    req: DetonateRequest,
+    cfg: Config,
+    name: str,
+    src: Path,
+    decoys: dict[str, str] | None = None,
+    bait: dict[str, Path] | None = None,
+) -> list[str]:
     return [
         "docker", "run", "-d", "--name", name,
         "--network", cfg.network, "--ip", cfg.sandbox_ip,
@@ -130,9 +151,11 @@ def docker_run_args(req: DetonateRequest, cfg: Config, name: str, src: Path) -> 
         # package (or payload) writing to ~ fails and the run proves nothing.
         "--tmpfs", "/tmp:rw,exec,size=512m,mode=1777",
         "--tmpfs", f"/home/runner:rw,exec,size=1g,uid={SANDBOX_UID},gid={SANDBOX_UID},mode=0755",
-        "-v", f"{src}:/work:rw", "-w", "/work", *bait_mounts(cfg.bait_dir),
+        "-v", f"{src}:/work:rw", "-w", "/work", *bait_mounts(cfg.bait_dir, bait),
         "-e", "HOME=/home/runner", "-e", "npm_config_cache=/tmp/.npm",
         "-e", "npm_config_update_notifier=false",
+        # Fake, per-run: none of these is a real credential (chamber/decoys.py).
+        *decoy_args(cfg, decoys),
         cfg.image, *req.command,
     ]  # fmt: skip
 
@@ -151,13 +174,14 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
     status, exit_code, error = "completed", None, None
     stdout = stderr = ""
     execs, connects, queries, files, scripts, truncated = [], [], [], [], [], False
+    decoys = make_decoys()
 
     def result() -> DetonateResult:
         return DetonateResult(
             job_id=req.job_id, status=status, exit_code=exit_code,
             duration_s=round(time.monotonic() - started, 2), exec_events=execs,
             connect_events=connects, dns_queries=queries, file_events=files,
-            executed_scripts=scripts,
+            executed_scripts=scripts, decoys=decoys,
             stdout_tail=_tail(stdout), stderr_tail=_tail(stderr), truncated=truncated,
             error=error,
         )  # fmt: skip
@@ -170,13 +194,14 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
             status, error = "error", f"clone failed ({type(exc).__name__})"
             return result()
         _chown_tree(src, SANDBOX_UID)
+        bait = write_bait_files(job_dir / "bait", decoys)  # outside src: not in /work
 
         tail, dns_tail = LogTail(cfg.tetragon_log), LogTail(cfg.dns_log)
         tail.start()
         dns_tail.start()
         started = time.monotonic()  # duration measures the detonation itself
         wall_start = time.time()
-        proc = _docker(*docker_run_args(req, cfg, name, src)[1:])
+        proc = _docker(*docker_run_args(req, cfg, name, src, decoys, bait)[1:])
         if proc.returncode != 0:
             status, error = "error", f"docker run failed: {proc.stderr.strip()[:300]}"
             return result()

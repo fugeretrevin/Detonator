@@ -1,8 +1,9 @@
 """Telemetry -> enrich -> rules -> LLM -> verdict -> report. Pure orchestration, no Modal."""
 
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
+from brain.decoys import decoy_hits, redact, redact_text
 from brain.enrich import enrich_connects
 from brain.github_client import ChangedFile, PrMetadata
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
@@ -69,7 +70,11 @@ def analyze(
     guard: GuardOutcome | None = None,
 ) -> Analysis:
     result = enrich(result)
-    rule_hits = evaluate(result, allowed_cidrs=allowed_cidrs)
+    raw_hits = evaluate(result, allowed_cidrs=allowed_cidrs) + decoy_hits(result)
+    raw_hits.sort(key=lambda h: (-h.severity, h.ts))
+    # Rules see the raw result; everything shown to the model or posted sees decoys redacted.
+    rule_hits = [replace(h, evidence=redact_text(h.evidence, result)) for h in raw_hits]
+    view = redact(result)
     contract = evaluate_contract(prediction, result)
     if flagged(guard):
         # The prediction came from text Prompt Guard flags as an injection: trust none of it.
@@ -77,10 +82,10 @@ def analyze(
     else:
         hits, cleared = apply_contract(rule_hits, contract, metadata)
     guilty = find_guilty_lines(hits, result, list(files))
-    outcome = llm(metadata, hits, result, diff, contract.for_prompt(),
+    outcome = llm(metadata, hits, view, diff, contract.for_prompt(),
                   guilty=for_prompt(guilty) or None)  # fmt: skip
-    final = combine(hits, outcome, result)
-    report = render(final, hits, outcome, result, job_id=job_id, contract=contract,
+    final = combine(hits, outcome, view)
+    report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty,
-                    script_runs=script_runs(hits, result), guard=guard)  # fmt: skip
-    return Analysis(final, hits, outcome, result, report, contract, cleared, rule_hits, guilty)
+                    script_runs=script_runs(hits, view), guard=guard)  # fmt: skip
+    return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty)

@@ -10,7 +10,7 @@ MAX_DNS_QUERIES = 200
 MAX_FILE_EVENTS = 100
 MAX_EXECUTED_SCRIPTS = 5
 MAX_SCRIPT_CHARS = 20_000
-# 2 (Nov 1): + ExecEvent.cwd, ConnectEvent.protocol, file_events, executed_scripts. Every
+# 2 (Nov 1): + ExecEvent.cwd, ConnectEvent.protocol, file_events, executed_scripts, decoys. Every
 # addition is optional, so a v1 Chamber's results still validate.
 CONTRACT_VERSION = 2
 MAX_TAIL_CHARS = 4000
@@ -90,6 +90,9 @@ class DetonateResult(BaseModel):
     executed_scripts: list[ExecutedScript] = Field(
         default_factory=list, max_length=MAX_EXECUTED_SCRIPTS
     )
+    # This run's fake canary credentials (name -> value), so the Brain can spot them in what
+    # the sandbox did. Never real secrets; redacted before anything is shown or posted.
+    decoys: dict[str, str] = Field(default_factory=dict)
     stdout_tail: str = Field(max_length=MAX_TAIL_CHARS)
     stderr_tail: str = Field(max_length=MAX_TAIL_CHARS)
     truncated: bool = False  # true if events were capped
