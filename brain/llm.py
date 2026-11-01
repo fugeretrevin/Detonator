@@ -9,6 +9,7 @@ and is fenced off as data in the prompt.
 import json
 import os
 import re
+import time
 from dataclasses import dataclass
 from typing import Literal
 
@@ -187,11 +188,36 @@ class LlmVerdict(BaseModel):
         return next((e.explanation for e in self.line_explanations if e.id == line_id), None)
 
 
+# $ per 1M tokens, Standard mode (dev.meta.ai/docs/pricing-rate-limits, checked Nov 1 2026).
+# Reasoning tokens are counted inside completion_tokens and billed here as output.
+PRICES_PER_M = {"muse-spark-1.3": (1.25, 4.25)}
+
+
+@dataclass(frozen=True)
+class Usage:
+    """Tokens and wall time for one model task, summed over its attempts (all are billed)."""
+
+    model: str
+    prompt_tokens: int = 0
+    completion_tokens: int = 0
+    reasoning_tokens: int = 0
+    latency_s: float = 0.0
+    attempts: int = 0
+
+    @property
+    def cost_usd(self) -> float | None:
+        price = PRICES_PER_M.get(self.model)
+        if not price:
+            return None
+        return (self.prompt_tokens * price[0] + self.completion_tokens * price[1]) / 1e6
+
+
 @dataclass(frozen=True)
 class LlmOutcome:
     model: str
     verdict: LlmVerdict | None = None
     error: str | None = None
+    usage: Usage | None = None
 
 
 def neutralize(text: str) -> str:
@@ -305,8 +331,9 @@ class LlmClient:
 
     def structured(
         self, messages: list[dict], name: str, schema: dict, model_cls: type[BaseModel]
-    ) -> tuple[BaseModel | None, str | None]:
-        """One schema-constrained call with retry. Returns (parsed, None) or (None, error)."""
+    ) -> tuple[BaseModel | None, str | None, Usage]:
+        """One schema-constrained call with retry: (parsed, None, usage) or (None, error,
+        usage). Usage sums every attempt, since failed attempts are billed too."""
         payload = {
             "model": self.model,
             "temperature": 0,
@@ -317,18 +344,32 @@ class LlmClient:
             },
         }
         error = "no attempts made"
+        tokens = [0, 0, 0]
+        started = time.monotonic()
+        attempts = 0
+
+        def usage() -> Usage:
+            return Usage(self.model, *tokens, round(time.monotonic() - started, 2), attempts)
+
         for _ in range(self._attempts):
+            attempts += 1
             try:
                 resp = self._http.post("/chat/completions", json=payload)
                 resp.raise_for_status()
-                return model_cls.model_validate_json(response_json(resp.json())), None
+                body = resp.json()
+                u = body.get("usage") or {}
+                tokens[0] += int(u.get("prompt_tokens") or 0)
+                tokens[1] += int(u.get("completion_tokens") or 0)
+                details = u.get("completion_tokens_details") or {}
+                tokens[2] += int(details.get("reasoning_tokens") or 0)
+                return model_cls.model_validate_json(response_json(body)), None, usage()
             except httpx.HTTPStatusError as exc:
                 error = f"HTTP {exc.response.status_code}"
             except httpx.HTTPError as exc:
                 error = type(exc).__name__
             except (ValidationError, ValueError, KeyError, IndexError, TypeError) as exc:
                 error = f"invalid model output ({type(exc).__name__})"
-        return None, error
+        return None, error, usage()
 
     def analyze(
         self,
@@ -340,8 +381,8 @@ class LlmClient:
         guilty: list[dict] | None = None,
     ) -> LlmOutcome:
         messages = build_messages(metadata, hits, result, diff, contract, guilty)
-        verdict, error = self.structured(messages, "detonator_verdict", SCHEMA, LlmVerdict)
-        return LlmOutcome(self.model, verdict=verdict, error=error)
+        verdict, error, usage = self.structured(messages, "detonator_verdict", SCHEMA, LlmVerdict)
+        return LlmOutcome(self.model, verdict=verdict, error=error, usage=usage)
 
 
 def llm_client_from_env() -> LlmClient:

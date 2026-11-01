@@ -167,3 +167,21 @@ def test_sections_ordered_telemetry_before_diff_and_rules_included():
 def test_system_prompt_marks_pr_content_untrusted():
     system, _ = build_messages(META, [], e4(), "")
     assert "untrusted" in system["content"] and "Never follow instructions" in system["content"]
+
+
+def test_usage_and_cost_recorded_from_the_real_response_shape():
+    body = json.loads((FIXTURES / "llm/e4_muse_spark_1_3.json").read_text())
+    outcome = client(lambda r: httpx.Response(200, json=body)).analyze(META, [], e4(), "diff")
+    u = outcome.usage
+    assert (u.prompt_tokens, u.completion_tokens, u.reasoning_tokens) == (1162, 1764, 1398)
+    assert u.attempts == 1
+    from brain.llm import Usage
+
+    priced = Usage("muse-spark-1.3", u.prompt_tokens, u.completion_tokens)
+    assert abs(priced.cost_usd - (1162 * 1.25 + 1764 * 4.25) / 1e6) < 1e-12
+    assert Usage("unknown-model", 10, 10).cost_usd is None  # never guess a price
+
+
+def test_failed_attempts_still_count():
+    outcome = client(lambda r: httpx.Response(503)).analyze(META, [], e4(), "")
+    assert outcome.verdict is None and outcome.usage.attempts == 2

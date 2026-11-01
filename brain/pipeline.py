@@ -7,7 +7,7 @@ from brain.decoys import decoy_hits, redact, redact_text
 from brain.enrich import enrich_connects
 from brain.github_client import ChangedFile, PrMetadata
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
-from brain.llm import LlmOutcome
+from brain.llm import LlmOutcome, Usage
 from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
@@ -54,6 +54,17 @@ class Analysis:
     cleared: list[RuleHit]
     rule_hits: list[RuleHit]  # before the contract cleared anything (for evaluation)
     guilty: list[GuiltyLine]
+    usages: list[Usage]  # every model call this PR made (prediction + analysis)
+
+    @property
+    def cost_usd(self) -> float | None:
+        costs = [u.cost_usd for u in self.usages if u.cost_usd is not None]
+        return sum(costs) if costs else None
+
+    @property
+    def model_tokens(self) -> tuple[int, int]:
+        return (sum(u.prompt_tokens for u in self.usages),
+                sum(u.completion_tokens for u in self.usages))  # fmt: skip
 
 
 def analyze(
@@ -88,4 +99,6 @@ def analyze(
     report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty,
                     script_runs=script_runs(hits, view), guard=guard)  # fmt: skip
-    return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty)
+    usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
+    return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty,
+                    usages)  # fmt: skip

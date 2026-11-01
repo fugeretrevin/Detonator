@@ -67,12 +67,18 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         ),  # fmt: skip
     }
     full = runs["full"]
+    prompt_tok, completion_tok = full.model_tokens
     return {
         "id": case.id,
         "kind": case.kind,
         "note": case.note,
         "status": result.status,
         "exit_code": result.exit_code,
+        "detonation_s": result.duration_s,
+        "model_latency_s": round(sum(u.latency_s for u in full.usages), 2),
+        "model_prompt_tokens": prompt_tok,
+        "model_completion_tokens": completion_tok,
+        "cost_usd": full.cost_usd,
         "outcomes": {k: a.final.title for k, a in runs.items()},
         "rules_fired": sorted({h.rule_id for h in runs["rules"].hits}),
         "cleared": sorted({h.target for h in runs["contract"].cleared}),
@@ -103,6 +109,31 @@ def summarize(rows: list[dict]) -> list[str]:
             cells = " | ".join(f"{counts[t]}/{len(subset)}" for t in ICON)
             out.append(f"| {kind} ({len(subset)}) | {cfg} | {cells} |")
     return out
+
+
+def _pctl(values: list[float], p: float) -> float:
+    s = sorted(values)
+    return round(s[min(len(s) - 1, int(p * len(s)))], 2) if s else 0.0
+
+
+def cost_latency(rows: list[dict]) -> list[str]:
+    det = [r["detonation_s"] for r in rows]
+    lat = [r["model_latency_s"] for r in rows]
+    costs = [r["cost_usd"] for r in rows if r.get("cost_usd") is not None]
+    prompt = sum(r["model_prompt_tokens"] for r in rows)
+    completion = sum(r["model_completion_tokens"] for r in rows)
+    n = max(len(costs), 1)
+    return [
+        "### Cost and latency (full pipeline)",
+        "",
+        f"- Detonation: p50 {_pctl(det, 0.5)}s, p95 {_pctl(det, 0.95)}s",
+        f"- Model latency per PR (prediction + analysis): p50 {_pctl(lat, 0.5)}s, "
+        f"p95 {_pctl(lat, 0.95)}s",
+        f"- Tokens per PR: {prompt // len(rows)} in / {completion // len(rows)} out (mean)",
+        f"- **Cost per PR: ${sum(costs) / n:.4f} mean** (muse-spark-1.3 at $1.25/1M in, "
+        f"$4.25/1M out); ${sum(costs):.3f} for all {len(rows)} cases",
+        "",
+    ]
 
 
 def details(rows: list[dict]) -> list[str]:
@@ -155,8 +186,8 @@ def main(results_dir: str, out_prefix: str = "eval/results") -> None:
     header = (f"Scored {stamp['scored_at']} at commit `{stamp['commit']}`"
               f"{' (UNCOMMITTED CHANGES)' if stamp['dirty'] else ''} with {client.model}; "
               f"detonations from `{Path(results_dir).name}`.")  # fmt: skip
-    md = ["# Evaluation results", "", header, "", *summarize(rows), "", "## Per case", "",
-          *details(rows), ""]  # fmt: skip
+    md = ["# Evaluation results", "", header, "", *summarize(rows), "",
+          *cost_latency(rows), "## Per case", "", *details(rows), ""]  # fmt: skip
     Path(f"{out_prefix}.md").write_text("\n".join(md), encoding="utf-8")
     print("\n".join(summarize(rows)))
 

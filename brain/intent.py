@@ -19,7 +19,7 @@ from typing import Literal
 from pydantic import BaseModel, Field, field_validator
 
 from brain.github_client import PrMetadata
-from brain.llm import LlmClient, neutralize
+from brain.llm import LlmClient, Usage, neutralize
 from brain.rules import DEFAULT_ALLOWED_DOMAINS, RDNS_PREFIX, RuleHit, Severity, domain_allowed
 from shared.contract import DetonateResult
 
@@ -110,6 +110,7 @@ class PredictionOutcome:
     model: str
     prediction: IntentPrediction | None = None
     error: str | None = None
+    usage: Usage | None = None
 
 
 def _normalize_domain(raw: str) -> str | None:
@@ -144,10 +145,10 @@ def build_intent_messages(metadata: PrMetadata) -> list[dict]:
 
 
 def predict(client: LlmClient, metadata: PrMetadata) -> PredictionOutcome:
-    prediction, error = client.structured(
+    prediction, error, usage = client.structured(
         build_intent_messages(metadata), "intent_prediction", INTENT_SCHEMA, IntentPrediction
     )
-    return PredictionOutcome(client.model, prediction=prediction, error=error)
+    return PredictionOutcome(client.model, prediction=prediction, error=error, usage=usage)
 
 
 # --- deterministic comparison ---
