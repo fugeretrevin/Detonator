@@ -37,3 +37,17 @@ def test_http_client_signs_and_retries_on_409():
     result = client.detonate(REQ)
     assert len(attempts) == 2
     assert result.status == "completed"
+
+
+def test_busy_wait_is_capped_and_fits_the_job_timeout(monkeypatch):
+    slept = []
+    monkeypatch.setattr("brain.chamber_client.time.sleep", slept.append)
+    http = httpx.Client(base_url="http://chamber.test",
+                        transport=httpx.MockTransport(lambda r: httpx.Response(409)))  # fmt: skip
+    client = HttpChamberClient("http://chamber.test", "s", http=http)
+    try:
+        client.detonate(DetonateRequest(job_id="j", clone_url="https://github.com/o/r",
+                                        head_sha="0" * 40))  # fmt: skip
+    except httpx.HTTPStatusError:
+        pass  # still busy after the last retry: the job fails closed
+    assert max(slept) == 20 and 300 < sum(slept) < 450  # detonate_job timeout is 600 s

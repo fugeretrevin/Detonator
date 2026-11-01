@@ -33,13 +33,18 @@ class HttpChamberClient:
         secret: str,
         *,
         http: httpx.Client | None = None,
-        busy_retries: int = 5,
+        busy_retries: int = 20,
         busy_backoff_s: float = 10.0,
+        max_backoff_s: float = 20.0,
     ) -> None:
+        # One detonation at a time on the Chamber: queued PRs wait ~6.5 min in total
+        # (10 s, then 20 s steps), inside detonate_job's 10 min timeout. A PR that still
+        # can't get a slot fails closed ("Could not verify"), never passes.
         self._secret = secret
         self._http = http or httpx.Client(base_url=base_url.rstrip("/"), timeout=600.0)
         self._busy_retries = busy_retries
         self._busy_backoff_s = busy_backoff_s
+        self._max_backoff_s = max_backoff_s
 
     def detonate(self, request: DetonateRequest) -> DetonateResult:
         body = request.model_dump_json().encode()
@@ -48,7 +53,7 @@ class HttpChamberClient:
             headers = {"Content-Type": "application/json", **signed_headers(self._secret, body)}
             resp = self._http.post("/detonate", content=body, headers=headers)
             if resp.status_code == 409 and attempt < self._busy_retries:
-                time.sleep(self._busy_backoff_s * (attempt + 1))
+                time.sleep(min(self._busy_backoff_s * (attempt + 1), self._max_backoff_s))
                 continue
             resp.raise_for_status()
             return DetonateResult.model_validate_json(resp.content)
