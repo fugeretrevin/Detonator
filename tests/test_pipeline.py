@@ -53,7 +53,7 @@ def test_e4_end_to_end_with_recorded_llm_is_failure():
     body = json.loads((FIXTURES / "llm/e4_muse_spark_1_3.json").read_text())
     seen = {}
 
-    def fake_llm(metadata, hits, result, diff, contract=None):
+    def fake_llm(metadata, hits, result, diff, contract=None, guilty=None):
         seen["rules"] = {h.rule_id for h in hits}
         return LlmOutcome("muse-spark-1.3", verdict=parse_response(body))
 
@@ -64,7 +64,7 @@ def test_e4_end_to_end_with_recorded_llm_is_failure():
 
 
 def test_e6_injected_llm_saying_benign_still_fails():
-    def gullible_llm(*_):
+    def gullible_llm(*_, **__):
         return LlmOutcome(
             "m",
             verdict=LlmVerdict(
@@ -91,6 +91,11 @@ def test_enrichment_runs_before_rules():
         return result.model_copy(update={"connect_events": events})
 
     out = analyze(
-        e4(), META, "", lambda *_: LlmOutcome("m", error="x"), job_id="j", enrich=name_everything
+        e4(),
+        META,
+        "",
+        lambda *_, **__: LlmOutcome("m", error="x"),
+        job_id="j",
+        enrich=name_everything,
     )
     assert {h.rule_id for h in out.hits} == {"EXEC_NET_TOOL"}

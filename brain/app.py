@@ -26,6 +26,7 @@ from brain.pipeline import (
     analyze,
     detonate_request,
 )
+from brain.report import render_line_comment
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -115,7 +116,8 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         return
     pool = ThreadPoolExecutor(max_workers=1)
     try:
-        metadata = gh.get_pr_metadata(*loc, event.number)
+        files = gh.list_pr_files(*loc, event.number)
+        metadata = gh.get_pr_metadata(*loc, event.number, files=files)
         diff = gh.get_pr_diff(*loc, event.number)
         # The model commits to its prediction while the sandbox runs, before any telemetry.
         prediction_future = pool.submit(_predict, metadata)
@@ -129,6 +131,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             job_id=job_id,
             prediction=prediction,
             allowed_cidrs=github_meta_cidrs(),
+            files=files,
         )
         final = analysis.final
         logger.info(
@@ -167,6 +170,17 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         gh.post_comment(*loc, event.number, analysis.report)
     except Exception:
         logger.exception("job=%s failed to post PR comment", job_id)
+
+    if analysis.final.title == "Blocked" and analysis.guilty:
+        comments = [
+            {"path": g.path, "line": g.line,
+             "body": render_line_comment(g, i, analysis.llm, analysis.result)}
+            for i, g in enumerate(analysis.guilty)
+        ]  # fmt: skip
+        try:
+            gh.create_review(*loc, event.number, event.head_sha, comments)
+        except Exception:
+            logger.exception("job=%s failed to post guilty-line review", job_id)
 
 
 def _predict(metadata: PrMetadata) -> PredictionOutcome:

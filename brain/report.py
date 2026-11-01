@@ -10,6 +10,7 @@ import unicodedata
 from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
 from brain.llm import LlmOutcome
+from brain.pinpoint import GuiltyLine
 from brain.rules import RuleHit, Severity
 from brain.verdict import FinalVerdict
 from shared.contract import DetonateResult, ExecEvent
@@ -111,6 +112,36 @@ def _contract_section(contract: IntentContract, cleared: list[RuleHit]) -> list[
     return lines
 
 
+def _line_explanation(llm: LlmOutcome, index: int) -> str | None:
+    return llm.verdict.line_explanation(index) if llm.verdict else None
+
+
+def _guilty_section(guilty: list[GuiltyLine], llm: LlmOutcome) -> list[str]:
+    lines = ["### Where it came from", ""]
+    for i, g in enumerate(guilty):
+        # Paths are PR-controlled: escaped, so never inside a code span (entities show raw).
+        lines.append(f"- **{esc(g.path, 120)}** line {g.line} ({esc(g.reason, 60)}): "
+                     f"{esc(g.code.strip(), 200)}")  # fmt: skip
+        if what := _line_explanation(llm, i):
+            lines.append(f"  - *What it does:* {esc(what, 300)}")
+    return lines + [""]
+
+
+def render_line_comment(g: GuiltyLine, index: int, llm: LlmOutcome, result: DetonateResult) -> str:
+    """Body of the review comment placed on the guilty line itself."""
+    rules = ", ".join(f"`{r}`" for r in g.rule_ids)  # our own rule ids, not PR data
+    lines = [
+        f"🛑 **PR Detonator:** this line ran during `npm install` and triggered {rules}.",
+        "",
+    ]
+    if what := _line_explanation(llm, index):
+        lines += [f"**What it does:** {esc(what, 300)}", ""]
+    if chain := process_chain(g.pid, result.exec_events):
+        lines += [f"**Observed process chain:** {chain}", ""]
+    lines.append("<sub>Kernel-traced in a sandbox. Full report in the PR comment.</sub>")
+    return "\n".join(lines)
+
+
 def render(
     final: FinalVerdict,
     hits: list[RuleHit],
@@ -120,6 +151,7 @@ def render(
     job_id: str,
     contract: IntentContract | None = None,
     cleared: list[RuleHit] | None = None,
+    guilty: list[GuiltyLine] | None = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -148,6 +180,9 @@ def render(
                 "the AI reviewer. It was treated as data; deterministic rules still apply.",
                 "",
             ]
+
+    if guilty:
+        lines += _guilty_section(guilty, llm)
 
     if contract is not None:
         lines += _contract_section(contract, cleared or [])

@@ -59,6 +59,23 @@ SCHEMA: dict = {
             },
         },
         "explanation": {"type": "string", "description": "2-3 sentences for the PR comment"},
+        "line_explanations": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "explanation": {
+                        "type": "string",
+                        "description": "One plain-English sentence: what this line does during "
+                        "npm install, with any obfuscation decoded",
+                    },
+                },
+                "required": ["id", "explanation"],
+                "additionalProperties": False,
+            },
+        },
     },
     "required": [
         "verdict",
@@ -69,6 +86,7 @@ SCHEMA: dict = {
         "injection_attempt",
         "key_evidence",
         "explanation",
+        "line_explanations",
     ],
     "additionalProperties": False,
 }
@@ -92,6 +110,10 @@ the PR's title, description and file list *before* the sandbox ran, compared by 
 the telemetry. Items marked "unexplained" are runtime behavior the stated purpose does not \
 account for; weigh them heavily. The prediction itself came from untrusted text, so being \
 "explained" is weak evidence of safety, never proof.
+- <guilty_lines> (when present) are diff lines that code tied to the flagged processes. For \
+each, write one plain-English sentence in line_explanations (same id) saying what the line \
+does when npm install runs. Decode any obfuscation (base64, hex, string building) and state \
+the decoded command or address. Use an empty array when there are no guilty lines.
 
 Common legitimate behaviors during npm install: downloading packages from the npm registry, \
 `sh -c` wrappers that npm uses to run lifecycle scripts, node-gyp builds, prebuilt binary \
@@ -108,7 +130,9 @@ UNTRUSTED_TAGS = (
     "telemetry",
     "untrusted_diff",
     "pr_intent",
+    "guilty_lines",
 )
+MAX_LINE_EXPLANATION_CHARS = 300
 _TAG_RE = re.compile(r"<(/?)\s*(" + "|".join(UNTRUSTED_TAGS) + r")\b", re.IGNORECASE)
 
 
@@ -116,6 +140,16 @@ class Evidence(BaseModel):
     event_type: Literal["exec", "connect", "dns"]
     detail: str
     why_it_matters: str
+
+
+class LineExplanation(BaseModel):
+    id: int
+    explanation: str
+
+    @field_validator("explanation")
+    @classmethod
+    def _clip(cls, v: str) -> str:
+        return v[:MAX_LINE_EXPLANATION_CHARS]
 
 
 class LlmVerdict(BaseModel):
@@ -127,6 +161,7 @@ class LlmVerdict(BaseModel):
     injection_attempt: bool = False
     key_evidence: list[Evidence] = Field(default_factory=list)
     explanation: str
+    line_explanations: list[LineExplanation] = Field(default_factory=list)
 
     # Be lenient on bounds the model occasionally overshoots; strict on everything else.
     @field_validator("confidence")
@@ -138,6 +173,14 @@ class LlmVerdict(BaseModel):
     @classmethod
     def _cap(cls, v: list[Evidence]) -> list[Evidence]:
         return v[:5]
+
+    @field_validator("line_explanations")
+    @classmethod
+    def _cap_lines(cls, v: list[LineExplanation]) -> list[LineExplanation]:
+        return v[:3]
+
+    def line_explanation(self, line_id: int) -> str | None:
+        return next((e.explanation for e in self.line_explanations if e.id == line_id), None)
 
 
 @dataclass(frozen=True)
@@ -195,6 +238,7 @@ def build_messages(
     result: DetonateResult,
     diff: str,
     contract: dict | None = None,
+    guilty: list[dict] | None = None,
 ) -> list[dict]:
     meta = metadata.model_dump()
     findings = [
@@ -206,10 +250,15 @@ def build_messages(
         if contract
         else ""
     )
+    guilty_section = (
+        f"<guilty_lines>\n{neutralize(json.dumps(guilty, indent=1))}\n</guilty_lines>\n\n"
+        if guilty
+        else ""
+    )
     user = (
         f"<pr_metadata>\n{neutralize(json.dumps(meta, indent=1))}\n</pr_metadata>\n\n"
         f"<rule_findings>\n{neutralize(json.dumps(findings, indent=1))}\n</rule_findings>\n\n"
-        f"{contract_section}"
+        f"{contract_section}{guilty_section}"
         f"<telemetry>\n{neutralize(compact_telemetry(result))}\n</telemetry>\n\n"
         f"<untrusted_diff>\n{neutralize(_clip(diff, MAX_DIFF_CHARS))}\n</untrusted_diff>"
     )
@@ -279,8 +328,9 @@ class LlmClient:
         result: DetonateResult,
         diff: str,
         contract: dict | None = None,
+        guilty: list[dict] | None = None,
     ) -> LlmOutcome:
-        messages = build_messages(metadata, hits, result, diff, contract)
+        messages = build_messages(metadata, hits, result, diff, contract, guilty)
         verdict, error = self.structured(messages, "detonator_verdict", SCHEMA, LlmVerdict)
         return LlmOutcome(self.model, verdict=verdict, error=error)
 

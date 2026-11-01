@@ -182,3 +182,21 @@ def test_comment_gets_marker(keypair):
     client = make_client(pem, routed({("POST", "/repos/o/r/issues/7/comments"): post}))
     client.post_comment(1, "o", "r", 7, "hello")
     assert seen["body"].endswith("<!-- pr-detonator -->")
+
+
+def test_create_review_puts_inline_comments_on_the_head_side(keypair):
+    pem, _ = keypair
+    seen = {}
+
+    def review(request):
+        seen.update(json.loads(request.content))
+        return httpx.Response(200, json={"id": 77})
+
+    client = make_client(pem, routed({("POST", "/repos/o/r/pulls/5/reviews"): review}))
+    comments = [{"path": "package.json", "line": 5, "body": "x"}]
+    assert client.create_review(1, "o", "r", 5, "a" * 40, comments) == 77
+    assert seen == {
+        "commit_id": "a" * 40,
+        "event": "COMMENT",
+        "comments": [{"path": "package.json", "line": 5, "body": "x", "side": "RIGHT"}],
+    }

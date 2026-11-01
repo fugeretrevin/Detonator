@@ -28,6 +28,7 @@ Three things judges should remember:
 | Live intent predictions (6 PRs incl. injection) | All correct; injection ignored; puppeteer→`storage.googleapis.com`, prisma→`binaries.prisma.sh`; 3–8 s, runs in parallel with detonation | Intent Contract ships |
 | `npm install puppeteer` on the Chamber | Failed at first: sandbox HOME not writable (**bug, fixed**). After the fix: Chrome download from `34.3.0.27` has no name in the Brain → `NET_RAW_IP` → **false ❌** | **DNS capture on the Chamber is P0.** Without it, CDN-heavy packages false-alarm and the eval numbers are bad. The contract cannot help, because raw IPs are never explainable (by design). |
 | **P0 done (Nov 1):** dnsmasq on det0, port 53 elsewhere rejected | puppeteer: both Chrome IPs named `storage.googleapis.com` from the sandbox's own lookups. Rules only ⚠️, rules+contract ✅, full ✅. E1–E7 re-run on GitHub: E1/E2/E3 ✅, E4/E5/E6 🛑, E7 🛑 could not verify | Gate passed. Eval (P1) can start. |
+| **Guilty line done (Nov 1)** | Real E4/E5/E6 on GitHub: inline review comments on `package.json:5` (all three) and `scripts/telemetry-optout.js:8` (E5's `cp.spawn`). Muse decoded the E5 base64 to the exact reverse-shell command; +0 extra model calls (same analysis request) | Demo beat for E5 |
 
 ## Plan (by Nov 4)
 

