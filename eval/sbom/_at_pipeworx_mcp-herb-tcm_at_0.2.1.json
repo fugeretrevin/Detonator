@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.17,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-herb-tcm",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "8e42e7ec8b9fa9611eb37b079b208511beb421c57a40156089a3063b6d40270d",
+  "value": "LuhIJ0a5WFWfybsB2YmqQBCsMVrc9IWQAJe2Z11v/9IoUnkCeASjGRnqRwjv6651BZRzjenZl8lrvB9LoWrWAQ=="
+ },
+ "version": "0.2.1"
+}

@@ -1,0 +1,37 @@
+{
+ "install": {
+  "duration_s": 5.97,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.9.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "oxlint-plugin-react-doctor",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "88b40cdc2e9a6527d8f52971e1c7aa50c463bdde29cf5b1c6cc372e33e303b4a",
+  "value": "x081t493j7bn21TWUQn00wCqnLOdA+bhpSqsj3EsJWMyh+m47tFGWeyS8yoOQK1sgSgxnkBksIs6SsFc58DHCQ=="
+ },
+ "version": "0.9.22"
+}

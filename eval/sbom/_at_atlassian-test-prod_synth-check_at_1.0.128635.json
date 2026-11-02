@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 8.04,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@atlassian-test-prod/synth-check",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "3dfa22e1a48048768cc7fb891b806b8f07cbdb5b5d31f47788668f6f3a2b9f2b",
+  "value": "dcMTQ+OaneYNrTBxl/wUysL2X+7TODXCw+PpXTw4bYRCPeUVUJP/TTwVZKDRd/9cv0IJRg7kW6+wnle2i85zAQ=="
+ },
+ "version": "1.0.128635"
+}

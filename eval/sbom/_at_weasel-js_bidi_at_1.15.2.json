@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.11,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@weasel-js/bidi",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "3d88f9af65ce38a61f51e238093a3fbadeadccfa2b76f88eba70986e814e25c3",
+  "value": "4V59Mck5OXjpZ4Kv9IRvP7MyqgKbbgDq0NvUteY2rN0Sj6BImsve3W3tD5rPv+Cmh9WLr9ltwLcIEOc96BeEBg=="
+ },
+ "version": "1.15.2"
+}

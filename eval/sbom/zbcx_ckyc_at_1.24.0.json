@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 40.1,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "zbcx_ckyc",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "011e4ffa24f49bcf88a7fb23bc8db5bef67760d24350dfd9a0adf37db27dce16",
+  "value": "psJ6GU544Qm8rzff3E+P8Di2dIyRQrjUGsRZQodm63IoITy5lFBmXibW+Q4Q74Oy1EkvfxsXxF6Kncpt8WKUBg=="
+ },
+ "version": "1.24.0"
+}

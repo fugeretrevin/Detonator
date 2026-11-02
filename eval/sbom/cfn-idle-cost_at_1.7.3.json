@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 6.09,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "cfn-idle-cost",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "d81a13c5556bc01a9db2cecf7a5d62b0e5c18a660fd0c344de10e21afdbc7852",
+  "value": "tSSDDwnf1Jlc1A/Dz1UhZC6/37w+QKkIp7dkAA1X86EWzGzmEB1PaxSN8Op4woGmOGf1dJXzmw7iDJgnt/C9Dw=="
+ },
+ "version": "1.7.3"
+}

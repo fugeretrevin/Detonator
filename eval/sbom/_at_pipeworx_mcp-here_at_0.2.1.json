@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.15,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-here",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "97dedc490b2653b838d16fb02435018355f48f0301f87ebf71616ff867088b09",
+  "value": "Z9eYeN2ed/WFSBAf0WhTf0X9DSrjOzd8AG3UqOOk2JuMgcgqSmteV80F5yU89B366o4gHOmdjFuLCmKSoRbKCw=="
+ },
+ "version": "0.2.1"
+}

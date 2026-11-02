@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 7.89,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "skill-family-harness-node",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "02681c3136b6b788029437580023ee54555da2a59991738cb90510ee6e42d8a9",
+  "value": "I1pQHvLzrElTKDtsF3LiE9WJ7UZC7FKF6hjYyWQdATy1M8v1l6pyEqZDRvKK+DCOpWkcTNQwPjDimHa4fG5VBg=="
+ },
+ "version": "0.35.0"
+}

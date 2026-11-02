@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.07,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "tokenshave",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "58498875da664c7e539e21b94f561bcbf3e9767073f39d6bee4ebeae30acb4c6",
+  "value": "0EUG/mdHbYDVqtrOJ2zWC3z2B5TBIsyPUce4jxgyhE0Ve1OAg2KD4g24KFcBvcc+7N23ur7XWhSAL5QY149FAw=="
+ },
+ "version": "0.6.0"
+}

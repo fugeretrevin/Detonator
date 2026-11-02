@@ -1,0 +1,37 @@
+{
+ "install": {
+  "duration_s": 5.43,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.10.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@reason-machines/cli-linux-x64",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "e84aec37ff46fa8d30c8818d6a68b610acb8f0cddbb246de41a02cdd56ea1f61",
+  "value": "d5q29fvbqaytcsQFiZptj9EleLtxF+YLf+SeyUyKsMAD+h9wJgfS+KaajApVqs/rZIJF5U1+PXlhZJJHDL8PBg=="
+ },
+ "version": "0.2.661"
+}

@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 4.27,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "cdk-idle-cost",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "1729f31fdfa2296ae8866b8bdb5dd228faf60a3a3f41b6f5bd1db1b758f88179",
+  "value": "DoLfO50aoYhbVZCjjKrgAoxVxyuGVul/BrKNW2sDB5WYn1oBSfdaSTn6rJvZqtENz4J3UMwe1aRf5OsrH1C+Cw=="
+ },
+ "version": "1.7.3"
+}

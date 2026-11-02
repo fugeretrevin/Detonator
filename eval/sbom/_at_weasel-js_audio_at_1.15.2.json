@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.16,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@weasel-js/audio",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "bd3063cec3cea0676dbcc98653b1157e4f31acc6edc6c01b0dfae9d04c17faa0",
+  "value": "AUb3vcIHi9HpfCLEHVxKNhpkroeQZU1uL2IwcRJ21p8RvlidKiJDKfW836CvwqLs5MfF97Hl3z4UzR+lEyaaCA=="
+ },
+ "version": "1.15.2"
+}

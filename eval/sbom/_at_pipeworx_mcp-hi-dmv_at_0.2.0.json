@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.06,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-hi-dmv",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "00a723874bd82354474aade273bed20e337c58ca1c0afe70b3ebddcb041eb992",
+  "value": "joD4tWxTl38lM7f2ISwkbUXuq6UaE2NzHZTk5+lhsvPdEtFIO4bRABc7j4c8cyVKZFU1Y0qEOYXhnCy33mfOCA=="
+ },
+ "version": "0.2.0"
+}

@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.09,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-hex-pm",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "c5bb74d9bb90beb4d4642623c3bd8566e83d6237682b5ce53775ab274ff7bc87",
+  "value": "tgOsefe6bmZ5JDYehldvqiTYLEL7Gk37wbljoKEM2Kqt0wHcH0IiNScjZeW6vRAHnA2PxKUoYO+DQDox8qZDAg=="
+ },
+ "version": "0.2.1"
+}

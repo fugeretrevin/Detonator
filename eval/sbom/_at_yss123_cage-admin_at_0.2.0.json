@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 9.17,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@yss123/cage-admin",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "292be195a1275e1ad81bd4a932953034d410893986e5331afe0339cd14151336",
+  "value": "U3RuMP6s5kjysqVbjo1krwvT0Mtz/LxTMGSb95ZfWnio2SrTgxuAClbzGzW2WWj23q+LtjmDCYcRjhcpOzFVCw=="
+ },
+ "version": "0.2.0"
+}

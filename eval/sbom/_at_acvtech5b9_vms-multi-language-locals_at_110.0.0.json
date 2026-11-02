@@ -1,0 +1,45 @@
+{
+ "install": {
+  "duration_s": 18.5,
+  "exit_code": 0,
+  "ran_install_scripts": true,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [
+   "/bin/sh"
+  ],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.0.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [
+   {
+    "package": "sharp",
+    "path": "/work/node_modules/sharp/install/check.js",
+    "sha256": "31fd360ede9ff3e80d643faff6c4570d0b2b5c621dc421b6c4086dfe86ce981f"
+   }
+  ],
+  "telemetry_truncated": false
+ },
+ "package": "@acvtech5b9/vms-multi-language-locals",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "1e29c1be7485f0b8dc0d6c9ac86366ebb8d08085ad3daf871894813bca73d8ca",
+  "value": "15r/UtOpwKn+xvPJAA8SLVHc6AlLOZK7uuaiaFRtzEN720I3i84Khvc11QMcO5Nu3B0DTI9u/18jd9kP0YwMAg=="
+ },
+ "version": "110.0.0"
+}

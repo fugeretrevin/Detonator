@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.41,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-hawaii-code",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "38f01a88376cde4ee667107a58aad2a6a1f61ae26f339172fe50b3fae3255126",
+  "value": "Aigldbv1cg7E5U9Q3sdGYIpWZjwF3NpvPZfp0ytRJBo/wsJy6oXv0FYZkIdme3+72SbwxyIswYeTdrCO1goiCg=="
+ },
+ "version": "0.2.1"
+}

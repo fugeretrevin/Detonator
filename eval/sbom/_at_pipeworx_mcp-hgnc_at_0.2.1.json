@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.15,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-hgnc",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "fbe957310007e1a797fa62053a5790d7711125d5a724546536d01edd4348015c",
+  "value": "ju07mALewsmoWeQeWCpREru6lv1CHYijQg4wHUVQAqs5sozYT3EvZJchYUGgvrrK4xmKaJNbUifp00T9CIFXCQ=="
+ },
+ "version": "0.2.1"
+}

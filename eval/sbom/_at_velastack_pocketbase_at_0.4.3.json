@@ -1,0 +1,37 @@
+{
+ "install": {
+  "duration_s": 16.34,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.11.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@velastack/pocketbase",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "fba1a0d21e8fc83634033c6b2155329cd7f6dd54c6b5b87c69118213a45b2239",
+  "value": "DpgrId3c6z6RG3eXjzc3FbkkqWdD+3UEc3pVaJtEfrObvvtcoriHnaIJBkIGz5y70z3xnM91hK4YF+yBqEFWCA=="
+ },
+ "version": "0.4.3"
+}

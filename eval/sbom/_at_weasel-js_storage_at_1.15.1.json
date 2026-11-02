@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.16,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@weasel-js/storage",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "3b218435ec247fd6b7c8683f3626d0578cc42dbeb3e9e215abf8e5bac0ee8b13",
+  "value": "bk40c9kn2xNVMrv9bAllKvi1CEWsKZzSZPm4r2rZTpJ7LN7WsHJdfA1kYShnK2stLckSTyadqxRFmKVkzl8kBQ=="
+ },
+ "version": "1.15.1"
+}

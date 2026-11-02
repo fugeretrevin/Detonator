@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.5,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-hash",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "49624c6afe7a6f83e073737fddc3fbae9635161439ad77057b40e9298e4bd443",
+  "value": "EDf0jE6mhRQROPQd+ne8H9DXXIRXMuj0EI7bEeRfMCD5Iv2kL+f1y+xFEgi70wbjCibCSfKkJpZ4tcfs2B4yAA=="
+ },
+ "version": "0.2.1"
+}

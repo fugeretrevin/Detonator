@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.15,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-help-scout",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "d4ccc0f6d4441982d658025d871f1c2b07d59416856a0b9af6cf4d65ce75ae66",
+  "value": "xpzE88AOUtFqIGwqWD48m2s3v0FN8rY66Ub8uWTjferLqbOWJClVQARHwP9wGAjwGT3BkQHnV2SKTG2KyoxjBQ=="
+ },
+ "version": "0.2.1"
+}

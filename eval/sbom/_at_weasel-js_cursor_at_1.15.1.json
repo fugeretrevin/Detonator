@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.24,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@weasel-js/cursor",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "a1634ab7bdcf7f850e71fb9756ee867325b866945cdda41940a02c02e7440060",
+  "value": "9Uw6wCoCXvYwTCwtu4RW6gstxoxF21hB6yciYep7M89TMHkHKl9NcZIPyYNKep/IwUNIZqZiJ2ZT2sOHBF6dBQ=="
+ },
+ "version": "1.15.1"
+}

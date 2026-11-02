@@ -1,0 +1,46 @@
+{
+ "install": {
+  "duration_s": 46.78,
+  "exit_code": 0,
+  "ran_install_scripts": true,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [
+   "/work/node_modules/esbuild/bin/esbuild",
+   "/work/node_modules/nitropack/node_modules/esbuild/bin/esbuild"
+  ],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.9.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [
+   {
+    "package": "esbuild",
+    "path": "/work/node_modules/esbuild/install.js",
+    "sha256": "10f6fa3644d8d23d066ff67b0ae449074e75884503546a9fedb667f1dcb9ade2"
+   }
+  ],
+  "telemetry_truncated": false
+ },
+ "package": "@analogjs/vite-plugin-nitro",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "8461110a98c5a22d95fda489cf1d39955862cd7acda8db4f085df4a3ed16e391",
+  "value": "LpmTpj3fWZ7gAaq7whSaY4SJ9OxoZL4qnXQphIMPMH4MvG3n9CquXXdLjAn/OVxKTjWB6DjX9PRzinBuL9rxCQ=="
+ },
+ "version": "2.9.5"
+}

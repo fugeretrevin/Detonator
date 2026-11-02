@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 5.96,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "jg-agent-hq",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "53c8943b8046681df0da252e6fc3ab1693855d008bb021c0b9fc962d8cf77c28",
+  "value": "KFSi9+hM4SNZ+KIkcVqLQmUfMYEWrVd/Dqrmtmz+Qn4Ov904qjjYvmMV/3/K9Yr6LcE2SrXEom29zOJKsOhGBw=="
+ },
+ "version": "10.5.0"
+}

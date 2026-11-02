@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 10.67,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pisell/pisellos",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "83000f42720ee564c4e3c90dbdad5413e596a9f83df74fc776ebab8f2883947b",
+  "value": "LVqSnmtDhRI/1fSwMFEMGCMzTDKvzG7hLI6r+ZZygBsIu3QCieSV4OHxER82qKFdNAObzoxG8bepn8E0BpLeDQ=="
+ },
+ "version": "2.3.192"
+}

@@ -1,0 +1,36 @@
+{
+ "install": {
+  "duration_s": 3.2,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "@pipeworx/mcp-health-canada-drugs",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "2ce8d6b96feda5d5a9cff6698c98c64cc58b1539fcf080cb87258841de0f1b81",
+  "value": "gOjeRiBcM3Zjn2PANVNrV5WXJGajBCUewnxiRBF67YhgxXilNw/6HtjuhlBz0bRJuF+xPcXz1GCyRh8rqMDlDQ=="
+ },
+ "version": "0.2.1"
+}

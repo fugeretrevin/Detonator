@@ -1,0 +1,37 @@
+{
+ "install": {
+  "duration_s": 24.4,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.6.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "react-doctor",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "d01da501552230947ae71ccc06796851e06c3477fc1d053bfc4d63730af29e53",
+  "value": "AXShLr4kFx0ZJdxBD1WKr+951kPvFKn06P+yawOyYMraETqKyn1u6wAoH4JiwQvqM98hxUbEArqvK3v9Q59LBA=="
+ },
+ "version": "0.9.22"
+}

@@ -1,0 +1,42 @@
+{
+ "install": {
+  "duration_s": 3.31,
+  "exit_code": 0,
+  "ran_install_scripts": true,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [
+   {
+    "package": "sprag-cli",
+    "path": "/work/node_modules/sprag-cli/bin/postinstall.js",
+    "sha256": "ec15c9034975673df933a6407ed82c1e00d181b6789b3363a38dbc951c72bb85"
+   }
+  ],
+  "telemetry_truncated": false
+ },
+ "package": "sprag-cli",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "c9d4836cb03a768ff61836dc0abd7394545874807dd247b443a6fefe6a2c00cb",
+  "value": "Mv9NBt5ouKZ7dxEy+Pv/tAHTq1TV/ZoXOEH1bMQB1qd3qNkNe4v5GxtX/Dp4PqRypyFs+wW2odd3tWO6kJGtCw=="
+ },
+ "version": "3.91.0"
+}

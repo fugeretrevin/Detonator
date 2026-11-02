@@ -1,0 +1,46 @@
+{
+ "install": {
+  "duration_s": 27.11,
+  "exit_code": 0,
+  "ran_install_scripts": true,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [
+   "/work/node_modules/esbuild/bin/esbuild",
+   "/work/node_modules/workerd/bin/workerd"
+  ],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [
+   "34.5.16.104.in-addr.arpa",
+   "registry.npmjs.org"
+  ],
+  "hosts": [
+   "registry.npmjs.org"
+  ],
+  "install_scripts": [
+   {
+    "package": "esbuild",
+    "path": "/work/node_modules/esbuild/install.js",
+    "sha256": "612294e278914443bdcf81cb17f54afec34dbdd2ebd999a6ee187912320cc315"
+   }
+  ],
+  "telemetry_truncated": false
+ },
+ "package": "eutaxy",
+ "provenance": {
+  "detector_commit": "07feaba",
+  "detonated_at": "2026-11-02T03:08:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "8607836619dab568ec4bef2e64a3191d3b79d53a6c4b1040f3cb0c1eeab5f967",
+  "value": "sXq8ooLlbPzLXM5UyE3G0AMBBr1GWkPzQrt6QXgukYGatW8CD9nHiH8Mn/WiLcY5g/jSiB44nYBEvVrwc4rjBQ=="
+ },
+ "version": "0.11.0"
+}
