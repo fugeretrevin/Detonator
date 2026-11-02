@@ -97,6 +97,7 @@ def write_manifest(count: int, manifest_path: Path, names_path: Path) -> None:
 def score(results_dir: Path, names_path: Path) -> dict:
     from brain.enrich import enrich_connects, github_meta_cidrs
     from brain.rules import DEFAULT_ALLOWED_DOMAINS, Severity, domain_allowed, evaluate, is_external
+    from brain.verdict import unverified_reason
     from shared.contract import DetonateResult
 
     names = json.loads(names_path.read_text())
@@ -109,8 +110,12 @@ def score(results_dir: Path, names_path: Path) -> dict:
         result = enrich_connects(DetonateResult.model_validate_json(path.read_text()))
         hits = evaluate(result, allowed_cidrs=cidrs)
         level = max((h.severity for h in hits), default=Severity.NONE)
+        # Same predicate as the production check: a failed install, truncated telemetry or a
+        # blind sensor is "Could not verify", never "Clean". Previously an install that exited
+        # nonzero still scored Clean here, which inflated the clean count.
+        reason = unverified_reason(result)
         verdict = ("Blocked" if level >= Severity.HIGH else
-                   "Could not verify" if result.status != "completed" else
+                   "Could not verify" if reason else
                    "Needs review" if level == Severity.LOW else "Clean")  # fmt: skip
         ran = sorted({s.package for s in result.executed_scripts if s.package})
         hosts = sorted(
@@ -128,6 +133,7 @@ def score(results_dir: Path, names_path: Path) -> dict:
             "status": result.status,
             "exit_code": result.exit_code,
             "duration_s": result.duration_s,
+            "unverified_reason": reason,
         })  # fmt: skip
         for p in ran:
             if p.startswith("."):
@@ -160,6 +166,11 @@ def report(data: dict) -> str:
         "(`…-darwin-arm64`, `…-windows-amd64`) that npm refuses on linux-x64, plus one whose "
         f"version had already been unpublished. Everything else is scored over the **{m} "
         "packages that actually installed**.",
+        "",
+        "Those excluded runs are recorded as **Could not verify**, never Clean: an install that "
+        "exited nonzero, timed out, lost telemetry to the event cap, or produced no process "
+        "events at all is an absence of evidence, not a clean bill of health. That is a "
+        "usability limit of this sandbox, not a judgement about the package.",
         "",
         "| Result | Count |",
         "|---|---|",

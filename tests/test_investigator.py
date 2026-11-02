@@ -7,6 +7,7 @@ from brain.llm import LlmClient, LlmOutcome
 from brain.pipeline import analyze
 from brain.rules import RuleHit, Severity
 from shared.contract import ConnectEvent, DetonateResult, ExecutedScript
+from tests.conftest import NPM_EXEC
 from tests.test_intent import meta
 
 LOW = RuleHit("NET_UNLISTED_DOMAIN", Severity.LOW, "node connected to cdn.example", "t", 1,
@@ -17,7 +18,7 @@ def result(scripts=()) -> DetonateResult:
     conn = ConnectEvent(ts="t", pid=1, binary="/usr/local/bin/node", daddr="93.1.1.1",
                         dport=443, family="AF_INET", resolved_domain="cdn.example")  # fmt: skip
     return DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
-                          exec_events=[], connect_events=[conn], dns_queries=[],
+                          exec_events=[NPM_EXEC], connect_events=[conn], dns_queries=[],
                           stdout_tail="", stderr_tail="",
                           executed_scripts=list(scripts))  # fmt: skip
 
@@ -159,8 +160,8 @@ def test_investigator_never_lowers_a_verdict():
 
 def test_investigator_skipped_when_nothing_to_triage():
     clean = DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
-                           exec_events=[], connect_events=[], dns_queries=[], stdout_tail="",
-                           stderr_tail="")  # fmt: skip
+                           exec_events=[NPM_EXEC], connect_events=[], dns_queries=[],
+                           stdout_tail="", stderr_tail="")  # fmt: skip
     seen = []
     analyze(clean, meta(), "", no_llm, job_id="j", enrich=lambda r: r,
             investigator=lambda h, r: seen.append(1))  # fmt: skip

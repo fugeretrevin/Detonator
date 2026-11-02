@@ -12,7 +12,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.69
+   "duration_s": 3.69,
+   "unverified_reason": ""
   },
   {
    "package": "nexrall-code@0.5.209",
@@ -26,7 +27,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.04
+   "duration_s": 19.04,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-sidebar-entry@0.6.19",
@@ -40,7 +42,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.09
+   "duration_s": 3.09,
+   "unverified_reason": ""
   },
   {
    "package": "@mirrowel/opencode-openshare@0.2.1",
@@ -54,7 +57,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.78
+   "duration_s": 18.78,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-node@0.0.0-reserved",
@@ -68,7 +72,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": ""
   },
   {
    "package": "spiderly@19.16.1",
@@ -82,7 +87,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 23.92
+   "duration_s": 23.92,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/theme@2.2.5",
@@ -96,11 +102,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.43
+   "duration_s": 8.43,
+   "unverified_reason": ""
   },
   {
    "package": "@motion-space/screencam-cli@1.25.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -110,7 +117,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.0
+   "duration_s": 3.0,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@huaqiu/dsh-kicad-drc@0.6.20",
@@ -124,7 +132,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.3
+   "duration_s": 4.3,
+   "unverified_reason": ""
   },
   {
    "package": "@elsikora/nestjs-crud-automator@4.7.0",
@@ -140,7 +149,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 21.63
+   "duration_s": 21.63,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli@2.2.5",
@@ -156,7 +166,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.08
+   "duration_s": 17.08,
+   "unverified_reason": ""
   },
   {
    "package": "@tempoxyz/ds@0.3.7",
@@ -170,11 +181,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 35.92
+   "duration_s": 35.92,
+   "unverified_reason": ""
   },
   {
    "package": "@mj-biz-apps/sales-ng@6.22.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -185,7 +197,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 58.39
+   "duration_s": 58.39,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@huaqiu/dsh-eda-selection@0.6.20",
@@ -199,7 +212,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.38
+   "duration_s": 4.38,
+   "unverified_reason": ""
   },
   {
    "package": "fakeout@1.0.132",
@@ -213,7 +227,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.07
+   "duration_s": 3.07,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-kicad@0.6.20",
@@ -227,7 +242,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.51
+   "duration_s": 5.51,
+   "unverified_reason": ""
   },
   {
    "package": "baiduwangpan-cli@1.7.0",
@@ -248,7 +264,8 @@
    ],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.5
+   "duration_s": 4.5,
+   "unverified_reason": ""
   },
   {
    "package": "@service-lasso/service-lasso@2026.11.2-d2a6be0",
@@ -262,11 +279,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.74
+   "duration_s": 9.74,
+   "unverified_reason": ""
   },
   {
    "package": "@aryacode/dsh-engineering@0.80.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -276,7 +294,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.43
+   "duration_s": 3.43,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@huaqiu/dsh-huaqiu-about@0.6.20",
@@ -290,7 +309,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.06
+   "duration_s": 4.06,
+   "unverified_reason": ""
   },
   {
    "package": "@alicloud/dms20250414@4.3.1",
@@ -304,7 +324,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.3
+   "duration_s": 9.3,
+   "unverified_reason": ""
   },
   {
    "package": "@atlassian-test-prod/synth-check@1.0.128641",
@@ -318,11 +339,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.28
+   "duration_s": 8.28,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-darwin-x64-baseline@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -332,7 +354,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.26
+   "duration_s": 3.26,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@supersuit/suggest-a-change@0.3.0",
@@ -346,11 +369,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.87
+   "duration_s": 3.87,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-windows-x64@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -360,7 +384,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.21
+   "duration_s": 3.21,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@canvas-components/react-pivot-table@0.2.52",
@@ -374,7 +399,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 14.48
+   "duration_s": 14.48,
+   "unverified_reason": ""
   },
   {
    "package": "@abelxiaoxing/cadence@2.0.30",
@@ -388,7 +414,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.63
+   "duration_s": 10.63,
+   "unverified_reason": ""
   },
   {
    "package": "@canvas-components/react-maintop-pattern@0.1.20",
@@ -402,7 +429,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.73
+   "duration_s": 12.73,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/simulation@2.2.5",
@@ -416,7 +444,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 53.72
+   "duration_s": 53.72,
+   "unverified_reason": ""
   },
   {
    "package": "openmausbot@0.1.138",
@@ -430,7 +459,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.16
+   "duration_s": 7.16,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/server@2.2.5",
@@ -444,7 +474,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 54.21
+   "duration_s": 54.21,
+   "unverified_reason": ""
   },
   {
    "package": "@lobehub/icons-static-webp@2.6.0",
@@ -458,7 +489,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.76
+   "duration_s": 4.76,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-eda-host@0.6.20",
@@ -472,7 +504,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.56
+   "duration_s": 6.56,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-linux-x64@2.2.5",
@@ -486,7 +519,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.72
+   "duration_s": 7.72,
+   "unverified_reason": ""
   },
   {
    "package": "@tempoxyz/id@0.0.2",
@@ -500,7 +534,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 31.21
+   "duration_s": 31.21,
+   "unverified_reason": ""
   },
   {
    "package": "learning-coach-skill@0.8.2",
@@ -514,7 +549,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.18
+   "duration_s": 3.18,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/sdk@2.2.5",
@@ -528,7 +564,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 53.01
+   "duration_s": 53.01,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-analytics@0.6.20",
@@ -542,7 +579,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.23
+   "duration_s": 7.23,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect@0.14.3",
@@ -556,7 +594,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.13
+   "duration_s": 5.13,
+   "unverified_reason": ""
   },
   {
    "package": "@threenative/ueformat@0.1.8",
@@ -570,11 +609,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.25
+   "duration_s": 4.25,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect-win32-x64@0.14.3",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -584,7 +624,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.08
+   "duration_s": 3.08,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@opencode/schema@2.2.5",
@@ -598,7 +639,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.44
+   "duration_s": 5.44,
+   "unverified_reason": ""
   },
   {
    "package": "@ramme-io/kernel@8.1.2",
@@ -612,7 +654,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 31.53
+   "duration_s": 31.53,
+   "unverified_reason": ""
   },
   {
    "package": "@rytass/erp-oracle-fusion@0.4.0",
@@ -626,7 +669,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.73
+   "duration_s": 3.73,
+   "unverified_reason": ""
   },
   {
    "package": "@bike4mind/cli@4.0.0",
@@ -647,7 +691,8 @@
    ],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 40.9
+   "duration_s": 40.9,
+   "unverified_reason": ""
   },
   {
    "package": "@cldmv/llm-translator@0.3.1",
@@ -663,7 +708,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.23
+   "duration_s": 6.23,
+   "unverified_reason": ""
   },
   {
    "package": "rsshub@1.0.0-master.23749f0",
@@ -679,11 +725,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 48.74
+   "duration_s": 48.74,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect-linux-arm64@0.14.3",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -693,7 +740,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.08
+   "duration_s": 3.08,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@huaqiu/component-gen-server@0.6.20",
@@ -707,7 +755,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.61
+   "duration_s": 10.61,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/protocol@2.2.5",
@@ -721,7 +770,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.13
+   "duration_s": 7.13,
+   "unverified_reason": ""
   },
   {
    "package": "@basou/sdk@0.75.0",
@@ -735,7 +785,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.83
+   "duration_s": 4.83,
+   "unverified_reason": ""
   },
   {
    "package": "@hotta/react-native-imagepicker@0.3.1",
@@ -751,11 +802,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 21.92
+   "duration_s": 21.92,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect-darwin-arm64@0.14.3",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -765,7 +817,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.11
+   "duration_s": 3.11,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@opencode/plugin-browser@2.2.5",
@@ -779,7 +832,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.53
+   "duration_s": 28.53,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-auth@0.6.20",
@@ -793,7 +847,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.34
+   "duration_s": 4.34,
+   "unverified_reason": ""
   },
   {
    "package": "@ramme-io/ui@5.0.3",
@@ -807,7 +862,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.44
+   "duration_s": 22.44,
+   "unverified_reason": ""
   },
   {
    "package": "event-reduce-react@0.9.0",
@@ -821,7 +877,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.82
+   "duration_s": 3.82,
+   "unverified_reason": ""
   },
   {
    "package": "nihon-numbers@2.0.0",
@@ -835,11 +892,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.02
+   "duration_s": 3.02,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-windows-x64-baseline@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -849,7 +907,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "wirejs-components@0.2.2",
@@ -863,7 +922,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.73
+   "duration_s": 3.73,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/plugin@2.2.5",
@@ -877,7 +937,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.84
+   "duration_s": 28.84,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-artifacts@0.6.20",
@@ -891,7 +952,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.31
+   "duration_s": 4.31,
+   "unverified_reason": ""
   },
   {
    "package": "@ramme-io/shared@4.2.0",
@@ -905,7 +967,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.7
+   "duration_s": 3.7,
+   "unverified_reason": ""
   },
   {
    "package": "@canvas-components/react-list-table@0.3.65",
@@ -919,11 +982,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.25
+   "duration_s": 12.25,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-linux-arm64-musl@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -933,7 +997,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "dsh-push-host@0.7.22",
@@ -947,7 +1012,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.52
+   "duration_s": 3.52,
+   "unverified_reason": ""
   },
   {
    "package": "@binoctal/open-agents-bridge@0.13.24",
@@ -966,7 +1032,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 33.89
+   "duration_s": 33.89,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect-linux-x64@0.14.3",
@@ -980,7 +1047,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.44
+   "duration_s": 3.44,
+   "unverified_reason": ""
   },
   {
    "package": "wirejs-resources@0.1.214",
@@ -994,7 +1062,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.46
+   "duration_s": 3.46,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/dsh-plugin-log@0.6.20",
@@ -1008,7 +1077,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "@lovince/icons@1.5.0",
@@ -1022,7 +1092,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.98
+   "duration_s": 3.98,
+   "unverified_reason": ""
   },
   {
    "package": "@pq-signature/scdr-002@3.0.5",
@@ -1036,7 +1107,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.72
+   "duration_s": 3.72,
+   "unverified_reason": ""
   },
   {
    "package": "pleni@0.3.0",
@@ -1050,7 +1122,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.11
+   "duration_s": 3.11,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/codemode@2.2.5",
@@ -1064,11 +1137,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.45
+   "duration_s": 5.45,
+   "unverified_reason": ""
   },
   {
    "package": "@talotrace/connect-darwin-x64@0.14.3",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1078,7 +1152,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.05
+   "duration_s": 3.05,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@retion-miniapp/react-native@0.13.0",
@@ -1092,7 +1167,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 40.7
+   "duration_s": 40.7,
+   "unverified_reason": ""
   },
   {
    "package": "@huaqiu/component-gen-app@0.6.20",
@@ -1106,7 +1182,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.33
+   "duration_s": 6.33,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/client@2.2.5",
@@ -1120,7 +1197,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.1
+   "duration_s": 6.1,
+   "unverified_reason": ""
   },
   {
    "package": "@payloadcms/plugin-sentry@3.92.1",
@@ -1134,7 +1212,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 50.54
+   "duration_s": 50.54,
+   "unverified_reason": ""
   },
   {
    "package": "@omniviewdev/ai-ui@6.1.4",
@@ -1148,11 +1227,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.66
+   "duration_s": 16.66,
+   "unverified_reason": ""
   },
   {
    "package": "@programinglive/dev-workflow-mcp-server@1.19.29",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [
     "postinstall",
@@ -1167,7 +1247,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 20.79
+   "duration_s": 20.79,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@ptengine/inline-editor@0.3.7",
@@ -1181,11 +1262,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.08
+   "duration_s": 24.08,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-linux-arm64@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1195,11 +1277,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.22
+   "duration_s": 3.22,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@aura-react-comp/business@0.2.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1209,7 +1292,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 9.62
+   "duration_s": 9.62,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@cychien/ezdesign@0.11.0",
@@ -1223,7 +1307,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.35
+   "duration_s": 11.35,
+   "unverified_reason": ""
   },
   {
    "package": "@ramme-io/devkit@0.3.0",
@@ -1237,7 +1322,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.12
+   "duration_s": 4.12,
+   "unverified_reason": ""
   },
   {
    "package": "@glassly/jspolyfill@0.3.7",
@@ -1253,7 +1339,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.5
+   "duration_s": 3.5,
+   "unverified_reason": ""
   },
   {
    "package": "@atlassian-test-staging/synth-check@1.0.128640",
@@ -1267,7 +1354,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.74
+   "duration_s": 7.74,
+   "unverified_reason": ""
   },
   {
    "package": "@ramme-io/create-app@3.4.2",
@@ -1281,7 +1369,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.66
+   "duration_s": 3.66,
+   "unverified_reason": ""
   },
   {
    "package": "squirrelscan@0.0.159",
@@ -1299,7 +1388,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.11
+   "duration_s": 5.11,
+   "unverified_reason": ""
   },
   {
    "package": "coc-goose@0.1.1",
@@ -1315,7 +1405,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.09
+   "duration_s": 3.09,
+   "unverified_reason": ""
   },
   {
    "package": "@mj-biz-apps/sales-actions@6.22.0",
@@ -1329,7 +1420,8 @@
    "off_registry_hosts": [],
    "status": "timeout",
    "exit_code": null,
-   "duration_s": 122.85
+   "duration_s": 122.85,
+   "unverified_reason": "the detonation did not finish (status timeout)"
   },
   {
    "package": "@threenative/terrain@0.1.4",
@@ -1343,11 +1435,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.19
+   "duration_s": 9.19,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-darwin-x64@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1357,7 +1450,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.23
+   "duration_s": 3.23,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@rytass/erp-oracle-fusion-nestjs@0.4.0",
@@ -1371,7 +1465,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.19
+   "duration_s": 6.19,
+   "unverified_reason": ""
   },
   {
    "package": "sftpc-mcp@1.0.1",
@@ -1385,7 +1480,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.26
+   "duration_s": 3.26,
+   "unverified_reason": ""
   },
   {
    "package": "@kevinhao/pi-subagent@1.2.2",
@@ -1399,7 +1495,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 15.24
+   "duration_s": 15.24,
+   "unverified_reason": ""
   },
   {
    "package": "@lovince/ui-headless@0.5.0",
@@ -1413,11 +1510,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.32
+   "duration_s": 3.32,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-windows-arm64@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1427,7 +1525,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.16
+   "duration_s": 3.16,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "wirejs-deploy-aws@0.1.212",
@@ -1441,7 +1540,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.65
+   "duration_s": 17.65,
+   "unverified_reason": ""
   },
   {
    "package": "@retion-miniapp/sdk@0.13.0",
@@ -1455,11 +1555,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": ""
   },
   {
    "package": "@efficient-erp/cli-win32-x64@1.212.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1469,7 +1570,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.32
+   "duration_s": 3.32,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "single-screen-utils@1.2.1",
@@ -1483,7 +1585,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.17
+   "duration_s": 4.17,
+   "unverified_reason": ""
   },
   {
    "package": "create-layout@1.2.0",
@@ -1497,11 +1600,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.54
+   "duration_s": 3.54,
+   "unverified_reason": ""
   },
   {
    "package": "@lark-codem/codem-cli-win32-arm64@0.1.253",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1511,7 +1615,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.06
+   "duration_s": 3.06,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "holiday-calendar@1.3.4",
@@ -1525,11 +1630,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "@mj-biz-apps/sales-server@6.22.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1539,7 +1645,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 122.09
+   "duration_s": 122.09,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@epoint-playwright/create@1.7.0",
@@ -1553,7 +1660,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": ""
   },
   {
    "package": "@indra.ai/deva@1.62.93",
@@ -1567,7 +1675,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.39
+   "duration_s": 3.39,
+   "unverified_reason": ""
   },
   {
    "package": "event-reduce@0.9.0",
@@ -1581,7 +1690,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.09
+   "duration_s": 3.09,
+   "unverified_reason": ""
   },
   {
    "package": "@rlmh/linux-x64@0.2.0",
@@ -1595,7 +1705,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.72
+   "duration_s": 5.72,
+   "unverified_reason": ""
   },
   {
    "package": "@firedmosquito831/my-claude-code@8.2.0",
@@ -1611,7 +1722,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.12
+   "duration_s": 3.12,
+   "unverified_reason": ""
   },
   {
    "package": "@cadcam/scan-origin@1.2.1",
@@ -1625,11 +1737,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.47
+   "duration_s": 3.47,
+   "unverified_reason": ""
   },
   {
    "package": "@anthusai/papyrus@5.70.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1642,7 +1755,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 64.49
+   "duration_s": 64.49,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@cadcam/scan-origin-linux-x64@1.2.1",
@@ -1656,7 +1770,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.31
+   "duration_s": 3.31,
+   "unverified_reason": ""
   },
   {
    "package": "spec-controller@0.1.178",
@@ -1670,7 +1785,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.07
+   "duration_s": 3.07,
+   "unverified_reason": ""
   },
   {
    "package": "@lovince/ui-vue@0.6.0",
@@ -1684,7 +1800,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.96
+   "duration_s": 5.96,
+   "unverified_reason": ""
   },
   {
    "package": "@lovince/ui-dom@0.2.1",
@@ -1698,7 +1815,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.42
+   "duration_s": 3.42,
+   "unverified_reason": ""
   },
   {
    "package": "next-evolve@0.3.4",
@@ -1712,7 +1830,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 20.67
+   "duration_s": 20.67,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/components@4.3.1",
@@ -1726,11 +1845,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.91
+   "duration_s": 17.91,
+   "unverified_reason": ""
   },
   {
    "package": "@epoint-playwright/playwright-core@1.7.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1742,7 +1862,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 10.07
+   "duration_s": 10.07,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@bike4mind/sdk@1.4.0",
@@ -1756,7 +1877,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.67
+   "duration_s": 3.67,
+   "unverified_reason": ""
   },
   {
    "package": "@mj-biz-apps/sales-entities@6.22.0",
@@ -1770,7 +1892,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.55
+   "duration_s": 8.55,
+   "unverified_reason": ""
   },
   {
    "package": "@memnexus-ai/typescript-sdk@1.78.4",
@@ -1784,7 +1907,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.77
+   "duration_s": 3.77,
+   "unverified_reason": ""
   },
   {
    "package": "orange4@1.0.0",
@@ -1798,7 +1922,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": ""
   },
   {
    "package": "@baidu-light-new/aiju@17.15.0",
@@ -1812,7 +1937,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.19
+   "duration_s": 4.19,
+   "unverified_reason": ""
   },
   {
    "package": "@omniviewdev/base-ui@0.11.0",
@@ -1826,7 +1952,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.32
+   "duration_s": 11.32,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-wecom@0.1.35",
@@ -1840,7 +1967,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.77
+   "duration_s": 3.77,
+   "unverified_reason": ""
   },
   {
    "package": "@quantcdn/quant-cloud-cli@0.8.0",
@@ -1854,7 +1982,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 15.58
+   "duration_s": 15.58,
+   "unverified_reason": ""
   },
   {
    "package": "@aspectlylabs/mikka@0.0.247",
@@ -1868,7 +1997,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.89
+   "duration_s": 13.89,
+   "unverified_reason": ""
   },
   {
    "package": "@lobehub/icons-static-png@2.6.0",
@@ -1882,7 +2012,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.39
+   "duration_s": 4.39,
+   "unverified_reason": ""
   },
   {
    "package": "@efficient-erp/cli@1.212.1",
@@ -1896,7 +2027,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.17
+   "duration_s": 4.17,
+   "unverified_reason": ""
   },
   {
    "package": "@memnexus-ai/sdk@1.78.4",
@@ -1910,7 +2042,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": ""
   },
   {
    "package": "@mj-biz-apps/sales-core-entities-server@6.22.0",
@@ -1925,7 +2058,8 @@
    "off_registry_hosts": [],
    "status": "timeout",
    "exit_code": null,
-   "duration_s": 122.75
+   "duration_s": 122.75,
+   "unverified_reason": "the detonation did not finish (status timeout)"
   },
   {
    "package": "@emailverifier/sdk@0.1.64",
@@ -1939,7 +2073,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.23
+   "duration_s": 3.23,
+   "unverified_reason": ""
   },
   {
    "package": "@antscorp/ui@0.6.1",
@@ -1953,7 +2088,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.36
+   "duration_s": 11.36,
+   "unverified_reason": ""
   },
   {
    "package": "@nano133/nanoterra@0.10.1",
@@ -1967,11 +2103,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.15
+   "duration_s": 4.15,
+   "unverified_reason": ""
   },
   {
    "package": "@epoint-playwright/playwright-web@1.7.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -1983,7 +2120,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 10.03
+   "duration_s": 10.03,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@ankhorage/repository@0.7.0",
@@ -1997,7 +2135,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.38
+   "duration_s": 7.38,
+   "unverified_reason": ""
   },
   {
    "package": "@involvex/bun-sweep@0.0.1",
@@ -2011,7 +2150,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.35
+   "duration_s": 9.35,
+   "unverified_reason": ""
   },
   {
    "package": "@yeolyi/unix-state@3.0.0",
@@ -2025,7 +2165,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.54
+   "duration_s": 3.54,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/chat-ui@1.53.15",
@@ -2039,7 +2180,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 30.16
+   "duration_s": 30.16,
+   "unverified_reason": ""
   },
   {
    "package": "@booyaka/mcp-vet@0.15.1",
@@ -2055,11 +2197,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.28
+   "duration_s": 4.28,
+   "unverified_reason": ""
   },
   {
    "package": "@vue-dnd-kit/nuxt@3.0.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2069,11 +2212,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 58.63
+   "duration_s": 58.63,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "clocktail@0.8.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2083,7 +2227,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@yeaft/webchat-agent@1.0.657",
@@ -2099,7 +2244,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 33.91
+   "duration_s": 33.91,
+   "unverified_reason": ""
   },
   {
    "package": "@gitmyabi/mywalleteoszs-team-845199c9--gitmyabi-lab@0.0.7",
@@ -2113,7 +2259,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.98
+   "duration_s": 9.98,
+   "unverified_reason": ""
   },
   {
    "package": "@galva-io/galva-admin-node@1.0.21-dev",
@@ -2127,7 +2274,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.41
+   "duration_s": 11.41,
+   "unverified_reason": ""
   },
   {
    "package": "@lobehub/icons@6.14.0",
@@ -2143,7 +2291,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 39.74
+   "duration_s": 39.74,
+   "unverified_reason": ""
   },
   {
    "package": "@lobehub/icons-static-svg@1.102.0",
@@ -2157,11 +2306,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.56
+   "duration_s": 3.56,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-dashboard@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2171,7 +2321,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 32.08
+   "duration_s": 32.08,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@antscorp/astryx-theme-antsomi@0.6.1",
@@ -2185,7 +2336,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.17
+   "duration_s": 8.17,
+   "unverified_reason": ""
   },
   {
    "package": "@3f-consulting/spec-controller-core@0.1.178",
@@ -2199,7 +2351,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.8
+   "duration_s": 3.8,
+   "unverified_reason": ""
   },
   {
    "package": "@antscorp/vite-stylex@0.6.1",
@@ -2213,11 +2366,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 15.4
+   "duration_s": 15.4,
+   "unverified_reason": ""
   },
   {
    "package": "@xbintsc/win32-arm64@0.6.8",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2227,7 +2381,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.24
+   "duration_s": 3.24,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "homebridge-tesla-wall-connector-local@1.1.0",
@@ -2241,7 +2396,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-codearts@1.2.2",
@@ -2255,11 +2411,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 14.72
+   "duration_s": 14.72,
+   "unverified_reason": ""
   },
   {
    "package": "@xbintsc/darwin-arm64@0.6.8",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2269,7 +2426,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.33
+   "duration_s": 3.33,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@epoint-playwright/codegen-cli@1.7.0",
@@ -2283,7 +2441,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.68
+   "duration_s": 3.68,
+   "unverified_reason": ""
   },
   {
    "package": "@north-light/sdk@0.3.575",
@@ -2297,7 +2456,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.3
+   "duration_s": 4.3,
+   "unverified_reason": ""
   },
   {
    "package": "@epoint-playwright/cdp-recorder@2.0.0-rc.2",
@@ -2311,7 +2471,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.57
+   "duration_s": 3.57,
+   "unverified_reason": ""
   },
   {
    "package": "@natch-the-storage/heathershaw-platform-types@1.25.4",
@@ -2325,11 +2486,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.19
+   "duration_s": 3.19,
+   "unverified_reason": ""
   },
   {
    "package": "@rlmh/win32-x64@0.2.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2339,11 +2501,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.32
+   "duration_s": 3.32,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@xbintsc/darwin-x64@0.6.8",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2353,7 +2516,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.21
+   "duration_s": 3.21,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "svelte-zukan@0.16.5",
@@ -2367,7 +2531,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 14.69
+   "duration_s": 14.69,
+   "unverified_reason": ""
   },
   {
    "package": "@ellieyujin/pi-reopen@0.2.0-dev.0",
@@ -2381,11 +2546,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.8
+   "duration_s": 16.8,
+   "unverified_reason": ""
   },
   {
    "package": "@opencode/cli-darwin-arm64@2.2.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2395,7 +2561,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.18
+   "duration_s": 3.18,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@opencode/ai@2.2.5",
@@ -2409,7 +2576,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.09
+   "duration_s": 12.09,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-english-coach@0.1.2",
@@ -2423,11 +2591,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.33
+   "duration_s": 4.33,
+   "unverified_reason": ""
   },
   {
    "package": "@rlmh/darwin-arm64@0.2.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2437,7 +2606,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.23
+   "duration_s": 3.23,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@lark-codem/codem-cli-linux-x64@0.1.253",
@@ -2451,7 +2621,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.12
+   "duration_s": 5.12,
+   "unverified_reason": ""
   },
   {
    "package": "@lobehub/icons-static-avatar@2.7.0",
@@ -2465,7 +2636,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.85
+   "duration_s": 3.85,
+   "unverified_reason": ""
   },
   {
    "package": "@finedesign/cli@0.0.0-stage",
@@ -2479,7 +2651,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.46
+   "duration_s": 3.46,
+   "unverified_reason": ""
   },
   {
    "package": "@agentguardx/helper@0.3.99",
@@ -2493,7 +2666,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.88
+   "duration_s": 5.88,
+   "unverified_reason": ""
   },
   {
    "package": "ichigokurosaki-baileys@1.1.8",
@@ -2509,7 +2683,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.85
+   "duration_s": 11.85,
+   "unverified_reason": ""
   },
   {
    "package": "@threenative/runtime-native@0.3.8",
@@ -2527,7 +2702,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 31.63
+   "duration_s": 31.63,
+   "unverified_reason": ""
   },
   {
    "package": "@tangle-network/sandbox-cli@0.21.67",
@@ -2543,11 +2719,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 29.07
+   "duration_s": 29.07,
+   "unverified_reason": ""
   },
   {
    "package": "@rlmh/darwin-x64@0.2.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2557,11 +2734,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.27
+   "duration_s": 3.27,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@mindlogic-ai/logician-ui@4.0.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2571,11 +2749,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 6.06
+   "duration_s": 6.06,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@lark-codem/codem-cli-linux-arm64@0.1.253",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2585,7 +2764,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.17
+   "duration_s": 3.17,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@lightupai/polaris@0.0.153",
@@ -2599,7 +2779,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.54
+   "duration_s": 11.54,
+   "unverified_reason": ""
   },
   {
    "package": "@idmui/basic@1.0.4",
@@ -2613,11 +2794,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.74
+   "duration_s": 19.74,
+   "unverified_reason": ""
   },
   {
    "package": "@lark-codem/codem-cli-darwin-arm64@0.1.253",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2627,7 +2809,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.22
+   "duration_s": 3.22,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@renovatebot/osv-offline@4.5.6",
@@ -2641,7 +2824,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.05
+   "duration_s": 5.05,
+   "unverified_reason": ""
   },
   {
    "package": "rlm-harness@0.2.0",
@@ -2657,11 +2841,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.03
+   "duration_s": 7.03,
+   "unverified_reason": ""
   },
   {
    "package": "@skyworx/dynamic-ui@1.0.35",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2671,7 +2856,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 228,
-   "duration_s": 49.56
+   "duration_s": 49.56,
+   "unverified_reason": "`npm install` failed with exit code 228, so there was no complete install to observe"
   },
   {
    "package": "@renovatebot/osv-offline-db@4.5.6",
@@ -2685,11 +2871,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.45
+   "duration_s": 3.45,
+   "unverified_reason": ""
   },
   {
    "package": "@momentic/qa-node@0.30.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2699,7 +2886,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.29
+   "duration_s": 3.29,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@materializeinc/sql-parser@26.48.2",
@@ -2713,7 +2901,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.72
+   "duration_s": 3.72,
+   "unverified_reason": ""
   },
   {
    "package": "@rightkit/social-ui@0.1.0",
@@ -2727,7 +2916,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.86
+   "duration_s": 5.86,
+   "unverified_reason": ""
   },
   {
    "package": "pi-c-review@1.0.2",
@@ -2741,7 +2931,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.84
+   "duration_s": 3.84,
+   "unverified_reason": ""
   },
   {
    "package": "@twip/web@0.0.0",
@@ -2755,7 +2946,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.08
+   "duration_s": 3.08,
+   "unverified_reason": ""
   },
   {
    "package": "@ascii-web/client@0.9.1",
@@ -2769,11 +2961,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.71
+   "duration_s": 3.71,
+   "unverified_reason": ""
   },
   {
    "package": "instar@1.3.1585",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [
     "postinstall",
@@ -2788,7 +2981,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 36.23
+   "duration_s": 36.23,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "dsh-revive@0.1.5",
@@ -2802,7 +2996,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.33
+   "duration_s": 3.33,
+   "unverified_reason": ""
   },
   {
    "package": "@staqforce.studio/staqui@0.1.0",
@@ -2816,7 +3011,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.42
+   "duration_s": 12.42,
+   "unverified_reason": ""
   },
   {
    "package": "@alicloud/cloudsso20210515@1.7.0",
@@ -2830,7 +3026,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.35
+   "duration_s": 9.35,
+   "unverified_reason": ""
   },
   {
    "package": "@postbye/mcp@1.0.0",
@@ -2844,7 +3041,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.5
+   "duration_s": 8.5,
+   "unverified_reason": ""
   },
   {
    "package": "@fleetless/contracts@8.2.0",
@@ -2860,7 +3058,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.99
+   "duration_s": 3.99,
+   "unverified_reason": ""
   },
   {
    "package": "agent-policy-kit@0.5.1",
@@ -2874,7 +3073,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.27
+   "duration_s": 3.27,
+   "unverified_reason": ""
   },
   {
    "package": "@materializeinc/sql-pretty@26.48.2",
@@ -2888,7 +3088,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.84
+   "duration_s": 3.84,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-ws-recency@0.10.6",
@@ -2902,11 +3103,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.07
+   "duration_s": 3.07,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-linux-arm64@0.46.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -2916,7 +3118,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.28
+   "duration_s": 3.28,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@cubeai/dsh-remote-feishu@0.4.2",
@@ -2930,7 +3133,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.42
+   "duration_s": 3.42,
+   "unverified_reason": ""
   },
   {
    "package": "jgy-public-component@0.0.61",
@@ -2946,7 +3150,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 14.94
+   "duration_s": 14.94,
+   "unverified_reason": ""
   },
   {
    "package": "@declarion/embed@0.133.0",
@@ -2960,7 +3165,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.88
+   "duration_s": 3.88,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-reasoning-level-selector@0.5.0",
@@ -2974,7 +3180,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.23
+   "duration_s": 3.23,
+   "unverified_reason": ""
   },
   {
    "package": "@wakeshift/sdk@0.7.1",
@@ -2988,11 +3195,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.83
+   "duration_s": 5.83,
+   "unverified_reason": ""
   },
   {
    "package": "@lark-codem/codem-cli-darwin-x64@0.1.253",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3002,11 +3210,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.31
+   "duration_s": 3.31,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@wocwang/cortico-world-gpt-sovits-for-coopanion@0.6.2",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3016,7 +3225,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.19
+   "duration_s": 3.19,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "luna-clasificador@1.2.6",
@@ -3032,7 +3242,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.64
+   "duration_s": 5.64,
+   "unverified_reason": ""
   },
   {
    "package": "@dungsil/dsh-plugin-korean-ime@0.1.0",
@@ -3046,7 +3257,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.39
+   "duration_s": 3.39,
+   "unverified_reason": ""
   },
   {
    "package": "@algforce_ai/reporsa@0.1.13",
@@ -3060,7 +3272,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.87
+   "duration_s": 6.87,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-generator@4.3.1",
@@ -3074,7 +3287,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.83
+   "duration_s": 22.83,
+   "unverified_reason": ""
   },
   {
    "package": "@threenative/three-native@0.3.8",
@@ -3088,7 +3302,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.25
+   "duration_s": 4.25,
+   "unverified_reason": ""
   },
   {
    "package": "@declarion/react@0.133.0",
@@ -3102,7 +3317,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 26.93
+   "duration_s": 26.93,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/cli@1.53.15",
@@ -3116,7 +3332,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 21.54
+   "duration_s": 21.54,
+   "unverified_reason": ""
   },
   {
    "package": "sawbuck@0.1.22",
@@ -3130,7 +3347,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.88
+   "duration_s": 3.88,
+   "unverified_reason": ""
   },
   {
    "package": "@materializeinc/sql-lexer@26.48.2",
@@ -3144,7 +3362,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.83
+   "duration_s": 3.83,
+   "unverified_reason": ""
   },
   {
    "package": "dealposdeploy@26.45.0",
@@ -3158,11 +3377,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.24
+   "duration_s": 3.24,
+   "unverified_reason": ""
   },
   {
    "package": "@hhxg/dsh-hhxg-market@0.5.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3172,7 +3392,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.21
+   "duration_s": 3.21,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@bridge-ds/mcp@0.14.1",
@@ -3186,7 +3407,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.17
+   "duration_s": 10.17,
+   "unverified_reason": ""
   },
   {
    "package": "@litert-lm/core@0.19.0",
@@ -3200,7 +3422,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.32
+   "duration_s": 5.32,
+   "unverified_reason": ""
   },
   {
    "package": "life-saver-mcp@0.8.1",
@@ -3215,11 +3438,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.44
+   "duration_s": 12.44,
+   "unverified_reason": ""
   },
   {
    "package": "@efficient-erp/cli-darwin-arm64@1.212.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3229,7 +3453,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.03
+   "duration_s": 3.03,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@frontera-sdk/workflow@1.53.15",
@@ -3243,7 +3468,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.32
+   "duration_s": 5.32,
+   "unverified_reason": ""
   },
   {
    "package": "@2bad/walt@1.0.0",
@@ -3257,7 +3483,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.21
+   "duration_s": 6.21,
+   "unverified_reason": ""
   },
   {
    "package": "@sawbuck/reins@0.1.0",
@@ -3271,7 +3498,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.21
+   "duration_s": 3.21,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-profile-stats@2.3.1",
@@ -3285,7 +3513,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.21
+   "duration_s": 3.21,
+   "unverified_reason": ""
   },
   {
    "package": "@linzumi/cli@1.0.323",
@@ -3299,7 +3528,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.82
+   "duration_s": 24.82,
+   "unverified_reason": ""
   },
   {
    "package": "@rig-c/review@1.1.1",
@@ -3313,7 +3543,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.99
+   "duration_s": 4.99,
+   "unverified_reason": ""
   },
   {
    "package": "jssip-emicnet@2.2.9",
@@ -3327,7 +3558,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.21
+   "duration_s": 4.21,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/agents@1.53.15",
@@ -3341,7 +3573,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.48
+   "duration_s": 4.48,
+   "unverified_reason": ""
   },
   {
    "package": "@efficient-erp/cli-linux-x64@1.212.1",
@@ -3355,7 +3588,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.34
+   "duration_s": 4.34,
+   "unverified_reason": ""
   },
   {
    "package": "remote-done@0.1.1",
@@ -3369,7 +3603,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.05
+   "duration_s": 3.05,
+   "unverified_reason": ""
   },
   {
    "package": "@allen-wei/model-hub-ui@0.1.1",
@@ -3383,7 +3618,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.89
+   "duration_s": 10.89,
+   "unverified_reason": ""
   },
   {
    "package": "@allen-wei/model-hub-react@0.1.1",
@@ -3397,7 +3633,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.76
+   "duration_s": 5.76,
+   "unverified_reason": ""
   },
   {
    "package": "@bridge-ds/toolbar@0.7.0",
@@ -3411,7 +3648,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.51
+   "duration_s": 13.51,
+   "unverified_reason": ""
   },
   {
    "package": "@lsamien/yaovi@0.1.23",
@@ -3437,7 +3675,8 @@
    ],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 55.84
+   "duration_s": 55.84,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/functions@1.53.15",
@@ -3451,7 +3690,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.86
+   "duration_s": 4.86,
+   "unverified_reason": ""
   },
   {
    "package": "@maqiuyao/dxf-viewer@0.2.31",
@@ -3465,7 +3705,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.44
+   "duration_s": 10.44,
+   "unverified_reason": ""
   },
   {
    "package": "@rightkit/dictation-ui@0.1.0",
@@ -3479,7 +3720,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.81
+   "duration_s": 11.81,
+   "unverified_reason": ""
   },
   {
    "package": "@threenative/raw-unreal@0.1.8",
@@ -3493,7 +3735,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.19
+   "duration_s": 4.19,
+   "unverified_reason": ""
   },
   {
    "package": "@suphark/ui@0.96.0",
@@ -3507,11 +3750,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.18
+   "duration_s": 19.18,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-pluggable-host@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3521,7 +3765,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 43.89
+   "duration_s": 43.89,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "opencode-mirasim-auth@0.7.0",
@@ -3535,7 +3780,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/chat@1.53.15",
@@ -3549,7 +3795,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.57
+   "duration_s": 5.57,
+   "unverified_reason": ""
   },
   {
    "package": "@modesto_ma/dsh-channels@0.7.0",
@@ -3563,11 +3810,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.61
+   "duration_s": 7.61,
+   "unverified_reason": ""
   },
   {
    "package": "@erdu-ec/dotnet-typescript-utils@1.1.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3577,7 +3825,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.16
+   "duration_s": 3.16,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@flowscripter/runtime@1.2.2",
@@ -3591,7 +3840,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.79
+   "duration_s": 6.79,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/blueprint@1.53.15",
@@ -3605,7 +3855,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.69
+   "duration_s": 4.69,
+   "unverified_reason": ""
   },
   {
    "package": "rig-review@1.1.1",
@@ -3619,7 +3870,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.04
+   "duration_s": 5.04,
+   "unverified_reason": ""
   },
   {
    "package": "dshell-relay@0.1.0",
@@ -3633,7 +3885,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.48
+   "duration_s": 4.48,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-vue-devtools@4.3.1",
@@ -3649,7 +3902,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 31.86
+   "duration_s": 31.86,
+   "unverified_reason": ""
   },
   {
    "package": "@bridge-ds/cli@0.17.5",
@@ -3663,7 +3917,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.53
+   "duration_s": 10.53,
+   "unverified_reason": ""
   },
   {
    "package": "@vue-dnd-kit/actions@1.0.0",
@@ -3677,7 +3932,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.81
+   "duration_s": 6.81,
+   "unverified_reason": ""
   },
   {
    "package": "@frontera-sdk/core@1.53.15",
@@ -3691,7 +3947,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.01
+   "duration_s": 4.01,
+   "unverified_reason": ""
   },
   {
    "package": "@ahmedrowaihi/mediabunny-dts@1.65.0-beta.261",
@@ -3705,11 +3962,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.91
+   "duration_s": 3.91,
+   "unverified_reason": ""
   },
   {
    "package": "@ipa-schema/ai@0.1.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3719,7 +3977,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 4.22
+   "duration_s": 4.22,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "universal-parcel-scraper@0.637.1",
@@ -3735,7 +3994,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.64
+   "duration_s": 10.64,
+   "unverified_reason": ""
   },
   {
    "package": "zlink-front@3.0.11",
@@ -3749,7 +4009,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.34
+   "duration_s": 7.34,
+   "unverified_reason": ""
   },
   {
    "package": "pi-better-web-search@0.1.8",
@@ -3763,7 +4024,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.36
+   "duration_s": 17.36,
+   "unverified_reason": ""
   },
   {
    "package": "@vue-dnd-kit/devtools@3.0.0",
@@ -3777,7 +4039,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.57
+   "duration_s": 10.57,
+   "unverified_reason": ""
   },
   {
    "package": "onepipeline-cli@0.97.5",
@@ -3791,11 +4054,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.14
+   "duration_s": 5.14,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-analytical-designer@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -3805,7 +4069,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 37.86
+   "duration_s": 37.86,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@gooddata/sdk-ui-geo@11.65.1",
@@ -3819,7 +4084,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 33.78
+   "duration_s": 33.78,
+   "unverified_reason": ""
   },
   {
    "package": "@bridge-ds/core@0.27.0",
@@ -3833,7 +4099,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.18
+   "duration_s": 4.18,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-harmony-hybrid@4.3.1",
@@ -3847,7 +4114,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 29.13
+   "duration_s": 29.13,
+   "unverified_reason": ""
   },
   {
    "package": "@allen-wei/model-hub-core@0.1.1",
@@ -3861,7 +4129,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.72
+   "duration_s": 5.72,
+   "unverified_reason": ""
   },
   {
    "package": "@bridge-ds/visual@0.3.21",
@@ -3875,7 +4144,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.83
+   "duration_s": 5.83,
+   "unverified_reason": ""
   },
   {
    "package": "@ascii-web/server@0.9.1",
@@ -3889,7 +4159,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.71
+   "duration_s": 3.71,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/service@4.3.1",
@@ -3903,7 +4174,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.08
+   "duration_s": 18.08,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-inject@4.3.1",
@@ -3917,7 +4189,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.65
+   "duration_s": 12.65,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-teamwork@0.1.35",
@@ -3931,7 +4204,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.77
+   "duration_s": 3.77,
+   "unverified_reason": ""
   },
   {
    "package": "nucleus-mcp@1.17.1",
@@ -3945,7 +4219,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.11
+   "duration_s": 3.11,
+   "unverified_reason": ""
   },
   {
    "package": "@bridge-ds/stylelint-plugin@0.2.25",
@@ -3959,7 +4234,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.63
+   "duration_s": 9.63,
+   "unverified_reason": ""
   },
   {
    "package": "orange3@1.0.0",
@@ -3973,7 +4249,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "@vue-dnd-kit/core@3.0.0",
@@ -3987,7 +4264,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.18
+   "duration_s": 6.18,
+   "unverified_reason": ""
   },
   {
    "package": "@secondlayer/stacks@6.5.4",
@@ -4001,7 +4279,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.84
+   "duration_s": 6.84,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/cli-convertor@4.3.1",
@@ -4017,7 +4296,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 41.39
+   "duration_s": 41.39,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-gateway-provider@1.1.3",
@@ -4033,7 +4313,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.38
+   "duration_s": 13.38,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-jd@4.3.1",
@@ -4047,11 +4328,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.92
+   "duration_s": 19.92,
+   "unverified_reason": ""
   },
   {
    "package": "@dogeos/dogeos-sdk@4.0.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4061,7 +4343,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 66.22
+   "duration_s": 66.22,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "dsh-logalyze@0.0.0",
@@ -4075,7 +4358,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.59
+   "duration_s": 4.59,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-harmony-ets@4.3.1",
@@ -4089,7 +4373,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 26.39
+   "duration_s": 26.39,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-h5@4.3.1",
@@ -4103,7 +4388,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 26.87
+   "duration_s": 26.87,
+   "unverified_reason": ""
   },
   {
    "package": "@stjoo0925/grimoire@0.12.3",
@@ -4117,7 +4403,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.12
+   "duration_s": 4.12,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-alipay@4.3.1",
@@ -4131,7 +4418,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.0
+   "duration_s": 17.0,
+   "unverified_reason": ""
   },
   {
    "package": "@basou/core@0.75.0",
@@ -4145,7 +4433,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.42
+   "duration_s": 4.42,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-harmony-cpp@4.3.1",
@@ -4159,7 +4448,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 52.31
+   "duration_s": 52.31,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-framework-vue3@4.3.1",
@@ -4173,7 +4463,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 26.15
+   "duration_s": 26.15,
+   "unverified_reason": ""
   },
   {
    "package": "@threenative/procedural-animals@0.1.4",
@@ -4188,11 +4479,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.6
+   "duration_s": 4.6,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-win-x64@0.46.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4202,11 +4494,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.16
+   "duration_s": 3.16,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@lark-codem/codem-cli-win32-x64@0.1.253",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4216,7 +4509,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@amaster.ai/pi-video-gen@0.1.35",
@@ -4230,11 +4524,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.12
+   "duration_s": 11.12,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/taro-rn@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4244,11 +4539,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 6.49
+   "duration_s": 6.49,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "sapbuddy-dsh@0.1.2",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4258,7 +4554,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 4.34
+   "duration_s": 4.34,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "crawlmark-mcp@0.3.0",
@@ -4277,11 +4574,12 @@
    ],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.38
+   "duration_s": 28.38,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/rn-runner@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4291,7 +4589,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 8.17
+   "duration_s": 8.17,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "ai-developer-skill-os@12.0.0",
@@ -4305,7 +4604,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.22
+   "duration_s": 3.22,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-semantic-search@11.65.1",
@@ -4319,11 +4619,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.68
+   "duration_s": 28.68,
+   "unverified_reason": ""
   },
   {
    "package": "@christianirack/brainllm-linux-arm64@0.8.8",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4333,7 +4634,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.37
+   "duration_s": 3.37,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@rightkit/document-core@0.1.0",
@@ -4347,7 +4649,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.14
+   "duration_s": 12.14,
+   "unverified_reason": ""
   },
   {
    "package": "@ascii-web/wasm@0.9.1",
@@ -4361,11 +4664,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.28
+   "duration_s": 3.28,
+   "unverified_reason": ""
   },
   {
    "package": "local-operator-ui@0.47.2",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [
     "postinstall",
@@ -4379,7 +4683,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 12.45
+   "duration_s": 12.45,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/plugin-platform-swan@4.3.1",
@@ -4393,7 +4698,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.03
+   "duration_s": 17.03,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/cli@4.3.1",
@@ -4411,7 +4717,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 32.49
+   "duration_s": 32.49,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/rn-supporter@4.3.1",
@@ -4425,7 +4732,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 55.82
+   "duration_s": 55.82,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-linux-x64@0.46.0",
@@ -4439,7 +4747,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.64
+   "duration_s": 6.64,
+   "unverified_reason": ""
   },
   {
    "package": "docnest@0.1.26",
@@ -4453,7 +4762,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.09
+   "duration_s": 17.09,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-mini-ci@4.3.1",
@@ -4467,7 +4777,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 44.61
+   "duration_s": 44.61,
+   "unverified_reason": ""
   },
   {
    "package": "@kaynooo/stack-tools@0.3.0",
@@ -4481,7 +4792,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.45
+   "duration_s": 3.45,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/create-app@4.3.1",
@@ -4497,7 +4809,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 34.55
+   "duration_s": 34.55,
+   "unverified_reason": ""
   },
   {
    "package": "aldehyde@0.2.529",
@@ -4511,7 +4824,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 100.01
+   "duration_s": 100.01,
+   "unverified_reason": ""
   },
   {
    "package": "@xochi/client@0.1.9",
@@ -4525,7 +4839,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.35
+   "duration_s": 13.35,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-storage@0.1.35",
@@ -4539,11 +4854,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.67
+   "duration_s": 8.67,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-darwin-arm64@0.46.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4553,7 +4869,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.31
+   "duration_s": 3.31,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/plugin-platform-qq@4.3.1",
@@ -4567,7 +4884,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.15
+   "duration_s": 18.15,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-weapp@4.3.1",
@@ -4581,7 +4899,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.79
+   "duration_s": 16.79,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/vite-runner@4.3.1",
@@ -4595,7 +4914,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 38.43
+   "duration_s": 38.43,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/router@4.3.1",
@@ -4609,7 +4929,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.43
+   "duration_s": 18.43,
+   "unverified_reason": ""
   },
   {
    "package": "@daracl/core@0.0.14",
@@ -4623,7 +4944,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.59
+   "duration_s": 3.59,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-task-scheduler@0.1.35",
@@ -4637,7 +4959,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.06
+   "duration_s": 5.06,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/ui@0.46.0",
@@ -4651,7 +4974,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 46.03
+   "duration_s": 46.03,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-react-devtools@4.3.1",
@@ -4667,7 +4991,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 29.98
+   "duration_s": 29.98,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-ascf@4.3.1",
@@ -4681,7 +5006,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.85
+   "duration_s": 17.85,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/cli@0.11.0",
@@ -4695,7 +5021,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 38.52
+   "duration_s": 38.52,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-http@4.3.1",
@@ -4709,7 +5036,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.24
+   "duration_s": 18.24,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-html@4.3.1",
@@ -4723,7 +5051,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.71
+   "duration_s": 12.71,
+   "unverified_reason": ""
   },
   {
    "package": "babel-preset-taro@4.3.1",
@@ -4737,7 +5066,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 27.21
+   "duration_s": 27.21,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/taro-loader@4.3.1",
@@ -4751,7 +5081,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.02
+   "duration_s": 16.02,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-web-access@0.1.35",
@@ -4765,7 +5096,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.36
+   "duration_s": 4.36,
+   "unverified_reason": ""
   },
   {
    "package": "@znmin/claude-remote-cli@0.3.0",
@@ -4781,7 +5113,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.23
+   "duration_s": 10.23,
+   "unverified_reason": ""
   },
   {
    "package": "ai-price-index@1.0.53",
@@ -4797,7 +5130,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.16
+   "duration_s": 3.16,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-platform-tt@4.3.1",
@@ -4811,7 +5145,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.4
+   "duration_s": 19.4,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-telemetry@0.1.35",
@@ -4825,11 +5160,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 7.62
+   "duration_s": 7.62,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-win-arm64@0.46.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4839,7 +5175,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/components-advanced@4.3.1",
@@ -4853,7 +5190,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.63
+   "duration_s": 22.63,
+   "unverified_reason": ""
   },
   {
    "package": "stylelint-config-taro-rn@4.3.1",
@@ -4867,7 +5205,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.81
+   "duration_s": 9.81,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/with-weapp@4.3.1",
@@ -4881,7 +5220,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.42
+   "duration_s": 18.42,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-security@0.1.35",
@@ -4895,11 +5235,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 15.6
+   "duration_s": 15.6,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/runtime-rn@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -4909,7 +5250,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 228,
-   "duration_s": 74.83
+   "duration_s": 74.83,
+   "unverified_reason": "`npm install` failed with exit code 228, so there was no complete install to observe"
   },
   {
    "package": "@secondlayer/shared@14.2.0",
@@ -4923,7 +5265,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.07
+   "duration_s": 8.07,
+   "unverified_reason": ""
   },
   {
    "package": "@secondlayer/subgraphs@7.7.4",
@@ -4937,7 +5280,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.24
+   "duration_s": 9.24,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-memory@0.1.35",
@@ -4951,7 +5295,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.09
+   "duration_s": 4.09,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-framework-solid@4.3.1",
@@ -4965,7 +5310,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.5
+   "duration_s": 22.5,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/plugin-framework-react@4.3.1",
@@ -4979,7 +5325,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.23
+   "duration_s": 19.23,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-lark@0.1.35",
@@ -4993,7 +5340,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.84
+   "duration_s": 3.84,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/webpack5-runner@4.3.1",
@@ -5007,7 +5355,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 44.5
+   "duration_s": 44.5,
+   "unverified_reason": ""
   },
   {
    "package": "@basou/cli@0.75.0",
@@ -5021,7 +5370,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.02
+   "duration_s": 5.02,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-kit@11.65.1",
@@ -5035,11 +5385,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.85
+   "duration_s": 28.85,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/cli-darwin-x64@0.46.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5049,7 +5400,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.27
+   "duration_s": 3.27,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/rn-style-transformer@4.3.1",
@@ -5063,7 +5415,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 29.72
+   "duration_s": 29.72,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/taro-h5@4.3.1",
@@ -5077,7 +5430,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.34
+   "duration_s": 22.34,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-image-gen@0.1.35",
@@ -5091,7 +5445,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.52
+   "duration_s": 3.52,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-vis-commons@11.65.1",
@@ -5105,11 +5460,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 28.1
+   "duration_s": 28.1,
+   "unverified_reason": ""
   },
   {
    "package": "@agentguardx/helper-win32-x64@0.3.99",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5119,7 +5475,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.24
+   "duration_s": 3.24,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/taroize@4.3.1",
@@ -5133,7 +5490,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.82
+   "duration_s": 13.82,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/webpack5-prebundle@4.3.1",
@@ -5147,11 +5505,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.45
+   "duration_s": 16.45,
+   "unverified_reason": ""
   },
   {
    "package": "@glassly/engine@0.3.7",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5161,7 +5520,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 228,
-   "duration_s": 63.69
+   "duration_s": 63.69,
+   "unverified_reason": "`npm install` failed with exit code 228, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/transformer-wx@4.3.1",
@@ -5175,7 +5535,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.68
+   "duration_s": 22.68,
+   "unverified_reason": ""
   },
   {
    "package": "create-moonshine-app@0.6.1",
@@ -5189,11 +5550,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.54
+   "duration_s": 3.54,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-memory-mem0@0.1.35",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5205,7 +5567,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 18.96
+   "duration_s": 18.96,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@pigeonposse/web-2026@1.0.2",
@@ -5219,7 +5582,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 11.28
+   "duration_s": 11.28,
+   "unverified_reason": ""
   },
   {
    "package": "@pigeonposse/api-config-2026@1.0.2",
@@ -5233,7 +5597,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.97
+   "duration_s": 6.97,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/util@11.65.1",
@@ -5247,7 +5612,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.3
+   "duration_s": 4.3,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/runner-utils@4.3.1",
@@ -5261,7 +5627,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 15.45
+   "duration_s": 15.45,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/cli@1.0.0-beta.11",
@@ -5275,7 +5642,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.03
+   "duration_s": 13.03,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/rn-transformer@4.3.1",
@@ -5289,7 +5657,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.26
+   "duration_s": 12.26,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-filters@11.65.1",
@@ -5303,7 +5672,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 31.83
+   "duration_s": 31.83,
+   "unverified_reason": ""
   },
   {
    "package": "@pedit/serve@0.4.0",
@@ -5317,7 +5687,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.97
+   "duration_s": 3.97,
+   "unverified_reason": ""
   },
   {
    "package": "@neural-charts/core@0.0.21",
@@ -5331,7 +5702,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.08
+   "duration_s": 4.08,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-goal@0.1.35",
@@ -5345,7 +5717,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.95
+   "duration_s": 3.95,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/components-react@4.3.1",
@@ -5359,7 +5732,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 19.76
+   "duration_s": 19.76,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/stylelint-config@11.65.1",
@@ -5373,7 +5747,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.02
+   "duration_s": 10.02,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/plugin-sdk@0.11.0",
@@ -5387,11 +5762,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.7
+   "duration_s": 3.7,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/components-rn@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5401,7 +5777,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 5.33
+   "duration_s": 5.33,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@threenative/physics@0.3.8",
@@ -5415,7 +5792,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.8
+   "duration_s": 22.8,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/provider-fastly@1.0.0-beta.11",
@@ -5429,11 +5807,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.54
+   "duration_s": 8.54,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-ext@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5443,7 +5822,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 29.02
+   "duration_s": 29.02,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/project-graph@4.3.1",
@@ -5457,7 +5837,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 14.51
+   "duration_s": 14.51,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-dingtalk@0.1.35",
@@ -5471,7 +5852,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.73
+   "duration_s": 3.73,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-web@0.31.4",
@@ -5487,7 +5869,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 37.28
+   "duration_s": 37.28,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-computer-use@0.1.35",
@@ -5501,7 +5884,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.37
+   "duration_s": 24.37,
+   "unverified_reason": ""
   },
   {
    "package": "postcss-taro-unit-transform@4.3.1",
@@ -5515,7 +5899,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.45
+   "duration_s": 3.45,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-pivot@11.65.1",
@@ -5529,7 +5914,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 32.61
+   "duration_s": 32.61,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-channels@0.1.35",
@@ -5543,7 +5929,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 20.75
+   "duration_s": 20.75,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-theme-provider@11.65.1",
@@ -5557,7 +5944,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.98
+   "duration_s": 12.98,
+   "unverified_reason": ""
   },
   {
    "package": "@pigeonposse/check-2026@1.0.2",
@@ -5571,7 +5959,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.93
+   "duration_s": 8.93,
+   "unverified_reason": ""
   },
   {
    "package": "tdem-electron-sdk@0.4.4",
@@ -5587,7 +5976,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.77
+   "duration_s": 12.77,
+   "unverified_reason": ""
   },
   {
    "package": "@pigeonposse/api-2026@1.0.2",
@@ -5601,7 +5991,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.39
+   "duration_s": 8.39,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-browser-use@0.1.35",
@@ -5615,7 +6006,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.57
+   "duration_s": 24.57,
+   "unverified_reason": ""
   },
   {
    "package": "@leadfund/lead-mcp@202610.2.0",
@@ -5629,7 +6021,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.75
+   "duration_s": 8.75,
+   "unverified_reason": ""
   },
   {
    "package": "@pigeonposse/api-client-2026@1.0.2",
@@ -5643,7 +6036,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.89
+   "duration_s": 3.89,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/helper@4.3.1",
@@ -5657,7 +6051,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.34
+   "duration_s": 13.34,
+   "unverified_reason": ""
   },
   {
    "package": "@givolt/i3-composer-agent@4.0.2",
@@ -5671,7 +6066,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.16
+   "duration_s": 4.16,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-attachments@0.1.35",
@@ -5685,7 +6081,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.65
+   "duration_s": 3.65,
+   "unverified_reason": ""
   },
   {
    "package": "@inixiative/config@0.5.175",
@@ -5701,7 +6098,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.16
+   "duration_s": 5.16,
+   "unverified_reason": ""
   },
   {
    "package": "@amaster.ai/pi-shared@0.1.35",
@@ -5715,7 +6113,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.11
+   "duration_s": 3.11,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/admin@0.11.0",
@@ -5729,7 +6128,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.19
+   "duration_s": 3.19,
+   "unverified_reason": ""
   },
   {
    "package": "pstdio@0.46.0",
@@ -5743,11 +6143,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.0
+   "duration_s": 13.0,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-metric-component@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5757,7 +6158,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 29.34
+   "duration_s": 29.34,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "babel-plugin-transform-react-jsx-to-rn-stylesheet@4.3.1",
@@ -5771,7 +6173,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.81
+   "duration_s": 6.81,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/workbench@0.46.0",
@@ -5785,7 +6188,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 50.11
+   "duration_s": 50.11,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/extend@4.3.1",
@@ -5799,7 +6203,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.81
+   "duration_s": 18.81,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/router-rn@4.3.1",
@@ -5813,7 +6218,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 38.42
+   "duration_s": 38.42,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/sdk@0.46.0",
@@ -5827,7 +6233,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.34
+   "duration_s": 4.34,
+   "unverified_reason": ""
   },
   {
    "package": "@pstdio/canvas@0.46.0",
@@ -5841,7 +6248,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.18
+   "duration_s": 5.18,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-pluggable-application@11.65.1",
@@ -5855,7 +6263,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 18.84
+   "duration_s": 18.84,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/taro@4.3.1",
@@ -5869,7 +6278,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.62
+   "duration_s": 17.62,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/react@4.3.1",
@@ -5883,7 +6293,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.84
+   "duration_s": 4.84,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/provider-node@1.0.0-beta.11",
@@ -5897,7 +6308,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.65
+   "duration_s": 6.65,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/api@4.3.1",
@@ -5911,7 +6323,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.85
+   "duration_s": 3.85,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/runtime@4.3.1",
@@ -5925,7 +6338,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.47
+   "duration_s": 3.47,
+   "unverified_reason": ""
   },
   {
    "package": "@payloadcms/richtext-lexical@3.92.1",
@@ -5939,11 +6353,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 52.45
+   "duration_s": 52.45,
+   "unverified_reason": ""
   },
   {
    "package": "@poince/auth@3.9.5",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -5953,7 +6368,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 40.7
+   "duration_s": 40.7,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "babel-plugin-transform-taroapi@4.3.1",
@@ -5967,7 +6383,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.59
+   "duration_s": 6.59,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/pulse@1.0.0-beta.11",
@@ -5981,7 +6398,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.75
+   "duration_s": 3.75,
+   "unverified_reason": ""
   },
   {
    "package": "@rightkit/system-ui@0.1.0",
@@ -5995,11 +6413,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.03
+   "duration_s": 8.03,
+   "unverified_reason": ""
   },
   {
    "package": "@agentguardx/helper-win32-arm64@0.3.99",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6009,7 +6428,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.32
+   "duration_s": 3.32,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@payloadcms/plugin-mcp@3.92.1",
@@ -6023,11 +6443,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 22.33
+   "duration_s": 22.33,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-loaders@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6037,11 +6458,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 30.69
+   "duration_s": 30.69,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@gooddata/sdk-ui-gen-ai@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6051,7 +6473,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 34.27
+   "duration_s": 34.27,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "stylelint-taro-rn@4.3.1",
@@ -6065,7 +6488,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.37
+   "duration_s": 9.37,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/shared@4.3.1",
@@ -6079,7 +6503,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.26
+   "duration_s": 3.26,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/assets@1.0.0-beta.11",
@@ -6093,7 +6518,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.96
+   "duration_s": 3.96,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-chrome-use@0.2.0",
@@ -6107,7 +6533,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": ""
   },
   {
    "package": "@fishwithcat/dsh-agent@0.2.2-alpha.2",
@@ -6121,7 +6548,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.92
+   "duration_s": 4.92,
+   "unverified_reason": ""
   },
   {
    "package": "postcss-pxtransform@4.3.1",
@@ -6135,7 +6563,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.47
+   "duration_s": 3.47,
+   "unverified_reason": ""
   },
   {
    "package": "create-kedge@0.11.0",
@@ -6149,7 +6578,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.23
+   "duration_s": 3.23,
+   "unverified_reason": ""
   },
   {
    "package": "@long.hg/universal-release-cli@1.1.1",
@@ -6163,7 +6593,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.26
+   "duration_s": 3.26,
+   "unverified_reason": ""
   },
   {
    "package": "@ahmedrowaihi/mediabunny@1.65.0-beta.261",
@@ -6177,7 +6608,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.77
+   "duration_s": 3.77,
+   "unverified_reason": ""
   },
   {
    "package": "postcss-plugin-constparse@4.3.1",
@@ -6191,7 +6623,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.41
+   "duration_s": 3.41,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-charts@11.65.1",
@@ -6205,7 +6638,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 33.52
+   "duration_s": 33.52,
+   "unverified_reason": ""
   },
   {
    "package": "postcss-html-transform@4.3.1",
@@ -6219,7 +6653,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.35
+   "duration_s": 3.35,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-drawing@0.31.4",
@@ -6235,7 +6670,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 40.12
+   "duration_s": 40.12,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui@11.65.1",
@@ -6249,7 +6685,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.5
+   "duration_s": 10.5,
+   "unverified_reason": ""
   },
   {
    "package": "eslint-plugin-taro@4.3.1",
@@ -6263,7 +6700,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.96
+   "duration_s": 10.96,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/docs@0.11.0",
@@ -6277,7 +6715,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.36
+   "duration_s": 3.36,
+   "unverified_reason": ""
   },
   {
    "package": "eslint-config-taro@4.3.1",
@@ -6291,7 +6730,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.2
+   "duration_s": 24.2,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/s3@1.0.0-beta.11",
@@ -6305,7 +6745,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.96
+   "duration_s": 3.96,
+   "unverified_reason": ""
   },
   {
    "package": "taro-css-to-react-native@4.3.1",
@@ -6319,7 +6760,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.69
+   "duration_s": 3.69,
+   "unverified_reason": ""
   },
   {
    "package": "@zerodep-dev/vue-tsx-pro-tsx@0.6.0",
@@ -6333,7 +6775,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 13.12
+   "duration_s": 13.12,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-browser@0.31.4",
@@ -6349,7 +6792,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 39.76
+   "duration_s": 39.76,
+   "unverified_reason": ""
   },
   {
    "package": "@ass-idp/contract@0.2.0",
@@ -6363,11 +6807,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.51
+   "duration_s": 4.51,
+   "unverified_reason": ""
   },
   {
    "package": "@lumirelle/linter-config@0.1.0",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6377,7 +6822,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.26
+   "duration_s": 3.26,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@tarojs/binding@4.3.1",
@@ -6393,7 +6839,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.95
+   "duration_s": 3.95,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/wasm-compiler@1.0.0-beta.11",
@@ -6407,7 +6854,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.8
+   "duration_s": 8.8,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/runtime-cf@0.11.0",
@@ -6421,7 +6869,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 20.21
+   "duration_s": 20.21,
+   "unverified_reason": ""
   },
   {
    "package": "babel-plugin-transform-solid-jsx@4.3.1",
@@ -6435,7 +6884,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.4
+   "duration_s": 6.4,
+   "unverified_reason": ""
   },
   {
    "package": "@3sixty/api-server-fastify@0.20.0-next.0",
@@ -6449,7 +6899,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 12.37
+   "duration_s": 12.37,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/mcp@1.0.0-beta.11",
@@ -6463,7 +6914,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.84
+   "duration_s": 3.84,
+   "unverified_reason": ""
   },
   {
    "package": "pepper-green4@1.0.0",
@@ -6477,11 +6929,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.74
+   "duration_s": 4.74,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-ui-catalog@11.65.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6491,7 +6944,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 35.65
+   "duration_s": 35.65,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@kedge/testing@0.11.0",
@@ -6505,7 +6959,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 24.95
+   "duration_s": 24.95,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-model@11.65.1",
@@ -6519,11 +6974,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.35
+   "duration_s": 5.35,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-win32-x64-msvc@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6533,7 +6989,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.09
+   "duration_s": 3.09,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@payloadcms/live-preview@3.92.1",
@@ -6547,7 +7004,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.25
+   "duration_s": 3.25,
+   "unverified_reason": ""
   },
   {
    "package": "stylelint-taro@4.3.1",
@@ -6561,7 +7019,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 9.31
+   "duration_s": 9.31,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/server@0.11.0",
@@ -6575,7 +7034,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.91
+   "duration_s": 4.91,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/jwt@1.0.0-beta.11",
@@ -6589,11 +7049,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.12
+   "duration_s": 4.12,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-linux-x64-musl@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6603,7 +7064,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.32
+   "duration_s": 3.32,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "pi-roundtable-coding@0.31.4",
@@ -6619,7 +7081,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 37.91
+   "duration_s": 37.91,
+   "unverified_reason": ""
   },
   {
    "package": "tipjar@0.1.0",
@@ -6633,7 +7096,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.1
+   "duration_s": 3.1,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/db@0.11.0",
@@ -6647,7 +7111,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 16.7
+   "duration_s": 16.7,
+   "unverified_reason": ""
   },
   {
    "package": "@zerodep-dev/vue-tsx-pro-ui@0.6.0",
@@ -6661,7 +7126,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 17.68
+   "duration_s": 17.68,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-line@0.31.4",
@@ -6677,7 +7143,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 38.16
+   "duration_s": 38.16,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-linux-x64-gnu@4.3.1",
@@ -6691,7 +7158,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.27
+   "duration_s": 3.27,
+   "unverified_reason": ""
   },
   {
    "package": "@3sixty/api-rest-client@0.20.0-next.0",
@@ -6705,7 +7173,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.94
+   "duration_s": 6.94,
+   "unverified_reason": ""
   },
   {
    "package": "@agentguardx/helper-linux-x64@0.3.99",
@@ -6719,7 +7188,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.71
+   "duration_s": 3.71,
+   "unverified_reason": ""
   },
   {
    "package": "@runeditrun/rer@0.2.96",
@@ -6733,7 +7203,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.04
+   "duration_s": 4.04,
+   "unverified_reason": ""
   },
   {
    "package": "robotmon-rerouter@1.13.0",
@@ -6749,7 +7220,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 10.55
+   "duration_s": 10.55,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/grip@1.0.0-beta.11",
@@ -6763,11 +7235,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.09
+   "duration_s": 4.09,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-linux-arm64-gnu@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6777,7 +7250,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.05
+   "duration_s": 3.05,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "pi-roundtable-webchat@0.31.4",
@@ -6793,7 +7267,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 39.22
+   "duration_s": 39.22,
+   "unverified_reason": ""
   },
   {
    "package": "@kedge/core@0.11.0",
@@ -6807,7 +7282,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.09
+   "duration_s": 3.09,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-sandbox@0.31.4",
@@ -6823,7 +7299,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 37.4
+   "duration_s": 37.4,
+   "unverified_reason": ""
   },
   {
    "package": "@payloadcms/plugin-import-export@3.92.1",
@@ -6837,11 +7314,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 40.39
+   "duration_s": 40.39,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-darwin-x64@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6851,7 +7329,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.05
+   "duration_s": 3.05,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@pulse-compute/entities@1.0.0-beta.11",
@@ -6865,7 +7344,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.56
+   "duration_s": 4.56,
+   "unverified_reason": ""
   },
   {
    "package": "@payloadcms/codemod@4.0.0-beta.6",
@@ -6879,11 +7359,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.61
+   "duration_s": 4.61,
+   "unverified_reason": ""
   },
   {
    "package": "@tarojs/binding-darwin-arm64@4.3.1",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -6893,7 +7374,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 3.18
+   "duration_s": 3.18,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@threenative/metahuman@0.1.4",
@@ -6907,7 +7389,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.28
+   "duration_s": 4.28,
+   "unverified_reason": ""
   },
   {
    "package": "pi-roundtable-mcp@0.31.4",
@@ -6923,7 +7406,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 37.62
+   "duration_s": 37.62,
+   "unverified_reason": ""
   },
   {
    "package": "release-radar@0.0.2",
@@ -6937,7 +7421,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.9
+   "duration_s": 6.9,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-session-history-search@0.1.0",
@@ -6951,7 +7436,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.15
+   "duration_s": 3.15,
+   "unverified_reason": ""
   },
   {
    "package": "@kaynooo/code-tools@0.3.0",
@@ -6965,7 +7451,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.48
+   "duration_s": 3.48,
+   "unverified_reason": ""
   },
   {
    "package": "@orangelogic/design-system-react@1.0.0-alpha",
@@ -6981,7 +7468,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 42.67
+   "duration_s": 42.67,
+   "unverified_reason": ""
   },
   {
    "package": "@gooddata/sdk-e2e-utils@11.65.1",
@@ -6995,7 +7483,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.41
+   "duration_s": 5.41,
+   "unverified_reason": ""
   },
   {
    "package": "@blacklake-tech-cn/castor-cli@0.1.0-beta.1",
@@ -7016,7 +7505,8 @@
    ],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 6.24
+   "duration_s": 6.24,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/wasm-runtime-core-as@1.0.0-beta.11",
@@ -7030,7 +7520,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 5.35
+   "duration_s": 5.35,
+   "unverified_reason": ""
   },
   {
    "package": "@ahmedrowaihi/mediabunny-aac-encoder@1.65.0-beta.261",
@@ -7044,7 +7535,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.89
+   "duration_s": 3.89,
+   "unverified_reason": ""
   },
   {
    "package": "dsh-dragon-maid-pet@0.0.0-stage",
@@ -7058,7 +7550,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.12
+   "duration_s": 3.12,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/wasm-library-kit@1.0.0-beta.11",
@@ -7072,7 +7565,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.45
+   "duration_s": 3.45,
+   "unverified_reason": ""
   },
   {
    "package": "@kingsoftcloud/agentkit-harness-core@0.0.7",
@@ -7086,7 +7580,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.97
+   "duration_s": 3.97,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/wasm-host-runtime@1.0.0-beta.11",
@@ -7100,7 +7595,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.83
+   "duration_s": 4.83,
+   "unverified_reason": ""
   },
   {
    "package": "@pulse-compute/crypto@1.0.0-beta.11",
@@ -7114,7 +7610,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 3.39
+   "duration_s": 3.39,
+   "unverified_reason": ""
   },
   {
    "package": "@ass-idp/server@0.2.0",
@@ -7128,11 +7625,12 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 8.17
+   "duration_s": 8.17,
+   "unverified_reason": ""
   },
   {
    "package": "@co0ontty/wand@4.107.2",
-   "verdict": "Clean",
+   "verdict": "Could not verify",
    "rules": [],
    "declared_install_scripts": [],
    "ran_install_scripts": false,
@@ -7143,7 +7641,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 1,
-   "duration_s": 24.54
+   "duration_s": 24.54,
+   "unverified_reason": "`npm install` failed with exit code 1, so there was no complete install to observe"
   },
   {
    "package": "@ass-idp/browser@0.2.0",
@@ -7157,7 +7656,8 @@
    "off_registry_hosts": [],
    "status": "completed",
    "exit_code": 0,
-   "duration_s": 4.29
+   "duration_s": 4.29,
+   "unverified_reason": ""
   }
  ],
  "atlas": {

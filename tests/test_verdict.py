@@ -4,19 +4,22 @@ from brain.llm import LlmOutcome, LlmVerdict
 from brain.rules import RuleHit, Severity
 from brain.verdict import combine, llm_level
 from shared.contract import DetonateResult
+from tests.conftest import NPM_EXEC
 
 
-def result(status: str = "completed") -> DetonateResult:
+def result(status: str = "completed", exit_code: int = 0, truncated: bool = False,
+           exec_events=(NPM_EXEC,)) -> DetonateResult:  # fmt: skip
     return DetonateResult(
         job_id="j",
         status=status,
-        exit_code=0,
+        exit_code=exit_code,
         duration_s=1,
-        exec_events=[],
+        exec_events=list(exec_events),
         connect_events=[],
         dns_queries=[],
         stdout_tail="",
         stderr_tail="",
+        truncated=truncated,
     )
 
 
@@ -89,3 +92,36 @@ def test_unfinished_detonation_still_fails_on_observed_evil():
     # e.g. a reverse shell that hangs the install until timeout
     final = combine([hit(Severity.CRITICAL)], NO_LLM, result("timeout"))
     assert final.conclusion == "failure" and not final.verified
+
+
+# --- "Clean" requires a finished install AND complete telemetry AND a live sensor ---
+# Regression guard: each of these used to return Clean/success or a passing `neutral`, which
+# told a reviewer we had watched the install when we had not.
+
+
+@pytest.mark.parametrize(
+    "kwargs, because",
+    [
+        ({"exit_code": 1}, "exit code 1"),  # npm install failed outright
+        ({"truncated": True}, "truncated"),  # event cap hit, behaviour may be missing
+        ({"exec_events": ()}, "no process events"),  # collector was blind
+    ],
+)
+def test_incomplete_observation_is_never_clean(kwargs, because):
+    final = combine([], llm("benign", 1.0), result(**kwargs))
+    assert final.title == "Could not verify"
+    assert final.conclusion == "failure"  # `neutral` would pass branch protection
+    assert not final.verified
+    assert because in final.reason
+
+
+def test_failed_install_with_a_finding_still_blocks():
+    """An install that reaches a C2 and then dies must read Blocked, not Could not verify."""
+    final = combine([hit(Severity.CRITICAL)], NO_LLM, result(exit_code=1))
+    assert final.title == "Blocked" and final.conclusion == "failure"
+    assert not final.verified and "exit code 1" in final.reason
+
+
+def test_a_fully_observed_clean_run_has_no_reason():
+    final = combine([], llm("benign"), result())
+    assert final.title == "Clean" and final.verified and final.reason == ""

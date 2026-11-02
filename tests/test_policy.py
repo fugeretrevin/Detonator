@@ -2,6 +2,7 @@ from brain.llm import LlmOutcome
 from brain.pipeline import analyze, detonate_request
 from brain.policy import DEFAULT_TIMEOUT_S, MAX_ALLOWED_DOMAINS, Policy, parse_policy
 from shared.contract import ConnectEvent, DetonateResult
+from tests.conftest import NPM_EXEC
 from tests.test_intent import meta
 from tests.test_pipeline import event
 
@@ -10,7 +11,7 @@ def result(domain="cdn.corp.example") -> DetonateResult:
     conn = ConnectEvent(ts="t", pid=1, binary="/usr/local/bin/node", daddr="93.1.1.1",
                         dport=443, family="AF_INET", resolved_domain=domain)  # fmt: skip
     return DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
-                          exec_events=[], connect_events=[conn], dns_queries=[],
+                          exec_events=[NPM_EXEC], connect_events=[conn], dns_queries=[],
                           stdout_tail="", stderr_tail="")  # fmt: skip
 
 
@@ -88,8 +89,8 @@ def test_needs_review_block_makes_a_warning_fail_the_check():
 
 def test_needs_review_block_does_not_touch_a_clean_verdict():
     clean = DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
-                           exec_events=[], connect_events=[], dns_queries=[], stdout_tail="",
-                           stderr_tail="")  # fmt: skip
+                           exec_events=[NPM_EXEC], connect_events=[], dns_queries=[],
+                           stdout_tail="", stderr_tail="")  # fmt: skip
     out = analyze(clean, meta(), "", no_llm, job_id="j", enrich=lambda r: r,
                   policy=parse_policy("needs_review: block"))  # fmt: skip
     assert out.final.conclusion == "success"

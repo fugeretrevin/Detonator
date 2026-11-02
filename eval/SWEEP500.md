@@ -4,6 +4,8 @@
 
 **79 of the 500 never installed** on this platform and are excluded from the rates below: the feed is largely per-platform binary subpackages (`…-darwin-arm64`, `…-windows-amd64`) that npm refuses on linux-x64, plus one whose version had already been unpublished. Everything else is scored over the **421 packages that actually installed**.
 
+Those excluded runs are recorded as **Could not verify**, never Clean: an install that exited nonzero, timed out, lost telemetry to the event cap, or produced no process events at all is an absence of evidence, not a clean bill of health. That is a usability limit of this sandbox, not a judgement about the package.
+
 | Result | Count |
 |---|---|
 | Clean | 413/421 |

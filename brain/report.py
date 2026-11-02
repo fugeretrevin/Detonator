@@ -297,9 +297,12 @@ def render(
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
     if not final.verified:
+        why = final.reason or f"the sandboxed install did not finish (`{result.status}`)"
         lines += [
-            f"> The sandboxed install did not finish (`{result.status}`), so this PR could "
-            "not be fully verified. Behavior observed before it stopped is shown below.",
+            f"> **This PR could not be fully verified**, because {why}. That is an absence of "
+            "evidence, not a finding against this change: we are saying we could not watch the "
+            "whole install, so we will not call it clean. Whatever *was* observed is shown "
+            "below.",
             "",
         ]
 
