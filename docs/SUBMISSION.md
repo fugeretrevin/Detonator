@@ -98,6 +98,35 @@ has known since October 2021. It cannot cover the window before an advisory exis
 the only window that matters, and it has no opinion at all about malicious code in the
 project's *own* `package.json`. PR Detonator blocked all five from behavior alone.
 
+### What a blind sweep of the live registry turned up
+
+We also pointed it at packages nobody curated: the **100 most recent publishes** from npm's
+change feed, detonated minutes after they went live ([method](../eval/SWEEP.md)).
+
+Of the 73 that install on linux-x64: **0 blocked, 0 needs-review.** That makes the
+false-positive claim much harder to wave away than a benign set we hand-picked. 7 ran install
+scripts; none reached a host outside the npm registry and GitHub.
+
+**One package did get flagged, and it turned out to be a real security weakness — just not an
+attack.** The raw-IP rule fired because its `postinstall` connected to a hardcoded IP address
+on a non-standard port with no DNS lookup at all. Reading its published source explained why:
+a fallback path downloads the product binary from that bare IP with
+**`rejectUnauthorized: false`** — TLS certificate verification disabled — then extracts it and
+links it as the executable. Anyone able to intercept that connection, or who later controls
+that address, can have an arbitrary binary executed on every machine running `npm install`
+(CWE-295 plus CWE-494).
+
+It isn't malicious: the maintainer owns the package and this is clearly a deliberate fallback
+with an unsafe default. We have reported it privately to the maintainer and are withholding
+the name until they've had a chance to respond.
+
+We think this is the most interesting result in the project, because nobody planned it. A
+behavioral rule fired on live registry data with no prior knowledge, the follow-up correctly
+concluded "not an attack", and there was still a genuine install-time code-execution exposure
+underneath. It also validates the specific signal that caught it: we only saw this because the
+connection **skipped DNS entirely**, which is the one thing a sandbox that logs every lookup
+can notice and a source scanner cannot.
+
 ### The evaluation
 
 **122 real detonations** on real infrastructure, scored by the production pipeline with the

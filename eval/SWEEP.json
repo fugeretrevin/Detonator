@@ -441,7 +441,7 @@
    "duration_s": 5.97
   },
   {
-   "package": "@onescience/onecode@1.19.3-202611021039",
+   "package": "<withheld pending disclosure>",
    "verdict": "Blocked",
    "rules": [
     "NET_RAW_IP"
@@ -451,11 +451,11 @@
    ],
    "ran_install_scripts": true,
    "hosts": [
-    "218.90.133.98",
+    "<redacted IP>",
     "registry.npmjs.org"
    ],
    "off_registry_hosts": [
-    "218.90.133.98"
+    "<redacted IP>"
    ],
    "status": "timeout",
    "exit_code": null,
@@ -1438,8 +1438,8 @@
   "sprag-cli": [
    "registry.npmjs.org"
   ],
-  "@onescience/onecode": [
-   "218.90.133.98",
+  "<withheld pending disclosure>": [
+   "<redacted IP>",
    "registry.npmjs.org"
   ],
   "esbuild": [

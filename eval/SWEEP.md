@@ -18,9 +18,18 @@
 
 | Package | Verdict | Rules | Off-registry hosts | Install |
 |---|---|---|---|---|
-| `@onescience/onecode@1.19.3-202611021039` | Blocked | NET_RAW_IP | 218.90.133.98 | timeout |
+| `<name withheld pending disclosure>` | Blocked | NET_RAW_IP | <redacted IP> | timeout |
 
 These are **observations, not accusations.** A package fetching its own vendor CDN at install is ordinary, and one automated run is not evidence of intent. Anything here would need human review before any claim is made about it.
+
+**Follow-up on the one flagged package.** We read its published source (no execution). The
+`postinstall` reaches a fallback that downloads the product binary from a hardcoded bare IP
+with TLS certificate verification disabled (`rejectUnauthorized: false`), then extracts it and
+links it as the executable — an install-time code-execution exposure if that connection is
+intercepted or the address changes hands (CWE-295, CWE-494). It is **not malicious**: the
+maintainer owns the package and this is a deliberate fallback with an unsafe default. Reported
+privately to the maintainer; name and address withheld here until they have had a chance to
+respond. We did not attempt interception and make no claim about exploitability in practice.
 
 ## Behavior atlas (real packages, real install behavior)
 
@@ -28,7 +37,7 @@ These are **observations, not accusations.** A package fetching its own vendor C
 |---|---|
 | `@astryxdesign/core` | registry.npmjs.org |
 | `@embedded-postgres/linux-x64` | registry.npmjs.org |
-| `@onescience/onecode` | 218.90.133.98, registry.npmjs.org |
+| `<name withheld pending disclosure>` | <redacted IP>, registry.npmjs.org |
 | `esbuild` | registry.npmjs.org |
 | `sharp` | registry.npmjs.org |
 | `sprag-cli` | registry.npmjs.org |
