@@ -177,7 +177,7 @@ def report(data: dict) -> str:
     findings = [r for r in rows if r["rules"] or r["off_registry_hosts"]]
     if findings:
         header = "| Package | Verdict | Rules | Off-registry hosts | Install |"
-        lines += ["## Findings (across all 100, including ones that did not finish)", "",
+        lines += [f"## Findings (across all {n}, including ones that did not finish)", "",
                   header, "|---|---|---|---|---|"]  # fmt: skip
         for r in findings:
             state = r["status"] if r["status"] != "completed" else f"exit {r['exit_code']}"
