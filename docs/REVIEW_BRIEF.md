@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (379 tests, all passing).
+- **[Test]** covered by the automated test suite (417 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -145,6 +145,15 @@ benign blocks.
 - ≥ high → check **failure "Blocked"**. Install did not finish (timeout/error) or any
   internal error → **failure "Could not verify"** (fail closed). Low only → **neutral
   "Needs review"** (GitHub treats neutral as passing). Nothing → **success "Clean"**.
+- **Clean also requires that the model analysis ran.** If Muse was asked and failed (outage,
+  timeout, invalid output), a rules-only result is capped at ⚠️ Needs review with a "Reduced
+  coverage" note, because in the red-team set 9 of 20 attacks are Clean on rules alone. A repo
+  policy `model_requirement: required` fails the check instead. HIGH/CRITICAL still Block.
+  [Test; not yet live-verified, added Nov 2]
+- A check left "in progress" (a hard Modal timeout or killed job skips the error handler) is
+  failed closed as "Could not verify" by a reconciler every 5 minutes, 15 minutes after
+  creation; a job whose PR got a newer head doesn't overwrite that head's report. [Test; not
+  yet live-verified, added Nov 2]
 - Branch protection on the demo repo requires the check, so "Blocked" disables merging. [Live]
 
 ### 4.3 Intent Contract (Muse) [Test, Live]
@@ -173,7 +182,16 @@ benign blocks.
 - Returns (strict JSON schema): verdict, confidence, stated intent, observed behavior,
   mismatch, `injection_attempt`, key evidence, explanation, and one plain-English sentence
   per guilty line ("decode any obfuscation").
-- 60 s timeout, one retry; on failure the verdict is rules-only and the report says so.
+- **Evidence grounding** [Test; not yet live-verified, added Nov 2]: every telemetry event the
+  model sees has an id (an HMAC of the job id, so a PR author can't predict or plant one).
+  Each key-evidence claim must cite ids and say whether it was *observed* or only
+  *seen in source*. Code checks every claim: unknown ids and wrong-type citations are
+  rejected; source-only claims are never presented as observed. The report shows supported
+  claims as the kernel's own record of the cited event, and flags hosts or IPs the model's
+  summary names that appear in neither the telemetry nor the diff. Verdicts are unchanged.
+  The eval records an unsupported-claim rate once re-scored.
+- 60 s timeout, one retry; on failure the verdict is rules-only, capped at Needs review
+  (4.2), and the report says so.
 
 ### 4.5 Guilty line and dependency attribution [Test, Live]
 
@@ -226,8 +244,10 @@ For a dependency-affecting public PR, the Brain also detonates the **base commit
   and shown as context — so a routine bump whose old version already hit some CDN stays quiet.
 - **HIGH/CRITICAL findings are never suppressed**, even if the base also had them.
 - The report lists **behaviors new in this PR** (host:port, exec, dns, file not seen on base).
-- Best effort: if the base doesn't detonate cleanly, nothing is suppressed and the PR is
-  judged on its own behavior. Private repos are skipped.
+- Best effort: if the base run isn't one we could have called Clean (didn't finish, npm
+  exited non-zero, truncated telemetry, or no process events), nothing is suppressed and the
+  PR is judged on its own behavior; only verified base runs are cached. Private repos are
+  skipped. (Until Nov 2 the check was `status == completed` only.)
 [Live: E8 reports "New at install: `tcp:203.0.113.10:4444`"; base `main` (color-helper 1.0.0)
 detonated clean and was cached; E1–E7 unchanged.]
 
@@ -241,6 +261,8 @@ so a policy read from there would let an attacker allowlist their own exfil host
 - `needs_review: pass | block`: `block` makes a ⚠️ verdict fail the check instead of being a
   mergeable neutral — the answer to "needs review is mergeable" for teams who want it strict.
 - `timeout_s`: 1..300.
+- `model_requirement: best_effort | required`: `required` fails the check when the AI
+  analysis didn't run, instead of capping it at Needs review. [Test, added Nov 2]
 Every field is validated; anything malformed, unknown or out of range is ignored with a
 warning shown in the report, so a broken policy can neither weaken a review nor break it.
 [Live: PR #15 targets a branch whose policy sets `needs_review: block`; the same puppeteer
@@ -468,7 +490,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            379 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            417 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

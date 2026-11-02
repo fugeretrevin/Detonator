@@ -35,7 +35,7 @@ This is the part that will break first on a new machine. None of it is committed
 ```powershell
 python -m venv .venv
 .venv\Scripts\python -m pip install --use-feature=truststore -r requirements-dev.txt
-.venv\Scripts\python -m pytest            # expect 380 passed, 1 skipped
+.venv\Scripts\python -m pytest            # expect 417 passed (Windows; 1 symlink test is Linux-only)
 .venv\Scripts\ruff.exe check .
 ```
 
@@ -98,6 +98,24 @@ All four were approved. 1 and 2 are low-risk; 3 is the one that could destabilis
    hosts, changed script hashes, new sensitive-file reads, new dropped executables, pinned to
    image digest + Node/npm versions. Wire into the E8 demo PR. Remember the signature attests
    **record integrity only**, never that the package is safe.
+
+### 5.1 Status as of 2026-11-02 evening (second machine, no `.env` yet)
+
+On `main`, unit-tested, **none deployed or live-verified yet**:
+- `294826c` stale-check reconciler (item 2b above).
+- `c06b6a1` a failed model analysis can't yield Clean (capped at Needs review; policy
+  `model_requirement: required` fails the check); differential suppresses only against a
+  fully verified base, and only verified bases are cached.
+- `30c9838` evidence grounding (item 1, second half): job-scoped event ids in the prompt,
+  claims checked by code, report section, eval metric. **Changes the Muse schema/prompt.**
+
+On branch `rt09-dropped-script` (`9d823f0`), **not merged**: item 2a. Merge only after the
+104 benign + 500 sweep raw detonations show zero new benign blocks.
+
+Before submitting, with the `.env`: one live Muse call with the new schema → deploy → re-run
+E1–E8 (check the grounding section on E4/E5 and that a pending-check record is added and
+removed) → re-score and re-stamp the eval. `docs/SUBMISSION.md` already describes the
+fail-closed model and checked evidence; if any of that fails live, fix or reword it there.
 
 ## 6. Outstanding items only you can do
 

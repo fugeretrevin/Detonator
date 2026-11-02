@@ -94,7 +94,9 @@ review comment on the exact line responsible.
    benign "needs review" results from 5 to 3 without clearing a single attack.
 3. **Un-talk-out-able.** Model output can only ever *raise* severity. Deterministic rules set
    a floor no model can lower. Prompt injection in the PR becomes evidence rather than
-   influence. Timeouts, crashes and integrity failures all fail closed — never "clean".
+   influence. Timeouts, crashes and integrity failures all fail closed — never "clean" —
+   and so does the model itself: if the analysis fails, the result can't be "clean" either.
+   Every piece of evidence the model cites is checked by code against the kernel record.
 4. **The guilty line.** When a PR is blocked, code walks the flagged process back to the npm
    lifecycle script that launched it and comments on that exact diff line. If a *dependency's*
    script did it, the Chamber copies the file out of the sandbox and we point at the line
@@ -264,7 +266,7 @@ and reporting what it found is the point.
 - **Per-repo policy**, read from the base branch only — never the PR's head, where the author
   could allowlist their own exfiltration host.
 
-15 deterministic rules, **379 automated tests**, and every fixture is recorded real output
+15 deterministic rules, **417 automated tests**, and every fixture is recorded real output
 (Tetragon events, dnsmasq logs, kernel firewall lines, Muse responses, GitHub patches).
 
 ---

@@ -123,8 +123,9 @@ flowchart LR
     blocked but never clear a finding.
 11. **Per-repo policy**: `.github/detonator.yml`, read from the **base** branch only (never
     the PR's head), lets a repo name hosts that are normal for it and switch "needs review"
-    from a passing neutral to a failing check. It can only tighten review, never silence a
-    kernel finding.
+    from a passing neutral to a failing check, or require the AI analysis
+    (`model_requirement: required`). It can only tighten review, never silence a kernel
+    finding.
 12. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
     that doesn't exist (a name an attacker could register — "slopsquatting") or was first
     published in the last week. Low severity, so a human reviews before it installs.
@@ -154,7 +155,13 @@ flowchart LR
   the result can never be "Clean".
 - **Every rendered string is escaped.** Process args, domains, and model output are rendered
   as HTML entities: no markdown, links, `@mentions`, or fake bot markers.
-- **Unfinished means unverified.** A timeout or error is never reported as success.
+- **Unfinished means unverified.** A timeout or error is never reported as success, and a
+  check left hanging by a killed job is failed closed by a reconciler.
+- **No silent AI dropout.** If the model analysis fails, a rules-only result is capped at
+  "needs review", never Clean (or fails outright under `model_requirement: required`).
+- **The AI's evidence is checked, not trusted.** Muse cites job-scoped event IDs; code
+  rejects invented or mismatched citations, and the report shows cited events from the
+  kernel record itself, not from the model's text.
 
 ## Results
 
@@ -216,7 +223,7 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Tests:** `python -m pytest` (381 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
+- **Tests:** `python -m pytest` (417 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`
