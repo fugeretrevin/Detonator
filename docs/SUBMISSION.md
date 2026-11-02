@@ -319,8 +319,10 @@ GitHub App (checks, review comments, branch protection) · Python 3.11, FastAPI,
 ## Before you submit (checklist — delete this section when pasting)
 
 1. **Re-run the full eval at the final commit** and update every figure above plus the commit
-   hash in `eval/README.md`. The numbers here are from commit `0aff394`; if you commit anything
-   that touches `brain/`, `shared/`, `chamber/` or `eval/` after that, re-stamp the table.
+   hash in `eval/README.md`. The numbers here are from commit `0aff394`. Re-stamp if you change
+   *detection logic* — anything under `brain/`, `shared/`, `chamber/`, or `eval/cases.py`.
+   Commits that only touch docs or the generated result files do not change the numbers and do
+   not invalidate the stamp.
 2. Record the demo video (`demo/DEMO_SCRIPT.md`) and paste the link into "Try it / see it".
 3. Rotate the Meta API key and the GitHub webhook secret, redeploy, re-run E1–E9.
 4. Confirm the repo is public, the README links resolve, and the dashboard loads.
