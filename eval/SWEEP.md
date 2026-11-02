@@ -27,9 +27,15 @@ These are **observations, not accusations.** A package fetching its own vendor C
 with TLS certificate verification disabled (`rejectUnauthorized: false`), then extracts it and
 links it as the executable — an install-time code-execution exposure if that connection is
 intercepted or the address changes hands (CWE-295, CWE-494). It is **not malicious**: the
-maintainer owns the package and this is a deliberate fallback with an unsafe default. Reported
-privately to the maintainer; name and address withheld here until they have had a chance to
-respond. We did not attempt interception and make no claim about exploitability in practice.
+maintainer owns the package and this is a deliberate fallback with an unsafe default.
+
+**Disclosure status: a private report is written but has NOT been sent yet.** We are not
+claiming to have completed responsible disclosure. Two honest caveats about the redaction in
+this file, too: the name and address are removed from the current text, but they were committed
+earlier in this repository's history and this repository is public, so the identifier is
+recoverable by anyone reading the git log. Treat the redaction as a courtesy in the prose, not
+as effective concealment. We did not attempt interception and make no claim about
+exploitability in practice.
 
 ## Behavior atlas (real packages, real install behavior)
 

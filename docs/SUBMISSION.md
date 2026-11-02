@@ -19,8 +19,9 @@ We pointed it at **100 packages published to npm minutes earlier**, knowing noth
 of them. It cleared 73 of 73 that installed, and flagged one — which turned out to have a real
 install-time code-execution exposure: a fallback that downloads the product binary from a
 hardcoded bare IP with **TLS verification disabled**, then extracts and runs it. Not malware,
-a deliberate fallback with an unsafe default; reported privately, name withheld. No advisory
-existed and nobody told us to look. The behavior alone gave it away.
+a deliberate fallback with an unsafe default. A private report is written but **not yet sent**,
+so we claim no completed disclosure; the name is omitted here. No advisory existed and nobody
+told us to look. The behavior alone gave it away.
 
 We then scaled the sweep to **500** of the newest packages ([`eval/SWEEP500.md`](../eval/SWEEP500.md)):
 413 of 421 that installed cleared, nothing benign was hard-blocked, seven landed in *needs
@@ -173,8 +174,14 @@ that address, can have an arbitrary binary executed on every machine running `np
 (CWE-295 plus CWE-494).
 
 It isn't malicious: the maintainer owns the package and this is clearly a deliberate fallback
-with an unsafe default. We have reported it privately to the maintainer and are withholding
-the name until they've had a chance to respond.
+with an unsafe default.
+
+**Disclosure status, stated precisely:** a private report to the maintainer is drafted but has
+**not been sent yet**, so we are not claiming credit for completed responsible disclosure. We
+omit the name here, and we will not pretend that amounts to concealment — the identifier was
+committed earlier in this public repository's history and can be recovered from the git log.
+We did not attempt to intercept the connection and make no claim about exploitability in
+practice.
 
 We think this is the most interesting result in the project, because nobody planned it. A
 behavioral rule fired on live registry data with no prior knowledge, the follow-up correctly

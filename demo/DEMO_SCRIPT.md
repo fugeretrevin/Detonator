@@ -89,3 +89,7 @@ Flash three things:
 - If a live check is slow, show the already-completed run on the same PR.
 - If the Chamber is down, the PR comments and inline reviews stay on GitHub as evidence.
 - Keep the package name in the cold open **unspoken** until the maintainer has been notified.
+  Say "disclosure pending", never "we reported it" — the email has not been sent. Also avoid
+  claiming the name is withheld: it is recoverable from this repo's git history, so the right
+  phrasing is that we are not naming it here, not that it is concealed. Check no terminal tab,
+  JSON file or `git log` on screen shows the identifier.

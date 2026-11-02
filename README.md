@@ -14,8 +14,10 @@ did against what the pull request claimed.**
 > machine running `npm install`.
 >
 > It isn't malware. The maintainer owns the package; it's a deliberate fallback with an unsafe
-> default. We reported it privately and are withholding the name. But nobody told us to look,
-> and no advisory existed: the behavior alone gave it away.
+> default. A private report is **written but not yet sent**, so we are not claiming to have
+> completed disclosure; the name is left out of this text, though it is recoverable from this
+> repository's earlier history. But nobody told us to look, and no advisory existed: the
+> behavior alone gave it away.
 > ([method](eval/SWEEP.md) · [what `npm audit` says instead](eval/BASELINE.md))
 
 We then scaled the same sweep to **500** of the newest packages: 413 of 421 that installed
