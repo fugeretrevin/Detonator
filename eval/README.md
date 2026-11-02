@@ -16,10 +16,10 @@ pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.m
 
 ## Results
 
-**Scored 2026-11-02 06:37 UTC at commit `0aff394`** (clean tree, the deployed Brain) with
-`muse-spark-1.3` and Llama Prompt Guard 2, on 122 detonations on the current Chamber: TLS,
-signed responses, DNS capture and sinkhole, non-TCP egress blocked, per-run canary
-credentials and decoy tools. `results.json` carries the same stamp.
+**Scored 2026-11-02 20:56 UTC at commit `a5183c9`** (clean tree) with `muse-spark-1.3` and
+Llama Prompt Guard 2, on 122 detonations on the current Chamber: TLS, signed responses, DNS
+capture and sinkhole, non-TCP egress blocked, per-run canary credentials and decoy tools.
+`results.json` carries the same stamp.
 
 Four arms, so the two model uses can be told apart: `analysis` is the model reasoning over the
 telemetry with **no** Intent Contract.
@@ -29,14 +29,34 @@ telemetry with **no** Intent Contract.
 | benign (104) | rules | 95 | 5 | **0** | 4 |
 | benign (104) | rules + Intent Contract | 97 | 3 | **0** | 4 |
 | benign (104) | rules + analysis (no contract) | 95 | 5 | **0** | 4 |
-| benign (104) | full (contract + Prompt Guard + analysis) | 97 | 3 | **0** | 4 |
+| benign (104) | full (contract + Prompt Guard + analysis) | 95 | 5 | **0** | 4 |
 | simulated attacks (16) | rules | 0 | 1 | 15 | 0 |
 | simulated attacks (16) | rules + Intent Contract | 0 | 1 | 15 | 0 |
 | simulated attacks (16) | rules + analysis (no contract) | 0 | 0 | **16** | 0 |
-| simulated attacks (16) | full | 0 | 0 | **16** | 0 |
+| simulated attacks (16) | full | 0 | 1 | 15 | 0 |
 | real-incident reconstructions (2) | all four arms | 0 | 0 | **2** | 0 |
 
-- **0 of 104 popular packages blocked, in any arm.** The 3 left at ⚠️ (puppeteer,
+> **One scored run is a sample, not a fact.** Temperature 0 is not determinism, and this table
+> is a single pass. An earlier pass of the identical telemetry gave benign 97/3 and attacks
+> 16/16 in the `full` arm, with no model errors either time. `REPEAT.md` measures the spread
+> over five trials; read the two together, and prefer the repeatability numbers for any claim.
+
+- **Repeatability (5 trials per case on identical telemetry, `REPEAT.md` / `REPEAT_CORE.md`).**
+  Red team, 20 cases: flip rate **1/20** (only `gm08-cpu-miner`), worst case **2/20 attacks
+  mergeable** (`rt08-local-miner` Clean in all five — the known inline-CPU-loop miss — plus
+  `gm08` once). Attacks and boundary benign, 24 cases: flip rate **1/24**, worst case **1/18
+  attacks mergeable**, **0/6 benign blocked in any trial**. The single unstable case is
+  **`m12-domain-exfil`** (Blocked ×3, Needs review ×2): it exfiltrates to an ordinary
+  *resolvable* domain, which the rules can only rate LOW, so the outcome hangs on whether Muse
+  returns `malicious` (HIGH) or `suspicious` (LOW) on that call. So the honest claims are
+  **16/16 attacks in 3 of 5 trials, 15/16 in the worst**, and **19/20 red team in 4 of 5
+  trials, 18/20 in the worst** — never a flat 16/16 or 19/20.
+- **Evidence grounding holds across every trial:** 394/394 claims in the scored run, and
+  251/251 and 380/380 summed over the two 5-trial sets — 0% unsupported, no case naming a host
+  or IP absent from both the telemetry and the diff. Measured by `brain/evidence.py`, which
+  rejects an event id that isn't in that job's index (ids are an HMAC of the job id, so a PR
+  author can't forge one) and requires an `observed` claim to cite an event of its own type.
+- **0 of 104 popular packages blocked, in any arm or any trial.** The 3 left at ⚠️ (puppeteer,
   playwright-chromium, chromedriver) all download from `storage.googleapis.com`, which is never
   auto-cleared.
 - **The ablation separates the two model uses, and each fixes something the other does not.**

@@ -200,9 +200,18 @@ real models. Full per-case table and methodology: [eval/README.md](../eval/READM
 
 | Set | Rules only | + Intent Contract | Full pipeline |
 |---|---|---|---|
-| **104 popular packages** (35 run install scripts) | **0 blocked**, 5 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ |
-| **16 simulated install-time attacks** | 15 blocked | 15 blocked | **16 blocked** |
+| **104 popular packages** (35 run install scripts) | **0 blocked**, 5 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ | **0 blocked**, 5 ⚠️, 4 ⏱️ |
+| **16 simulated install-time attacks** | 15 blocked | 15 blocked | **16 blocked in 3 of 5 trials, 15 in the worst** |
 | **2 reconstructions of real incidents** | 2 blocked | 2 blocked | **2 blocked** |
+
+**We re-ran the model five times per case on identical telemetry, because temperature 0 is not
+determinism** ([`eval/REPEAT.md`](../eval/REPEAT.md)). Across 24 attack and boundary-benign
+cases the flip rate is **1/24** and **no benign case was blocked in any trial**; across the 20
+red-team cases it is **1/20**. Exactly one case is unstable — `m12`, which exfiltrates to an
+ordinary *resolvable* domain that the rules can only rate LOW, so its verdict hangs on whether
+Muse says `malicious` or `suspicious` on that call. That is why we quote **16/16 in 3 of 5
+trials** rather than a flat 16/16, and **19/20 red team in 4 of 5 trials, 18/20 in the worst**.
+A single scored run would have let us claim the better number and never know.
 
 - **Zero false blocks across all 104 popular packages**, in every arm — including the hard ones
   that download binaries at install: puppeteer, playwright, electron, prisma, cypress,

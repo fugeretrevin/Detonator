@@ -179,17 +179,24 @@ It *does* catch our ua-parser-js reconstruction — because that attack has had 
 since 2021. Advisory databases are retrospective; PR Detonator blocked all five from behavior
 alone, which is what you need the first time an attack runs.
 
-**Evaluation (122 real detonations, scored 2026-11-02 at commit `0aff394`,
+**Evaluation (122 real detonations, scored 2026-11-02 at commit `a5183c9`,
 [details](eval/README.md)):** **0 of 104 popular packages blocked** (35 of which run install
 scripts: puppeteer, electron, prisma, cypress, re2, ...); **16 of 16 simulated install-time
-attacks blocked**; and **defanged reconstructions of two real incidents, ua-parser-js (2021)
-and the Shai-Hulud npm worm (2025), both blocked and blamed on the version-bump line**. Muse
-decoded the payload in 5/5 obfuscated attacks and named the right dependency in 2/2. Cost
-~$0.015 per PR. Scaling to 104 packages surfaced one false positive (a dependency's nested
-`npm` reading `~/.npmrc`), now fixed. Rules alone block 15 of 16 attacks; the model catches
-the last (exfil to a resolvable domain).
+attacks blocked in 3 of 5 trials, 15 of 16 in the worst**; and **defanged reconstructions of
+two real incidents, ua-parser-js (2021) and the Shai-Hulud npm worm (2025), both blocked and
+blamed on the version-bump line**. Muse decoded the payload in 5/5 obfuscated attacks and named
+the right dependency in 2/2. Cost ~$0.015 per PR. Scaling to 104 packages surfaced one false
+positive (a dependency's nested `npm` reading `~/.npmrc`), now fixed. Rules alone block 15 of
+16 attacks; the model catches the last (exfil to a resolvable domain).
 
-Of those 104 benign packages, **97 are verified clean, 3 need review and 4 are "could not
+**We quote a range because we measured one.** Re-running the model five times per case on
+identical telemetry ([eval/REPEAT.md](eval/REPEAT.md)) gives a flip rate of 1/24 on attacks and
+boundary benign, 1/20 on the red-team set, and **zero benign blocked in any trial**. One case
+is unstable: `m12` exfiltrates to an ordinary resolvable domain that the rules can only rate
+LOW, so its verdict depends on whether Muse returns `malicious` or `suspicious`. Temperature 0
+is not determinism, and a single run would have let us publish the luckier number.
+
+Of those 104 benign packages, **95 are verified clean, 5 need review and 4 are "could not
 verify"** — `better-sqlite3`, `argon2`, `cpu-features` and `node-pty` fail to compile in this
 sandbox, and we refuse to call an install clean that we never watched finish. That is a limit
 of our sandbox, not a mark against those packages, and none of them was blocked.
