@@ -18,7 +18,7 @@
 
 | Package | Verdict | Rules | Off-registry hosts | Install |
 |---|---|---|---|---|
-| `<name withheld pending disclosure>` | Blocked | NET_RAW_IP | <redacted IP> | timeout |
+| `<name withheld pending a fix>` | Blocked | NET_RAW_IP | <redacted IP> | timeout |
 
 These are **observations, not accusations.** A package fetching its own vendor CDN at install is ordinary, and one automated run is not evidence of intent. Anything here would need human review before any claim is made about it.
 
@@ -29,8 +29,9 @@ links it as the executable — an install-time code-execution exposure if that c
 intercepted or the address changes hands (CWE-295, CWE-494). It is **not malicious**: the
 maintainer owns the package and this is a deliberate fallback with an unsafe default.
 
-**Disclosure status: a private report is written but has NOT been sent yet.** We are not
-claiming to have completed responsible disclosure. Two honest caveats about the redaction in
+**Disclosure status: a private report was sent to the package's sole npm maintainer on
+Nov 2, 2026**, after confirming the issue is still present in that day's latest version. No
+response or fix yet, so disclosure is not complete. Two honest caveats about the redaction in
 this file, too: the name and address are removed from the current text, but they were committed
 earlier in this repository's history and this repository is public, so the identifier is
 recoverable by anyone reading the git log. Treat the redaction as a courtesy in the prose, not
@@ -43,7 +44,7 @@ exploitability in practice.
 |---|---|
 | `@astryxdesign/core` | registry.npmjs.org |
 | `@embedded-postgres/linux-x64` | registry.npmjs.org |
-| `<name withheld pending disclosure>` | <redacted IP>, registry.npmjs.org |
+| `<name withheld pending a fix>` | <redacted IP>, registry.npmjs.org |
 | `esbuild` | registry.npmjs.org |
 | `sharp` | registry.npmjs.org |
 | `sprag-cli` | registry.npmjs.org |

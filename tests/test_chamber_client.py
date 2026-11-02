@@ -114,8 +114,33 @@ def test_tls_only_with_https_and_a_pinned_cert():
 
     assert not C("http://1.2.3.4:8443", "s").tls
     assert not C("https://1.2.3.4:8443", "s").tls  # no pinned cert: not trusted for tokens
-    pem = (Path(__file__).parent / "fixtures/selfsigned_test_cert.pem").read_text()
-    assert C("https://1.2.3.4:8443", "s", ca_pem=pem).tls
+    assert C("https://1.2.3.4:8443", "s", ca_pem=_self_signed_cert_pem()).tls
+
+
+def _self_signed_cert_pem() -> str:
+    # Generated per run: a committed .pem would be swallowed by the *.pem gitignore rule.
+    import datetime
+
+    from cryptography import x509
+    from cryptography.hazmat.primitives import hashes, serialization
+    from cryptography.hazmat.primitives.asymmetric import ec
+    from cryptography.x509.oid import NameOID
+
+    key = ec.generate_private_key(ec.SECP256R1())
+    name = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "chamber-test")])
+    now = datetime.datetime.now(datetime.UTC)
+    cert = (
+        x509.CertificateBuilder()
+        .subject_name(name)
+        .issuer_name(name)
+        .public_key(key.public_key())
+        .serial_number(x509.random_serial_number())
+        .not_valid_before(now)
+        .not_valid_after(now + datetime.timedelta(days=1))
+        .add_extension(x509.BasicConstraints(ca=True, path_length=None), critical=True)
+        .sign(key, hashes.SHA256())
+    )
+    return cert.public_bytes(serialization.Encoding.PEM).decode()
 
 
 def health_client(response) -> HttpChamberClient:

@@ -14,8 +14,8 @@ did against what the pull request claimed.**
 > machine running `npm install`.
 >
 > It isn't malware. The maintainer owns the package; it's a deliberate fallback with an unsafe
-> default. A private report is **written but not yet sent**, so we are not claiming to have
-> completed disclosure; the name is left out of this text, though it is recoverable from this
+> default. We **reported it privately to the maintainer on Nov 2, 2026**; there is no response
+> or fix yet, so the name is left out of this text, though it is recoverable from this
 > repository's earlier history. But nobody told us to look, and no advisory existed: the
 > behavior alone gave it away.
 > ([method](eval/SWEEP.md) · [what `npm audit` says instead](eval/BASELINE.md))
@@ -194,13 +194,14 @@ End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.
 | README change | ✅ Clean |
 | Add `lodash` | ✅ Clean (registry traffic only) |
 | Add `esbuild` (postinstall binary check) | ✅ Clean, no false positive |
-| Add `puppeteer` (downloads Chrome from a Google CDN) | ✅ Clean: CDN named by DNS capture, explained by the Intent Contract |
+| Add `puppeteer` (downloads Chrome from `storage.googleapis.com`) | ⚠️ Needs review (mergeable): shared hosting is never auto-cleared; the investigator writes a triage note |
 | "Typo fix" that exfiltrates `env` to a raw IP | 🛑 Blocked: `EXEC_NET_TOOL`, `NET_RAW_IP` |
 | Base64-obfuscated reverse shell | 🛑 Blocked (critical): `EXEC_INTERACTIVE_SHELL` |
 | Exfil + prompt injection in PR body and `package.json` | 🛑 Blocked, injection flagged |
 | Install that hangs forever | 🛑 Could not verify (timeout fails closed) |
+| "Bump color-helper 1.0.0 → 1.0.1" whose new version's postinstall opens a raw socket | 🛑 Blocked: inline comment on the bumped line naming `color-helper` |
 
-Detonations take 3–8 s; a full check completes in well under a minute. Demo payloads target
+Detonations take 3–20 s; a full check completes in well under a minute. Demo payloads target
 only TEST-NET-3 (`203.0.113.10`), so connect attempts are traced and go nowhere.
 
 ## Layout
@@ -215,7 +216,7 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Tests:** `python -m pytest` (170+ tests; fixtures recorded from real Tetragon and model output)
+- **Tests:** `python -m pytest` (381 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`
@@ -224,7 +225,8 @@ demo/      scenario payloads for the demo repo
 
 ## Scope and limits
 
-npm only; detects unexpected outbound connections and suspicious process spawns during
-install. The Brain→Chamber link is HMAC-signed HTTP, so private repos are refused (neutral)
-until TLS is added. One detonation at a time. Next steps: HTTPS on the Chamber, base-vs-head
-differential detonation, kill-on-detect via Tetragon enforcement, pip support.
+npm only; detects unexpected outbound connections, non-TCP egress, credential reads and
+suspicious process spawns during install. Payloads that only run when a package is
+`require`d at runtime (event-stream, 2018) are out of scope. Hardened Docker in a dedicated
+VM, not a microVM; one detonation at a time. Next steps: kill-on-detect via Tetragon
+enforcement, pip support.

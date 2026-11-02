@@ -16,8 +16,8 @@ branch) and show the finished results. Have `eval/SWEEP.md`, `eval/DWELL_TIME.md
 > malware — it's a real package with an unsafe fallback — but no advisory existed, nobody
 > told us to look, and the behavior alone gave it away. That's the whole idea."
 
-Show `eval/SWEEP.md` (the finding row) briefly. Don't name the package on camera (disclosure
-pending).
+Show `eval/SWEEP.md` (the finding row) briefly. Don't name the package on camera (reported
+privately, not fixed yet).
 
 ## 0:25 – 0:45 · Why this, why now
 
@@ -88,8 +88,9 @@ Flash three things:
 
 - If a live check is slow, show the already-completed run on the same PR.
 - If the Chamber is down, the PR comments and inline reviews stay on GitHub as evidence.
-- Keep the package name in the cold open **unspoken** until the maintainer has been notified.
-  Say "disclosure pending", never "we reported it" — the email has not been sent. Also avoid
+- Keep the package name in the cold open **unspoken** until the maintainer has shipped a fix.
+  Say "we reported it privately to the maintainer"; never "fixed" or "acknowledged" unless they
+  reply (report sent Nov 2, 2026, no response yet). Also avoid
   claiming the name is withheld: it is recoverable from this repo's git history, so the right
   phrasing is that we are not naming it here, not that it is concealed. Check no terminal tab,
   JSON file or `git log` on screen shows the identifier.
