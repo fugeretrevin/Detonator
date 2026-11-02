@@ -81,6 +81,25 @@ with the sandbox run.
 
 ## Results
 
+### What the tool teams already run says about the same pull requests
+
+`npm audit`, run on our own attack payloads ([method and raw output](../eval/BASELINE.md)):
+
+| Pull request | `npm audit` | PR Detonator |
+|---|---|---|
+| Shai-Hulud reconstruction (bump → steals `~/.npmrc`, runs TruffleHog, POSTs secrets) | **found 0 vulnerabilities** | 🛑 Blocked, payload line decoded |
+| "Fix typo" with an `$(env)`-exfiltrating postinstall | **found 0 vulnerabilities** | 🛑 Blocked + canary token caught |
+| base64 → `sh` | **found 0 vulnerabilities** | 🛑 Blocked, command decoded |
+| Stolen `$GITHUB_TOKEN` in a request header | **found 0 vulnerabilities** | 🛑 Blocked (critical) |
+| ua-parser-js 0.7.29 (the real 2021 hijack) | 1 high — GHSA-pjwm-rvh2-c87w | 🛑 Blocked |
+
+`npm audit` isn't broken — it's **retrospective**. It catches ua-parser-js because the world
+has known since October 2021. It cannot cover the window before an advisory exists, which is
+the only window that matters, and it has no opinion at all about malicious code in the
+project's *own* `package.json`. PR Detonator blocked all five from behavior alone.
+
+### The evaluation
+
 **122 real detonations** on real infrastructure, scored by the production pipeline with the
 real models. Full per-case table and methodology: [eval/README.md](../eval/README.md).
 

@@ -123,6 +123,13 @@ flowchart LR
 
 ## Results
 
+**What the tool everyone already runs says about the same PRs** ([details](eval/BASELINE.md)):
+`npm audit` reports **"found 0 vulnerabilities"** on the Shai-Hulud reconstruction, on an
+`$(env)`-exfiltrating postinstall, on a base64→`sh` payload, and on a stolen-token request.
+It *does* catch our ua-parser-js reconstruction — because that attack has had an advisory
+since 2021. Advisory databases are retrospective; PR Detonator blocked all five from behavior
+alone, which is what you need the first time an attack runs.
+
 **Evaluation (122 real detonations, scored 2026-11-02 at commit `04b7c25`,
 [details](eval/README.md)):** **0 of 104 popular packages blocked** (35 of which run install
 scripts: puppeteer, electron, prisma, cypress, re2, ...); **16 of 16 simulated install-time
