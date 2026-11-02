@@ -16,23 +16,35 @@ pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.m
 
 ## Results
 
-**Scored 2026-11-02 00:09 UTC at commit `04b7c25`** (clean tree, the deployed Brain) with
+**Scored 2026-11-02 06:37 UTC at commit `0aff394`** (clean tree, the deployed Brain) with
 `muse-spark-1.3` and Llama Prompt Guard 2, on 122 detonations on the current Chamber: TLS,
 signed responses, DNS capture and sinkhole, non-TCP egress blocked, per-run canary
 credentials and decoy tools. `results.json` carries the same stamp.
 
-| Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
-|---|---|---|---|---|
-| benign (104) | rules | 99 | 5 | **0** |
-| benign (104) | rules + Intent Contract | 101 | 3 | **0** |
-| benign (104) | full (contract + Prompt Guard + analysis) | 101 | 3 | **0** |
-| simulated attacks (16) | rules | 0 | 1 | 15 |
-| simulated attacks (16) | rules + Intent Contract | 0 | 1 | 15 |
-| simulated attacks (16) | full | 0 | 0 | **16** |
-| real-incident reconstructions (2) | rules / contract / full | 0 | 0 | **2** |
+Four arms, so the two model uses can be told apart: `analysis` is the model reasoning over the
+telemetry with **no** Intent Contract.
 
-- **0 of 104 popular packages blocked.** The 3 left at ⚠️ (puppeteer, playwright-chromium,
-  chromedriver) all download from `storage.googleapis.com`, which is never auto-cleared.
+| Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
+|---|---|---|---|---|---|
+| benign (104) | rules | 95 | 5 | **0** | 4 |
+| benign (104) | rules + Intent Contract | 97 | 3 | **0** | 4 |
+| benign (104) | rules + analysis (no contract) | 95 | 5 | **0** | 4 |
+| benign (104) | full (contract + Prompt Guard + analysis) | 97 | 3 | **0** | 4 |
+| simulated attacks (16) | rules | 0 | 1 | 15 | 0 |
+| simulated attacks (16) | rules + Intent Contract | 0 | 1 | 15 | 0 |
+| simulated attacks (16) | rules + analysis (no contract) | 0 | 0 | **16** | 0 |
+| simulated attacks (16) | full | 0 | 0 | **16** | 0 |
+| real-incident reconstructions (2) | all four arms | 0 | 0 | **2** | 0 |
+
+- **0 of 104 popular packages blocked, in any arm.** The 3 left at ⚠️ (puppeteer,
+  playwright-chromium, chromedriver) all download from `storage.googleapis.com`, which is never
+  auto-cleared.
+- **The ablation separates the two model uses, and each fixes something the other does not.**
+  The Intent Contract takes benign ⚠️ from 5 to 3 (it explains `binaries.prisma.sh` for a Prisma
+  bump and `download.cypress.io` for Cypress) and clears **no** attack: 15 → 15. The analysis
+  arm blocks 16/16 while leaving benign verdicts exactly where the rules left them: its one
+  addition is **m12**, which exfiltrates to an ordinary *resolvable* domain that the rules can
+  only rate LOW — so rules and contract both leave m12 a **mergeable** ⚠️.
 - **Scaling to 104 found one real false positive and we fixed it:** `re2`'s install runs a
   nested `npm run verify-build`, and that npm reads `~/.npmrc` as config, which first tripped
   `CRED_FILE_ACCESS`. The rule now never flags an npm/npx process reading it; a theft reads it
@@ -44,9 +56,13 @@ credentials and decoy tools. `results.json` carries the same stamp.
   2.9k out tokens; detonation p50 4.5 s / p95 13.8 s; model latency p50 12.5 s / p95 24.2 s.
 - New rules exercised: **m15** (UDP exfil) → `NET_NON_TCP_EGRESS`; **m16** (token in a curl
   header) → `DECOY_CREDENTIAL_SEEN` (critical); **m08** + Shai-Hulud → `CRED_FILE_ACCESS`.
-- 4 native packages (better-sqlite3, argon2, cpu-features, node-pty) exited non-zero: they
-  compile from source and the minimal sandbox image has no C toolchain. They are still
-  reported ✅ Clean (no malicious behavior); a failed benign build is not a false block.
+- **4 native packages are ⏱️ "could not verify", not ✅ Clean** (better-sqlite3, argon2,
+  cpu-features, node-pty): they compile from source and the minimal sandbox image has no C
+  toolchain, so they exit 1. We never watched a complete install, so we do not call them clean.
+  They are equally **not** false blocks — nothing was blocked, and this is a usability limit of
+  our sandbox, not a judgement about those packages. Earlier runs of this suite counted them as
+  ✅ Clean, which inflated the clean total to 99/101; the verdict now requires a finished
+  install, whole telemetry and a live sensor before it will say Clean.
 
 **Real-incident reconstructions** (defanged, delivered as Dependabot-style dependency bumps,
 see `INCIDENTS` in [cases.py](cases.py)):
@@ -74,7 +90,7 @@ Sources for the incident behavior: [Sysdig](https://sysdig.com/blog/shai-hulud-t
 The ua-parser-js geolocation service is a stand-in: our sources don't name it.
 
 What each layer contributes:
-- **Rules** never blocked a benign package, and catch 14/15 attacks on kernel facts alone.
+- **Rules** never blocked a benign package, and catch 15/16 attacks on kernel facts alone.
 - **The Intent Contract** clears downloads the PR text predicted from vendor-owned hosts
   (prisma, cypress, playwright's CDNs) without clearing any attack. The 3 benign installs
   left at ⚠️ (puppeteer, chromedriver, playwright-chromium) all fetch from

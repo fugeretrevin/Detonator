@@ -314,19 +314,28 @@ Typical detonation 3–20 s; a full check completes in well under a minute.
 
 122 real detonations, re-run Nov 1–2 on the current Chamber (TLS, signed responses, DNS
 capture and sinkhole, non-TCP egress blocked, per-run canary credentials and decoy tools),
-**scored at commit `04b7c25` (clean tree, same code as deployed)** with `muse-spark-1.3`
-and Prompt Guard 2. Three setups: rules only; rules + Intent Contract; full (contract +
-Prompt Guard + Muse analysis, i.e. production).
+**scored at commit `0aff394` (clean tree, same code as deployed)** with `muse-spark-1.3`
+and Prompt Guard 2. Four setups: rules only; rules + Intent Contract; rules + analysis with
+*no* contract (the isolating arm); full (contract + Prompt Guard + Muse analysis, i.e.
+production).
 
-| Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
-|---|---|---|---|---|
-| Benign (104) | rules | 99 | 5 | **0** |
-| Benign (104) | + contract | 101 | 3 | **0** |
-| Benign (104) | full | 101 | 3 | **0** |
-| Simulated attacks (16) | rules | 0 | 1 | 15 |
-| Simulated attacks (16) | + contract | 0 | 1 | 15 |
-| Simulated attacks (16) | full | 0 | 0 | **16** |
-| Real-incident reconstructions (2) | all three | 0 | 0 | **2** |
+| Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
+|---|---|---|---|---|---|
+| Benign (104) | rules | 95 | 5 | **0** | 4 |
+| Benign (104) | + contract | 97 | 3 | **0** | 4 |
+| Benign (104) | + analysis (no contract) | 95 | 5 | **0** | 4 |
+| Benign (104) | full | 97 | 3 | **0** | 4 |
+| Simulated attacks (16) | rules | 0 | 1 | 15 | 0 |
+| Simulated attacks (16) | + contract | 0 | 1 | 15 | 0 |
+| Simulated attacks (16) | + analysis (no contract) | 0 | 0 | **16** | 0 |
+| Simulated attacks (16) | full | 0 | 0 | **16** | 0 |
+| Real-incident reconstructions (2) | all four | 0 | 0 | **2** | 0 |
+
+The ⏱️ column is new and deliberate: `better-sqlite3`, `argon2`, `cpu-features` and `node-pty`
+compile from source and exit 1 in this image, so we never observed a finished install and will
+not call them Clean. Earlier runs counted them Clean, inflating the benign clean total to
+99/101. The two model uses also separate cleanly here — the contract takes benign ⚠️ from 5 to 3
+and clears no attack, while the analysis arm blocks 16/16 and changes no benign verdict.
 
 - **Benign set:** 104 popular packages, 35 of which run install scripts (puppeteer,
   playwright, electron, prisma, cypress, chromedriver, esbuild, @swc/core, sharp, bcrypt,

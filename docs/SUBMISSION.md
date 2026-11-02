@@ -114,6 +114,25 @@ review comment on the exact line responsible.
 Cost: **~$0.015 per pull request**. Model latency p50 12.5 s, p95 24.2 s — fully overlapped
 with the sandbox run.
 
+**A four-arm ablation separates the two model uses** — same 122 cases, same commit, scored by
+the production pipeline ([full table](../eval/results.md)):
+
+| Arm | Benign ⚠️ needs-review (of 104) | Attacks blocked (of 16) |
+|---|---|---|
+| rules only | 5 | 15 |
+| rules + Intent Contract | **3** | 15 |
+| rules + analysis, *no* Contract | 5 | **16** |
+| full (both) | **3** | **16** |
+
+They repair different failures and neither substitutes for the other. The **Contract** is what
+removes benign review noise and clears no attack: it explains `binaries.prisma.sh` for a Prisma
+bump and `download.cypress.io` for Cypress, because the PR's stated purpose predicts those
+hosts. The **analysis** is what closes the one detection gap and changes no benign verdict:
+`m12` exfiltrates to an ordinary *resolvable* domain, which the rules can only rate LOW — so
+rules and Contract both leave it a **mergeable** ⚠️, and only reading the telemetry against the
+diff makes it Blocked. That is the argument for using a model here at all, and it is why the
+rules still set an independent floor underneath both.
+
 ---
 
 ## Results
@@ -171,13 +190,21 @@ real models. Full per-case table and methodology: [eval/README.md](../eval/READM
 
 | Set | Rules only | + Intent Contract | Full pipeline |
 |---|---|---|---|
-| **104 popular packages** (35 run install scripts) | **0 blocked**, 5 ⚠️ | **0 blocked**, 3 ⚠️ | **0 blocked**, 3 ⚠️ |
+| **104 popular packages** (35 run install scripts) | **0 blocked**, 5 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ |
 | **16 simulated install-time attacks** | 15 blocked | 15 blocked | **16 blocked** |
 | **2 reconstructions of real incidents** | 2 blocked | 2 blocked | **2 blocked** |
 
-- **Zero false blocks across 104 popular packages**, including the hard ones that download
-  binaries at install: puppeteer, playwright, electron, prisma, cypress, chromedriver,
-  esbuild, sharp, bcrypt, sqlite3, canvas, @sentry/cli, re2.
+- **Zero false blocks across all 104 popular packages**, in every arm — including the hard ones
+  that download binaries at install: puppeteer, playwright, electron, prisma, cypress,
+  chromedriver, esbuild, sharp, bcrypt, sqlite3, canvas, @sentry/cli, re2.
+- **4 of the 104 are ⏱️ "could not verify", not clean**, and we count them that way on purpose:
+  `better-sqlite3`, `argon2`, `cpu-features` and `node-pty` failed to compile in this sandbox
+  (exit 1). We did not watch a complete install, so we will not call them clean — but that is a
+  **usability limit of our sandbox, not a judgement about those packages**. So the honest
+  benign result is *97 verified clean, 3 needing review, 4 unverifiable, 0 blocked* — never
+  "104/104 clean". An earlier version of this tool reported those four as Clean; finding and
+  fixing that is in the write-up because it is the single most important thing a security tool
+  can get right.
 - **We rebuilt two real attacks** (defanged, delivered as Dependabot-style version bumps):
   **ua-parser-js 0.7.29** (geofenced miner download) and the **Shai-Hulud worm** (downloads
   the real TruffleHog, scans for secrets, posts them to webhook.site). Both are blocked and
@@ -292,8 +319,8 @@ GitHub App (checks, review comments, branch protection) · Python 3.11, FastAPI,
 ## Before you submit (checklist — delete this section when pasting)
 
 1. **Re-run the full eval at the final commit** and update every figure above plus the commit
-   hash in `eval/README.md`. The numbers here are from commit `04b7c25`; the detection core
-   is unchanged since, but the table should be stamped at whatever you submit.
+   hash in `eval/README.md`. The numbers here are from commit `0aff394`; if you commit anything
+   that touches `brain/`, `shared/`, `chamber/` or `eval/` after that, re-stamp the table.
 2. Record the demo video (`demo/DEMO_SCRIPT.md`) and paste the link into "Try it / see it".
 3. Rotate the Meta API key and the GitHub webhook secret, redeploy, re-run E1–E9.
 4. Confirm the repo is public, the README links resolve, and the dashboard loads.

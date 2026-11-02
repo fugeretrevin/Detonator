@@ -170,7 +170,7 @@ It *does* catch our ua-parser-js reconstruction — because that attack has had 
 since 2021. Advisory databases are retrospective; PR Detonator blocked all five from behavior
 alone, which is what you need the first time an attack runs.
 
-**Evaluation (122 real detonations, scored 2026-11-02 at commit `04b7c25`,
+**Evaluation (122 real detonations, scored 2026-11-02 at commit `0aff394`,
 [details](eval/README.md)):** **0 of 104 popular packages blocked** (35 of which run install
 scripts: puppeteer, electron, prisma, cypress, re2, ...); **16 of 16 simulated install-time
 attacks blocked**; and **defanged reconstructions of two real incidents, ua-parser-js (2021)
@@ -179,6 +179,11 @@ decoded the payload in 5/5 obfuscated attacks and named the right dependency in 
 ~$0.015 per PR. Scaling to 104 packages surfaced one false positive (a dependency's nested
 `npm` reading `~/.npmrc`), now fixed. Rules alone block 15 of 16 attacks; the model catches
 the last (exfil to a resolvable domain).
+
+Of those 104 benign packages, **97 are verified clean, 3 need review and 4 are "could not
+verify"** — `better-sqlite3`, `argon2`, `cpu-features` and `node-pty` fail to compile in this
+sandbox, and we refuse to call an install clean that we never watched finish. That is a limit
+of our sandbox, not a mark against those packages, and none of them was blocked.
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 
