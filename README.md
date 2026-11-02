@@ -1,12 +1,40 @@
 # PR Detonator
 
-**Static scanners read code. PR Detonator watches it run.**
+**Static scanners read code. PR Detonator runs it — under kernel tracing — and holds what it
+did against what the pull request claimed.**
 
-A GitHub App that, on every pull request, runs the PR's `npm install` inside a disposable,
-hardened sandbox, traces what the code *actually does* at the kernel level with eBPF
-(Tetragon), and asks a Meta model to compare that runtime behavior with what the PR *claims*
-to do. A PR titled "Fix typo in README" that opens a raw-IP connection during `postinstall`
-gets a failing check that blocks the merge, plus a forensic comment explaining why.
+> **We pointed it at 100 packages published to npm minutes earlier, knowing nothing about any
+> of them. It cleared 73 of 73 that installed, and flagged one.**
+>
+> That one connected to a hardcoded IP address on a non-standard port during `postinstall`,
+> with no DNS lookup at all. Reading its published source explained why: a fallback path
+> downloads the product binary from that bare IP with **TLS certificate verification
+> disabled**, then extracts it and links it as the executable. Anyone who can intercept that
+> connection — or who later controls that address — gets arbitrary code executed on every
+> machine running `npm install`.
+>
+> It isn't malware. The maintainer owns the package; it's a deliberate fallback with an unsafe
+> default. We reported it privately and are withholding the name. But nobody told us to look,
+> and no advisory existed: the behavior alone gave it away.
+> ([method](eval/SWEEP.md) · [what `npm audit` says instead](eval/BASELINE.md))
+
+## Why now
+
+Install-time supply-chain attacks are the ones that actually land — event-stream, ua-parser-js,
+the Shai-Hulud worm — because a package's `postinstall` runs on every laptop and CI runner
+before anyone imports a line of its code. The pull request that lets one in is usually a
+**one-line version bump**, so there is nothing in the diff to review.
+
+And increasingly nobody is reviewing it anyway: **AI coding agents now open the PRs and pick
+the dependencies**, including packages that don't exist, which attackers then register. Review
+has become the bottleneck precisely as the volume of machine-written dependency changes
+exploded. PR Detonator is the layer that checks what the agent just installed — by running it.
+
+A GitHub App: on every pull request it runs the PR's `npm install` in a disposable hardened
+sandbox, traces every process, connection and DNS lookup at the kernel level with eBPF
+(Tetragon), and asks a Meta model to compare that behavior with what the PR *claims* to do. A
+PR titled "Fix typo in README" that opens a raw-IP connection during `postinstall` gets a
+failing check that blocks the merge and an inline comment on the exact guilty line.
 
 **Live dashboard** (recent runs, verdict tally, and a behavior atlas of what packages do at
 install): https://fugeretrevin--pr-detonator-dashboard.us-east.modal.run/

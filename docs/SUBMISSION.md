@@ -13,17 +13,49 @@ what it did against what the pull request claimed.**
 
 ---
 
+## Open with this (the one result to lead on)
+
+We pointed it at **100 packages published to npm minutes earlier**, knowing nothing about any
+of them. It cleared 73 of 73 that installed, and flagged one — which turned out to have a real
+install-time code-execution exposure: a fallback that downloads the product binary from a
+hardcoded bare IP with **TLS verification disabled**, then extracts and runs it. Not malware,
+a deliberate fallback with an unsafe default; reported privately, name withheld. No advisory
+existed and nobody told us to look. The behavior alone gave it away.
+
+---
+
 ## The problem (120 words)
 
-Supply-chain attacks have moved to **install time**. A package's `postinstall` script runs on
-every laptop and CI runner that installs it, before anyone imports a line of its code. That
-is how event-stream (2018), ua-parser-js (2021) and the Shai-Hulud npm worm (2025) spread —
-and the pull request that lets them in is usually a one-line version bump that review and
-auto-merge wave straight through.
+Supply-chain attacks have moved to **install time**. A package's `postinstall` runs on every
+laptop and CI runner that installs it, before anyone imports a line of its code — that is how
+event-stream (2018), ua-parser-js (2021) and the Shai-Hulud worm (2025) spread. The pull
+request that lets one in is usually a **one-line version bump**, so there is nothing in the
+diff to review.
 
-Reviewing the diff doesn't help: the malicious code isn't in the diff, it's inside the
-dependency. Static and LLM code review read code that attackers obfuscate, and an LLM
-reviewer can be talked out of a finding by text the attacker also controls.
+And increasingly nobody is: **AI coding agents now open the PRs and choose the dependencies**,
+sometimes packages that don't exist, which attackers then register. Review became the
+bottleneck exactly as machine-written dependency changes exploded.
+
+Static and LLM code review read source that attackers obfuscate — and an LLM reviewer can be
+talked out of a finding by text the attacker also controls.
+
+---
+
+## The window everything else is blind in
+
+`npm audit` and every advisory-based tool can only know about an attack after someone
+publishes an advisory. These are the real windows ([sources and caveats](../eval/DWELL_TIME.md)):
+
+| Incident | Malicious version installable for | Caught by behavior in |
+|---|---|---|
+| ua-parser-js (2021) | **≈4 hours** before clean versions; ≈8 h to advisory | **12.4 s**, rules alone |
+| Shai-Hulud (2025) | **≈1 day** before public reports | **9.8 s**, rules alone |
+| event-stream (2018) | **over two months** | **Not covered** — it ran on `require`, not install. We say so rather than claiming it |
+
+We check pull requests, so the honest claim is that we'd have caught the PR adopting a poisoned
+version at the moment it opened — not that we'd have protected everyone during those windows.
+Closing that is what the registry-scale watch is for: detonate each new release at publish
+time and diff its behavior record against the previous version.
 
 ---
 
