@@ -7,6 +7,8 @@ from brain.decoys import decoy_hits, redact, redact_text
 from brain.differential import Differential
 from brain.differential import diff as differential_diff
 from brain.enrich import enrich_connects
+from brain.evidence import Grounding, build_index, corpus_for
+from brain.evidence import check as check_evidence
 from brain.github_client import ChangedFile, PrMetadata, added_registry_dependencies
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
 from brain.investigator import Investigation
@@ -69,6 +71,7 @@ class Analysis:
     usages: list[Usage]  # every model call this PR made (prediction + analysis)
     differential: "Differential | None" = None  # base-vs-head comparison, when the base ran
     investigation: "Investigation | None" = None  # triage note, only for ⚠️ verdicts
+    grounding: "Grounding | None" = None  # the model's claims checked against the record
 
     @property
     def cost_usd(self) -> float | None:
@@ -128,6 +131,9 @@ def analyze(
     outcome = llm(metadata, hits, view, diff, contract.for_prompt(),
                   guilty=for_prompt(guilty) or None)  # fmt: skip
     final = combine(hits, outcome, view)
+    # Code, not the model, decides which of its claims the kernel record supports. Report only.
+    grounding = (check_evidence(outcome.verdict, build_index(view), corpus_for(view, diff))
+                 if outcome.verdict else None)  # fmt: skip
     # A ⚠️ verdict means a human must decide: give them a triage note. Escalate-only.
     investigation = None
     if investigator is not None and final.title == "Needs review":
@@ -143,9 +149,10 @@ def analyze(
     report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty, script_runs=script_runs(hits, view),
                     guard=guard, differential=differential,
-                    investigation=investigation, policy=policy)  # fmt: skip
+                    investigation=investigation, policy=policy,
+                    grounding=grounding)  # fmt: skip
     usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
     if investigation is not None:
         usages += investigation.usages
     return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty,
-                    usages, differential, investigation)  # fmt: skip
+                    usages, differential, investigation, grounding)  # fmt: skip

@@ -10,6 +10,7 @@ import re
 import unicodedata
 
 from brain.differential import Differential
+from brain.evidence import Grounding
 from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
 from brain.investigator import Investigation
@@ -263,6 +264,29 @@ def _investigation_section(inv: "Investigation") -> list[str]:
     return lines
 
 
+def _grounding_section(g: "Grounding") -> list[str]:
+    """The AI's evidence, as checked by code: each supported claim is shown as the kernel's
+    own record of the cited event; the model only supplies the reason it matters."""
+    if not g.claims and not g.unsupported_mentions:
+        return []
+    lines = ["<details><summary>Evidence the AI cited, checked against the kernel record "
+             f"({len(g.supported)} of {g.claims} supported)</summary>", ""]  # fmt: skip
+    for c in g.supported[:MAX_ROWS]:
+        if c.kind == "source_inferred":
+            lines.append(f"- 📄 *seen in source, not observed running* — {esc(c.why, 200)}")
+            continue
+        for item in c.items[:2]:
+            lines.append(f"- 🔬 `{esc(item.text, 160)}` — {esc(c.why, 200)}")
+    if g.rejected:
+        lines.append(f"- {len(g.rejected)} claim(s) left out: they cited no matching kernel "
+                     "event, so they are not presented as fact.")  # fmt: skip
+    if g.unsupported_mentions:
+        names = ", ".join(f"`{esc(m, 60)}`" for m in g.unsupported_mentions[:5])
+        lines.append(f"- ⚠️ The AI's summary mentions {names}, which appear in neither the "
+                     "kernel record nor the diff.")  # fmt: skip
+    return lines + ["", "</details>", ""]
+
+
 def _policy_section(policy: "Policy", final: FinalVerdict) -> list[str]:
     """What this repository's own policy contributed (read from the base branch)."""
     lines = ["### Repository policy", "",
@@ -296,6 +320,7 @@ def render(
     differential: "Differential | None" = None,
     investigation: "Investigation | None" = None,
     policy: "Policy | None" = None,
+    grounding: "Grounding | None" = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -337,6 +362,8 @@ def render(
                 "the AI reviewer. It was treated as data; deterministic rules still apply.",
                 "",
             ]
+        if grounding is not None:
+            lines += _grounding_section(grounding)
 
     if top := flagged(guard):
         lines += [

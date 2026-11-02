@@ -123,6 +123,7 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         "prompt_guard_error": guard.error,
         "explain_decoded": explain_decoded,
         "explain_attributed": explain_attributed,
+        "grounding": full.grounding.summary() if full.grounding else None,
         "guilty_lines": [f"{g.path}:{g.line}" for g in full.guilty],
         "script_runs": sorted(
             {r.package or "(project)" for r in script_runs(full.hits, full.result)}
@@ -226,6 +227,28 @@ def provenance() -> dict:
     }
 
 
+def grounding_quality(rows: list[dict]) -> list[str]:
+    """How many of Muse's evidence claims the kernel record backs (brain/evidence.py)."""
+    g = [r["grounding"] for r in rows if r.get("grounding")]
+    claims = sum(x["claims"] for x in g)
+    if not claims:
+        return []
+    supported = sum(x["supported"] for x in g)
+    rejected = sum(x["rejected"] for x in g)
+    inferred = sum(x["source_inferred"] for x in g)
+    mentions = [r["id"] for r in rows if (r.get("grounding") or {}).get("unsupported_mentions")]
+    return [
+        "### Evidence grounding (full pipeline)",
+        "",
+        f"- **{supported}/{claims}** evidence claims cite a real kernel event of the right type "
+        f"({inferred} labelled source-only); **{rejected}** rejected "
+        f"({rejected / claims:.0%} unsupported-claim rate).",
+        f"- Cases whose summary names a host/IP absent from the record and diff: "
+        f"{len(mentions)}" + (f" ({', '.join(mentions[:10])})" if mentions else ""),
+        "",
+    ]
+
+
 def main(results_dir: str, out_prefix: str = "eval/results") -> None:
     client = LlmClient(api_key(), base_url="https://api.meta.ai/v1")
     cidrs = github_meta_cidrs()
@@ -242,7 +265,7 @@ def main(results_dir: str, out_prefix: str = "eval/results") -> None:
               f"{' (UNCOMMITTED CHANGES)' if stamp['dirty'] else ''} with {client.model}; "
               f"detonations from `{Path(results_dir).name}`.")  # fmt: skip
     md = ["# Evaluation results", "", header, "", *summarize(rows), "",
-          *explanation_quality(rows), *cost_latency(rows),
+          *explanation_quality(rows), *grounding_quality(rows), *cost_latency(rows),
           "## Per case", "", *details(rows), ""]  # fmt: skip
     Path(f"{out_prefix}.md").write_text("\n".join(md), encoding="utf-8")
     print("\n".join(summarize(rows)))
