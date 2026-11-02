@@ -113,7 +113,16 @@ def _find_fixture(name: str) -> Path:
 
 
 def chamber_client_from_env() -> ChamberClient:
-    mode = os.environ.get("CHAMBER_MODE", "mock")
+    # Deliberately no default. Defaulting to "mock" meant a deployment with a missing or
+    # misconfigured secret would silently answer from recorded fixtures, reporting a verdict on
+    # a real pull request from a canned result. Mock has to be asked for by name.
+    mode = os.environ.get("CHAMBER_MODE")
+    if not mode:
+        raise RuntimeError(
+            "CHAMBER_MODE is not set. Use 'http' for a real Chamber, or set it to 'mock' "
+            "explicitly for local tests; there is no default, so a misconfigured deployment "
+            "fails instead of serving recorded fixtures as real detonations."
+        )
     if mode == "mock":
         return MockChamberClient(
             _find_fixture(os.environ.get("MOCK_CHAMBER_FIXTURE", "detonate_result_e4.json"))

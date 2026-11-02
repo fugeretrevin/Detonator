@@ -19,9 +19,21 @@ MAX_RECORDS = 200
 CONCLUSION_ICON = {"success": "✅", "neutral": "⚠️", "failure": "🛑"}
 
 
-def build_record(event: "PullRequestEvent", analysis: "Analysis", job_id: str, ts: str) -> dict:
-    """A compact, structured summary. No free-form untrusted text is stored except the PR
-    title, which the dashboard escapes on render like everything else."""
+def build_record(
+    event: "PullRequestEvent", analysis: "Analysis", job_id: str, ts: str
+) -> dict | None:
+    """A compact, structured summary, or None for a private repo.
+
+    The dashboard is public and unauthenticated, so a private repo must never produce a record
+    at all: its name, PR title and the hosts its install contacted would otherwise be stored and
+    served to anyone. Filtering at render time would be too late — the data would already be in
+    the shared Dict. Returning None here makes the refusal unit-testable and keeps any future
+    caller from forgetting it.
+
+    No free-form untrusted text is stored except the PR title, which the dashboard escapes on
+    render like everything else."""
+    if event.repo_private:
+        return None
     r = analysis.result
     hosts = sorted({c.resolved_domain or c.daddr for c in r.connect_events if is_external(c.daddr)})
     packages = sorted({s.package for s in r.executed_scripts if s.package})

@@ -1,8 +1,13 @@
-"""Score recorded Chamber results with the production pipeline, three ways:
+"""Score recorded Chamber results with the production pipeline, four ways:
 
   rules     deterministic rules only
   contract  rules + Intent Contract (model predicts from title/body/file names)
+  analysis  rules + model analysis of the telemetry, with NO Intent Contract
   full      rules + contract + Prompt Guard 2 + model analysis (what the GitHub App runs)
+
+`analysis` is the isolating arm: comparing it against `contract` and `full` separates what the
+*pre-execution prediction* contributes from what *post-execution reasoning over the telemetry*
+contributes, instead of only showing the combined lift over `rules`.
 
   python -m eval.run_brain <results-dir> [out-prefix]    # writes <out>.md and <out>.json
 
@@ -37,7 +42,7 @@ from brain.pipeline import Analysis, analyze  # noqa: E402
 from eval.cases import CASES, Case  # noqa: E402
 from shared.contract import DetonateResult  # noqa: E402
 
-CONFIGS = ("rules", "contract", "full")
+CONFIGS = ("rules", "contract", "analysis", "full")
 ICON = {"Clean": "✅", "Needs review": "⚠️", "Blocked": "❌", "Could not verify": "⏱️"}
 
 
@@ -83,6 +88,9 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
     runs: dict[str, Analysis] = {
         "rules": analyze(result, meta, diff, no_llm, **common),
         "contract": analyze(result, meta, diff, no_llm, prediction=prediction, **common),
+        # No `prediction`: the model reasons over the telemetry without being told what the PR
+        # claimed, which isolates the Intent Contract's contribution.
+        "analysis": analyze(result, meta, diff, client.analyze, guard=guard, **common),
         "full": analyze(
             result, meta, diff, client.analyze, prediction=prediction, guard=guard, **common
         ),  # fmt: skip
@@ -183,8 +191,8 @@ def explanation_quality(rows: list[dict]) -> list[str]:
 
 
 def details(rows: list[dict]) -> list[str]:
-    out = ["| Case | Kind | Rules | +Contract | Full | Fired | Notes |",
-           "|---|---|---|---|---|---|---|"]  # fmt: skip
+    out = ["| Case | Kind | Rules | +Contract | +Analysis | Full | Fired | Notes |",
+           "|---|---|---|---|---|---|---|---|"]  # fmt: skip
     for r in rows:
         o = r["outcomes"]
         notes = []
@@ -198,7 +206,8 @@ def details(rows: list[dict]) -> list[str]:
             notes.append(r["note"])
         out.append(
             f"| {r['id']} | {r['kind']} | {ICON[o['rules']]} | {ICON[o['contract']]} "
-            f"| {ICON[o['full']]} | {' '.join(r['rules_fired']) or '-'} | {'; '.join(notes)} |"
+            f"| {ICON[o['analysis']]} | {ICON[o['full']]} "
+            f"| {' '.join(r['rules_fired']) or '-'} | {'; '.join(notes)} |"
         )
     return out
 

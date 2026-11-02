@@ -198,6 +198,14 @@ and reporting what it found is the point.
 
 ## What's engineered carefully (not just a demo)
 
+- **"Clean" means we actually watched.** A Clean verdict requires three separate things to
+  hold: the install *finished* (exit 0), the telemetry was not truncated by the event cap, and
+  the sensor recorded process events at all (a real `npm install` always execs, so zero events
+  means the collector was blind, not that the install was quiet). If any one fails we return
+  **Could not verify** as a check *failure* — GitHub treats `neutral` as passing, so a run we
+  could not observe must never be neutral. It is an absence of evidence, not an accusation, and
+  the report names which precondition failed. We found and fixed this: a failed install used to
+  report Clean.
 - **Nothing of value in the blast radius.** The sandbox gets no tokens and no host
   environment; public repos are cloned anonymously; the VM has no cloud IAM role. Private
   repos are cloned on the *host* with a token scoped to that one repository, read-only,
@@ -221,7 +229,7 @@ and reporting what it found is the point.
 - **Per-repo policy**, read from the base branch only — never the PR's head, where the author
   could allowlist their own exfiltration host.
 
-15 deterministic rules, **360 automated tests**, and every fixture is recorded real output
+15 deterministic rules, **379 automated tests**, and every fixture is recorded real output
 (Tetragon events, dnsmasq logs, kernel firewall lines, Muse responses, GitHub patches).
 
 ---

@@ -251,12 +251,16 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             logger.exception("job=%s failed to post guilty-line review", job_id)
 
     # Run log for the dashboard (best effort; a logging failure must not fail the job).
+    # build_record returns None for a private repo, which must not reach the public dashboard.
     try:
         import datetime
 
         ts = datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d %H:%M")
         rec = build_record(event, analysis, job_id, ts)
-        run_log["records"] = ((run_log.get("records") or [])[-(RUN_LOG_HISTORY - 1) :]) + [rec]
+        if rec is None:
+            logger.info("job=%s private repo: not recorded in the public run log", job_id)
+        else:
+            run_log["records"] = ((run_log.get("records") or [])[-(RUN_LOG_HISTORY - 1) :]) + [rec]
     except Exception:
         logger.exception("job=%s failed to write run log", job_id)
 

@@ -11,11 +11,11 @@ FIXTURES = Path(__file__).parent / "fixtures"
 R02 = DetonateResult.model_validate_json((FIXTURES / "detonate_real_r02.json").read_text())
 
 
-def event(title: str = "Add dep") -> PullRequestEvent:
+def event(title: str = "Add dep", repo_private: bool = False) -> PullRequestEvent:
     return PullRequestEvent(
         delivery_id="d", action="opened", installation_id=1, account_login="o", owner="o",
         repo="r", number=12, head_sha="a" * 40, head_clone_url="https://github.com/o/r.git",
-        is_fork=False, repo_private=False, title=title,
+        is_fork=False, repo_private=repo_private, title=title,
     )  # fmt: skip
 
 
@@ -29,6 +29,12 @@ def test_record_summarizes_a_run():
     assert rec["repo"] == "o/r" and rec["pr"] == 12 and rec["verdict"] == "Blocked"
     assert "tinycolor-recon" in rec["packages_ran_scripts"]
     assert "CRED_FILE_ACCESS" in rec["rules"]
+
+
+def test_private_repo_produces_no_record_for_the_public_dashboard():
+    """The dashboard is public and unauthenticated: a private repo's name, PR title and the
+    hosts its install contacted must never be stored at all, not merely hidden on render."""
+    assert build_record(event(repo_private=True), analysis_for(R02), "job", "t") is None
 
 
 def test_dashboard_escapes_untrusted_pr_title_and_rules():
