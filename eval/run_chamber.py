@@ -31,9 +31,9 @@ def secret() -> str:
     raise SystemExit("CHAMBER_SECRET missing")
 
 
-def detonate(key: str, repo: str, sha: str, command: list[str]) -> dict:
+def detonate(key: str, repo: str, sha: str, command: list[str], timeout_s: int = TIMEOUT_S) -> dict:
     req = DetonateRequest(job_id=str(uuid.uuid4()), clone_url=repo, head_sha=sha,
-                          command=command, timeout_s=TIMEOUT_S)  # fmt: skip
+                          command=command, timeout_s=timeout_s)  # fmt: skip
     body = req.model_dump_json().encode()
     http = urllib.request.Request(
         API, data=body, method="POST",
@@ -53,7 +53,8 @@ def main(manifest: str, repo: str, sha: str, out: str) -> None:
             continue  # resumable
         started = time.monotonic()
         try:
-            result = detonate(key, repo, sha, case["command"])
+            result = detonate(key, repo, sha, case["command"],
+                              int(case.get("timeout_s") or TIMEOUT_S))  # fmt: skip
         except (urllib.error.URLError, TimeoutError) as exc:
             print(f"{case['id']:<22} ERROR {exc}", flush=True)
             continue

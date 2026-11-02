@@ -123,6 +123,13 @@ flowchart LR
 
 ## Results
 
+**Registry sweep — real packages nobody curated** ([details](eval/SWEEP.md)): we took the 100
+most recent publishes straight off npm's change feed and detonated them. Of the 73 that
+install on linux-x64: **0 blocked, 0 needs-review** — the false-positive number comes from
+real registry traffic, not a list we chose. 7 ran install scripts. One package (which hung
+past our timeout) connected to a hardcoded IP on port 4443 with no DNS lookup at all; that is
+reported as an observation for review, not an accusation.
+
 **What the tool everyone already runs says about the same PRs** ([details](eval/BASELINE.md)):
 `npm audit` reports **"found 0 vulnerabilities"** on the Shai-Hulud reconstruction, on an
 `$(env)`-exfiltrating postinstall, on a base64→`sh` payload, and on a stolen-token request.
