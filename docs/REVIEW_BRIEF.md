@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (360 tests, all passing).
+- **[Test]** covered by the automated test suite (379 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -459,7 +459,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            360 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            379 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

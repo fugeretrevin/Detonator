@@ -22,3 +22,7 @@ schedule in Section 6; Section 1 overrides the original architecture doc.
 - Modal CLI: always go through `.venv\Scripts\python scripts\modal_cli.py <args>` — Norton re-signs TLS on this machine and plain `modal` fails cert verification (the wrapper uses the OS trust store).
 - Deploy Brain: `.venv\Scripts\python scripts\modal_cli.py deploy -m brain.app`
 - GitHub smoke test: `.venv\Scripts\python scripts/smoke_github.py`
+- Release archive: `git archive --format=zip -o pr-detonator-release.zip HEAD` — **never** zip the
+  working directory. Zipping the folder ignores `.gitignore` and ships `.env`, `.git/` and
+  `.venv/`; `git archive` includes only tracked files. Verify afterwards that the archive has no
+  `.env`, no `.git/`, no `.venv/`, and that the only `.pem` is `eval/sbom/public_key.pem`.
