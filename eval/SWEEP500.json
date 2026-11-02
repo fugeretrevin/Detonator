@@ -1,0 +1,7274 @@
+{
+ "rows": [
+  {
+   "package": "@glassly/cloud-protocol@0.3.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.69
+  },
+  {
+   "package": "nexrall-code@0.5.209",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.04
+  },
+  {
+   "package": "@huaqiu/dsh-sidebar-entry@0.6.19",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.09
+  },
+  {
+   "package": "@mirrowel/opencode-openshare@0.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.78
+  },
+  {
+   "package": "@opencode/cli-node@0.0.0-reserved",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.17
+  },
+  {
+   "package": "spiderly@19.16.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 23.92
+  },
+  {
+   "package": "@opencode/theme@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.43
+  },
+  {
+   "package": "@motion-space/screencam-cli@1.25.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.0
+  },
+  {
+   "package": "@huaqiu/dsh-kicad-drc@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.3
+  },
+  {
+   "package": "@elsikora/nestjs-crud-automator@4.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 21.63
+  },
+  {
+   "package": "@opencode/cli@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.08
+  },
+  {
+   "package": "@tempoxyz/ds@0.3.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 35.92
+  },
+  {
+   "package": "@mj-biz-apps/sales-ng@6.22.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 58.39
+  },
+  {
+   "package": "@huaqiu/dsh-eda-selection@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.38
+  },
+  {
+   "package": "fakeout@1.0.132",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.07
+  },
+  {
+   "package": "@huaqiu/dsh-kicad@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.51
+  },
+  {
+   "package": "baiduwangpan-cli@1.7.0",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "ghfast.top",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [
+    "ghfast.top"
+   ],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.5
+  },
+  {
+   "package": "@service-lasso/service-lasso@2026.11.2-d2a6be0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.74
+  },
+  {
+   "package": "@aryacode/dsh-engineering@0.80.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.43
+  },
+  {
+   "package": "@huaqiu/dsh-huaqiu-about@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.06
+  },
+  {
+   "package": "@alicloud/dms20250414@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.3
+  },
+  {
+   "package": "@atlassian-test-prod/synth-check@1.0.128641",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.28
+  },
+  {
+   "package": "@opencode/cli-darwin-x64-baseline@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.26
+  },
+  {
+   "package": "@supersuit/suggest-a-change@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.87
+  },
+  {
+   "package": "@opencode/cli-windows-x64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.21
+  },
+  {
+   "package": "@canvas-components/react-pivot-table@0.2.52",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 14.48
+  },
+  {
+   "package": "@abelxiaoxing/cadence@2.0.30",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.63
+  },
+  {
+   "package": "@canvas-components/react-maintop-pattern@0.1.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.73
+  },
+  {
+   "package": "@opencode/simulation@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 53.72
+  },
+  {
+   "package": "openmausbot@0.1.138",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.16
+  },
+  {
+   "package": "@opencode/server@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 54.21
+  },
+  {
+   "package": "@lobehub/icons-static-webp@2.6.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.76
+  },
+  {
+   "package": "@huaqiu/dsh-eda-host@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.56
+  },
+  {
+   "package": "@opencode/cli-linux-x64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.72
+  },
+  {
+   "package": "@tempoxyz/id@0.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 31.21
+  },
+  {
+   "package": "learning-coach-skill@0.8.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.18
+  },
+  {
+   "package": "@opencode/sdk@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 53.01
+  },
+  {
+   "package": "@huaqiu/dsh-analytics@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.23
+  },
+  {
+   "package": "@talotrace/connect@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.13
+  },
+  {
+   "package": "@threenative/ueformat@0.1.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.25
+  },
+  {
+   "package": "@talotrace/connect-win32-x64@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.08
+  },
+  {
+   "package": "@opencode/schema@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.44
+  },
+  {
+   "package": "@ramme-io/kernel@8.1.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 31.53
+  },
+  {
+   "package": "@rytass/erp-oracle-fusion@0.4.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.73
+  },
+  {
+   "package": "@bike4mind/cli@4.0.0",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "cdn.sheetjs.com",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [
+    "cdn.sheetjs.com"
+   ],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 40.9
+  },
+  {
+   "package": "@cldmv/llm-translator@0.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.23
+  },
+  {
+   "package": "rsshub@1.0.0-master.23749f0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "codeload.github.com",
+    "github.com",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 48.74
+  },
+  {
+   "package": "@talotrace/connect-linux-arm64@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.08
+  },
+  {
+   "package": "@huaqiu/component-gen-server@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.61
+  },
+  {
+   "package": "@opencode/protocol@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.13
+  },
+  {
+   "package": "@basou/sdk@0.75.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.83
+  },
+  {
+   "package": "@hotta/react-native-imagepicker@0.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 21.92
+  },
+  {
+   "package": "@talotrace/connect-darwin-arm64@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.11
+  },
+  {
+   "package": "@opencode/plugin-browser@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.53
+  },
+  {
+   "package": "@huaqiu/dsh-auth@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.34
+  },
+  {
+   "package": "@ramme-io/ui@5.0.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.44
+  },
+  {
+   "package": "event-reduce-react@0.9.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.82
+  },
+  {
+   "package": "nihon-numbers@2.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.02
+  },
+  {
+   "package": "@opencode/cli-windows-x64-baseline@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.1
+  },
+  {
+   "package": "wirejs-components@0.2.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.73
+  },
+  {
+   "package": "@opencode/plugin@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.84
+  },
+  {
+   "package": "@huaqiu/dsh-artifacts@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.31
+  },
+  {
+   "package": "@ramme-io/shared@4.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.7
+  },
+  {
+   "package": "@canvas-components/react-list-table@0.3.65",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.25
+  },
+  {
+   "package": "@opencode/cli-linux-arm64-musl@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.17
+  },
+  {
+   "package": "dsh-push-host@0.7.22",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.52
+  },
+  {
+   "package": "@binoctal/open-agents-bridge@0.13.24",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "api.github.com",
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 33.89
+  },
+  {
+   "package": "@talotrace/connect-linux-x64@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.44
+  },
+  {
+   "package": "wirejs-resources@0.1.214",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.46
+  },
+  {
+   "package": "@huaqiu/dsh-plugin-log@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "@lovince/icons@1.5.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.98
+  },
+  {
+   "package": "@pq-signature/scdr-002@3.0.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.72
+  },
+  {
+   "package": "pleni@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.11
+  },
+  {
+   "package": "@opencode/codemode@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.45
+  },
+  {
+   "package": "@talotrace/connect-darwin-x64@0.14.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.05
+  },
+  {
+   "package": "@retion-miniapp/react-native@0.13.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 40.7
+  },
+  {
+   "package": "@huaqiu/component-gen-app@0.6.20",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.33
+  },
+  {
+   "package": "@opencode/client@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.1
+  },
+  {
+   "package": "@payloadcms/plugin-sentry@3.92.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 50.54
+  },
+  {
+   "package": "@omniviewdev/ai-ui@6.1.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.66
+  },
+  {
+   "package": "@programinglive/dev-workflow-mcp-server@1.19.29",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall",
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 20.79
+  },
+  {
+   "package": "@ptengine/inline-editor@0.3.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.08
+  },
+  {
+   "package": "@opencode/cli-linux-arm64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.22
+  },
+  {
+   "package": "@aura-react-comp/business@0.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 9.62
+  },
+  {
+   "package": "@cychien/ezdesign@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.35
+  },
+  {
+   "package": "@ramme-io/devkit@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.12
+  },
+  {
+   "package": "@glassly/jspolyfill@0.3.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.5
+  },
+  {
+   "package": "@atlassian-test-staging/synth-check@1.0.128640",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.74
+  },
+  {
+   "package": "@ramme-io/create-app@3.4.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.66
+  },
+  {
+   "package": "squirrelscan@0.0.159",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.11
+  },
+  {
+   "package": "coc-goose@0.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.09
+  },
+  {
+   "package": "@mj-biz-apps/sales-actions@6.22.0",
+   "verdict": "Could not verify",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "timeout",
+   "exit_code": null,
+   "duration_s": 122.85
+  },
+  {
+   "package": "@threenative/terrain@0.1.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.19
+  },
+  {
+   "package": "@opencode/cli-darwin-x64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.23
+  },
+  {
+   "package": "@rytass/erp-oracle-fusion-nestjs@0.4.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.19
+  },
+  {
+   "package": "sftpc-mcp@1.0.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.26
+  },
+  {
+   "package": "@kevinhao/pi-subagent@1.2.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 15.24
+  },
+  {
+   "package": "@lovince/ui-headless@0.5.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.32
+  },
+  {
+   "package": "@opencode/cli-windows-arm64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.16
+  },
+  {
+   "package": "wirejs-deploy-aws@0.1.212",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.65
+  },
+  {
+   "package": "@retion-miniapp/sdk@0.13.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.25
+  },
+  {
+   "package": "@efficient-erp/cli-win32-x64@1.212.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.32
+  },
+  {
+   "package": "single-screen-utils@1.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.17
+  },
+  {
+   "package": "create-layout@1.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.54
+  },
+  {
+   "package": "@lark-codem/codem-cli-win32-arm64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.06
+  },
+  {
+   "package": "holiday-calendar@1.3.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "@mj-biz-apps/sales-server@6.22.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 122.09
+  },
+  {
+   "package": "@epoint-playwright/create@1.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.17
+  },
+  {
+   "package": "@indra.ai/deva@1.62.93",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.39
+  },
+  {
+   "package": "event-reduce@0.9.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.09
+  },
+  {
+   "package": "@rlmh/linux-x64@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.72
+  },
+  {
+   "package": "@firedmosquito831/my-claude-code@8.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.12
+  },
+  {
+   "package": "@cadcam/scan-origin@1.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.47
+  },
+  {
+   "package": "@anthusai/papyrus@5.70.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "codeload.github.com",
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 64.49
+  },
+  {
+   "package": "@cadcam/scan-origin-linux-x64@1.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.31
+  },
+  {
+   "package": "spec-controller@0.1.178",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.07
+  },
+  {
+   "package": "@lovince/ui-vue@0.6.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.96
+  },
+  {
+   "package": "@lovince/ui-dom@0.2.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.42
+  },
+  {
+   "package": "next-evolve@0.3.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 20.67
+  },
+  {
+   "package": "@tarojs/components@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.91
+  },
+  {
+   "package": "@epoint-playwright/playwright-core@1.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 10.07
+  },
+  {
+   "package": "@bike4mind/sdk@1.4.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.67
+  },
+  {
+   "package": "@mj-biz-apps/sales-entities@6.22.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.55
+  },
+  {
+   "package": "@memnexus-ai/typescript-sdk@1.78.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.77
+  },
+  {
+   "package": "orange4@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.17
+  },
+  {
+   "package": "@baidu-light-new/aiju@17.15.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.19
+  },
+  {
+   "package": "@omniviewdev/base-ui@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.32
+  },
+  {
+   "package": "@amaster.ai/pi-wecom@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.77
+  },
+  {
+   "package": "@quantcdn/quant-cloud-cli@0.8.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 15.58
+  },
+  {
+   "package": "@aspectlylabs/mikka@0.0.247",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.89
+  },
+  {
+   "package": "@lobehub/icons-static-png@2.6.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.39
+  },
+  {
+   "package": "@efficient-erp/cli@1.212.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.17
+  },
+  {
+   "package": "@memnexus-ai/sdk@1.78.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.17
+  },
+  {
+   "package": "@mj-biz-apps/sales-core-entities-server@6.22.0",
+   "verdict": "Could not verify",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "timeout",
+   "exit_code": null,
+   "duration_s": 122.75
+  },
+  {
+   "package": "@emailverifier/sdk@0.1.64",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.23
+  },
+  {
+   "package": "@antscorp/ui@0.6.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.36
+  },
+  {
+   "package": "@nano133/nanoterra@0.10.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.15
+  },
+  {
+   "package": "@epoint-playwright/playwright-web@1.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 10.03
+  },
+  {
+   "package": "@ankhorage/repository@0.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.38
+  },
+  {
+   "package": "@involvex/bun-sweep@0.0.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.35
+  },
+  {
+   "package": "@yeolyi/unix-state@3.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.54
+  },
+  {
+   "package": "@frontera-sdk/chat-ui@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 30.16
+  },
+  {
+   "package": "@booyaka/mcp-vet@0.15.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.28
+  },
+  {
+   "package": "@vue-dnd-kit/nuxt@3.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 58.63
+  },
+  {
+   "package": "clocktail@0.8.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.25
+  },
+  {
+   "package": "@yeaft/webchat-agent@1.0.657",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 33.91
+  },
+  {
+   "package": "@gitmyabi/mywalleteoszs-team-845199c9--gitmyabi-lab@0.0.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.98
+  },
+  {
+   "package": "@galva-io/galva-admin-node@1.0.21-dev",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.41
+  },
+  {
+   "package": "@lobehub/icons@6.14.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 39.74
+  },
+  {
+   "package": "@lobehub/icons-static-svg@1.102.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.56
+  },
+  {
+   "package": "@gooddata/sdk-ui-dashboard@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 32.08
+  },
+  {
+   "package": "@antscorp/astryx-theme-antsomi@0.6.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.17
+  },
+  {
+   "package": "@3f-consulting/spec-controller-core@0.1.178",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.8
+  },
+  {
+   "package": "@antscorp/vite-stylex@0.6.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 15.4
+  },
+  {
+   "package": "@xbintsc/win32-arm64@0.6.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.24
+  },
+  {
+   "package": "homebridge-tesla-wall-connector-local@1.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "dsh-codearts@1.2.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 14.72
+  },
+  {
+   "package": "@xbintsc/darwin-arm64@0.6.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.33
+  },
+  {
+   "package": "@epoint-playwright/codegen-cli@1.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.68
+  },
+  {
+   "package": "@north-light/sdk@0.3.575",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.3
+  },
+  {
+   "package": "@epoint-playwright/cdp-recorder@2.0.0-rc.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.57
+  },
+  {
+   "package": "@natch-the-storage/heathershaw-platform-types@1.25.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.19
+  },
+  {
+   "package": "@rlmh/win32-x64@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.32
+  },
+  {
+   "package": "@xbintsc/darwin-x64@0.6.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.21
+  },
+  {
+   "package": "svelte-zukan@0.16.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 14.69
+  },
+  {
+   "package": "@ellieyujin/pi-reopen@0.2.0-dev.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.8
+  },
+  {
+   "package": "@opencode/cli-darwin-arm64@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.18
+  },
+  {
+   "package": "@opencode/ai@2.2.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.09
+  },
+  {
+   "package": "dsh-english-coach@0.1.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.33
+  },
+  {
+   "package": "@rlmh/darwin-arm64@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.23
+  },
+  {
+   "package": "@lark-codem/codem-cli-linux-x64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.12
+  },
+  {
+   "package": "@lobehub/icons-static-avatar@2.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.85
+  },
+  {
+   "package": "@finedesign/cli@0.0.0-stage",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.46
+  },
+  {
+   "package": "@agentguardx/helper@0.3.99",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.88
+  },
+  {
+   "package": "ichigokurosaki-baileys@1.1.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.85
+  },
+  {
+   "package": "@threenative/runtime-native@0.3.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "install"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 31.63
+  },
+  {
+   "package": "@tangle-network/sandbox-cli@0.21.67",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "codeload.github.com",
+    "github.com",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 29.07
+  },
+  {
+   "package": "@rlmh/darwin-x64@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.27
+  },
+  {
+   "package": "@mindlogic-ai/logician-ui@4.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 6.06
+  },
+  {
+   "package": "@lark-codem/codem-cli-linux-arm64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.17
+  },
+  {
+   "package": "@lightupai/polaris@0.0.153",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.54
+  },
+  {
+   "package": "@idmui/basic@1.0.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.74
+  },
+  {
+   "package": "@lark-codem/codem-cli-darwin-arm64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.22
+  },
+  {
+   "package": "@renovatebot/osv-offline@4.5.6",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.05
+  },
+  {
+   "package": "rlm-harness@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.03
+  },
+  {
+   "package": "@skyworx/dynamic-ui@1.0.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 228,
+   "duration_s": 49.56
+  },
+  {
+   "package": "@renovatebot/osv-offline-db@4.5.6",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.45
+  },
+  {
+   "package": "@momentic/qa-node@0.30.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.29
+  },
+  {
+   "package": "@materializeinc/sql-parser@26.48.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.72
+  },
+  {
+   "package": "@rightkit/social-ui@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.86
+  },
+  {
+   "package": "pi-c-review@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.84
+  },
+  {
+   "package": "@twip/web@0.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.08
+  },
+  {
+   "package": "@ascii-web/client@0.9.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.71
+  },
+  {
+   "package": "instar@1.3.1585",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall",
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 36.23
+  },
+  {
+   "package": "dsh-revive@0.1.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.33
+  },
+  {
+   "package": "@staqforce.studio/staqui@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.42
+  },
+  {
+   "package": "@alicloud/cloudsso20210515@1.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.35
+  },
+  {
+   "package": "@postbye/mcp@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.5
+  },
+  {
+   "package": "@fleetless/contracts@8.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.99
+  },
+  {
+   "package": "agent-policy-kit@0.5.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.27
+  },
+  {
+   "package": "@materializeinc/sql-pretty@26.48.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.84
+  },
+  {
+   "package": "dsh-ws-recency@0.10.6",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.07
+  },
+  {
+   "package": "@pstdio/cli-linux-arm64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.28
+  },
+  {
+   "package": "@cubeai/dsh-remote-feishu@0.4.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.42
+  },
+  {
+   "package": "jgy-public-component@0.0.61",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 14.94
+  },
+  {
+   "package": "@declarion/embed@0.133.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.88
+  },
+  {
+   "package": "dsh-reasoning-level-selector@0.5.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.23
+  },
+  {
+   "package": "@wakeshift/sdk@0.7.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.83
+  },
+  {
+   "package": "@lark-codem/codem-cli-darwin-x64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.31
+  },
+  {
+   "package": "@wocwang/cortico-world-gpt-sovits-for-coopanion@0.6.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.19
+  },
+  {
+   "package": "luna-clasificador@1.2.6",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.64
+  },
+  {
+   "package": "@dungsil/dsh-plugin-korean-ime@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.39
+  },
+  {
+   "package": "@algforce_ai/reporsa@0.1.13",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.87
+  },
+  {
+   "package": "@tarojs/plugin-generator@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.83
+  },
+  {
+   "package": "@threenative/three-native@0.3.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.25
+  },
+  {
+   "package": "@declarion/react@0.133.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 26.93
+  },
+  {
+   "package": "@frontera-sdk/cli@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 21.54
+  },
+  {
+   "package": "sawbuck@0.1.22",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.88
+  },
+  {
+   "package": "@materializeinc/sql-lexer@26.48.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.83
+  },
+  {
+   "package": "dealposdeploy@26.45.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.24
+  },
+  {
+   "package": "@hhxg/dsh-hhxg-market@0.5.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.21
+  },
+  {
+   "package": "@bridge-ds/mcp@0.14.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.17
+  },
+  {
+   "package": "@litert-lm/core@0.19.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.32
+  },
+  {
+   "package": "life-saver-mcp@0.8.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.44
+  },
+  {
+   "package": "@efficient-erp/cli-darwin-arm64@1.212.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.03
+  },
+  {
+   "package": "@frontera-sdk/workflow@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.32
+  },
+  {
+   "package": "@2bad/walt@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.21
+  },
+  {
+   "package": "@sawbuck/reins@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.21
+  },
+  {
+   "package": "dsh-profile-stats@2.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.21
+  },
+  {
+   "package": "@linzumi/cli@1.0.323",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.82
+  },
+  {
+   "package": "@rig-c/review@1.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.99
+  },
+  {
+   "package": "jssip-emicnet@2.2.9",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.21
+  },
+  {
+   "package": "@frontera-sdk/agents@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.48
+  },
+  {
+   "package": "@efficient-erp/cli-linux-x64@1.212.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.34
+  },
+  {
+   "package": "remote-done@0.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.05
+  },
+  {
+   "package": "@allen-wei/model-hub-ui@0.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.89
+  },
+  {
+   "package": "@allen-wei/model-hub-react@0.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.76
+  },
+  {
+   "package": "@bridge-ds/toolbar@0.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.51
+  },
+  {
+   "package": "@lsamien/yaovi@0.1.23",
+   "verdict": "Blocked",
+   "rules": [
+    "EXEC_DROPPED_BINARY",
+    "EXEC_NET_TOOL",
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "astral.sh",
+    "nodejs.org",
+    "pypi.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [
+    "astral.sh",
+    "pypi.org"
+   ],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 55.84
+  },
+  {
+   "package": "@frontera-sdk/functions@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.86
+  },
+  {
+   "package": "@maqiuyao/dxf-viewer@0.2.31",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.44
+  },
+  {
+   "package": "@rightkit/dictation-ui@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.81
+  },
+  {
+   "package": "@threenative/raw-unreal@0.1.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.19
+  },
+  {
+   "package": "@suphark/ui@0.96.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.18
+  },
+  {
+   "package": "@gooddata/sdk-ui-pluggable-host@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 43.89
+  },
+  {
+   "package": "opencode-mirasim-auth@0.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "@frontera-sdk/chat@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.57
+  },
+  {
+   "package": "@modesto_ma/dsh-channels@0.7.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.61
+  },
+  {
+   "package": "@erdu-ec/dotnet-typescript-utils@1.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.16
+  },
+  {
+   "package": "@flowscripter/runtime@1.2.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.79
+  },
+  {
+   "package": "@frontera-sdk/blueprint@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.69
+  },
+  {
+   "package": "rig-review@1.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.04
+  },
+  {
+   "package": "dshell-relay@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.48
+  },
+  {
+   "package": "@tarojs/plugin-vue-devtools@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 31.86
+  },
+  {
+   "package": "@bridge-ds/cli@0.17.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.53
+  },
+  {
+   "package": "@vue-dnd-kit/actions@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.81
+  },
+  {
+   "package": "@frontera-sdk/core@1.53.15",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.01
+  },
+  {
+   "package": "@ahmedrowaihi/mediabunny-dts@1.65.0-beta.261",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.91
+  },
+  {
+   "package": "@ipa-schema/ai@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 4.22
+  },
+  {
+   "package": "universal-parcel-scraper@0.637.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.64
+  },
+  {
+   "package": "zlink-front@3.0.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.34
+  },
+  {
+   "package": "pi-better-web-search@0.1.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.36
+  },
+  {
+   "package": "@vue-dnd-kit/devtools@3.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.57
+  },
+  {
+   "package": "onepipeline-cli@0.97.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.14
+  },
+  {
+   "package": "@gooddata/sdk-ui-analytical-designer@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 37.86
+  },
+  {
+   "package": "@gooddata/sdk-ui-geo@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 33.78
+  },
+  {
+   "package": "@bridge-ds/core@0.27.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.18
+  },
+  {
+   "package": "@tarojs/plugin-platform-harmony-hybrid@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 29.13
+  },
+  {
+   "package": "@allen-wei/model-hub-core@0.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.72
+  },
+  {
+   "package": "@bridge-ds/visual@0.3.21",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.83
+  },
+  {
+   "package": "@ascii-web/server@0.9.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.71
+  },
+  {
+   "package": "@tarojs/service@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.08
+  },
+  {
+   "package": "@tarojs/plugin-inject@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.65
+  },
+  {
+   "package": "@amaster.ai/pi-teamwork@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.77
+  },
+  {
+   "package": "nucleus-mcp@1.17.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.11
+  },
+  {
+   "package": "@bridge-ds/stylelint-plugin@0.2.25",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.63
+  },
+  {
+   "package": "orange3@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "@vue-dnd-kit/core@3.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.18
+  },
+  {
+   "package": "@secondlayer/stacks@6.5.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.84
+  },
+  {
+   "package": "@tarojs/cli-convertor@4.3.1",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_INTERNAL_TARGET"
+   ],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 41.39
+  },
+  {
+   "package": "dsh-gateway-provider@1.1.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.38
+  },
+  {
+   "package": "@tarojs/plugin-platform-jd@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.92
+  },
+  {
+   "package": "@dogeos/dogeos-sdk@4.0.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 66.22
+  },
+  {
+   "package": "dsh-logalyze@0.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.59
+  },
+  {
+   "package": "@tarojs/plugin-platform-harmony-ets@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 26.39
+  },
+  {
+   "package": "@tarojs/plugin-platform-h5@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 26.87
+  },
+  {
+   "package": "@stjoo0925/grimoire@0.12.3",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.12
+  },
+  {
+   "package": "@tarojs/plugin-platform-alipay@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.0
+  },
+  {
+   "package": "@basou/core@0.75.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.42
+  },
+  {
+   "package": "@tarojs/plugin-platform-harmony-cpp@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 52.31
+  },
+  {
+   "package": "@tarojs/plugin-framework-vue3@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 26.15
+  },
+  {
+   "package": "@threenative/procedural-animals@0.1.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "codeload.github.com",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.6
+  },
+  {
+   "package": "@pstdio/cli-win-x64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.16
+  },
+  {
+   "package": "@lark-codem/codem-cli-win32-x64@0.1.253",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.25
+  },
+  {
+   "package": "@amaster.ai/pi-video-gen@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.12
+  },
+  {
+   "package": "@tarojs/taro-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 6.49
+  },
+  {
+   "package": "sapbuddy-dsh@0.1.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 4.34
+  },
+  {
+   "package": "crawlmark-mcp@0.3.0",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org",
+    "storage.googleapis.com"
+   ],
+   "off_registry_hosts": [
+    "storage.googleapis.com"
+   ],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.38
+  },
+  {
+   "package": "@tarojs/rn-runner@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 8.17
+  },
+  {
+   "package": "ai-developer-skill-os@12.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.22
+  },
+  {
+   "package": "@gooddata/sdk-ui-semantic-search@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.68
+  },
+  {
+   "package": "@christianirack/brainllm-linux-arm64@0.8.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.37
+  },
+  {
+   "package": "@rightkit/document-core@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.14
+  },
+  {
+   "package": "@ascii-web/wasm@0.9.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.28
+  },
+  {
+   "package": "local-operator-ui@0.47.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall",
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 12.45
+  },
+  {
+   "package": "@tarojs/plugin-platform-swan@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.03
+  },
+  {
+   "package": "@tarojs/cli@4.3.1",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_INTERNAL_TARGET"
+   ],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 32.49
+  },
+  {
+   "package": "@tarojs/rn-supporter@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 55.82
+  },
+  {
+   "package": "@pstdio/cli-linux-x64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.64
+  },
+  {
+   "package": "docnest@0.1.26",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.09
+  },
+  {
+   "package": "@tarojs/plugin-mini-ci@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 44.61
+  },
+  {
+   "package": "@kaynooo/stack-tools@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.45
+  },
+  {
+   "package": "@tarojs/create-app@4.3.1",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_INTERNAL_TARGET"
+   ],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 34.55
+  },
+  {
+   "package": "aldehyde@0.2.529",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 100.01
+  },
+  {
+   "package": "@xochi/client@0.1.9",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.35
+  },
+  {
+   "package": "@amaster.ai/pi-storage@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.67
+  },
+  {
+   "package": "@pstdio/cli-darwin-arm64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.31
+  },
+  {
+   "package": "@tarojs/plugin-platform-qq@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.15
+  },
+  {
+   "package": "@tarojs/plugin-platform-weapp@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.79
+  },
+  {
+   "package": "@tarojs/vite-runner@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 38.43
+  },
+  {
+   "package": "@tarojs/router@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.43
+  },
+  {
+   "package": "@daracl/core@0.0.14",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.59
+  },
+  {
+   "package": "@amaster.ai/pi-task-scheduler@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.06
+  },
+  {
+   "package": "@pstdio/ui@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 46.03
+  },
+  {
+   "package": "@tarojs/plugin-react-devtools@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 29.98
+  },
+  {
+   "package": "@tarojs/plugin-platform-ascf@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.85
+  },
+  {
+   "package": "@kedge/cli@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 38.52
+  },
+  {
+   "package": "@tarojs/plugin-http@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.24
+  },
+  {
+   "package": "@tarojs/plugin-html@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.71
+  },
+  {
+   "package": "babel-preset-taro@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 27.21
+  },
+  {
+   "package": "@tarojs/taro-loader@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.02
+  },
+  {
+   "package": "@amaster.ai/pi-web-access@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.36
+  },
+  {
+   "package": "@znmin/claude-remote-cli@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.23
+  },
+  {
+   "package": "ai-price-index@1.0.53",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.16
+  },
+  {
+   "package": "@tarojs/plugin-platform-tt@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.4
+  },
+  {
+   "package": "@amaster.ai/pi-telemetry@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 7.62
+  },
+  {
+   "package": "@pstdio/cli-win-arm64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.25
+  },
+  {
+   "package": "@tarojs/components-advanced@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.63
+  },
+  {
+   "package": "stylelint-config-taro-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.81
+  },
+  {
+   "package": "@tarojs/with-weapp@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.42
+  },
+  {
+   "package": "@amaster.ai/pi-security@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 15.6
+  },
+  {
+   "package": "@tarojs/runtime-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 228,
+   "duration_s": 74.83
+  },
+  {
+   "package": "@secondlayer/shared@14.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.07
+  },
+  {
+   "package": "@secondlayer/subgraphs@7.7.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.24
+  },
+  {
+   "package": "@amaster.ai/pi-memory@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.09
+  },
+  {
+   "package": "@tarojs/plugin-framework-solid@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.5
+  },
+  {
+   "package": "@tarojs/plugin-framework-react@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.23
+  },
+  {
+   "package": "@amaster.ai/pi-lark@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.84
+  },
+  {
+   "package": "@tarojs/webpack5-runner@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 44.5
+  },
+  {
+   "package": "@basou/cli@0.75.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.02
+  },
+  {
+   "package": "@gooddata/sdk-ui-kit@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.85
+  },
+  {
+   "package": "@pstdio/cli-darwin-x64@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.27
+  },
+  {
+   "package": "@tarojs/rn-style-transformer@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 29.72
+  },
+  {
+   "package": "@tarojs/taro-h5@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.34
+  },
+  {
+   "package": "@amaster.ai/pi-image-gen@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.52
+  },
+  {
+   "package": "@gooddata/sdk-ui-vis-commons@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 28.1
+  },
+  {
+   "package": "@agentguardx/helper-win32-x64@0.3.99",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.24
+  },
+  {
+   "package": "@tarojs/taroize@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.82
+  },
+  {
+   "package": "@tarojs/webpack5-prebundle@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.45
+  },
+  {
+   "package": "@glassly/engine@0.3.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 228,
+   "duration_s": 63.69
+  },
+  {
+   "package": "@tarojs/transformer-wx@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.68
+  },
+  {
+   "package": "create-moonshine-app@0.6.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.54
+  },
+  {
+   "package": "@amaster.ai/pi-memory-mem0@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 18.96
+  },
+  {
+   "package": "@pigeonposse/web-2026@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 11.28
+  },
+  {
+   "package": "@pigeonposse/api-config-2026@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.97
+  },
+  {
+   "package": "@gooddata/util@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.3
+  },
+  {
+   "package": "@tarojs/runner-utils@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 15.45
+  },
+  {
+   "package": "@pulse-compute/cli@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.03
+  },
+  {
+   "package": "@tarojs/rn-transformer@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.26
+  },
+  {
+   "package": "@gooddata/sdk-ui-filters@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 31.83
+  },
+  {
+   "package": "@pedit/serve@0.4.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.97
+  },
+  {
+   "package": "@neural-charts/core@0.0.21",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.08
+  },
+  {
+   "package": "@amaster.ai/pi-goal@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.95
+  },
+  {
+   "package": "@tarojs/components-react@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 19.76
+  },
+  {
+   "package": "@gooddata/stylelint-config@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.02
+  },
+  {
+   "package": "@kedge/plugin-sdk@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.7
+  },
+  {
+   "package": "@tarojs/components-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 5.33
+  },
+  {
+   "package": "@threenative/physics@0.3.8",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.8
+  },
+  {
+   "package": "@pulse-compute/provider-fastly@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.54
+  },
+  {
+   "package": "@gooddata/sdk-ui-ext@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 29.02
+  },
+  {
+   "package": "@tarojs/project-graph@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 14.51
+  },
+  {
+   "package": "@amaster.ai/pi-dingtalk@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.73
+  },
+  {
+   "package": "pi-roundtable-web@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 37.28
+  },
+  {
+   "package": "@amaster.ai/pi-computer-use@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.37
+  },
+  {
+   "package": "postcss-taro-unit-transform@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.45
+  },
+  {
+   "package": "@gooddata/sdk-ui-pivot@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 32.61
+  },
+  {
+   "package": "@amaster.ai/pi-channels@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 20.75
+  },
+  {
+   "package": "@gooddata/sdk-ui-theme-provider@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.98
+  },
+  {
+   "package": "@pigeonposse/check-2026@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.93
+  },
+  {
+   "package": "tdem-electron-sdk@0.4.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.77
+  },
+  {
+   "package": "@pigeonposse/api-2026@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.39
+  },
+  {
+   "package": "@amaster.ai/pi-browser-use@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.57
+  },
+  {
+   "package": "@leadfund/lead-mcp@202610.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.75
+  },
+  {
+   "package": "@pigeonposse/api-client-2026@1.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.89
+  },
+  {
+   "package": "@tarojs/helper@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.34
+  },
+  {
+   "package": "@givolt/i3-composer-agent@4.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.16
+  },
+  {
+   "package": "@amaster.ai/pi-attachments@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.65
+  },
+  {
+   "package": "@inixiative/config@0.5.175",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.16
+  },
+  {
+   "package": "@amaster.ai/pi-shared@0.1.35",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.11
+  },
+  {
+   "package": "@kedge/admin@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.19
+  },
+  {
+   "package": "pstdio@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.0
+  },
+  {
+   "package": "@gooddata/sdk-ui-metric-component@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 29.34
+  },
+  {
+   "package": "babel-plugin-transform-react-jsx-to-rn-stylesheet@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.81
+  },
+  {
+   "package": "@pstdio/workbench@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 50.11
+  },
+  {
+   "package": "@tarojs/extend@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.81
+  },
+  {
+   "package": "@tarojs/router-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 38.42
+  },
+  {
+   "package": "@pstdio/sdk@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.34
+  },
+  {
+   "package": "@pstdio/canvas@0.46.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.18
+  },
+  {
+   "package": "@gooddata/sdk-ui-pluggable-application@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 18.84
+  },
+  {
+   "package": "@tarojs/taro@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.62
+  },
+  {
+   "package": "@tarojs/react@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.84
+  },
+  {
+   "package": "@pulse-compute/provider-node@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.65
+  },
+  {
+   "package": "@tarojs/api@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.85
+  },
+  {
+   "package": "@tarojs/runtime@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.47
+  },
+  {
+   "package": "@payloadcms/richtext-lexical@3.92.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 52.45
+  },
+  {
+   "package": "@poince/auth@3.9.5",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 40.7
+  },
+  {
+   "package": "babel-plugin-transform-taroapi@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.59
+  },
+  {
+   "package": "@pulse-compute/pulse@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.75
+  },
+  {
+   "package": "@rightkit/system-ui@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.03
+  },
+  {
+   "package": "@agentguardx/helper-win32-arm64@0.3.99",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.32
+  },
+  {
+   "package": "@payloadcms/plugin-mcp@3.92.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 22.33
+  },
+  {
+   "package": "@gooddata/sdk-ui-loaders@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 30.69
+  },
+  {
+   "package": "@gooddata/sdk-ui-gen-ai@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 34.27
+  },
+  {
+   "package": "stylelint-taro-rn@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.37
+  },
+  {
+   "package": "@tarojs/shared@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.26
+  },
+  {
+   "package": "@pulse-compute/assets@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.96
+  },
+  {
+   "package": "dsh-chrome-use@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.25
+  },
+  {
+   "package": "@fishwithcat/dsh-agent@0.2.2-alpha.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.92
+  },
+  {
+   "package": "postcss-pxtransform@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.47
+  },
+  {
+   "package": "create-kedge@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.23
+  },
+  {
+   "package": "@long.hg/universal-release-cli@1.1.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.26
+  },
+  {
+   "package": "@ahmedrowaihi/mediabunny@1.65.0-beta.261",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.77
+  },
+  {
+   "package": "postcss-plugin-constparse@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.41
+  },
+  {
+   "package": "@gooddata/sdk-ui-charts@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 33.52
+  },
+  {
+   "package": "postcss-html-transform@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.35
+  },
+  {
+   "package": "pi-roundtable-drawing@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 40.12
+  },
+  {
+   "package": "@gooddata/sdk-ui@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.5
+  },
+  {
+   "package": "eslint-plugin-taro@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.96
+  },
+  {
+   "package": "@kedge/docs@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.36
+  },
+  {
+   "package": "eslint-config-taro@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.2
+  },
+  {
+   "package": "@pulse-compute/s3@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.96
+  },
+  {
+   "package": "taro-css-to-react-native@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.69
+  },
+  {
+   "package": "@zerodep-dev/vue-tsx-pro-tsx@0.6.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 13.12
+  },
+  {
+   "package": "pi-roundtable-browser@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 39.76
+  },
+  {
+   "package": "@ass-idp/contract@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.51
+  },
+  {
+   "package": "@lumirelle/linter-config@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.26
+  },
+  {
+   "package": "@tarojs/binding@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.95
+  },
+  {
+   "package": "@pulse-compute/wasm-compiler@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.8
+  },
+  {
+   "package": "@kedge/runtime-cf@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 20.21
+  },
+  {
+   "package": "babel-plugin-transform-solid-jsx@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.4
+  },
+  {
+   "package": "@3sixty/api-server-fastify@0.20.0-next.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 12.37
+  },
+  {
+   "package": "@pulse-compute/mcp@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.84
+  },
+  {
+   "package": "pepper-green4@1.0.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.74
+  },
+  {
+   "package": "@gooddata/sdk-ui-catalog@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 35.65
+  },
+  {
+   "package": "@kedge/testing@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 24.95
+  },
+  {
+   "package": "@gooddata/sdk-model@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.35
+  },
+  {
+   "package": "@tarojs/binding-win32-x64-msvc@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.09
+  },
+  {
+   "package": "@payloadcms/live-preview@3.92.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.25
+  },
+  {
+   "package": "stylelint-taro@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 9.31
+  },
+  {
+   "package": "@kedge/server@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.91
+  },
+  {
+   "package": "@pulse-compute/jwt@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.12
+  },
+  {
+   "package": "@tarojs/binding-linux-x64-musl@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.32
+  },
+  {
+   "package": "pi-roundtable-coding@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 37.91
+  },
+  {
+   "package": "tipjar@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.1
+  },
+  {
+   "package": "@kedge/db@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 16.7
+  },
+  {
+   "package": "@zerodep-dev/vue-tsx-pro-ui@0.6.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 17.68
+  },
+  {
+   "package": "pi-roundtable-line@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 38.16
+  },
+  {
+   "package": "@tarojs/binding-linux-x64-gnu@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.27
+  },
+  {
+   "package": "@3sixty/api-rest-client@0.20.0-next.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.94
+  },
+  {
+   "package": "@agentguardx/helper-linux-x64@0.3.99",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.71
+  },
+  {
+   "package": "@runeditrun/rer@0.2.96",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.04
+  },
+  {
+   "package": "robotmon-rerouter@1.13.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [
+    "prepare"
+   ],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 10.55
+  },
+  {
+   "package": "@pulse-compute/grip@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.09
+  },
+  {
+   "package": "@tarojs/binding-linux-arm64-gnu@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.05
+  },
+  {
+   "package": "pi-roundtable-webchat@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 39.22
+  },
+  {
+   "package": "@kedge/core@0.11.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.09
+  },
+  {
+   "package": "pi-roundtable-sandbox@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 37.4
+  },
+  {
+   "package": "@payloadcms/plugin-import-export@3.92.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 40.39
+  },
+  {
+   "package": "@tarojs/binding-darwin-x64@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.05
+  },
+  {
+   "package": "@pulse-compute/entities@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.56
+  },
+  {
+   "package": "@payloadcms/codemod@4.0.0-beta.6",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.61
+  },
+  {
+   "package": "@tarojs/binding-darwin-arm64@4.3.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 3.18
+  },
+  {
+   "package": "@threenative/metahuman@0.1.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.28
+  },
+  {
+   "package": "pi-roundtable-mcp@0.31.4",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 37.62
+  },
+  {
+   "package": "release-radar@0.0.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.9
+  },
+  {
+   "package": "dsh-session-history-search@0.1.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.15
+  },
+  {
+   "package": "@kaynooo/code-tools@0.3.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.48
+  },
+  {
+   "package": "@orangelogic/design-system-react@1.0.0-alpha",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": true,
+   "hosts": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 42.67
+  },
+  {
+   "package": "@gooddata/sdk-e2e-utils@11.65.1",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.41
+  },
+  {
+   "package": "@blacklake-tech-cn/castor-cli@0.1.0-beta.1",
+   "verdict": "Needs review",
+   "rules": [
+    "NET_UNLISTED_DOMAIN"
+   ],
+   "declared_install_scripts": [
+    "postinstall"
+   ],
+   "ran_install_scripts": true,
+   "hosts": [
+    "bl-v3-cli.oss-cn-shanghai.aliyuncs.com",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [
+    "bl-v3-cli.oss-cn-shanghai.aliyuncs.com"
+   ],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 6.24
+  },
+  {
+   "package": "@pulse-compute/wasm-runtime-core-as@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 5.35
+  },
+  {
+   "package": "@ahmedrowaihi/mediabunny-aac-encoder@1.65.0-beta.261",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.89
+  },
+  {
+   "package": "dsh-dragon-maid-pet@0.0.0-stage",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.12
+  },
+  {
+   "package": "@pulse-compute/wasm-library-kit@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.45
+  },
+  {
+   "package": "@kingsoftcloud/agentkit-harness-core@0.0.7",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.97
+  },
+  {
+   "package": "@pulse-compute/wasm-host-runtime@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.83
+  },
+  {
+   "package": "@pulse-compute/crypto@1.0.0-beta.11",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 3.39
+  },
+  {
+   "package": "@ass-idp/server@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 8.17
+  },
+  {
+   "package": "@co0ontty/wand@4.107.2",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 1,
+   "duration_s": 24.54
+  },
+  {
+   "package": "@ass-idp/browser@0.2.0",
+   "verdict": "Clean",
+   "rules": [],
+   "declared_install_scripts": [],
+   "ran_install_scripts": false,
+   "hosts": [
+    "registry.npmjs.org"
+   ],
+   "off_registry_hosts": [],
+   "status": "completed",
+   "exit_code": 0,
+   "duration_s": 4.29
+  }
+ ],
+ "atlas": {
+  "@scarf/scarf": [
+   "registry.npmjs.org"
+  ],
+  "@opencode/cli": [
+   "registry.npmjs.org"
+  ],
+  "baiduwangpan-cli": [
+   "ghfast.top",
+   "registry.npmjs.org"
+  ],
+  "@alicloud/openapi-core": [
+   "registry.npmjs.org"
+  ],
+  "esbuild": [
+   "codeload.github.com",
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "koffi": [
+   "registry.npmjs.org"
+  ],
+  "@parcel/watcher": [
+   "registry.npmjs.org"
+  ],
+  "@binoctal/open-agents-bridge": [
+   "api.github.com",
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "@sentry/cli": [
+   "registry.npmjs.org"
+  ],
+  "squirrelscan": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "@firedmosquito831/my-claude-code": [
+   "registry.npmjs.org"
+  ],
+  "@swc/core": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "@astryxdesign/core": [
+   "registry.npmjs.org"
+  ],
+  "@homebridge/node-pty-prebuilt-multiarch": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "sharp": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "@threenative/core": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "@threenative/runtime-native": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "rlm-harness": [
+   "registry.npmjs.org"
+  ],
+  "ffmpeg-static": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "ssh2": [
+   "astral.sh",
+   "nodejs.org",
+   "pypi.org",
+   "registry.npmjs.org"
+  ],
+  "@lsamien/yaovi": [
+   "astral.sh",
+   "nodejs.org",
+   "pypi.org",
+   "registry.npmjs.org"
+  ],
+  "electron": [
+   "github.com",
+   "registry.npmjs.org",
+   "release-assets.githubusercontent.com"
+  ],
+  "puppeteer": [
+   "registry.npmjs.org",
+   "storage.googleapis.com"
+  ],
+  "@znmin/claude-remote-cli": [
+   "registry.npmjs.org"
+  ],
+  "@tarojs/binding": [
+   "registry.npmjs.org"
+  ],
+  "@blacklake-tech-cn/castor-cli": [
+   "bl-v3-cli.oss-cn-shanghai.aliyuncs.com",
+   "registry.npmjs.org"
+  ]
+ }
+}

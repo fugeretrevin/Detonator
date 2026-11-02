@@ -1,0 +1,733 @@
+{
+ "commit": "1aa9c45",
+ "dirty": false,
+ "scored_at": "2026-11-02 05:55 UTC",
+ "rows": [
+  {
+   "id": "rt01-env-https",
+   "kind": "redteam",
+   "note": "control: env exfil over HTTPS to a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.99,
+   "model_latency_s": 22.94,
+   "model_prompt_tokens": 2328,
+   "model_completion_tokens": 3729,
+   "cost_usd": 0.01875825,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0022,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt02-ssh-key",
+   "kind": "redteam",
+   "note": "control: reads the bait SSH key and exfiltrates it",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.96,
+   "model_latency_s": 23.72,
+   "model_prompt_tokens": 2484,
+   "model_completion_tokens": 3300,
+   "cost_usd": 0.01713,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:3"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt03-revshell",
+   "kind": "redteam",
+   "note": "control: /dev/tcp reverse shell",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.88,
+   "model_latency_s": 13.7,
+   "model_prompt_tokens": 2581,
+   "model_completion_tokens": 2311,
+   "cost_usd": 0.013048,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_INTERACTIVE_SHELL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt04-fetch-exec",
+   "kind": "redteam",
+   "note": "control: download-and-execute",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 207.9,
+   "model_latency_s": 18.56,
+   "model_prompt_tokens": 2339,
+   "model_completion_tokens": 3001,
+   "cost_usd": 0.015677999999999997,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt05-charcode",
+   "kind": "redteam",
+   "note": "control: char-code obfuscated raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.94,
+   "model_latency_s": 15.87,
+   "model_prompt_tokens": 2252,
+   "model_completion_tokens": 3179,
+   "cost_usd": 0.01632575,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt06-persist-rcfile",
+   "kind": "redteam",
+   "note": "GAP: writes a persistence line to ~/.bashrc; no network at install",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 23.19,
+   "model_prompt_tokens": 2060,
+   "model_completion_tokens": 3098,
+   "cost_usd": 0.0157415,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt07-self-propagate",
+   "kind": "redteam",
+   "note": "GAP: modifies a sibling node_modules package; no network at install",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.94,
+   "model_latency_s": 22.09,
+   "model_prompt_tokens": 2086,
+   "model_completion_tokens": 3566,
+   "cost_usd": 0.017763,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0013,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt08-local-miner",
+   "kind": "redteam",
+   "note": "GAP: local CPU miner, no egress and no dropped binary",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 10.97,
+   "model_latency_s": 16.25,
+   "model_prompt_tokens": 2021,
+   "model_completion_tokens": 3133,
+   "cost_usd": 0.0158415,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt09-dropped-binary",
+   "kind": "redteam",
+   "note": "writes a stage to /tmp, chmods +x and runs it (expect EXEC_DROPPED_BINARY)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 25.0,
+   "model_prompt_tokens": 2152,
+   "model_completion_tokens": 4926,
+   "cost_usd": 0.0236255,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt10-ci-dormant",
+   "kind": "redteam",
+   "note": "GAP: sandbox-aware; dormant when CI is detected",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.93,
+   "model_latency_s": 31.35,
+   "model_prompt_tokens": 2077,
+   "model_completion_tokens": 5495,
+   "cost_usd": 0.02595,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm01-env-exfil",
+   "kind": "redteam-ind",
+   "note": "g1: environment-variable exfiltration via HTTP POST to a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.98,
+   "model_latency_s": 18.34,
+   "model_prompt_tokens": 2329,
+   "model_completion_tokens": 3055,
+   "cost_usd": 0.015895,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0432,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.1"
+   ]
+  },
+  {
+   "id": "gm02-cred-harvest",
+   "kind": "redteam-ind",
+   "note": "g2: harvest ~/.ssh and ~/.aws credential files, upload them",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.98,
+   "model_latency_s": 25.62,
+   "model_prompt_tokens": 2396,
+   "model_completion_tokens": 3780,
+   "cost_usd": 0.01906,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:6"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm03-obfuscated-exec",
+   "kind": "redteam-ind",
+   "note": "g3: base64 payload decoded in-memory and run via child_process.exec",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.02,
+   "model_latency_s": 26.26,
+   "model_prompt_tokens": 2576,
+   "model_completion_tokens": 3640,
+   "cost_usd": 0.01869,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "gm04-rcfile-persist",
+   "kind": "redteam-ind",
+   "note": "g4: shell-profile modification (~/.bashrc, ~/.zshrc) for persistence",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.9,
+   "model_latency_s": 26.5,
+   "model_prompt_tokens": 2067,
+   "model_completion_tokens": 4518,
+   "cost_usd": 0.02178525,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm05-cron-inject",
+   "kind": "redteam-ind",
+   "note": "g5: cron-job injection fetching a script from a .invalid host",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.91,
+   "model_latency_s": 13.45,
+   "model_prompt_tokens": 1942,
+   "model_completion_tokens": 2211,
+   "cost_usd": 0.011824250000000001,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0015,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm06-binary-drop",
+   "kind": "redteam-ind",
+   "note": "g6: download an external binary, chmod +x, run it detached",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.97,
+   "model_latency_s": 17.49,
+   "model_prompt_tokens": 2531,
+   "model_completion_tokens": 3509,
+   "cost_usd": 0.018077000000000003,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:4",
+    "scripts/setup.js:8"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.50"
+   ]
+  },
+  {
+   "id": "gm07-recon",
+   "kind": "redteam-ind",
+   "note": "g7: host fingerprinting (uname/whoami/ifconfig) written out and sent",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.9,
+   "model_latency_s": 13.8,
+   "model_prompt_tokens": 2436,
+   "model_completion_tokens": 2643,
+   "cost_usd": 0.014277749999999999,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0063,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm08-cpu-miner",
+   "kind": "redteam-ind",
+   "note": "g8: detached background process doing heavy hashing (simulated cryptominer)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 28.13,
+   "model_latency_s": 19.82,
+   "model_prompt_tokens": 2184,
+   "model_completion_tokens": 3217,
+   "cost_usd": 0.01640225,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0014,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm09-backdoor-listen",
+   "kind": "redteam-ind",
+   "note": "g9: opens a listening TCP server (backdoor / bind shell)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.95,
+   "model_latency_s": 24.02,
+   "model_prompt_tokens": 2073,
+   "model_completion_tokens": 4157,
+   "cost_usd": 0.0202585,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm10-dep-tamper",
+   "kind": "redteam-ind",
+   "note": "g10: local supply-chain tampering \u2014 modifies a sibling node_modules package",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.94,
+   "model_latency_s": 22.56,
+   "model_prompt_tokens": 2131,
+   "model_completion_tokens": 3848,
+   "cost_usd": 0.01901775,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.001,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  }
+ ]
+}
