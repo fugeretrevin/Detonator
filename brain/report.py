@@ -410,11 +410,17 @@ def render(
         lines += _policy_section(policy, final)
 
     model_note = llm.model if v else f"{llm.model} (unavailable: {esc(llm.error, 80)}; rules only)"
+    cpu = result.resources.cpu_s if result.resources else None
+    sensor = result.sensor
+    witness = ""
+    if sensor is not None:
+        witness = " · sensor witness " + ("✓" if sensor.pre_seen and sensor.post_seen else "✗")
     lines += [
         "---",
         f"<sub>Detonated `npm install` in {result.duration_s:.1f}s · "
         f"{len(result.exec_events)} exec / {len(result.connect_events)} connect events"
-        f"{' (truncated)' if result.truncated else ''} · model {model_note}"
+        f"{' (truncated)' if result.truncated else ''}"
+        f"{f' · {cpu:.1f}s CPU' if cpu is not None else ''}{witness} · model {model_note}"
         f"{_guard_note(guard)} · job `{job_id}`"
         "</sub>",
         "",

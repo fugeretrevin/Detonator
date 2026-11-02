@@ -345,6 +345,26 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     return hits
 
 
+# rt08: a bare CPU loop leaves no exec, connect or file trace, only CPU time. Off (None) until
+# calibrated on the benign set: native builds and big unzips burn real CPU too. Builds are
+# exempt when a compiler/build tool ran; anything left is LOW (a human looks), never a block.
+CPU_REVIEW_THRESHOLD_S: float | None = None
+BUILD_TOOLS = frozenset({"cc", "gcc", "g++", "c++", "clang", "clang++", "make", "cmake", "ld",
+                         "cc1", "cc1plus", "rustc", "cargo", "go", "node-gyp"})  # fmt: skip
+
+
+def _cpu_hits(result: DetonateResult, threshold: float | None = None) -> list[RuleHit]:
+    threshold = CPU_REVIEW_THRESHOLD_S if threshold is None else threshold
+    usage = result.resources
+    if threshold is None or usage is None or usage.cpu_s is None or usage.cpu_s < threshold:
+        return []
+    if any(_basename(e.binary) in BUILD_TOOLS for e in result.exec_events):
+        return []
+    why = (f"the install used {usage.cpu_s:.1f}s of CPU with no compiler or build tool "
+           "running (possible local miner)")  # fmt: skip
+    return [RuleHit("RES_CPU_HEAVY", Severity.LOW, why, "", 0)]
+
+
 def evaluate(
     result: DetonateResult,
     allowed_domains: tuple[str, ...] = DEFAULT_ALLOWED_DOMAINS,
@@ -360,6 +380,7 @@ def evaluate(
         hits.extend(_dns_hits(query))
     hits.extend(_exfil_service_hits(result))
     hits.extend(_credential_hits(result))
+    hits.extend(_cpu_hits(result))
     if result.truncated:
         # Events past the caps were dropped; a flood could be hiding a payload.
         hits.append(

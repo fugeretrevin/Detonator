@@ -12,7 +12,9 @@ MAX_EXECUTED_SCRIPTS = 5
 MAX_SCRIPT_CHARS = 20_000
 # 2 (Nov 1): + ExecEvent.cwd, ConnectEvent.protocol, file_events, executed_scripts, decoys. Every
 # addition is optional, so a v1 Chamber's results still validate.
-CONTRACT_VERSION = 2
+# 3 (Nov 2): + DetonateResult.sensor (per-job witness), DetonateResult.resources (CPU/memory).
+# Both optional: a v2 Chamber sends neither and the Brain keeps its v2 checks.
+CONTRACT_VERSION = 3
 MAX_TAIL_CHARS = 4000
 
 
@@ -72,6 +74,27 @@ class ExecutedScript(BaseModel):
     truncated: bool = False
 
 
+class SensorWitness(BaseModel):
+    """Did Tetragon see *this* container at both ends of the install? The Chamber wraps the
+    command so the container execs `/bin/true pre-<nonce>` before it and `/bin/true
+    post-<nonce>` after it, with a random per-job nonce, and looks for both execs attributed
+    to this container ID. Non-empty exec_events only proves the collector saw *something*.
+    Code inside the sandbox can read the nonce, so this proves the collector was armed and
+    attributing, not that the sandbox didn't fake an extra event. Added Nov 2."""
+
+    pre_seen: bool
+    post_seen: bool
+
+
+class ResourceUsage(BaseModel):
+    """Container cgroup usage, sampled while it ran (the cgroup goes away at exit). Covers
+    every process in the sandbox, npm included. Added Nov 2."""
+
+    cpu_s: float | None = None
+    peak_memory_mb: float | None = None
+    samples: int = 0
+
+
 class DnsQuery(BaseModel):
     ts: str
     domain: str
@@ -97,3 +120,5 @@ class DetonateResult(BaseModel):
     stderr_tail: str = Field(max_length=MAX_TAIL_CHARS)
     truncated: bool = False  # true if events were capped
     error: str | None = None
+    sensor: SensorWitness | None = None  # None from a v2 Chamber
+    resources: ResourceUsage | None = None  # None from a v2 Chamber or if sampling failed

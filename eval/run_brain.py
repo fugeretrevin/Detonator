@@ -124,6 +124,11 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
         "explain_decoded": explain_decoded,
         "explain_attributed": explain_attributed,
         "grounding": full.grounding.summary() if full.grounding else None,
+        # v3 Chamber only (None from older runs): calibrates CPU_REVIEW_THRESHOLD_S (rt08).
+        "cpu_s": result.resources.cpu_s if result.resources else None,
+        "sensor_witness": (result.sensor.pre_seen and result.sensor.post_seen)
+        if result.sensor
+        else None,
         "guilty_lines": [f"{g.path}:{g.line}" for g in full.guilty],
         "script_runs": sorted(
             {r.package or "(project)" for r in script_runs(full.hits, full.result)}
