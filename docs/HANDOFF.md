@@ -81,7 +81,9 @@ All four were approved. 1 and 2 are low-risk; 3 is the one that could destabilis
 2. **Close the two concrete gaps found here.** (a) `rt09`: `EXEC_DROPPED_BINARY` does not fire
    when a dropped file runs via `sh /tmp/x.sh` rather than being `execve`'d directly — the model
    had to backstop it. Use interpreter args + kernel cwd, resolve paths inside the sandbox only.
-   (b) Stale-check reconciliation: a hard Modal timeout/kill can bypass the exception handler and
+   (b) **Done 2026-11-02, not yet deployed** (`brain/reconcile.py`, `reconcile_checks` every
+   5 min, `pr-detonator-pending-checks` Dict; a superseded job skips comment + review).
+   Original note — Stale-check reconciliation: a hard Modal timeout/kill can bypass the exception handler and
    leave a check `in_progress`; add a reconciler keyed by SHA/check-run-id that writes a failing
    *Could not verify*, and never lets an older head SHA's green result stand for a new SHA.
    **Validate both against the 104 benign + 500 sweep before merging** — zero new benign blocks.

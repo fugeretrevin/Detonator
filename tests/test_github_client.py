@@ -299,3 +299,22 @@ def test_get_file_reads_an_exact_ref_and_tolerates_absence(keypair):
         ),
     )
     assert missing.get_file(1, "o", "r", ".github/detonator.yml", "b" * 40) is None
+
+
+def test_get_check_run_and_pr_head_sha(keypair):
+    pem, _ = keypair
+    client = make_client(
+        pem,
+        routed(
+            {
+                ("GET", "/repos/o/r/check-runs/55"): lambda r: httpx.Response(
+                    200, json={"id": 55, "status": "in_progress"}
+                ),
+                ("GET", "/repos/o/r/pulls/3"): lambda r: httpx.Response(
+                    200, json={"head": {"sha": "c" * 40}}
+                ),
+            }
+        ),
+    )
+    assert client.get_check_run(1, "o", "r", 55)["status"] == "in_progress"
+    assert client.get_pr_head_sha(1, "o", "r", 3) == "c" * 40

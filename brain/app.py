@@ -8,6 +8,7 @@ import functools
 import logging
 import os
 import re
+import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -29,6 +30,7 @@ from brain.pipeline import (
     detonate_request,
 )
 from brain.policy import POLICY_PATH, Policy, parse_policy
+from brain.reconcile import PendingCheck, head_moved, pending_key, reconcile
 from brain.report import render_line_comment, with_run_history
 from brain.runlog import build_record
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
@@ -84,6 +86,8 @@ run_log = modal.Dict.from_name("pr-detonator-runs", create_if_missing=True)
 RUN_LOG_HISTORY = 200
 # Base-branch detonation results, cached by SHA for differential detonation (P2.1).
 base_cache = modal.Dict.from_name("pr-detonator-base-cache", create_if_missing=True)
+# Check runs created but not yet completed; the reconciler fails stale ones closed (HANDOFF 5.2b).
+pending_checks = modal.Dict.from_name("pr-detonator-pending-checks", create_if_missing=True)
 
 
 class ModalDictDeduper:
@@ -123,6 +127,12 @@ def _handle(headers: dict[str, str], body: bytes) -> JSONResponse:
         event.head_sha,
         details_url=f"https://github.com/{event.owner}/{event.repo}/pull/{event.number}",
     )
+    pending = PendingCheck(event.installation_id, event.owner, event.repo, event.head_sha,
+                           check_run_id, started_at=time.time())  # fmt: skip
+    try:
+        pending_checks[pending.key] = pending.to_dict()
+    except Exception:
+        logger.exception("could not record pending check %s", check_run_id)
     detonate_job.spawn(event, check_run_id)
     return JSONResponse({"status": "accepted", "check_run_id": check_run_id}, status_code=202)
 
@@ -140,6 +150,14 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
     gh = github()
     loc = (event.installation_id, event.owner, event.repo)
     job_id = str(uuid.uuid4())
+
+    def finish(conclusion: str, title: str, summary: str) -> None:
+        gh.complete_check_run(*loc, check_run_id, conclusion, title, summary)
+        try:  # best effort: the reconciler also drops checks it finds completed
+            pending_checks.pop(pending_key(check_run_id))
+        except Exception:
+            pass
+
     try:
         chamber = chamber_client_from_env()
         private_token = None
@@ -148,7 +166,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             private_token = gh.repo_read_token(event.installation_id, event.repo)
     except Exception as exc:
         summary = f"Detonator setup error (`{type(exc).__name__}`), job `{job_id}`."
-        gh.complete_check_run(*loc, check_run_id, "failure", "Could not verify this PR", summary)
+        finish("failure", "Could not verify this PR", summary)
         raise
     policy = _repo_policy(gh, event)
     request = detonate_request(event, job_id, private_token=private_token,
@@ -161,9 +179,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             event.repo,
             event.number,
         )
-        gh.complete_check_run(
-            *loc, check_run_id, "failure", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY
-        )
+        finish("failure", PRIVATE_REPO_TITLE, PRIVATE_REPO_SUMMARY)
         return
     pool = ThreadPoolExecutor(max_workers=2)
     try:
@@ -212,14 +228,10 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             len(analysis.cleared),
             prediction.error,
         )
-        gh.complete_check_run(
-            *loc, check_run_id, final.conclusion, f"PR Detonator: {final.title}", analysis.report
-        )
+        finish(final.conclusion, f"PR Detonator: {final.title}", analysis.report)
     except Exception as exc:
         # Never leave the check hanging; fail closed (neutral would pass branch protection).
-        gh.complete_check_run(
-            *loc,
-            check_run_id,
+        finish(
             "failure",
             "Could not verify this PR",
             f"Detonator internal error (`{type(exc).__name__}`), job `{job_id}`.",
@@ -228,16 +240,33 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
     finally:
         pool.shutdown(wait=False, cancel_futures=True)
 
+    # The check run belongs to this commit either way, but if the PR moved on while we ran,
+    # this job's comment and review would overwrite the newer head's report.
+    try:
+        current = gh.get_pr_head_sha(*loc, event.number)
+    except Exception:
+        logger.exception("job=%s could not read the PR head; posting anyway", job_id)
+        current = event.head_sha
+    superseded = head_moved(current, event.head_sha)
+    if superseded:
+        logger.info("job=%s head moved %s -> %s: not posting comment or review",
+                    job_id, event.head_sha[:7], current[:7])  # fmt: skip
+
     # The check already carries the verdict; a failed comment must not overwrite it.
     try:
         title = analysis.final.title
-        gh.upsert_comment(*loc, event.number, analysis.report,
-                          merge=lambda prev: with_run_history(analysis.report, prev,
-                                                              event.head_sha, title))  # fmt: skip
+        report = analysis.report
+        if not superseded:
+            gh.upsert_comment(
+                *loc,
+                event.number,
+                report,
+                merge=lambda prev: with_run_history(report, prev, event.head_sha, title),
+            )
     except Exception:
         logger.exception("job=%s failed to post PR comment", job_id)
 
-    if analysis.final.title == "Blocked" and analysis.guilty:
+    if not superseded and analysis.final.title == "Blocked" and analysis.guilty:
         comments = [
             {"path": g.path, "line": g.line,
              "body": render_line_comment(g, i, analysis.llm, analysis.result)}
@@ -333,6 +362,21 @@ def chamber_health() -> dict:
     if not status["ok"]:
         logger.warning("chamber health: DOWN (%s)", status["detail"])
     return status
+
+
+@app.function(image=image, secrets=SECRETS, schedule=modal.Period(minutes=5), timeout=120)
+def reconcile_checks() -> dict[str, str]:
+    """Fail closed on check runs whose job died without completing them (HANDOFF 5.2b)."""
+    actions = reconcile(dict(pending_checks.items()), github(), time.time())
+    for key, action in actions.items():
+        if action not in ("waiting", "retry"):
+            try:
+                pending_checks.pop(key)
+            except Exception:
+                pass
+    if any(a == "failed" for a in actions.values()):
+        logger.warning("reconciler failed stale checks closed: %s", actions)
+    return actions
 
 
 def _guard(metadata: PrMetadata, diff: str) -> pg.GuardOutcome:

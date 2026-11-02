@@ -221,7 +221,16 @@ class GitHubClient:
             },
         )
 
+    def get_check_run(self, installation_id: int, owner: str, repo: str, check_run_id: int) -> dict:
+        return self._request(
+            installation_id, "GET", f"/repos/{owner}/{repo}/check-runs/{check_run_id}"
+        ).json()
+
     # --- pull request data ---
+
+    def get_pr_head_sha(self, installation_id: int, owner: str, repo: str, number: int) -> str:
+        pr = self._request(installation_id, "GET", f"/repos/{owner}/{repo}/pulls/{number}").json()
+        return pr["head"]["sha"]
 
     def get_pr_diff(self, installation_id: int, owner: str, repo: str, number: int) -> str:
         resp = self._request(
