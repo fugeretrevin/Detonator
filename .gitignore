@@ -4,6 +4,9 @@
 !.env.example
 *.pem
 *.key
+# The SBOM signing *public* key is meant to be published: without it nobody can verify the
+# committed behavior records. Private keys stay covered by the rule above.
+!eval/sbom/public_key.pem
 
 # Python
 __pycache__/
