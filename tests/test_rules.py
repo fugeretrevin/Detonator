@@ -372,3 +372,55 @@ def test_nested_npm_run_reading_npmrc_is_not_credential_theft():
     # reads ~/.npmrc as config. It descends from a lifecycle shell but must not fire.
     res = DetonateResult.model_validate_json((FIXTURES / "detonate_real_re2.json").read_text())
     assert "CRED_FILE_ACCESS" not in {h.rule_id for h in evaluate(res)}
+
+
+# --- EXEC_DROPPED_BINARY via an interpreter (rt09: `sh /tmp/stage.sh`) ---
+
+
+def with_cwd(event: ExecEvent, cwd: str | None) -> ExecEvent:
+    return event.model_copy(update={"cwd": cwd})
+
+
+@pytest.mark.parametrize(
+    "binary, args, cwd",
+    [
+        ("/usr/bin/sh", "/tmp/stage.sh", "/work"),  # rt09 exactly
+        ("/bin/bash", "-e /dev/shm/x", "/work"),  # options before the operand
+        ("/usr/local/bin/node", "/home/runner/.cache/p.js arg", "/work"),
+        ("/usr/bin/python3.11", "x.py", "/tmp/stage"),  # relative to the kernel's cwd
+        ("/usr/bin/sh", "../../../tmp/s.sh", "/work/node_modules/pkg"),  # traversal normalized
+        ("/usr/bin/perl", "/var/tmp/p.pl", None),
+    ],
+)
+def test_interpreter_running_a_dropped_script_fires(binary, args, cwd):
+    res = result([with_cwd(exec_event(binary, args), cwd)])
+    assert "EXEC_DROPPED_BINARY" in rule_ids(res)
+
+
+@pytest.mark.parametrize(
+    "binary, args, cwd",
+    [
+        ("/usr/bin/sh", "-c /tmp/looks-like-a-path", "/work"),  # inline command, not a file
+        ("/bin/bash", "-ec 'echo hi'", "/work"),
+        ("/usr/local/bin/node", "-e require('/tmp/x')", "/work"),
+        ("/usr/bin/python3", "-m pip --version", "/tmp"),
+        ("/usr/local/bin/node", "/work/node_modules/re2/scripts/verify-build.js", "/work"),
+        ("/usr/local/bin/node", "/tmp/.npm/_npx/abc/node_modules/.bin/x", "/work"),  # npm cache
+        ("/usr/bin/sh", "scripts/install.sh", "/work/node_modules/pkg"),  # the package's own
+        ("/usr/bin/sh", "../../tmp/s.sh", "/work/node_modules/pkg"),  # resolves to /work/tmp
+        ("/usr/bin/sh", "x.sh", None),  # relative with no cwd: can't resolve, don't guess
+        ("/usr/bin/make", "/tmp/Makefile", "/work"),  # not an interpreter we model
+    ],
+)
+def test_ordinary_script_runs_do_not_fire(binary, args, cwd):
+    res = result([with_cwd(exec_event(binary, args), cwd)])
+    assert "EXEC_DROPPED_BINARY" not in rule_ids(res)
+
+
+def test_recorded_real_detonations_gain_no_dropped_script_hits():
+    # re2 is a real native build; dep/r01 run package scripts from node_modules.
+    for name in ("detonate_real_re2.json", "detonate_real_dep.json", "detonate_real_r01.json",
+                 "detonate_real_e4.json", "detonate_real_e5.json"):  # fmt: skip
+        res = DetonateResult.model_validate_json((FIXTURES / name).read_text())
+        hits = [h for h in evaluate(res) if h.rule_id == "EXEC_DROPPED_BINARY"]
+        assert hits == [], name
