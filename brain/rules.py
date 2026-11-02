@@ -5,6 +5,7 @@ are attacker-influenced (args, binaries), so evidence strings must be escaped wh
 """
 
 import ipaddress
+import posixpath
 import re
 import shlex
 from dataclasses import dataclass
@@ -32,6 +33,20 @@ NET_TOOLS = frozenset(
     {"curl", "wget", "nc", "ncat", "netcat", "nc.openbsd", "nc.traditional", "socat", "telnet"}
 )
 SHELLS = frozenset({"sh", "bash", "dash", "zsh", "ash", "ksh"})
+# Programs that run a script *file* given as an operand (`sh /tmp/x.sh`, `node /tmp/x.js`):
+# the kernel sees the interpreter's path, so the dropped file only shows up in the args.
+INTERPRETERS = SHELLS | {"node", "nodejs", "python", "python3", "perl", "ruby", "php"}
+# Per interpreter: after these, the next token is inline code or a module, not a script file.
+# (Per interpreter because `bash -e` is "exit on error", while `node -e` is inline code.)
+INLINE_CODE_FLAGS = {
+    **{s: frozenset({"-c"}) for s in SHELLS},
+    "node": frozenset({"-e", "-p", "--eval", "--print"}),
+    "nodejs": frozenset({"-e", "-p", "--eval", "--print"}),
+    "python": frozenset({"-c", "-m"}),
+    "perl": frozenset({"-e", "-E"}),
+    "ruby": frozenset({"-e"}),
+    "php": frozenset({"-r"}),
+}
 DEV_SOCKET_RE = re.compile(r"/dev/(tcp|udp)/")
 BASE64_DECODE_RE = re.compile(r"\bbase64\s+(?:-\w*d\w*|--decode)\b")
 PIPE_TO_SHELL_RE = re.compile(r"\|\s*(?:/\S*/)?(?:ba|da|z|k)?sh\b")
@@ -314,6 +329,27 @@ def _interactive_shell_flag(tokens: list[str]) -> bool:
     return False
 
 
+def _script_operand(event: ExecEvent) -> str | None:
+    """The script file an interpreter was asked to run, resolved against the kernel-recorded
+    cwd (string-only, never touching the host filesystem), or None for inline code."""
+    name = _basename(event.binary)
+    family = re.sub(r"[\d.]+$", "", name)  # python3.11 -> python
+    if family not in INTERPRETERS:
+        return None
+    inline = INLINE_CODE_FLAGS.get(family, frozenset())
+    for tok in _tokens(event.args):
+        if tok in inline:
+            return None
+        if tok.startswith("-") and not tok.startswith("--") and name in SHELLS and "c" in tok:
+            return None  # a shell option cluster with -c (e.g. -ec): inline command
+        if tok.startswith("-"):
+            continue
+        if tok.startswith("/"):
+            return posixpath.normpath(tok)
+        return posixpath.normpath(posixpath.join(event.cwd, tok)) if event.cwd else None
+    return None
+
+
 def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     hits: list[RuleHit] = []
     name = _basename(event.binary)
@@ -331,6 +367,13 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     if event.binary.startswith(DROP_DIRS) and not event.binary.startswith(NPM_CACHE_DIR):
         hit("EXEC_DROPPED_BINARY", Severity.HIGH,
             "ran a program from a temp/home directory (dropped at install time)")  # fmt: skip
+    elif (
+        (script := _script_operand(event))
+        and script.startswith(DROP_DIRS)
+        and not (script.startswith(NPM_CACHE_DIR))
+    ):
+        hit("EXEC_DROPPED_BINARY", Severity.HIGH,
+            f"{name} ran a script from a temp/home directory ({_clip(script)})")  # fmt: skip
 
     if DEV_SOCKET_RE.search(args):
         hit("EXEC_INTERACTIVE_SHELL", Severity.CRITICAL, "/dev/tcp or /dev/udp socket redirect")
