@@ -1,0 +1,32 @@
+{
+ "install": {
+  "duration_s": 3.04,
+  "exit_code": 0,
+  "ran_install_scripts": false,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [],
+  "hosts": [],
+  "install_scripts": [],
+  "telemetry_truncated": false
+ },
+ "package": "color-helper",
+ "provenance": {
+  "detector_commit": "a96c8a1",
+  "detonated_at": "2026-11-02T22:39:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "3086fdda034cf12c65fba36995523cdafccaedaca5f32e2be670d3937b55e792",
+  "value": "cFudkg0b/tOWJb8wFwOBMjWrZ8KqHuaYmp9qG7h08/DcoTVgX1ciqNlhPNdwC6kAQqK0nr0sxPoV3tpWdu8zBw=="
+ },
+ "version": "1.0.0"
+}

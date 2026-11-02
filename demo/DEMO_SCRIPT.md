@@ -77,12 +77,28 @@ Flash three things:
 > "Advisory tools are retrospective — they protect you from last year's attack. This catches
 > behavior the first time it runs, in seconds, at about a cent and a half per PR."
 
-## 2:40 – 3:00 · Where this goes
+## 2:40 – 3:00 · Where this goes — and show it working
 
-> "Detonate every new npm release minutes after publish, and diff its behavior against the
-> last version — 'this release started reading your npmrc' as an alert, not a GHSA days later.
-> We already emit a signed, per-version behavioral record for exactly that. Lockfiles pin
-> bytes; this pins behavior."
+Run this live; it takes a second and needs no network:
+
+```
+python -m brain.sbom diff eval/sbom/color-helper_at_1.0.0.json \
+                          eval/sbom/color-helper_at_1.0.1.json eval/sbom/public_key.pem
+```
+
+Same package, two versions, detonated under identical conditions. The output says
+**old verified, new verified**, then *"new raw IP contacted at install: 203.0.113.10"* and
+*"new install script: node_modules/color-helper/install.js — none → 967cb59a"*.
+
+> "Detonate every new npm release minutes after publish and diff its behavior against the last
+> version — 'this release started talking to a new address' as an alert, not a GHSA days later.
+> That's the same signed record you just watched verify. Lockfiles pin bytes; this pins
+> behavior."
+
+Two things to say out loud, because they're the honest part: the signature proves the **record**
+wasn't edited, not that the package is safe — and the tool reports this pair as only
+*partially comparable*, because these two records don't pin the image and Node versions. It
+tells you what it couldn't compare instead of quietly comparing anyway.
 
 ## Fallbacks
 

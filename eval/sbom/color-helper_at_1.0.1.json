@@ -1,0 +1,40 @@
+{
+ "install": {
+  "duration_s": 6.05,
+  "exit_code": 0,
+  "ran_install_scripts": true,
+  "status": "completed"
+ },
+ "observed": {
+  "binaries_outside_system_paths": [],
+  "blocked_non_tcp_egress": [],
+  "credential_files_opened": [
+   "/home/runner/.npmrc"
+  ],
+  "dns_queries": [],
+  "hosts": [
+   "203.0.113.10"
+  ],
+  "install_scripts": [
+   {
+    "package": "color-helper",
+    "path": "/work/node_modules/color-helper/install.js",
+    "sha256": "967cb59a0ba5a3b3680d52aad6f74895e15a52e46f30febd023ab3e36ca1e6ea"
+   }
+  ],
+  "telemetry_truncated": false
+ },
+ "package": "color-helper",
+ "provenance": {
+  "detector_commit": "a96c8a1",
+  "detonated_at": "2026-11-02T22:39:59Z",
+  "sandbox": "docker + Tetragon eBPF + logging resolver, egress TCP-only"
+ },
+ "schema": "pr-detonator/behavior-record@1",
+ "signature": {
+  "algorithm": "ed25519",
+  "sha256": "dfb4f48eae7c1108b1530e3789e805e5a7f7ecdd4463bf1fa318d1d1ae896aa3",
+  "value": "fAOToRjiv4/8YGaZXoDMsGOmGwIDYAg3HE6olTvWL/owhNFpCjFxydNw8142awzsgWUsa6GRenl6JpahJz2RCg=="
+ },
+ "version": "1.0.1"
+}
