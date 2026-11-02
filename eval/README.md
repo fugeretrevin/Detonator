@@ -56,6 +56,17 @@ telemetry with **no** Intent Contract.
   or IP absent from both the telemetry and the diff. Measured by `brain/evidence.py`, which
   rejects an event id that isn't in that job's index (ids are an HMAC of the job id, so a PR
   author can't forge one) and requires an `observed` claim to cite an event of its own type.
+- **We measured whether CPU time could close the `rt08` gap, and it can't.** With cgroup
+  sampling on all 142 cases, `rt08-local-miner` used **8.16 s** of CPU while **eight benign
+  packages used more** — playwright-chromium 26.0, prisma 25.1, puppeteer 21.3, parcel 13.3,
+  electron 9.7, nx 9.6, cypress 9.1, @swc/cli 8.3. Any threshold low enough to catch rt08 flags
+  the most popular install-script packages in the ecosystem, and the build-tool exemption
+  doesn't rescue them because they download prebuilt binaries rather than invoking a compiler.
+  A ~30 s threshold would catch `gm08-cpu-miner` (36.3 s) cleanly, but the model already catches
+  gm08 for forking a detached worker, so the rule buys nothing there either. `RES_CPU_HEAVY`
+  therefore stays **off** on evidence, not caution: closing this needs a second signal (process
+  ancestry, lifetime, syscall profile), not a bigger number. `cpu_s` is recorded on every run so
+  it can be re-tested cheaply.
 - **0 of 104 popular packages blocked, in any arm or any trial.** The 3 left at ⚠️ (puppeteer,
   playwright-chromium, chromedriver) all download from `storage.googleapis.com`, which is never
   auto-cleared.

@@ -532,7 +532,10 @@ INCIDENTS = [
 # blocks 9/10, because the model reads the payload in the diff even when it never fires in the
 # sandbox (the ~/.bashrc beacon, the sibling-package overwrite, the dormant-when-CI branch).
 # The one case nothing catches is rt08 — a bare inline CPU loop with no network, no files and no
-# telltale strings.
+# telltale strings. We measured whether CPU time could close it: rt08 burns 8.16 s, and eight
+# benign packages burn more (playwright-chromium 26.0 s, prisma 25.1 s, puppeteer 21.3 s, ...),
+# so any threshold that catches it also flags the most popular install-script packages. It stays
+# an open miss on purpose; see CPU_REVIEW_THRESHOLD_S in brain/rules.py for the numbers.
 # rt09 is the one gap this set closed by hand: it originally fired no rule, because it runs the
 # dropped file via `sh <path>` rather than exec'ing it, so only the model caught it.
 # EXEC_DROPPED_BINARY now also matches a script operand given to an interpreter, so the rules

@@ -388,9 +388,21 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     return hits
 
 
-# rt08: a bare CPU loop leaves no exec, connect or file trace, only CPU time. Off (None) until
-# calibrated on the benign set: native builds and big unzips burn real CPU too. Builds are
-# exempt when a compiler/build tool ran; anything left is LOW (a human looks), never a block.
+# rt08: a bare CPU loop leaves no exec, connect or file trace, only CPU time. Builds are exempt
+# when a compiler/build tool ran; anything left would be LOW (a human looks), never a block.
+#
+# Deliberately OFF, and now for a measured reason rather than caution. With cgroup sampling on
+# all 142 eval cases, `rt08-local-miner` used **8.16 s** of CPU and **eight benign packages used
+# more**: playwright-chromium 26.0, prisma 25.1, puppeteer 21.3, parcel 13.3, electron 9.7,
+# nx 9.6, cypress 9.1, @swc/cli 8.3. Any threshold low enough to catch rt08 flags the most
+# popular install-script packages in the ecosystem, and the build-tool exemption does not save
+# them (they download prebuilt binaries, they don't invoke a compiler). A threshold near 30 s
+# would catch `gm08-cpu-miner` (36.3 s) with nothing benign above it, but the model already
+# catches gm08 because it forks a detached worker — so the rule would buy nothing there either.
+#
+# Conclusion: CPU time alone cannot close the rt08 gap at an acceptable false-review cost. Any
+# future attempt needs a second signal (process ancestry, lifetime, no-op syscall profile), not
+# a bigger number. `cpu_s` is still recorded for every run, so this can be re-tested cheaply.
 CPU_REVIEW_THRESHOLD_S: float | None = None
 BUILD_TOOLS = frozenset({"cc", "gcc", "g++", "c++", "clang", "clang++", "make", "cmake", "ld",
                          "cc1", "cc1plus", "rustc", "cargo", "go", "node-gyp"})  # fmt: skip
