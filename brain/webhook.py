@@ -41,6 +41,7 @@ class PullRequestEvent:
     head_clone_url: str
     is_fork: bool
     repo_private: bool = True  # fail closed if GitHub omits the flag
+    title: str = ""  # PR title (untrusted; for the dashboard, escaped on render)
 
 
 def account_login(payload: dict) -> str | None:
@@ -67,6 +68,7 @@ def parse_pull_request_event(delivery_id: str, payload: dict) -> PullRequestEven
         head_clone_url=head_repo["clone_url"],
         is_fork=head_repo["full_name"] != base_repo["full_name"],
         repo_private=base_repo.get("private") is not False or head_repo.get("private") is True,
+        title=(pr.get("title") or "")[:200],
     )
 
 

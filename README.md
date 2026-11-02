@@ -8,6 +8,9 @@ hardened sandbox, traces what the code *actually does* at the kernel level with 
 to do. A PR titled "Fix typo in README" that opens a raw-IP connection during `postinstall`
 gets a failing check that blocks the merge, plus a forensic comment explaining why.
 
+**Live dashboard** (recent runs, verdict tally, and a behavior atlas of what packages do at
+install): https://fugeretrevin--pr-detonator-dashboard.us-east.modal.run/
+
 ## Example
 
 A PR titled **"Add install-time telemetry opt-out"** adds a script that base64-decodes and

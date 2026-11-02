@@ -28,6 +28,7 @@ from brain.pipeline import (
     detonate_request,
 )
 from brain.report import render_line_comment, with_run_history
+from brain.runlog import build_record
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -75,6 +76,9 @@ deliveries = modal.Dict.from_name("pr-detonator-deliveries", create_if_missing=T
 # Chamber health history, written every 10 minutes (HARDENING_PLAN P0.5).
 health_log = modal.Dict.from_name("pr-detonator-health", create_if_missing=True)
 HEALTH_HISTORY = 144  # 24 h at one check per 10 min
+# Per-run summaries for the dashboard (HARDENING_PLAN P1.6).
+run_log = modal.Dict.from_name("pr-detonator-runs", create_if_missing=True)
+RUN_LOG_HISTORY = 200
 
 
 class ModalDictDeduper:
@@ -226,6 +230,16 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         except Exception:
             logger.exception("job=%s failed to post guilty-line review", job_id)
 
+    # Run log for the dashboard (best effort; a logging failure must not fail the job).
+    try:
+        import datetime
+
+        ts = datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d %H:%M")
+        rec = build_record(event, analysis, job_id, ts)
+        run_log["records"] = ((run_log.get("records") or [])[-(RUN_LOG_HISTORY - 1) :]) + [rec]
+    except Exception:
+        logger.exception("job=%s failed to write run log", job_id)
+
 
 @app.cls(image=guard_image, cpu=2.0, memory=2048, scaledown_window=300, timeout=120)
 class PromptGuard:
@@ -258,6 +272,25 @@ class PromptGuard:
             out.append({"scores": scores,
                         "tokens": self.tokenizer.convert_ids_to_tokens(ids)[:12]})  # fmt: skip
         return out
+
+
+@app.function(image=image)
+@modal.asgi_app()
+def dashboard():
+    """Read-only public page: recent runs, verdict tally, behavior atlas. No inputs accepted."""
+    from fastapi import FastAPI
+    from fastapi.responses import HTMLResponse
+
+    from brain.runlog import render_dashboard
+
+    web = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
+
+    @web.get("/", response_class=HTMLResponse)
+    def index() -> str:
+        records = run_log.get("records") or []
+        return render_dashboard(records)
+
+    return web
 
 
 @app.function(image=image, secrets=SECRETS, schedule=modal.Period(minutes=10), timeout=60)

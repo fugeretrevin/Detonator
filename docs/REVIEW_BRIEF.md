@@ -196,6 +196,10 @@ benign blocks.
   reconstructions: ua-parser-js `preinstall.sh:4,6`, Shai-Hulud `bundle.js:11,23`]
 - Every report lists **"Packages that ran install scripts"** (benign ones too), flagged ones
   marked: the seed of a behavioral SBOM.
+- A read-only **dashboard** (`@modal.asgi_app`, no inputs accepted) shows recent runs, a
+  verdict tally, and a **behavior atlas** (package → hosts contacted, binaries run) built from
+  the run log. Every value is entity-encoded like the comments. [Live]
+  https://fugeretrevin--pr-detonator-dashboard.us-east.modal.run/
 
 ### 4.6 Prompt Guard 2 [Live, validated]
 
