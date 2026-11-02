@@ -1,39 +1,52 @@
 # Evaluation
 
-40 real detonations on the Chamber (Tetragon + DNS capture), scored by the production
+122 real detonations on the Chamber (Tetragon + DNS capture), scored by the production
 pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.md](results.md).
 
-- **Benign (26):** popular packages, most with install-time downloads or scripts (puppeteer,
-  playwright-chromium, electron, prisma, cypress, chromedriver, esbuild, sharp, bcrypt,
-  sqlite3, canvas, ffmpeg-static, @sentry/cli, ...), each as an "Add <pkg>" PR.
-- **Malicious (14):** install-time attacks written for this eval ([cases.py](cases.py)):
+- **Benign (104):** popular packages, 35 of which run install scripts (puppeteer,
+  playwright, electron, prisma, cypress, chromedriver, esbuild, @swc/core, sharp, bcrypt,
+  sqlite3, better-sqlite3, canvas, @napi-rs/canvas, ffmpeg-static, @sentry/cli, re2, ...),
+  the rest common pure-JS deps (express, react, axios, zod, ...). Each an "Add <pkg>" PR.
+- **Malicious (16):** install-time attacks written for this eval ([cases.py](cases.py)):
   curl/wget exfil, `wget | sh`, `/dev/tcp` reverse shell, base64 → sh, pure-JS sockets,
   HTTPS env exfil, char-code obfuscation, `.npmrc` theft, perl sockets, cloud metadata
-  probe, DNS-label exfil, exfil to a resolvable domain, prompt injection, delayed payload.
-  They only reach TEST-NET-3, the (blocked) metadata address, a `.invalid` name, or
-  example.com with a dummy body.
+  probe, DNS-label exfil, exfil to a resolvable domain, prompt injection, delayed payload,
+  UDP exfil, and a stolen `$GITHUB_TOKEN` in a request header. They only reach TEST-NET-3,
+  the (blocked) metadata address, a `.invalid` name, example.com, or sinkholed services.
 
 ## Results
 
-**Scored 2026-11-01 17:04 UTC at commit `b45e980`** (clean tree, the deployed Brain) with
-`muse-spark-1.3` and Llama Prompt Guard 2, on 43 detonations re-run the same day on the
-current Chamber: TLS, DNS capture and sinkhole, non-TCP egress blocked and logged, planted
-credential bait. `results.json` carries the same stamp.
+**Scored 2026-11-02 00:09 UTC at commit `04b7c25`** (clean tree, the deployed Brain) with
+`muse-spark-1.3` and Llama Prompt Guard 2, on 122 detonations on the current Chamber: TLS,
+signed responses, DNS capture and sinkhole, non-TCP egress blocked, per-run canary
+credentials and decoy tools. `results.json` carries the same stamp.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
 |---|---|---|---|---|
-| benign (26) | rules | 21 | 5 | **0** |
-| benign (26) | rules + Intent Contract | 23 | 3 | **0** |
-| benign (26) | full (contract + Prompt Guard + analysis) | 23 | 3 | **0** |
-| simulated attacks (15) | rules | 0 | 1 | 14 |
-| simulated attacks (15) | rules + Intent Contract | 0 | 1 | 14 |
-| simulated attacks (15) | full | 0 | 0 | **15** |
+| benign (104) | rules | 99 | 5 | **0** |
+| benign (104) | rules + Intent Contract | 101 | 3 | **0** |
+| benign (104) | full (contract + Prompt Guard + analysis) | 101 | 3 | **0** |
+| simulated attacks (16) | rules | 0 | 1 | 15 |
+| simulated attacks (16) | rules + Intent Contract | 0 | 1 | 15 |
+| simulated attacks (16) | full | 0 | 0 | **16** |
 | real-incident reconstructions (2) | rules / contract / full | 0 | 0 | **2** |
 
-New in this run: **m15** (env exfil over UDP, no TCP at all) is blocked by
-`NET_NON_TCP_EGRESS`; **m08** (.npmrc theft) and the **Shai-Hulud** reconstruction also trip
-`CRED_FILE_ACCESS`. Every benign install opened `~/.npmrc` too, but only from npm's own
-process, never from an install script, so the bait rule fired on none of them.
+- **0 of 104 popular packages blocked.** The 3 left at ⚠️ (puppeteer, playwright-chromium,
+  chromedriver) all download from `storage.googleapis.com`, which is never auto-cleared.
+- **Scaling to 104 found one real false positive and we fixed it:** `re2`'s install runs a
+  nested `npm run verify-build`, and that npm reads `~/.npmrc` as config, which first tripped
+  `CRED_FILE_ACCESS`. The rule now never flags an npm/npx process reading it; a theft reads it
+  from the dependency's own code (m08 still fires). Numbers above are after the fix.
+- **What Muse explained (ground truth, P1.5):** decoded the payload in **5/5** obfuscated
+  attacks (base64, char-code, DNS-hex, and both reconstructions) and attributed **2/2**
+  dependency-delivered attacks to the right package and file.
+- **Cost and latency (full pipeline):** **$0.0149 per PR** mean (muse-spark-1.3), ~2.2k in /
+  2.9k out tokens; detonation p50 4.5 s / p95 13.8 s; model latency p50 12.5 s / p95 24.2 s.
+- New rules exercised: **m15** (UDP exfil) → `NET_NON_TCP_EGRESS`; **m16** (token in a curl
+  header) → `DECOY_CREDENTIAL_SEEN` (critical); **m08** + Shai-Hulud → `CRED_FILE_ACCESS`.
+- 4 native packages (better-sqlite3, argon2, cpu-features, node-pty) exited non-zero: they
+  compile from source and the minimal sandbox image has no C toolchain. They are still
+  reported ✅ Clean (no malicious behavior); a failed benign build is not a false block.
 
 **Real-incident reconstructions** (defanged, delivered as Dependabot-style dependency bumps,
 see `INCIDENTS` in [cases.py](cases.py)):

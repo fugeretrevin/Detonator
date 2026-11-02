@@ -1,12 +1,12 @@
 # Evaluation results
 
-Scored 2026-11-01 23:59 UTC at commit `b6aa20c` with muse-spark-1.3; detonations from `eval-results-6`.
+Scored 2026-11-02 00:09 UTC at commit `04b7c25` with muse-spark-1.3; detonations from `eval-results-6`.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
 |---|---|---|---|---|---|
-| benign (104) | rules | 98/104 | 5/104 | 1/104 | 0/104 |
-| benign (104) | contract | 100/104 | 3/104 | 1/104 | 0/104 |
-| benign (104) | full | 100/104 | 3/104 | 1/104 | 0/104 |
+| benign (104) | rules | 99/104 | 5/104 | 0/104 | 0/104 |
+| benign (104) | contract | 101/104 | 3/104 | 0/104 | 0/104 |
+| benign (104) | full | 101/104 | 3/104 | 0/104 | 0/104 |
 | malicious (16) | rules | 0/16 | 1/16 | 15/16 | 0/16 |
 | malicious (16) | contract | 0/16 | 1/16 | 15/16 | 0/16 |
 | malicious (16) | full | 0/16 | 0/16 | 16/16 | 0/16 |
@@ -22,9 +22,9 @@ Scored 2026-11-01 23:59 UTC at commit `b6aa20c` with muse-spark-1.3; detonations
 ### Cost and latency (full pipeline)
 
 - Detonation: p50 4.51s, p95 13.83s
-- Model latency per PR (prediction + analysis): p50 12.94s, p95 24.74s
-- Tokens per PR: 2189 in / 2912 out (mean)
-- **Cost per PR: $0.0151 mean** (muse-spark-1.3 at $1.25/1M in, $4.25/1M out); $1.844 for all 122 cases
+- Model latency per PR (prediction + analysis): p50 12.51s, p95 24.15s
+- Tokens per PR: 2188 in / 2872 out (mean)
+- **Cost per PR: $0.0149 mean** (muse-spark-1.3 at $1.25/1M in, $4.25/1M out); $1.823 for all 122 cases
 
 ## Per case
 
@@ -66,7 +66,7 @@ Scored 2026-11-01 23:59 UTC at commit `b6aa20c` with muse-spark-1.3; detonations
 | cpu-features | benign | ✅ | ✅ | ✅ | - | install completed exit=1 |
 | sentry-profiling-node | benign | ✅ | ✅ | ✅ | - |  |
 | playwright | benign | ✅ | ✅ | ✅ | - |  |
-| re2 | benign | ❌ | ❌ | ❌ | CRED_FILE_ACCESS |  |
+| re2 | benign | ✅ | ✅ | ✅ | - |  |
 | keytar | benign | ✅ | ✅ | ✅ | - |  |
 | node-pty | benign | ✅ | ✅ | ✅ | - | install completed exit=1 |
 | zeromq | benign | ✅ | ✅ | ✅ | - |  |

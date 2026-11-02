@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (290 tests, all passing).
+- **[Test]** covered by the automated test suite (322 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -122,16 +122,19 @@ Chamber sinkhole.
 | `NET_EXFIL_SERVICE` | high | DNS lookup of, or connect to, a known exfil/tunnel/IP-lookup service (webhook.site, pipedream, interact.sh/oast, ngrok, trycloudflare, pastebin, transfer.sh, Telegram/Discord APIs, ipinfo, ipify, …) |
 | `DNS_ENCODED_LABEL` | high | a DNS label ≥ 40 chars that looks encoded (all hex, or ≥ 20% digits) |
 | `NET_NON_TCP_EGRESS` | high | any UDP/ICMP/other non-TCP packet leaving the sandbox (blocked; from the firewall log) |
-| `CRED_FILE_ACCESS` | high | a process descended from an install script opens a planted bait credential (npm itself reading `~/.npmrc` doesn't count) |
+| `CRED_FILE_ACCESS` | high | a non-npm process descended from an install script opens a planted bait credential (npm/npx reading `~/.npmrc` as config doesn't count) |
+| `DECOY_CREDENTIAL_SEEN` | critical | a per-run fake token appears in a process's args, a DNS name, or the install's output (harvested and used/sent) |
+| `DECOY_TOOL_INVOKED` | high | the install ran a decoy CLI (`gh`, `aws`, `claude`, `gemini`, `trufflehog`) planted on PATH |
 | `NET_UNLISTED_DOMAIN` | low | connect to a named domain not on the allowlist (npm/yarn registries, GitHub and its release/object hosts, nodejs.org) |
 | `TELEMETRY_TRUNCATED` | low | event caps hit or log rotated: a flood could be hiding something |
 
-Six rules were added because evaluation or review exposed gaps: `NET_INTERNAL_TARGET` and
-`DNS_ENCODED_LABEL` (simulated metadata probe and DNS-label exfil got past rules),
-`EXEC_DROPPED_BINARY` and `NET_EXFIL_SERVICE` (the Shai-Hulud reconstruction got past
-rules), `NET_NON_TCP_EGRESS` (UDP exfil was an untraced channel) and `CRED_FILE_ACCESS`
-(credential reads were invisible). Each was checked against the 26 benign installs: none
-fired.
+Eight rules were added because evaluation or review exposed gaps: `NET_INTERNAL_TARGET` and
+`DNS_ENCODED_LABEL` (metadata probe and DNS-label exfil got past rules), `EXEC_DROPPED_BINARY`
+and `NET_EXFIL_SERVICE` (Shai-Hulud got past rules), `NET_NON_TCP_EGRESS` (UDP was an untraced
+channel), `CRED_FILE_ACCESS` plus the two `DECOY_*` rules (credential theft was invisible).
+Each was checked against the full benign set; the only false positive this surfaced (`re2`'s
+nested npm reading `~/.npmrc`) was fixed before adoption, and the 104-package run has zero
+benign blocks.
 
 ### 4.2 Verdict [Test]
 
@@ -254,39 +257,45 @@ Typical detonation 3–20 s; a full check completes in well under a minute.
 
 ## 7. Evaluation [Eval]
 
-43 real detonations, re-run on Nov 1 on the current Chamber (TLS, DNS capture and sinkhole,
-non-TCP egress blocked, credential bait), **scored at commit `b45e980` (clean tree, same
-code as deployed)** with `muse-spark-1.3` and Prompt Guard 2. Three setups: rules only;
-rules + Intent Contract; full (contract + Prompt Guard + Muse analysis, i.e. production).
+122 real detonations, re-run Nov 1–2 on the current Chamber (TLS, signed responses, DNS
+capture and sinkhole, non-TCP egress blocked, per-run canary credentials and decoy tools),
+**scored at commit `04b7c25` (clean tree, same code as deployed)** with `muse-spark-1.3`
+and Prompt Guard 2. Three setups: rules only; rules + Intent Contract; full (contract +
+Prompt Guard + Muse analysis, i.e. production).
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked |
 |---|---|---|---|---|
-| Benign (26) | rules | 21 | 5 | **0** |
-| Benign (26) | + contract | 23 | 3 | **0** |
-| Benign (26) | full | 23 | 3 | **0** |
-| Simulated attacks (15) | rules | 0 | 1 | 14 |
-| Simulated attacks (15) | + contract | 0 | 1 | 14 |
-| Simulated attacks (15) | full | 0 | 0 | **15** |
+| Benign (104) | rules | 99 | 5 | **0** |
+| Benign (104) | + contract | 101 | 3 | **0** |
+| Benign (104) | full | 101 | 3 | **0** |
+| Simulated attacks (16) | rules | 0 | 1 | 15 |
+| Simulated attacks (16) | + contract | 0 | 1 | 15 |
+| Simulated attacks (16) | full | 0 | 0 | **16** |
 | Real-incident reconstructions (2) | all three | 0 | 0 | **2** |
 
-- **Benign set:** lodash, express, react, typescript, puppeteer, playwright-chromium,
-  electron, prisma + @prisma/client, esbuild, @swc/core, sharp, bcrypt, sqlite3, canvas,
-  cypress, chromedriver, ffmpeg-static, @sentry/cli, core-js, protobufjs, es5-ext, nodemon,
-  husky, msw, @biomejs/biome, lefthook. Each as an "Add <pkg>" PR, current versions, no
-  lockfile. 17 of them ran install scripts.
+- **Benign set:** 104 popular packages, 35 of which run install scripts (puppeteer,
+  playwright, electron, prisma, cypress, chromedriver, esbuild, @swc/core, sharp, bcrypt,
+  sqlite3, better-sqlite3, canvas, @napi-rs/canvas, ffmpeg-static, @sentry/cli, re2, argon2,
+  ssh2, @parcel/watcher, ...); the rest common pure-JS deps (express, react, axios, zod, …).
+  Each an "Add <pkg>" PR, current versions, no lockfile.
 - The 3 benign "needs review" in full: puppeteer, chromedriver, playwright-chromium (all
-  download from storage.googleapis.com, deliberately never auto-cleared). Cypress varies with
-  the model: "suspicious" in two earlier runs, clean in this one.
-- Every benign install opened the bait `~/.npmrc`, always from npm's own process; the
-  credential rule fired on none of them.
-- **Simulated attacks** (written for this eval, all targeting TEST-NET-3 or our own blocked
+  download from storage.googleapis.com, deliberately never auto-cleared).
+- **Scaling to 104 found one false positive, now fixed:** `re2`'s install runs a nested
+  `npm run verify-build` that reads the bait `~/.npmrc` as config, which first tripped
+  `CRED_FILE_ACCESS`. The rule now never flags an npm/npx process; a real theft reads it from
+  the dependency's own code (m08 still fires). Numbers above are after the fix.
+- **Simulated attacks** (written for this eval, all to TEST-NET-3 or our own blocked
   addresses): curl env exfil, wget|sh, /dev/tcp reverse shell, base64→sh, pure-JS raw socket,
-  HTTPS env exfil from node, char-code obfuscation, .npmrc theft, perl socket, cloud metadata
-  probe, DNS-label exfil, exfil to a resolvable domain (example.com, dummy body), exfil +
-  prompt injection, delayed (4 s) payload, env exfil over UDP.
-- **What each layer adds:** rules block 14/15 attacks with zero benign blocks; the contract
+  HTTPS env exfil, char-code obfuscation, .npmrc theft, perl socket, cloud metadata probe,
+  DNS-label exfil, exfil to a resolvable domain, prompt injection, delayed payload, UDP exfil,
+  and a stolen `$GITHUB_TOKEN` in a curl header.
+- **What each layer adds:** rules block 15/16 attacks with zero benign blocks; the contract
   cuts benign "needs review" 5 → 3 without clearing any attack; Muse catches the one attack
   rules can't (m12: exfil to a resolvable domain, only a low "unlisted domain" for rules).
+- **What Muse explained (P1.5 ground truth):** decoded the payload in **5/5** obfuscated
+  attacks and attributed **2/2** dependency-delivered attacks to the right package and file.
+- **Cost and latency:** **$0.0149 per PR** mean (muse-spark-1.3, ~2.2k in / 2.9k out tokens);
+  detonation p50 4.5 s / p95 13.8 s; model latency p50 12.5 s / p95 24.2 s.
 - **Real-incident reconstructions** (defanged; delivered as Dependabot-style dependency
   bumps; sources: Sysdig, Truesec, MITRE ATT&CK S9008, BleepingComputer, CERT-EU 2021-057,
   ua-parser-js issue #536):
@@ -313,6 +322,8 @@ rules + Intent Contract; full (contract + Prompt Guard + Muse analysis, i.e. pro
   it removed 2 of 5 benign false alarms without clearing any attack.
 - **Muse, analysis:** catches what rules can't (domain exfil), explains behavior in plain
   language, flags prompt injection, and decodes obfuscated payloads onto the guilty line.
+  Measured against ground truth: decoded **5/5** obfuscated payloads, attributed **2/2**
+  dependency attacks to the right package/file. Cost **~$0.015 per PR**.
 - **Prompt Guard 2:** measured honestly; useful for explicit jailbreaks, not for indirect
   injection in code review; therefore scoped to "don't trust flagged text" rather than
   deciding verdicts.
@@ -327,7 +338,7 @@ The first version of this brief listed 15 open issues. Status after the fix pass
 | 1 | Non-DNS UDP and ICMP egress untraced and unblocked | **Fixed.** Only TCP may leave; everything else is logged and rejected, reported as `NET_NON_TCP_EGRESS`. Before the fix, a test UDP datagram really left the sandbox. New eval case m15 (UDP exfil) is blocked. |
 | 2 | No file-access tracing | **Fixed for credentials.** Planted bait credentials, traced opens, `CRED_FILE_ACCESS`. Other file reads are still untraced. |
 | 3 | Install-time only (require/runtime payloads, event-stream) | **Open (scope).** Running tests or importing changed packages in the sandbox would extend coverage. |
-| 4 | Sandbox-aware or delayed malware | **Partly addressed.** The bait makes the sandbox look like a developer machine with credentials to steal. No fake env tokens or `CI=true`: real installers read `GITHUB_TOKEN` and could break. Timeout-evading payloads (> 180 s) are still possible. |
+| 4 | Sandbox-aware or delayed malware | **Partly addressed (P1.2).** Per-run fake `GITHUB_TOKEN`/`NPM_TOKEN`/AWS keys in env, `~/.npmrc` and `~/.aws`, plus `CI=true` and decoy CLIs on PATH, so the sandbox looks like a dev/CI box worth robbing; using a decoy fires critical. The fake `GITHUB_TOKEN` did not break any benign install in the 104-package run (electron, which reads it, was Clean). Timeout-evading payloads (> 180 s) are still possible. |
 | 5 | Private repos unsupported | **Fixed, pending one live test.** TLS with a pinned cert; single-repo, read-only token, verified against the GitHub API. An end-to-end PR on a private repo still needs a private repo added to the App. |
 | 6 | Single VM, untested rebuild, no AMI | **Open; mitigation pending.** AMI snapshot to be taken by the owner (no AWS CLI access from the dev machine, by design). Fresh-VM rebuild untested. |
 | 7 | Fork PRs untested | **Open.** Should work by design; needs a fork to test. |
@@ -392,7 +403,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            290 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            322 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

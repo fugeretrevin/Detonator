@@ -103,14 +103,15 @@ flowchart LR
 
 ## Results
 
-**Evaluation (43 real detonations, scored 2026-11-01 at commit `b45e980`,
-[details](eval/README.md)):** 0 of 26 popular packages with install-time downloads blocked
-(puppeteer, electron, prisma, cypress, ...); 15 of 15 simulated install-time attacks
-blocked; and **defanged reconstructions of two real incidents, ua-parser-js (2021) and the
-Shai-Hulud npm worm (2025), both blocked and blamed on the version-bump line**. Rebuilding
-Shai-Hulud exposed a real gap (it was only "needs review"), closed by two new kernel-level
-rules. Rules alone block 14 of 15 simulated attacks; the model catches the remaining one
-(exfil to a resolvable domain).
+**Evaluation (122 real detonations, scored 2026-11-02 at commit `04b7c25`,
+[details](eval/README.md)):** **0 of 104 popular packages blocked** (35 of which run install
+scripts: puppeteer, electron, prisma, cypress, re2, ...); **16 of 16 simulated install-time
+attacks blocked**; and **defanged reconstructions of two real incidents, ua-parser-js (2021)
+and the Shai-Hulud npm worm (2025), both blocked and blamed on the version-bump line**. Muse
+decoded the payload in 5/5 obfuscated attacks and named the right dependency in 2/2. Cost
+~$0.015 per PR. Scaling to 104 packages surfaced one false positive (a dependency's nested
+`npm` reading `~/.npmrc`), now fixed. Rules alone block 15 of 16 attacks; the model catches
+the last (exfil to a resolvable domain).
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 
