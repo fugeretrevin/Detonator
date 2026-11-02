@@ -134,6 +134,9 @@ def analyze(
         investigation = investigator(hits, view)
         if investigation is not None:
             final = combine(hits, outcome, view, extra_level=investigation.level)
+    if policy.requires_model and final.model_unavailable and final.title != "Blocked":
+        # The repo requires the AI analysis: without it this commit is unverified, not clean.
+        final = replace(final, conclusion="failure", title="Could not verify")
     if policy.blocks_needs_review and final.title == "Needs review":
         # The repo opted into strict mode: a ⚠️ must not be mergeable here.
         final = replace(final, conclusion="failure")

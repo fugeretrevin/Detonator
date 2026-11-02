@@ -212,7 +212,7 @@ def test_truncation_hit_never_cleared():
 
 
 def benign_llm(*_, **__):
-    return LlmOutcome("m", error="x")  # rules + contract only
+    return LlmOutcome("m", error="x", skipped=True)  # rules + contract only
 
 
 def test_pipeline_prisma_like_install_goes_clean_with_contract():

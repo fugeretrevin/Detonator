@@ -62,7 +62,7 @@ def test_llm_level_mapping(verdict, confidence, expected):
     "hits, outcome, conclusion",
     [
         ([], llm("benign"), "success"),
-        ([], NO_LLM, "success"),
+        ([], NO_LLM, "neutral"),  # model down: rules saw nothing, which is not Clean
         ([hit(Severity.LOW)], llm("benign"), "neutral"),
         ([], llm("suspicious"), "neutral"),
         ([], llm("malicious", 0.6), "failure"),  # LLM can escalate
@@ -125,3 +125,31 @@ def test_failed_install_with_a_finding_still_blocks():
 def test_a_fully_observed_clean_run_has_no_reason():
     final = combine([], llm("benign"), result())
     assert final.title == "Clean" and final.verified and final.reason == ""
+
+
+# --- model outage: Clean needs the analysis to have run ---
+
+
+@pytest.mark.parametrize(
+    "hits, res, title, conclusion",
+    [
+        ([], result(), "Needs review", "neutral"),  # rules saw nothing; model didn't run
+        ([hit(Severity.LOW)], result(), "Needs review", "neutral"),
+        ([hit(Severity.HIGH)], result(), "Blocked", "failure"),  # the floor still blocks
+        ([], result(exit_code=1), "Could not verify", "failure"),  # unverified wins
+    ],
+)
+def test_model_failure_never_yields_clean(hits, res, title, conclusion):
+    final = combine(hits, NO_LLM, res)
+    assert (final.title, final.conclusion) == (title, conclusion)
+    assert "HTTP 503" in final.model_unavailable
+
+
+def test_deliberately_skipped_model_is_not_a_failure():
+    skipped = LlmOutcome("none", error="skipped", skipped=True)
+    final = combine([], skipped, result())
+    assert final.title == "Clean" and final.model_unavailable == ""
+
+
+def test_model_that_ran_reports_nothing_unavailable():
+    assert combine([], llm("benign"), result()).model_unavailable == ""

@@ -47,7 +47,7 @@ ICON = {"Clean": "✅", "Needs review": "⚠️", "Blocked": "❌", "Could not v
 
 
 def no_llm(*_, **__) -> LlmOutcome:
-    return LlmOutcome("none", error="skipped")
+    return LlmOutcome("none", error="skipped", skipped=True)
 
 
 def _score_explanation(case: Case, full) -> tuple[bool | None, bool | None]:

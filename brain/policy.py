@@ -11,6 +11,9 @@ What a repo may configure:
 - `needs_review`: `pass` (default; ⚠️ is a neutral, mergeable check) or `block` (⚠️ fails the
   check too). This is the answer to "needs review is mergeable" for teams who want it strict.
 - `timeout_s`: how long the install may run (1..300).
+- `model_requirement`: `best_effort` (default; if the AI analysis fails, a rules-only result is
+  capped at ⚠️ Needs review, never Clean) or `required` (the check fails as "Could not verify"
+  instead). Either way high/critical rule findings still block.
 
 Everything is validated; anything unknown, malformed or out of range is ignored and the
 default applies, so a broken policy can never weaken or break a review.
@@ -38,14 +41,20 @@ class Policy:
     timeout_s: int = DEFAULT_TIMEOUT_S
     source: str | None = None  # where it came from, for the report
     warnings: list[str] = field(default_factory=list)
+    model_requirement: str = "best_effort"  # "best_effort" | "required"
 
     @property
     def blocks_needs_review(self) -> bool:
         return self.needs_review == "block"
 
     @property
+    def requires_model(self) -> bool:
+        return self.model_requirement == "required"
+
+    @property
     def configured(self) -> bool:
-        return bool(self.allowed_domains) or self.blocks_needs_review or self.source is not None
+        return (bool(self.allowed_domains) or self.blocks_needs_review or self.requires_model
+                or self.source is not None)  # fmt: skip
 
 
 def _is_ip(host: str) -> bool:
@@ -109,8 +118,18 @@ def parse_policy(text: str | None, source: str = POLICY_PATH) -> Policy:
     else:
         warnings.append(f"timeout_s must be {MIN_TIMEOUT_S}..{MAX_TIMEOUT_S}; using the default")
 
-    unknown = sorted(set(data) - {"allowed_domains", "needs_review", "timeout_s"})
+    model_requirement = "best_effort"
+    raw_mr = data.get("model_requirement")
+    if isinstance(raw_mr, str) and raw_mr.strip().lower() in ("best_effort", "required"):
+        model_requirement = raw_mr.strip().lower()
+    elif raw_mr is not None:
+        warnings.append(
+            "model_requirement must be 'best_effort' or 'required'; using 'best_effort'"
+        )
+
+    known = {"allowed_domains", "needs_review", "timeout_s", "model_requirement"}
+    unknown = sorted(set(data) - known)
     if unknown:
         warnings.append(f"ignored unknown keys: {', '.join(unknown[:5])}")
 
-    return Policy(domains, needs_review, timeout, source, warnings)
+    return Policy(domains, needs_review, timeout, source, warnings, model_requirement)

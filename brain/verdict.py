@@ -17,6 +17,12 @@ If any of them fails we report "Could not verify" as a *failure*, never "Clean".
 absence-of-evidence label, not a malware label, and `reason` says which precondition failed
 so the report can explain it. A high/critical finding still Blocks regardless, since observed
 maliciousness outranks an incomplete run.
+
+"Clean" also means the model analysis *ran*. The model catches attacks the rules can't (in
+the red-team set, 9 of 20 were Clean on rules alone), so if it was asked and failed (outage,
+timeout, invalid output) a rules-only result is capped at "Needs review" with the reason in
+`model_unavailable`. A repo whose policy sets `model_requirement: required` fails the check
+instead (pipeline). A deliberately skipped model (`LlmOutcome.skipped`) is not a failure.
 """
 
 from dataclasses import dataclass
@@ -38,6 +44,7 @@ class FinalVerdict:
     title: str
     verified: bool  # False when we could not fully observe a finished install
     reason: str = ""  # why `verified` is False; "" when it is True
+    model_unavailable: str = ""  # why the model analysis is missing; "" when it ran or was skipped
 
 
 def unverified_reason(result: DetonateResult) -> str:
@@ -77,17 +84,28 @@ def combine(
     level = max(rule_level, model_level or Severity.NONE, extra_level or Severity.NONE)
     reason = unverified_reason(result)
     verified = not reason
+    missing = model_unavailable_reason(llm)
 
     if level >= Severity.HIGH:
         # Observed maliciousness outranks an incomplete run: block either way.
-        return FinalVerdict(level, rule_level, model_level, "failure", "Blocked", verified, reason)
+        return FinalVerdict(level, rule_level, model_level, "failure", "Blocked", verified, reason,
+                            missing)  # fmt: skip
     if not verified:
         # Fail closed. GitHub treats `neutral` as passing, so anything we could not fully
         # observe must be a `failure` or it slips through branch protection — including a
         # failed install or truncated telemetry, which we previously called Clean.
         return FinalVerdict(
-            level, rule_level, model_level, "failure", "Could not verify", verified, reason
-        )
-    if level == Severity.LOW:
-        return FinalVerdict(level, rule_level, model_level, "neutral", "Needs review", verified)
+            level, rule_level, model_level, "failure", "Could not verify", verified, reason,
+            missing,
+        )  # fmt: skip
+    if level == Severity.LOW or missing:
+        # Without the model, "nothing fired" only means the rules saw nothing: not Clean.
+        return FinalVerdict(level, rule_level, model_level, "neutral", "Needs review", verified,
+                            model_unavailable=missing)  # fmt: skip
     return FinalVerdict(level, rule_level, model_level, "success", "Clean", verified)
+
+
+def model_unavailable_reason(llm: LlmOutcome) -> str:
+    if llm.verdict is not None or llm.skipped:
+        return ""
+    return f"the AI analysis did not run ({(llm.error or 'no result')[:80]})"

@@ -55,7 +55,7 @@ def test_threshold_matches_recorded_validation():
 
 
 def benign_llm(*_, **__):
-    return LlmOutcome("m", error="x")
+    return LlmOutcome("m", error="x", skipped=True)
 
 
 def prisma_like():

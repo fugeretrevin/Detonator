@@ -133,7 +133,7 @@ def test_executed_script_tool_returns_captured_content():
 
 
 def no_llm(*a, **k):
-    return LlmOutcome("m", error="x")
+    return LlmOutcome("m", error="x", skipped=True)
 
 
 def test_investigator_runs_only_for_needs_review_and_can_escalate():

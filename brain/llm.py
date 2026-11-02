@@ -218,6 +218,9 @@ class LlmOutcome:
     verdict: LlmVerdict | None = None
     error: str | None = None
     usage: Usage | None = None
+    # True only when analysis was deliberately not requested (the eval's rules-only arms).
+    # A verdict of None without it means the model was asked and failed: see verdict.combine.
+    skipped: bool = False
 
 
 def neutralize(text: str) -> str:

@@ -16,7 +16,7 @@ def result(domain="cdn.corp.example") -> DetonateResult:
 
 
 def no_llm(*a, **k):
-    return LlmOutcome("m", error="x")
+    return LlmOutcome("m", error="x", skipped=True)
 
 
 # --- parsing ---
@@ -100,3 +100,52 @@ def test_policy_timeout_reaches_the_detonate_request():
     req = detonate_request(event(private=False), "job-1", timeout_s=60)
     assert req.timeout_s == 60
     assert detonate_request(event(private=False), "job-1").timeout_s == DEFAULT_TIMEOUT_S
+
+
+# --- model_requirement ---
+
+
+def failed_llm(*a, **k):
+    return LlmOutcome("m", error="HTTP 503")
+
+
+def quiet_result() -> DetonateResult:
+    return DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
+                          exec_events=[NPM_EXEC], connect_events=[], dns_queries=[],
+                          stdout_tail="", stderr_tail="")  # fmt: skip
+
+
+def test_model_requirement_parsed_and_defaults_to_best_effort():
+    assert parse_policy("model_requirement: required").requires_model
+    assert not parse_policy("needs_review: pass").requires_model
+    bad = parse_policy("model_requirement: sometimes")
+    assert not bad.requires_model and any("model_requirement" in w for w in bad.warnings)
+
+
+def test_model_outage_is_capped_at_needs_review_by_default():
+    out = analyze(quiet_result(), meta(), "", failed_llm, job_id="j")
+    assert (out.final.title, out.final.conclusion) == ("Needs review", "neutral")
+    assert "Reduced coverage" in out.report
+
+
+def test_required_model_outage_fails_the_check():
+    policy = parse_policy("model_requirement: required")
+    out = analyze(quiet_result(), meta(), "", failed_llm, job_id="j", policy=policy)
+    assert (out.final.title, out.final.conclusion) == ("Could not verify", "failure")
+    assert "requires it, so the check fails" in out.report
+
+
+def test_required_model_present_still_clean():
+    policy = parse_policy("model_requirement: required")
+    out = analyze(quiet_result(), meta(), "", no_llm, job_id="j", policy=policy)
+    assert out.final.title == "Clean"  # skipped arm: no outage to act on
+
+
+def test_required_model_outage_keeps_a_block_a_block():
+    policy = parse_policy("model_requirement: required")
+    raw_ip = ConnectEvent(ts="t", pid=1, binary="/usr/local/bin/node", daddr="203.0.113.10",
+                          dport=4444, family="AF_INET", resolved_domain=None)  # fmt: skip
+    res = quiet_result().model_copy(update={"connect_events": [raw_ip]})
+    out = analyze(res, meta(), "", failed_llm, job_id="j", policy=policy,
+                  enrich=lambda r: r)  # fmt: skip
+    assert (out.final.title, out.final.conclusion) == ("Blocked", "failure")

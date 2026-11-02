@@ -33,6 +33,7 @@ from brain.policy import POLICY_PATH, Policy, parse_policy
 from brain.reconcile import PendingCheck, head_moved, pending_key, reconcile
 from brain.report import render_line_comment, with_run_history
 from brain.runlog import build_record
+from brain.verdict import unverified_reason
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
 from shared.contract import DetonateRequest, DetonateResult
 
@@ -409,7 +410,8 @@ def _base_detonation(chamber, event: PullRequestEvent, metadata: PrMetadata):
         req = DetonateRequest(job_id=str(uuid.uuid4()), clone_url=base_url,
                               head_sha=event.base_sha, clone_token=None)  # fmt: skip
         result = chamber.detonate(req)
-        base_cache[key] = result.model_dump_json()
+        if not unverified_reason(result):  # a transient failure must not stick to this SHA
+            base_cache[key] = result.model_dump_json()
         return result
     except Exception:
         logger.exception("base detonation failed for %s", key)

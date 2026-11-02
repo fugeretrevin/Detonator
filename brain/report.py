@@ -217,9 +217,10 @@ def _script_runs_section(runs: list[ScriptRun]) -> list[str]:
 
 def _differential_section(diff: "Differential") -> list[str]:
     """What the PR changed versus the base branch (only shown when the base detonated)."""
-    if diff.base_status != "completed":
+    if diff.base_unverified or diff.base_status != "completed":
+        why = diff.base_unverified or f"status `{esc(diff.base_status, 20)}`"
         lines = ["### Compared to the base branch", "",
-                 f"The base branch did not detonate cleanly (`{esc(diff.base_status, 20)}`), so "
+                 f"The base branch could not be used for comparison ({esc(why, 160)}), so "
                  "no behavior was suppressed as pre-existing.", ""]  # fmt: skip
         return lines
     lines = ["### Compared to the base branch", ""]
@@ -273,6 +274,8 @@ def _policy_section(policy: "Policy", final: FinalVerdict) -> list[str]:
     if policy.blocks_needs_review:
         extra = " — this check fails rather than passing" if final.title == "Needs review" else ""
         lines.append(f"- `needs_review: block`: a ⚠️ verdict is not mergeable here{extra}.")
+    if policy.requires_model:
+        lines.append("- `model_requirement: required`: without the AI analysis this check fails.")
     for w in policy.warnings[:5]:
         lines.append(f"- ⚠️ {esc(w, 160)}")
     return lines + [""]
@@ -303,6 +306,16 @@ def render(
             "evidence, not a finding against this change: we are saying we could not watch the "
             "whole install, so we will not call it clean. Whatever *was* observed is shown "
             "below.",
+            "",
+        ]
+    if final.model_unavailable and final.title != "Blocked":
+        required = policy is not None and policy.requires_model
+        consequence = ("this repository requires it, so the check fails"
+                       if required else "so this result is capped at ⚠️ Needs review")  # fmt: skip
+        lines += [
+            f"> **Reduced coverage:** {esc(final.model_unavailable, 160)}. Only the "
+            "deterministic rules ran, and some attacks are only caught by the analysis, "
+            f"{consequence}. This is not a finding against the change.",
             "",
         ]
 

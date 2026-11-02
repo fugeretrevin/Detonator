@@ -10,6 +10,7 @@ is blocked whether or not the old version also had one.
 from dataclasses import dataclass
 
 from brain.rules import RuleHit, Severity, is_external
+from brain.verdict import unverified_reason
 from shared.contract import DetonateResult
 
 
@@ -40,6 +41,7 @@ class Differential:
     base_status: str  # the base detonation's status (completed/timeout/error)
     new_behaviors: list[str]  # behavior keys in head but not base
     pre_existing: list[RuleHit]  # LOW head hits the base already produced (suppressed)
+    base_unverified: str = ""  # why the base can't be compared against; "" when it can
 
     @property
     def available(self) -> bool:
@@ -53,10 +55,13 @@ def diff(
     base: DetonateResult,
 ) -> tuple[list[RuleHit], Differential]:
     """Returns (kept_hits, differential). Only LOW head hits whose (rule, target) the base
-    also produced are suppressed, and only when the base detonation completed (else we trust
-    nothing it says). The caller evaluates both hit lists on enriched results with the same
-    allowlist, so identities are comparable."""
-    base_ok = base.status == "completed"
+    also produced are suppressed, and only when the base run is one we could have called
+    Clean: finished, exit 0, untruncated, sensor saw it (verdict.unverified_reason). A base we
+    could not fully observe suppresses nothing; the head is judged on its own. The caller
+    evaluates both hit lists on enriched results with the same allowlist, so identities are
+    comparable."""
+    base_unverified = unverified_reason(base)
+    base_ok = not base_unverified
     base_low = {_hit_identity(h) for h in base_hits} if base_ok else set()
     kept, suppressed = [], []
     for h in head_hits:
@@ -65,4 +70,4 @@ def diff(
         else:
             kept.append(h)
     new = sorted(_behaviors(head) - _behaviors(base)) if base_ok else []
-    return kept, Differential(base.status, new, suppressed)
+    return kept, Differential(base.status, new, suppressed, base_unverified)

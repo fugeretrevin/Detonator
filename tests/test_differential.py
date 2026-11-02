@@ -1,12 +1,17 @@
+import pytest
+
 from brain.differential import diff
 from brain.rules import RuleHit, Severity, evaluate
 from shared.contract import ConnectEvent, DetonateResult
+from tests.conftest import NPM_EXEC
 
 
-def result(connects=(), status="completed") -> DetonateResult:
-    return DetonateResult(job_id="j", status=status, exit_code=0, duration_s=1,
-                          exec_events=[], connect_events=list(connects), dns_queries=[],
-                          stdout_tail="", stderr_tail="")  # fmt: skip
+def result(connects=(), status="completed", exit_code=0, truncated=False,
+           exec_events=(NPM_EXEC,)) -> DetonateResult:  # fmt: skip
+    return DetonateResult(job_id="j", status=status, exit_code=exit_code, duration_s=1,
+                          exec_events=list(exec_events), connect_events=list(connects),
+                          dns_queries=[], stdout_tail="", stderr_tail="",
+                          truncated=truncated)  # fmt: skip
 
 
 def conn(daddr, domain=None, dport=443, proto="tcp") -> ConnectEvent:
@@ -56,3 +61,20 @@ def test_nothing_suppressed_when_base_did_not_complete():
     base = result([conn("93.1.1.1", "cdn.example")], status="timeout")
     kept, d = diff(head_hits, evaluate(base), result(), base)
     assert kept == head_hits and d.new_behaviors == [] and "timeout" in d.base_status
+
+
+@pytest.mark.parametrize(
+    "bad_base, why",
+    [
+        ({"exit_code": 1}, "exit code 1"),  # completed, but npm failed: a partial install
+        ({"truncated": True}, "truncated"),
+        ({"exec_events": ()}, "sensor was blind"),
+    ],
+)
+def test_nothing_suppressed_when_base_is_not_fully_verified(bad_base, why):
+    head_hits = [low("NET_UNLISTED_DOMAIN", "cdn.example")]
+    base = result([conn("93.1.1.1", "cdn.example")], **bad_base)
+    assert base.status == "completed"  # the old status-only check would have trusted it
+    kept, d = diff(head_hits, evaluate(base), result([conn("93.1.1.1", "cdn.example")]), base)
+    assert kept == head_hits and d.pre_existing == [] and d.new_behaviors == []
+    assert why in d.base_unverified
