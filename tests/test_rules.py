@@ -120,6 +120,27 @@ def test_metadata_probe_named_in_evidence():
     assert "cloud metadata service" in hit.evidence
 
 
+def test_public_domain_resolving_to_private_ip_is_downgraded():
+    # taro.jd.com legitimately resolves to RFC1918 in public DNS; the install reached the
+    # address its resolver chose, not a hardcoded internal host. Needs-review, not Blocked.
+    hits = evaluate(result(connects=[connect("172.28.56.182", domain="taro.jd.com")]))
+    assert [(h.rule_id, h.severity) for h in hits] == [("NET_INTERNAL_TARGET", Severity.LOW)]
+    assert "taro.jd.com" in hits[0].evidence
+
+
+@pytest.mark.parametrize("addr", ["169.254.169.254", "169.254.170.2", "fe80::1"])
+def test_rebinding_to_metadata_or_link_local_stays_high(addr):
+    # A domain pointing at the metadata service / link-local is DNS rebinding — never downgrade.
+    hits = evaluate(result(connects=[connect(addr, domain="evil.example.com")]))
+    assert [(h.rule_id, h.severity) for h in hits] == [("NET_INTERNAL_TARGET", Severity.HIGH)]
+
+
+def test_raw_private_literal_without_dns_stays_high():
+    # No forward DNS name => a direct internal pivot, not a CDN that resolves to a private IP.
+    hits = evaluate(result(connects=[connect("10.0.0.5", domain=None)]))
+    assert [(h.rule_id, h.severity) for h in hits] == [("NET_INTERNAL_TARGET", Severity.HIGH)]
+
+
 @pytest.mark.parametrize("addr", ["127.0.0.1", "::1"])
 def test_loopback_ignored(addr):
     assert evaluate(result(connects=[connect(addr)])) == []

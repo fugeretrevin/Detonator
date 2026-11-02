@@ -124,15 +124,44 @@ def domain_allowed(domain: str, allowed: tuple[str, ...]) -> bool:
 
 def _internal_hit(event: ConnectEvent) -> list[RuleHit]:
     """An install has no business on link-local or private ranges (metadata, the VPC, the
-    host). The Chamber's iptables refuse these, but the attempt itself is the signal."""
+    host). The Chamber's iptables refuse these, but the attempt itself is the signal.
+
+    One case is downgraded, never cleared: when a *public* domain's own DNS answer points into
+    an RFC1918 range, the install reached the address its resolver chose, not a hardcoded
+    internal host. Some real vendor/CDN endpoints publish private IPs in public DNS (e.g.
+    `taro.jd.com` -> 172.x), so this is Needs-review, not Blocked. Two things keep their HIGH
+    severity even with a domain attached, so nothing dangerous is laundered down:
+      - cloud-metadata and link-local targets (a DNS-rebinding attempt at the metadata service
+        resolves a name straight to 169.254.169.254; that must still block), and
+      - a raw private-IP literal with no forward DNS name (`resolved_domain` is None), which is
+        a direct internal pivot.
+    `resolved_domain` on an internal IP comes only from a lookup the Chamber actually observed
+    (enrich never names internal IPs), so a present name here is forward-confirmed."""
     if (event.daddr, event.dport) == SANDBOX_RESOLVER:
         return []  # DNS over TCP to the Chamber's logging resolver
     try:
-        if ipaddress.ip_address(event.daddr).is_loopback:
-            return []  # install-time tests talking to their own localhost server
+        ip = ipaddress.ip_address(event.daddr)
     except ValueError:
         return []
-    what = "the cloud metadata service" if event.daddr in METADATA_ADDRS else "an internal address"
+    if ip.is_loopback:
+        return []  # install-time tests talking to their own localhost server
+    is_metadata = event.daddr in METADATA_ADDRS
+    pinned_high = is_metadata or ip.is_link_local  # metadata / link-local never downgrade
+    domain = (event.resolved_domain or "").rstrip(".")
+    via_public_domain = bool(domain) and not domain.startswith(RDNS_PREFIX) and not pinned_high
+    if via_public_domain:
+        return [
+            RuleHit(
+                "NET_INTERNAL_TARGET",
+                Severity.LOW,
+                f"{_basename(event.binary)} (pid {event.pid}) connected to "
+                f"{event.daddr}:{event.dport}, a private address that {domain} resolves to",
+                event.ts,
+                event.pid,
+                target=event.daddr,
+            )
+        ]
+    what = "the cloud metadata service" if is_metadata else "an internal address"
     return [
         RuleHit(
             "NET_INTERNAL_TARGET",
