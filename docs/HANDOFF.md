@@ -59,7 +59,24 @@ All on `main` unless marked as a branch. Commit hashes for `git show`.
 | `b05c0d2`, `181f54f` | **`eval/repeat.py`**: re-score frozen telemetry N times; flip rate, worst-case unsafe passes, benign blocks, grounding over all trials → `eval/REPEAT.{md,json}`. | temperature 0 ≠ determinism | **not run** (~$20 for 142 cases × 5) |
 | `d7f6b2a` | **SBOM version delta**: `behavior_delta` / `render_delta`, `python -m brain.sbom diff old.json new.json [public_key.pem]`. Comparability (install finished, untruncated, same package, environment, detector version, signatures), changed scripts by path, an "attention" list (never a verdict). Optional `environment` block on records; committed records byte-identical and still verify. | HANDOFF item 4 | done; **not wired into E8** |
 | `d927f96` (was branch `rt09-dropped-script`) | `EXEC_DROPPED_BINARY` also fires for a dropped script run by an interpreter (`sh /tmp/stage.sh`, `node /home/…/x.js`); per-interpreter inline-code flags; relative paths resolved against kernel cwd with `posixpath` only (never touches the host fs). | `rt09` fired no rule; only Muse caught it | **validated and merged.** Re-scored rules-only against all 622 recorded detonations: the 122-case set and the 500-package sweep are identical in blocked count and in which cases fire the rule, while `rt09-dropped-binary` now fires (red-team rules-HIGH 10 → 11). One new true positive, zero new blocks. |
-| branch `sensor-witness-cpu` `d434b7a` | **⚠️ Contract v3** (`shared/contract.py`, optional `DetonateResult.sensor` + `resources`). Chamber wraps the install with `/bin/true pre-<nonce>` / `post-<nonce>` markers; parser recognises only our wrapper (parent outside the container — confirmed in the real Tetragon fixture) and its marker children, so a payload can't hide execs or fake markers. Missing marker → Could not verify. Cgroup CPU/memory sampler (systemd and cgroupfs layouts; `None` if neither). Rule `RES_CPU_HEAVY` (LOW, build tools exempt) **off** (`CPU_REVIEW_THRESHOLD_S = None`). Eval rows record `cpu_s`, `sensor_witness`. | "exec events exist" ≠ "sensor watched this container"; `rt08` leaves only CPU time | **needs a Chamber deploy; do not merge yet** |
+| `e8c328d` (was branch `sensor-witness-cpu`) | **⚠️ Contract v3** (`shared/contract.py`, optional `DetonateResult.sensor` + `resources`). Chamber wraps the install with `/bin/true pre-<nonce>` / `post-<nonce>` markers; the parser accepts a marker only from our wrapper and drops the wrapper and markers from telemetry. Missing marker → Could not verify. Cgroup CPU/memory sampler (systemd and cgroupfs layouts; `None` if neither). Rule `RES_CPU_HEAVY` (LOW, build tools exempt) **off** (`CPU_REVIEW_THRESHOLD_S = None`). | "exec events exist" ≠ "sensor watched this container"; `rt08` leaves only CPU time | **merged and live on both Chamber and Brain.** See the bug note below. |
+
+> **The witness passed 20 unit tests and still failed in production** — worth remembering.
+> `_is_wrapper` required the witness shell's parent to be *outside* the container, but the
+> sandbox image declares an `ENTRYPOINT`, so the real tree is `docker-entrypoint.sh` → our
+> shell → `/bin/true`. Every live run reported `pre_seen=False`, and because `brain/verdict.py`
+> fails closed on a missing marker, deploying the Brain would have made **every pull request
+> "Could not verify"**. Every test fixture had modelled the wrapper as a direct child of the
+> runtime. Fixed in `e8c328d`: a wrapper is accepted when its parent is outside the container
+> **or is itself a container root**, which keeps the anti-spoof property (a payload descends
+> from the install command, so its shell can have neither an external nor a root parent).
+> Validated live: `pre_seen`/`post_seen` true on a benign install and on `m01`, wrapper and
+> markers excluded, cgroup sampling returning real numbers. Lesson: validate sensor changes on
+> the VM *before* deploying the Brain that enforces them.
+>
+> Rollback of the Chamber code, if ever needed, is the backup the deploy made:
+> `sudo cp -a /opt/pr-detonator/backup-<stamp>/{chamber,shared} /opt/pr-detonator/ && sudo systemctl restart chamber.service`
+> (the newest stamp is in `/opt/pr-detonator/LAST_BACKUP`).
 
 Also done outside git: the **disclosure email was sent** Nov 2 to the package's sole npm
 maintainer (re-confirmed the issue in that day's latest version first). Docs say "reported
