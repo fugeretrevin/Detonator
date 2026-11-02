@@ -305,6 +305,8 @@ comment instead of adding a new one.
 | E8 Dependabot-style "Bump color-helper 1.0.0 → 1.0.1" where 1.0.1's postinstall opens a raw socket | #12 | 🛑 Blocked; inline comment on the bumped line naming `color-helper` |
 | Base for E8: add harmless color-helper 1.0.0 | #11 | ✅ Clean, merged |
 | E9 "Add PDF export with puppeteer" (real CDN download) | #13 | ⚠️ Needs review + investigator triage note (4 tool calls, risk benign, verdict unchanged) |
+| Repo policy `needs_review: block` on the base branch | #15 | ⚠️ Needs review but **conclusion `failure`** — the policy makes a warning non-mergeable |
+| **Fork PR** from `fugeretrevin/demo-target` with an env-exfil postinstall | #16 | 🛑 Blocked: `EXEC_NET_TOOL`, `NET_RAW_IP` and **`DECOY_CREDENTIAL_SEEN`** (the `$(env)` dump carried the planted canary token), inline comment on `package.json:5` |
 
 Typical detonation 3–20 s; a full check completes in well under a minute.
 
@@ -394,7 +396,7 @@ The first version of this brief listed 15 open issues. Status after the fix pass
 | 4 | Sandbox-aware or delayed malware | **Partly addressed (P1.2).** Per-run fake `GITHUB_TOKEN`/`NPM_TOKEN`/AWS keys in env, `~/.npmrc` and `~/.aws`, plus `CI=true` and decoy CLIs on PATH, so the sandbox looks like a dev/CI box worth robbing; using a decoy fires critical. The fake `GITHUB_TOKEN` did not break any benign install in the 104-package run (electron, which reads it, was Clean). Timeout-evading payloads (> 180 s) are still possible. |
 | 5 | Private repos unsupported | **Fixed, pending one live test.** TLS with a pinned cert; single-repo, read-only token, verified against the GitHub API. An end-to-end PR on a private repo still needs a private repo added to the App. |
 | 6 | Single VM, untested rebuild, no AMI | **Open; mitigation pending.** AMI snapshot to be taken by the owner (no AWS CLI access from the dev machine, by design). Fresh-VM rebuild untested. |
-| 7 | Fork PRs untested | **Open.** Should work by design; needs a fork to test. |
+| 7 | Fork PRs untested | **Fixed (verified live).** A PR from `fugeretrevin/demo-target` (a real fork) into the demo repo was blocked: the allowlist correctly keys on the *base* repo owner, the fork's head was cloned (the payload exists only there), the inline comment landed, and differential detonation against the base still ran. PR #16. |
 | 8 | Allowlist limits who can try it | **Open by choice.** "Try it yourself" deliberately not offered (strangers' code on the VM). |
 | 9 | Exfil to an arbitrary resolvable domain is low for rules | **Open (by design).** A stricter rule would block puppeteer-style legitimate downloads; the model catches it (m12). |
 | 10 | Evaluation scale and authorship | **Open.** 26 benign, 15 self-written attacks, 2 reconstructions, one run each. Not a real-world detection rate. |
