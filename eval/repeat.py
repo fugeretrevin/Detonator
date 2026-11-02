@@ -151,7 +151,9 @@ def main(argv: list[str] | None = None) -> None:
         json.dumps({**stamp, "trials": args.trials, "arms": arms, "rows": rows}, indent=1)
     )
     dirty = " (UNCOMMITTED CHANGES)" if stamp["dirty"] else ""
-    header = f"Scored {stamp['scored_at']} at commit `{stamp['commit']}`{dirty} with {client.model}."
+    header = (
+        f"Scored {stamp['scored_at']} at commit `{stamp['commit']}`{dirty} with {client.model}."
+    )
     md = ["# Repeatability", "", header, ""]
     for arm in arms:
         md += summarize(rows, arm, args.trials)
