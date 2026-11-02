@@ -7,6 +7,7 @@ import asyncio
 import functools
 import logging
 import os
+import re
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -30,6 +31,7 @@ from brain.pipeline import (
 from brain.report import render_line_comment, with_run_history
 from brain.runlog import build_record
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
+from shared.contract import DetonateRequest, DetonateResult
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -79,6 +81,8 @@ HEALTH_HISTORY = 144  # 24 h at one check per 10 min
 # Per-run summaries for the dashboard (HARDENING_PLAN P1.6).
 run_log = modal.Dict.from_name("pr-detonator-runs", create_if_missing=True)
 RUN_LOG_HISTORY = 200
+# Base-branch detonation results, cached by SHA for differential detonation (P2.1).
+base_cache = modal.Dict.from_name("pr-detonator-base-cache", create_if_missing=True)
 
 
 class ModalDictDeduper:
@@ -160,6 +164,8 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         prediction_future = pool.submit(_predict, metadata)
         guard_future = pool.submit(_guard, metadata, diff)
         result = chamber.detonate(request)
+        # Dependency-affecting PRs: detonate the base too (cached by SHA) and report the delta.
+        base_result = _base_detonation(chamber, event, metadata) if event.base_sha else None
         prediction = prediction_future.result(timeout=150)
         try:
             guard = guard_future.result(timeout=60)
@@ -175,6 +181,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             allowed_cidrs=github_meta_cidrs(),
             files=files,
             guard=guard,
+            base_result=base_result,
         )
         final = analysis.final
         logger.info(
@@ -317,6 +324,35 @@ def _guard(metadata: PrMetadata, diff: str) -> pg.GuardOutcome:
     except Exception as exc:  # screening is advisory: never fail the job on it
         logger.exception("prompt guard failed")
         return pg.GuardOutcome(error=type(exc).__name__)
+
+
+_HEX40 = re.compile(r"^[0-9a-f]{40}$")
+
+
+def _base_detonation(chamber, event: PullRequestEvent, metadata: PrMetadata):
+    """Detonate the PR's base commit for differential reporting. Best effort and cached by
+    SHA; any failure returns None (the PR is still judged on its own behavior). Only for
+    public, dependency-affecting PRs with a valid, different base SHA."""
+    if event.repo_private or not _HEX40.match(event.base_sha or ""):
+        return None
+    if event.base_sha == event.head_sha:
+        return None
+    if not (metadata.package_json_changed or metadata.lockfile_changed):
+        return None  # nothing dependency-related changed: a base run would add no signal
+    key = f"{event.owner}/{event.repo}@{event.base_sha}"
+    try:
+        cached = base_cache.get(key)
+        if cached:
+            return DetonateResult.model_validate_json(cached)
+        base_url = f"https://github.com/{event.owner}/{event.repo}.git"
+        req = DetonateRequest(job_id=str(uuid.uuid4()), clone_url=base_url,
+                              head_sha=event.base_sha, clone_token=None)  # fmt: skip
+        result = chamber.detonate(req)
+        base_cache[key] = result.model_dump_json()
+        return result
+    except Exception:
+        logger.exception("base detonation failed for %s", key)
+        return None
 
 
 def _predict(metadata: PrMetadata) -> PredictionOutcome:

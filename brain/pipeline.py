@@ -4,6 +4,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, replace
 
 from brain.decoys import decoy_hits, redact, redact_text
+from brain.differential import Differential
+from brain.differential import diff as differential_diff
 from brain.enrich import enrich_connects
 from brain.github_client import ChangedFile, PrMetadata
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
@@ -55,6 +57,7 @@ class Analysis:
     rule_hits: list[RuleHit]  # before the contract cleared anything (for evaluation)
     guilty: list[GuiltyLine]
     usages: list[Usage]  # every model call this PR made (prediction + analysis)
+    differential: "Differential | None" = None  # base-vs-head comparison, when the base ran
 
     @property
     def cost_usd(self) -> float | None:
@@ -79,6 +82,7 @@ def analyze(
     enrich: Callable[[DetonateResult], DetonateResult] = enrich_connects,
     files: list[ChangedFile] = (),
     guard: GuardOutcome | None = None,
+    base_result: DetonateResult | None = None,
 ) -> Analysis:
     result = enrich(result)
     raw_hits = evaluate(result, allowed_cidrs=allowed_cidrs) + decoy_hits(result)
@@ -92,13 +96,18 @@ def analyze(
         hits, cleared = list(rule_hits), []
     else:
         hits, cleared = apply_contract(rule_hits, contract, metadata)
+    differential = None
+    if base_result is not None:
+        base_view = enrich(base_result)
+        base_hits = evaluate(base_view, allowed_cidrs=allowed_cidrs)
+        hits, differential = differential_diff(hits, base_hits, result, base_view)
     guilty = find_guilty_lines(hits, result, list(files))
     outcome = llm(metadata, hits, view, diff, contract.for_prompt(),
                   guilty=for_prompt(guilty) or None)  # fmt: skip
     final = combine(hits, outcome, view)
     report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
-                    cleared=cleared, guilty=guilty,
-                    script_runs=script_runs(hits, view), guard=guard)  # fmt: skip
+                    cleared=cleared, guilty=guilty, script_runs=script_runs(hits, view),
+                    guard=guard, differential=differential)  # fmt: skip
     usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
     return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty,
-                    usages)  # fmt: skip
+                    usages, differential)  # fmt: skip

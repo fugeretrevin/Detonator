@@ -9,6 +9,7 @@ import json
 import re
 import unicodedata
 
+from brain.differential import Differential
 from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
 from brain.llm import LlmOutcome
@@ -212,6 +213,26 @@ def _script_runs_section(runs: list[ScriptRun]) -> list[str]:
     return lines + [""]
 
 
+def _differential_section(diff: "Differential") -> list[str]:
+    """What the PR changed versus the base branch (only shown when the base detonated)."""
+    if diff.base_status != "completed":
+        lines = ["### Compared to the base branch", "",
+                 f"The base branch did not detonate cleanly (`{esc(diff.base_status, 20)}`), so "
+                 "no behavior was suppressed as pre-existing.", ""]  # fmt: skip
+        return lines
+    lines = ["### Compared to the base branch", ""]
+    if diff.new_behaviors:
+        lines.append("**New at install in this PR** (not seen on the base):")
+        lines += [f"- `{esc(b, 100)}`" for b in diff.new_behaviors[:MAX_ROWS]]
+    else:
+        lines.append("No new install-time behavior versus the base branch.")
+    if diff.pre_existing:
+        hosts = ", ".join(esc(h.target, 60) for h in diff.pre_existing)
+        lines += ["", f"Pre-existing low-severity findings the base already produced "
+                  f"(not counted against this PR): {hosts}."]  # fmt: skip
+    return lines + [""]
+
+
 def render(
     final: FinalVerdict,
     hits: list[RuleHit],
@@ -224,6 +245,7 @@ def render(
     guilty: list[GuiltyLine] | None = None,
     script_runs: list[ScriptRun] | None = None,
     guard: GuardOutcome | None = None,
+    differential: "Differential | None" = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -260,6 +282,9 @@ def render(
             f"“{esc(top.snippet, 160)}”. The Intent Contract cleared nothing for this PR.",
             "",
         ]
+
+    if differential is not None:
+        lines += _differential_section(differential)
 
     if guilty:
         lines += _guilty_section(guilty, llm)
