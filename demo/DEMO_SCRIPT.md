@@ -67,7 +67,9 @@ calls downloadBrowsers(); storage.googleapis.com is a known package CDN."*
 ## 2:15 – 2:40 · The evidence
 
 Flash three things:
-- **0 false blocks** across 100 uncurated live packages (`eval/SWEEP.md`) and 104 popular ones.
+- **0 false blocks** across 100 uncurated live packages (`eval/SWEEP.md`) and 104 popular ones
+  — and the same bar held at **500** (`eval/SWEEP500.md`): 413/421 cleared, nothing benign
+  hard-blocked.
 - **`npm audit` says "0 vulnerabilities"** on the same attacks it hasn't seen yet
   (`eval/BASELINE.md`); dwell time of real incidents was hours to months (`eval/DWELL_TIME.md`).
 - The **dashboard** and its **behavior atlas** — what each package did at install.

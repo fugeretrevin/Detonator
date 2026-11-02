@@ -18,6 +18,11 @@ did against what the pull request claimed.**
 > and no advisory existed: the behavior alone gave it away.
 > ([method](eval/SWEEP.md) · [what `npm audit` says instead](eval/BASELINE.md))
 
+We then scaled the same sweep to **500** of the newest packages: 413 of 421 that installed
+cleared, nothing benign was hard-blocked, seven were routed to *needs review*, and the one
+block was a package that downloads and runs binaries during `install`.
+([the 500-package run](eval/SWEEP500.md))
+
 ## Why now
 
 Install-time supply-chain attacks are the ones that actually land — event-stream, ua-parser-js,

@@ -22,6 +22,11 @@ hardcoded bare IP with **TLS verification disabled**, then extracts and runs it.
 a deliberate fallback with an unsafe default; reported privately, name withheld. No advisory
 existed and nobody told us to look. The behavior alone gave it away.
 
+We then scaled the sweep to **500** of the newest packages ([`eval/SWEEP500.md`](../eval/SWEEP500.md)):
+413 of 421 that installed cleared, nothing benign was hard-blocked, seven landed in *needs
+review*, and the single block was a package that downloads and runs binaries at install — the
+tiering doing its job at scale, not a wall of false alarms.
+
 ---
 
 ## The problem (120 words)
