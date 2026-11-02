@@ -101,11 +101,13 @@ All four were approved. 1 and 2 are low-risk; 3 is the one that could destabilis
 
 ## 6. Outstanding items only you can do
 
-1. ~~Send the disclosure.~~ **Sent Nov 2, 2026** to `liu0218dong@gmail.com` (sole npm
-   maintainer; no repo/bugs URL published), after confirming the issue is still in that day's
-   latest version. Docs now say *reported privately, no response yet*. If there's no reply in
-   1–2 weeks: ask for a private contact on Gitee (`onescience-ai`, no details in public), then
-   security@npmjs.com. Only say "acknowledged"/"fixed" if they actually reply or ship a fix.
+1. ~~Send the disclosure.~~ **Sent Nov 2, 2026** to the package's sole npm maintainer (the
+   address on its npm record; no repo/bugs URL published), after confirming the issue is
+   still in that day's latest version. Docs now say *reported privately, no response yet*.
+   If there's no reply in 1–2 weeks: ask the vendor's public code host for a private security
+   contact (no details in public), then security@npmjs.com. Only say "acknowledged"/"fixed"
+   if they actually reply or ship a fix. Keep the recipient and package identifiers out of
+   this repo: they're in the owner's sent mail.
 2. **Record the demo video** — `demo/DEMO_SCRIPT.md`. Biggest single score lever by both audits'
    own arithmetic (demo scored 7.1/10 at 25% weight).
 3. **Paste the video URL** into `docs/SUBMISSION.md` and check it from a logged-out browser.
