@@ -526,15 +526,19 @@ INCIDENTS = [
 
 # --- red-team set (HARDENING_PLAN P1.3, gap-targeting) ---
 # Author-designed, aimed at the detector's known blind spots rather than at rules it already
-# passes. rt01-rt05 are controls the rules catch. rt06-rt10 target the gaps: the deterministic
-# rules miss all five (they involve no network, or only dormant/indirect network), which is the
-# point — an honest red-team row names what the *floor* misses. Scored result (commit stamped
-# in the eval output): rules block only the 5 controls; the full pipeline blocks 9/10, because
-# the model reads the payload in the diff even when it never fires in the sandbox (the ~/.bashrc
-# beacon, the sibling-package overwrite, the staged /dev/tcp script, the dormant-when-CI branch).
+# passes. rt01-rt05 are controls the rules catch. rt06-rt10 target the gaps: they involve no
+# network, or only dormant/indirect network, which is the point — an honest red-team row names
+# what the *floor* misses. Scored result (commit stamped in the eval output): the full pipeline
+# blocks 9/10, because the model reads the payload in the diff even when it never fires in the
+# sandbox (the ~/.bashrc beacon, the sibling-package overwrite, the dormant-when-CI branch).
 # The one case nothing catches is rt08 — a bare inline CPU loop with no network, no files and no
-# telltale strings. Note rt09 did NOT fire EXEC_DROPPED_BINARY (it runs the dropped file via
-# `sh <path>`, not as a binary); the model backstop is what blocked it.
+# telltale strings.
+# rt09 is the one gap this set closed by hand: it originally fired no rule, because it runs the
+# dropped file via `sh <path>` rather than exec'ing it, so only the model caught it.
+# EXEC_DROPPED_BINARY now also matches a script operand given to an interpreter, so the rules
+# floor catches it without the model (rules block 6/10 here, not 5). That rule change was
+# checked against every recorded detonation first: identical hits on the 122-case set and the
+# 500-package sweep, so it added one true positive and no new blocks.
 # Same safety envelope as the rest: TEST-NET-3, example.com, .invalid names, and file writes
 # only inside the sandbox's ephemeral tmpfs.
 # NOTE: this is NOT a held-out set (the author knows the rules). For a truly independent row see

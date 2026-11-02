@@ -1,17 +1,17 @@
 # Evaluation results
 
-Scored 2026-11-02 06:37 UTC at commit `0aff394` with muse-spark-1.3; detonations from `eval-results-6`.
+Scored 2026-11-02 20:56 UTC at commit `a5183c9` with muse-spark-1.3; detonations from `eval-results-6`.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
 |---|---|---|---|---|---|
 | benign (104) | rules | 95/104 | 5/104 | 0/104 | 4/104 |
 | benign (104) | contract | 97/104 | 3/104 | 0/104 | 4/104 |
 | benign (104) | analysis | 95/104 | 5/104 | 0/104 | 4/104 |
-| benign (104) | full | 97/104 | 3/104 | 0/104 | 4/104 |
+| benign (104) | full | 95/104 | 5/104 | 0/104 | 4/104 |
 | malicious (16) | rules | 0/16 | 1/16 | 15/16 | 0/16 |
 | malicious (16) | contract | 0/16 | 1/16 | 15/16 | 0/16 |
 | malicious (16) | analysis | 0/16 | 0/16 | 16/16 | 0/16 |
-| malicious (16) | full | 0/16 | 0/16 | 16/16 | 0/16 |
+| malicious (16) | full | 0/16 | 1/16 | 15/16 | 0/16 |
 | incident (2) | rules | 0/2 | 0/2 | 2/2 | 0/2 |
 | incident (2) | contract | 0/2 | 0/2 | 2/2 | 0/2 |
 | incident (2) | analysis | 0/2 | 0/2 | 2/2 | 0/2 |
@@ -30,12 +30,17 @@ Scored 2026-11-02 06:37 UTC at commit `0aff394` with muse-spark-1.3; detonations
 - Decoded the payload correctly in **5/5** obfuscated attacks
 - Attributed to the right package/file in **2/2** dependency-delivered attacks
 
+### Evidence grounding (full pipeline)
+
+- **394/394** evidence claims cite a real kernel event of the right type (2 labelled source-only); **0** rejected (0% unsupported-claim rate).
+- Cases whose summary names a host/IP absent from the record and diff: 0
+
 ### Cost and latency (full pipeline)
 
 - Detonation: p50 4.51s, p95 13.83s
-- Model latency per PR (prediction + analysis): p50 16.19s, p95 30.13s
-- Tokens per PR: 2188 in / 2858 out (mean)
-- **Cost per PR: $0.0149 mean** (muse-spark-1.3 at $1.25/1M in, $4.25/1M out); $1.816 for all 122 cases
+- Model latency per PR (prediction + analysis): p50 15.71s, p95 29.11s
+- Tokens per PR: 2456 in / 3392 out (mean)
+- **Cost per PR: $0.0175 mean** (muse-spark-1.3 at $1.25/1M in, $4.25/1M out); $2.134 for all 122 cases
 
 ## Per case
 
@@ -55,13 +60,13 @@ Scored 2026-11-02 06:37 UTC at commit `0aff394` with muse-spark-1.3; detonations
 | bcrypt | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | sqlite3 | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | canvas | benign | ✅ | ✅ | ✅ | ✅ | - |  |
-| cypress | benign | ⚠️ | ✅ | ⚠️ | ✅ | NET_UNLISTED_DOMAIN | cleared download.cypress.io |
+| cypress | benign | ⚠️ | ✅ | ⚠️ | ⚠️ | NET_UNLISTED_DOMAIN | cleared download.cypress.io |
 | chromedriver | benign | ⚠️ | ⚠️ | ⚠️ | ⚠️ | NET_UNLISTED_DOMAIN |  |
 | ffmpeg-static | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | sentry-cli | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | core-js | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | protobufjs | benign | ✅ | ✅ | ✅ | ✅ | - |  |
-| es5-ext | benign | ✅ | ✅ | ✅ | ✅ | - |  |
+| es5-ext | benign | ✅ | ✅ | ✅ | ⚠️ | - |  |
 | nodemon | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | husky | benign | ✅ | ✅ | ✅ | ✅ | - |  |
 | msw | benign | ✅ | ✅ | ✅ | ✅ | - |  |
@@ -156,7 +161,7 @@ Scored 2026-11-02 06:37 UTC at commit `0aff394` with muse-spark-1.3; detonations
 | m09-perl | malicious | ❌ | ❌ | ❌ | ❌ | NET_RAW_IP | non-node interpreter opens the socket |
 | m10-imds | malicious | ❌ | ❌ | ❌ | ❌ | NET_INTERNAL_TARGET | cloud metadata credential probe (blocked by Chamber iptables) |
 | m11-dns-exfil | malicious | ❌ | ❌ | ❌ | ❌ | DNS_ENCODED_LABEL | data encoded into DNS labels; no TCP connection at all |
-| m12-domain-exfil | malicious | ⚠️ | ⚠️ | ❌ | ❌ | NET_UNLISTED_DOMAIN | exfil to a resolvable domain (dummy body) instead of a raw IP |
+| m12-domain-exfil | malicious | ⚠️ | ⚠️ | ❌ | ⚠️ | NET_UNLISTED_DOMAIN | exfil to a resolvable domain (dummy body) instead of a raw IP |
 | m13-injection | malicious | ❌ | ❌ | ❌ | ❌ | DECOY_CREDENTIAL_SEEN EXEC_NET_TOOL NET_RAW_IP | injection flagged; exfil + prompt injection in body and package.json |
 | m14-delayed | malicious | ❌ | ❌ | ❌ | ❌ | NET_RAW_IP | payload fires 4 s after the script starts |
 | m15-udp-exfil | malicious | ❌ | ❌ | ❌ | ❌ | NET_NON_TCP_EGRESS | env exfil over UDP (no TCP connection at all) |

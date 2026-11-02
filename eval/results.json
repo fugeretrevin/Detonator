@@ -1,7 +1,7 @@
 {
- "commit": "0aff394",
+ "commit": "a5183c9",
  "dirty": false,
- "scored_at": "2026-11-02 06:37 UTC",
+ "scored_at": "2026-11-02 20:56 UTC",
  "rows": [
   {
    "id": "lodash",
@@ -10,10 +10,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.42,
-   "model_latency_s": 19.45,
-   "model_prompt_tokens": 1934,
-   "model_completion_tokens": 2668,
-   "cost_usd": 0.0137565,
+   "model_latency_s": 12.22,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2407,
+   "cost_usd": 0.012961,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -31,6 +31,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -44,10 +51,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.7,
-   "model_latency_s": 14.48,
-   "model_prompt_tokens": 1934,
-   "model_completion_tokens": 2240,
-   "cost_usd": 0.0119375,
+   "model_latency_s": 15.28,
+   "model_prompt_tokens": 2183,
+   "model_completion_tokens": 2780,
+   "cost_usd": 0.01454375,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -65,6 +72,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -78,10 +92,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.3,
-   "model_latency_s": 17.1,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2570,
-   "cost_usd": 0.0133325,
+   "model_latency_s": 14.64,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2994,
+   "cost_usd": 0.015455749999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -99,6 +113,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -112,10 +133,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.98,
-   "model_latency_s": 15.55,
-   "model_prompt_tokens": 1932,
-   "model_completion_tokens": 2372,
-   "cost_usd": 0.012496,
+   "model_latency_s": 15.34,
+   "model_prompt_tokens": 2184,
+   "model_completion_tokens": 2922,
+   "cost_usd": 0.0151485,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -133,6 +154,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -146,10 +174,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 19.82,
-   "model_latency_s": 20.41,
-   "model_prompt_tokens": 2433,
-   "model_completion_tokens": 3510,
-   "cost_usd": 0.01795875,
+   "model_latency_s": 27.71,
+   "model_prompt_tokens": 2705,
+   "model_completion_tokens": 4445,
+   "cost_usd": 0.0222725,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -160,9 +188,7 @@
     "NET_UNLISTED_DOMAIN"
    ],
    "cleared": [],
-   "predicted_domains": [
-    "edgedl.me.gvt1.com"
-   ],
+   "predicted_domains": [],
    "prediction_error": null,
    "llm_verdict": "benign",
    "llm_error": null,
@@ -171,6 +197,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "puppeteer"
@@ -187,10 +220,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 21.06,
-   "model_latency_s": 30.13,
-   "model_prompt_tokens": 3027,
-   "model_completion_tokens": 4344,
-   "cost_usd": 0.02224575,
+   "model_latency_s": 34.81,
+   "model_prompt_tokens": 3359,
+   "model_completion_tokens": 5317,
+   "cost_usd": 0.026796,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -215,6 +248,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "playwright-chromium"
@@ -233,10 +273,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 12.63,
-   "model_latency_s": 18.51,
-   "model_prompt_tokens": 2254,
-   "model_completion_tokens": 3229,
-   "cost_usd": 0.01654075,
+   "model_latency_s": 19.62,
+   "model_prompt_tokens": 2546,
+   "model_completion_tokens": 3248,
+   "cost_usd": 0.0169865,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -254,6 +294,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "electron"
@@ -271,10 +318,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 26.12,
-   "model_latency_s": 17.08,
-   "model_prompt_tokens": 2360,
-   "model_completion_tokens": 2944,
-   "cost_usd": 0.015462,
+   "model_latency_s": 21.22,
+   "model_prompt_tokens": 2653,
+   "model_completion_tokens": 3423,
+   "cost_usd": 0.017863999999999998,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
@@ -298,6 +345,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 5,
+    "supported": 5,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@prisma/engines",
@@ -315,10 +369,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.59,
-   "model_latency_s": 26.83,
-   "model_prompt_tokens": 2134,
-   "model_completion_tokens": 3783,
-   "cost_usd": 0.018745249999999998,
+   "model_latency_s": 18.0,
+   "model_prompt_tokens": 2409,
+   "model_completion_tokens": 3059,
+   "cost_usd": 0.016012000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -336,6 +390,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "esbuild"
@@ -351,10 +412,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.02,
-   "model_latency_s": 16.62,
-   "model_prompt_tokens": 2123,
-   "model_completion_tokens": 2692,
-   "cost_usd": 0.01409475,
+   "model_latency_s": 16.05,
+   "model_prompt_tokens": 2397,
+   "model_completion_tokens": 2947,
+   "cost_usd": 0.015521,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -372,6 +433,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@swc/core"
@@ -387,10 +455,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.27,
-   "model_latency_s": 22.61,
-   "model_prompt_tokens": 1958,
-   "model_completion_tokens": 3076,
-   "cost_usd": 0.0155205,
+   "model_latency_s": 22.3,
+   "model_prompt_tokens": 2218,
+   "model_completion_tokens": 3709,
+   "cost_usd": 0.01853575,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -408,6 +476,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -421,10 +496,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.38,
-   "model_latency_s": 15.07,
-   "model_prompt_tokens": 2369,
-   "model_completion_tokens": 2502,
-   "cost_usd": 0.01359475,
+   "model_latency_s": 19.32,
+   "model_prompt_tokens": 2661,
+   "model_completion_tokens": 3543,
+   "cost_usd": 0.018384,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -442,6 +517,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "bcrypt"
@@ -457,10 +539,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.22,
-   "model_latency_s": 27.8,
-   "model_prompt_tokens": 2370,
-   "model_completion_tokens": 3397,
-   "cost_usd": 0.01739975,
+   "model_latency_s": 19.04,
+   "model_prompt_tokens": 2672,
+   "model_completion_tokens": 3500,
+   "cost_usd": 0.018215000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -478,6 +560,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "sqlite3"
@@ -495,10 +584,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.56,
-   "model_latency_s": 23.9,
-   "model_prompt_tokens": 2362,
-   "model_completion_tokens": 3489,
-   "cost_usd": 0.01778075,
+   "model_latency_s": 20.12,
+   "model_prompt_tokens": 2660,
+   "model_completion_tokens": 3769,
+   "cost_usd": 0.01934325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -516,6 +605,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "canvas"
@@ -533,15 +629,15 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 36.37,
-   "model_latency_s": 30.09,
-   "model_prompt_tokens": 3520,
-   "model_completion_tokens": 4049,
-   "cost_usd": 0.02160825,
+   "model_latency_s": 29.11,
+   "model_prompt_tokens": 3947,
+   "model_completion_tokens": 5631,
+   "cost_usd": 0.0288655,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
     "analysis": "Needs review",
-    "full": "Clean"
+    "full": "Needs review"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -553,13 +649,20 @@
     "download.cypress.io"
    ],
    "prediction_error": null,
-   "llm_verdict": "benign",
+   "llm_verdict": "suspicious",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "cypress"
@@ -576,10 +679,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 8.82,
-   "model_latency_s": 15.74,
-   "model_prompt_tokens": 2402,
-   "model_completion_tokens": 3106,
-   "cost_usd": 0.016203,
+   "model_latency_s": 28.83,
+   "model_prompt_tokens": 2695,
+   "model_completion_tokens": 5132,
+   "cost_usd": 0.02517975,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -599,6 +702,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "chromedriver"
@@ -616,10 +726,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.74,
-   "model_latency_s": 30.13,
-   "model_prompt_tokens": 2366,
-   "model_completion_tokens": 4471,
-   "cost_usd": 0.02195925,
+   "model_latency_s": 36.62,
+   "model_prompt_tokens": 2708,
+   "model_completion_tokens": 6850,
+   "cost_usd": 0.0324975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -628,7 +738,11 @@
    },
    "rules_fired": [],
    "cleared": [],
-   "predicted_domains": [],
+   "predicted_domains": [
+    "evermeet.cx",
+    "www.gyan.dev",
+    "johnvansickle.com"
+   ],
    "prediction_error": null,
    "llm_verdict": "benign",
    "llm_error": null,
@@ -637,6 +751,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "ffmpeg-static"
@@ -654,10 +775,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.41,
-   "model_latency_s": 18.08,
-   "model_prompt_tokens": 2102,
-   "model_completion_tokens": 3115,
-   "cost_usd": 0.01586625,
+   "model_latency_s": 20.03,
+   "model_prompt_tokens": 2369,
+   "model_completion_tokens": 4147,
+   "cost_usd": 0.020586,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -677,6 +798,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@sentry/cli"
@@ -692,10 +820,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.5,
-   "model_latency_s": 24.65,
-   "model_prompt_tokens": 2082,
-   "model_completion_tokens": 2885,
-   "cost_usd": 0.01486375,
+   "model_latency_s": 26.94,
+   "model_prompt_tokens": 2360,
+   "model_completion_tokens": 5070,
+   "cost_usd": 0.0244975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -713,6 +841,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "core-js"
@@ -728,10 +863,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.3,
-   "model_latency_s": 15.17,
-   "model_prompt_tokens": 1941,
-   "model_completion_tokens": 2495,
-   "cost_usd": 0.01303,
+   "model_latency_s": 13.28,
+   "model_prompt_tokens": 2191,
+   "model_completion_tokens": 2669,
+   "cost_usd": 0.014082,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -749,6 +884,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -762,27 +904,34 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.75,
-   "model_latency_s": 20.33,
-   "model_prompt_tokens": 2110,
-   "model_completion_tokens": 2929,
-   "cost_usd": 0.01508575,
+   "model_latency_s": 22.25,
+   "model_prompt_tokens": 2369,
+   "model_completion_tokens": 4253,
+   "cost_usd": 0.0210365,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
     "analysis": "Clean",
-    "full": "Clean"
+    "full": "Needs review"
    },
    "rules_fired": [],
    "cleared": [],
    "predicted_domains": [],
    "prediction_error": null,
-   "llm_verdict": "benign",
+   "llm_verdict": "suspicious",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "es5-ext"
@@ -798,10 +947,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.35,
-   "model_latency_s": 20.3,
-   "model_prompt_tokens": 1948,
-   "model_completion_tokens": 2598,
-   "cost_usd": 0.0134765,
+   "model_latency_s": 18.64,
+   "model_prompt_tokens": 2194,
+   "model_completion_tokens": 3623,
+   "cost_usd": 0.01814025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -819,6 +968,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -832,10 +988,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.07,
-   "model_latency_s": 31.12,
-   "model_prompt_tokens": 1945,
-   "model_completion_tokens": 4536,
-   "cost_usd": 0.02170925,
+   "model_latency_s": 32.97,
+   "model_prompt_tokens": 2196,
+   "model_completion_tokens": 6227,
+   "cost_usd": 0.02920975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -853,6 +1009,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -866,10 +1029,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 7.85,
-   "model_latency_s": 16.03,
-   "model_prompt_tokens": 2099,
-   "model_completion_tokens": 2427,
-   "cost_usd": 0.012938499999999999,
+   "model_latency_s": 14.69,
+   "model_prompt_tokens": 2361,
+   "model_completion_tokens": 3295,
+   "cost_usd": 0.016954999999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -887,6 +1050,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "msw"
@@ -902,10 +1072,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.11,
-   "model_latency_s": 16.19,
-   "model_prompt_tokens": 1996,
-   "model_completion_tokens": 2474,
-   "cost_usd": 0.0130095,
+   "model_latency_s": 12.36,
+   "model_prompt_tokens": 2257,
+   "model_completion_tokens": 2729,
+   "cost_usd": 0.0144195,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -923,6 +1093,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -936,10 +1113,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.85,
-   "model_latency_s": 26.18,
-   "model_prompt_tokens": 2073,
-   "model_completion_tokens": 3748,
-   "cost_usd": 0.018520250000000002,
+   "model_latency_s": 18.05,
+   "model_prompt_tokens": 2343,
+   "model_completion_tokens": 3758,
+   "cost_usd": 0.01890025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -957,6 +1134,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "lefthook"
@@ -972,10 +1156,10 @@
    "status": "completed",
    "exit_code": 1,
    "detonation_s": 7.74,
-   "model_latency_s": 22.81,
-   "model_prompt_tokens": 3048,
-   "model_completion_tokens": 3377,
-   "cost_usd": 0.01816225,
+   "model_latency_s": 18.87,
+   "model_prompt_tokens": 3404,
+   "model_completion_tokens": 3111,
+   "cost_usd": 0.01747675,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -993,6 +1177,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "better-sqlite3"
@@ -1010,10 +1201,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.25,
-   "model_latency_s": 16.88,
-   "model_prompt_tokens": 2389,
-   "model_completion_tokens": 2405,
-   "cost_usd": 0.0132075,
+   "model_latency_s": 24.09,
+   "model_prompt_tokens": 2690,
+   "model_completion_tokens": 3801,
+   "cost_usd": 0.01951675,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1031,6 +1222,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "bufferutil"
@@ -1046,10 +1244,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.21,
-   "model_latency_s": 20.12,
-   "model_prompt_tokens": 2420,
-   "model_completion_tokens": 3125,
-   "cost_usd": 0.01630625,
+   "model_latency_s": 22.86,
+   "model_prompt_tokens": 2716,
+   "model_completion_tokens": 4441,
+   "cost_usd": 0.02226925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1067,6 +1265,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "utf-8-validate"
@@ -1082,10 +1287,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.0,
-   "model_latency_s": 20.57,
-   "model_prompt_tokens": 2126,
-   "model_completion_tokens": 3498,
-   "cost_usd": 0.017524,
+   "model_latency_s": 17.69,
+   "model_prompt_tokens": 2404,
+   "model_completion_tokens": 3326,
+   "cost_usd": 0.0171405,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1103,6 +1308,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher"
@@ -1118,10 +1330,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.39,
-   "model_latency_s": 13.19,
-   "model_prompt_tokens": 2002,
-   "model_completion_tokens": 2141,
-   "cost_usd": 0.01160175,
+   "model_latency_s": 16.16,
+   "model_prompt_tokens": 2256,
+   "model_completion_tokens": 3039,
+   "cost_usd": 0.01573575,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1139,6 +1351,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1152,10 +1371,10 @@
    "status": "completed",
    "exit_code": 1,
    "detonation_s": 6.23,
-   "model_latency_s": 20.83,
-   "model_prompt_tokens": 3679,
-   "model_completion_tokens": 2904,
-   "cost_usd": 0.01694075,
+   "model_latency_s": 21.7,
+   "model_prompt_tokens": 4096,
+   "model_completion_tokens": 3950,
+   "cost_usd": 0.0219075,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1173,6 +1392,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "argon2"
@@ -1189,10 +1415,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.89,
-   "model_latency_s": 13.61,
-   "model_prompt_tokens": 3248,
-   "model_completion_tokens": 2469,
-   "cost_usd": 0.01455325,
+   "model_latency_s": 30.72,
+   "model_prompt_tokens": 3617,
+   "model_completion_tokens": 5493,
+   "cost_usd": 0.0278665,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1210,6 +1436,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "cpu-features",
@@ -1227,10 +1460,10 @@
    "status": "completed",
    "exit_code": 1,
    "detonation_s": 3.28,
-   "model_latency_s": 28.61,
-   "model_prompt_tokens": 2073,
-   "model_completion_tokens": 4203,
-   "cost_usd": 0.020454,
+   "model_latency_s": 21.86,
+   "model_prompt_tokens": 2326,
+   "model_completion_tokens": 4395,
+   "cost_usd": 0.02158625,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1248,6 +1481,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "cpu-features"
@@ -1263,10 +1503,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 8.57,
-   "model_latency_s": 36.93,
-   "model_prompt_tokens": 2152,
-   "model_completion_tokens": 5134,
-   "cost_usd": 0.024509499999999997,
+   "model_latency_s": 16.34,
+   "model_prompt_tokens": 2423,
+   "model_completion_tokens": 3365,
+   "cost_usd": 0.017329999999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1284,6 +1524,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@sentry/node-cpu-profiler"
@@ -1299,10 +1546,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.82,
-   "model_latency_s": 30.09,
-   "model_prompt_tokens": 1938,
-   "model_completion_tokens": 3783,
-   "cost_usd": 0.01850025,
+   "model_latency_s": 29.94,
+   "model_prompt_tokens": 2199,
+   "model_completion_tokens": 4480,
+   "cost_usd": 0.02178875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1312,7 +1559,8 @@
    "rules_fired": [],
    "cleared": [],
    "predicted_domains": [
-    "cdn.playwright.dev"
+    "cdn.playwright.dev",
+    "playwright.azureedge.net"
    ],
    "prediction_error": null,
    "llm_verdict": "benign",
@@ -1322,6 +1570,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1335,10 +1590,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 7.08,
-   "model_latency_s": 22.09,
-   "model_prompt_tokens": 2870,
-   "model_completion_tokens": 3019,
-   "cost_usd": 0.01641825,
+   "model_latency_s": 17.4,
+   "model_prompt_tokens": 3215,
+   "model_completion_tokens": 3475,
+   "cost_usd": 0.0187875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1356,6 +1611,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 5,
+    "supported": 5,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "re2"
@@ -1373,10 +1635,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.92,
-   "model_latency_s": 24.06,
-   "model_prompt_tokens": 2363,
-   "model_completion_tokens": 3373,
-   "cost_usd": 0.017289,
+   "model_latency_s": 15.19,
+   "model_prompt_tokens": 2667,
+   "model_completion_tokens": 3337,
+   "cost_usd": 0.017516,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1394,6 +1656,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "keytar"
@@ -1411,10 +1680,10 @@
    "status": "completed",
    "exit_code": 1,
    "detonation_s": 6.46,
-   "model_latency_s": 12.99,
-   "model_prompt_tokens": 2986,
-   "model_completion_tokens": 2299,
-   "cost_usd": 0.013503249999999998,
+   "model_latency_s": 23.88,
+   "model_prompt_tokens": 3335,
+   "model_completion_tokens": 4670,
+   "cost_usd": 0.02401625,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1432,6 +1701,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 5,
+    "supported": 5,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "node-pty"
@@ -1448,10 +1724,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.2,
-   "model_latency_s": 19.23,
-   "model_prompt_tokens": 2077,
-   "model_completion_tokens": 3164,
-   "cost_usd": 0.016043250000000002,
+   "model_latency_s": 19.61,
+   "model_prompt_tokens": 2350,
+   "model_completion_tokens": 3681,
+   "cost_usd": 0.01858175,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1469,6 +1745,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "zeromq"
@@ -1484,10 +1767,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.28,
-   "model_latency_s": 14.25,
-   "model_prompt_tokens": 1965,
-   "model_completion_tokens": 2847,
-   "cost_usd": 0.014556,
+   "model_latency_s": 18.64,
+   "model_prompt_tokens": 2223,
+   "model_completion_tokens": 3197,
+   "cost_usd": 0.016366,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1505,6 +1788,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1518,10 +1808,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.85,
-   "model_latency_s": 16.45,
-   "model_prompt_tokens": 2385,
-   "model_completion_tokens": 2506,
-   "cost_usd": 0.01363175,
+   "model_latency_s": 30.87,
+   "model_prompt_tokens": 2673,
+   "model_completion_tokens": 5239,
+   "cost_usd": 0.025606999999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1539,6 +1829,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "classic-level"
@@ -1554,10 +1851,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.14,
-   "model_latency_s": 15.37,
-   "model_prompt_tokens": 1945,
-   "model_completion_tokens": 2383,
-   "cost_usd": 0.012559,
+   "model_latency_s": 17.36,
+   "model_prompt_tokens": 2200,
+   "model_completion_tokens": 3158,
+   "cost_usd": 0.0161715,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1575,6 +1872,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1588,10 +1892,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 7.28,
-   "model_latency_s": 24.18,
-   "model_prompt_tokens": 2120,
-   "model_completion_tokens": 3911,
-   "cost_usd": 0.019271749999999997,
+   "model_latency_s": 23.7,
+   "model_prompt_tokens": 2390,
+   "model_completion_tokens": 4759,
+   "cost_usd": 0.023213249999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1609,6 +1913,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher"
@@ -1624,10 +1935,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 11.78,
-   "model_latency_s": 18.11,
-   "model_prompt_tokens": 2113,
-   "model_completion_tokens": 2632,
-   "cost_usd": 0.01382725,
+   "model_latency_s": 15.58,
+   "model_prompt_tokens": 2384,
+   "model_completion_tokens": 3027,
+   "cost_usd": 0.01584475,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1645,6 +1956,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@swc/core"
@@ -1660,10 +1978,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.49,
-   "model_latency_s": 23.1,
-   "model_prompt_tokens": 1939,
-   "model_completion_tokens": 3239,
-   "cost_usd": 0.016189500000000002,
+   "model_latency_s": 21.85,
+   "model_prompt_tokens": 2197,
+   "model_completion_tokens": 4327,
+   "cost_usd": 0.021136000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1681,6 +1999,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1694,10 +2019,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 9.04,
-   "model_latency_s": 15.11,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2234,
-   "cost_usd": 0.0119045,
+   "model_latency_s": 13.09,
+   "model_prompt_tokens": 2172,
+   "model_completion_tokens": 2507,
+   "cost_usd": 0.01336975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1715,6 +2040,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1728,10 +2060,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.8,
-   "model_latency_s": 16.89,
-   "model_prompt_tokens": 1968,
-   "model_completion_tokens": 2708,
-   "cost_usd": 0.013968999999999999,
+   "model_latency_s": 14.62,
+   "model_prompt_tokens": 2217,
+   "model_completion_tokens": 3040,
+   "cost_usd": 0.01569125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1749,6 +2081,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1762,10 +2101,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 10.87,
-   "model_latency_s": 31.03,
-   "model_prompt_tokens": 1962,
-   "model_completion_tokens": 4318,
-   "cost_usd": 0.020804000000000003,
+   "model_latency_s": 21.8,
+   "model_prompt_tokens": 2216,
+   "model_completion_tokens": 3821,
+   "cost_usd": 0.01900925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1783,6 +2122,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1796,10 +2142,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 19.2,
-   "model_latency_s": 21.78,
-   "model_prompt_tokens": 3081,
-   "model_completion_tokens": 3045,
-   "cost_usd": 0.016792500000000002,
+   "model_latency_s": 26.97,
+   "model_prompt_tokens": 3445,
+   "model_completion_tokens": 4641,
+   "cost_usd": 0.0240305,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1817,6 +2163,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 5,
+    "supported": 5,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher",
@@ -1834,10 +2187,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.88,
-   "model_latency_s": 13.67,
-   "model_prompt_tokens": 1935,
-   "model_completion_tokens": 2182,
-   "cost_usd": 0.011692250000000001,
+   "model_latency_s": 17.29,
+   "model_prompt_tokens": 2181,
+   "model_completion_tokens": 3124,
+   "cost_usd": 0.01600325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1855,6 +2208,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1868,10 +2228,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.31,
-   "model_latency_s": 15.89,
-   "model_prompt_tokens": 1930,
-   "model_completion_tokens": 2483,
-   "cost_usd": 0.01296525,
+   "model_latency_s": 14.86,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2558,
+   "cost_usd": 0.01360275,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1889,6 +2249,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1902,10 +2269,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.39,
-   "model_latency_s": 17.3,
-   "model_prompt_tokens": 1936,
-   "model_completion_tokens": 2945,
-   "cost_usd": 0.014936250000000002,
+   "model_latency_s": 15.94,
+   "model_prompt_tokens": 2190,
+   "model_completion_tokens": 3059,
+   "cost_usd": 0.01573825,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1923,6 +2290,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1936,10 +2310,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.51,
-   "model_latency_s": 14.06,
-   "model_prompt_tokens": 1946,
-   "model_completion_tokens": 2282,
-   "cost_usd": 0.012131,
+   "model_latency_s": 15.06,
+   "model_prompt_tokens": 2196,
+   "model_completion_tokens": 3203,
+   "cost_usd": 0.01635775,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1957,6 +2331,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1970,10 +2351,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.08,
-   "model_latency_s": 13.08,
-   "model_prompt_tokens": 1938,
-   "model_completion_tokens": 2163,
-   "cost_usd": 0.01161525,
+   "model_latency_s": 13.81,
+   "model_prompt_tokens": 2181,
+   "model_completion_tokens": 2853,
+   "cost_usd": 0.0148515,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1991,6 +2372,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2004,10 +2392,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.91,
-   "model_latency_s": 15.94,
-   "model_prompt_tokens": 1923,
-   "model_completion_tokens": 2228,
-   "cost_usd": 0.01187275,
+   "model_latency_s": 12.66,
+   "model_prompt_tokens": 2170,
+   "model_completion_tokens": 2545,
+   "cost_usd": 0.01352875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2025,6 +2413,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2038,10 +2433,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 13.04,
-   "model_latency_s": 22.0,
-   "model_prompt_tokens": 1964,
-   "model_completion_tokens": 3086,
-   "cost_usd": 0.015570500000000001,
+   "model_latency_s": 17.89,
+   "model_prompt_tokens": 2220,
+   "model_completion_tokens": 3875,
+   "cost_usd": 0.01924375,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2059,6 +2454,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2072,10 +2474,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.17,
-   "model_latency_s": 12.4,
-   "model_prompt_tokens": 1934,
-   "model_completion_tokens": 2059,
-   "cost_usd": 0.011168250000000001,
+   "model_latency_s": 14.17,
+   "model_prompt_tokens": 2177,
+   "model_completion_tokens": 2550,
+   "cost_usd": 0.01355875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2093,6 +2495,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2106,10 +2515,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.07,
-   "model_latency_s": 14.12,
-   "model_prompt_tokens": 1925,
-   "model_completion_tokens": 2300,
-   "cost_usd": 0.01218125,
+   "model_latency_s": 11.28,
+   "model_prompt_tokens": 2174,
+   "model_completion_tokens": 2558,
+   "cost_usd": 0.013589,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2127,6 +2536,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2140,10 +2556,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.87,
-   "model_latency_s": 14.66,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2323,
-   "cost_usd": 0.0122865,
+   "model_latency_s": 12.92,
+   "model_prompt_tokens": 2180,
+   "model_completion_tokens": 2515,
+   "cost_usd": 0.013413749999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2161,6 +2577,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2174,10 +2597,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.79,
-   "model_latency_s": 26.43,
-   "model_prompt_tokens": 2137,
-   "model_completion_tokens": 3968,
-   "cost_usd": 0.01953525,
+   "model_latency_s": 20.39,
+   "model_prompt_tokens": 2410,
+   "model_completion_tokens": 3886,
+   "cost_usd": 0.019528,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2195,6 +2618,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "esbuild"
@@ -2210,10 +2640,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 13.83,
-   "model_latency_s": 23.15,
-   "model_prompt_tokens": 2355,
-   "model_completion_tokens": 3115,
-   "cost_usd": 0.016182500000000002,
+   "model_latency_s": 19.57,
+   "model_prompt_tokens": 2653,
+   "model_completion_tokens": 3957,
+   "cost_usd": 0.0201335,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2231,6 +2661,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "nx"
@@ -2246,10 +2683,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.03,
-   "model_latency_s": 12.83,
-   "model_prompt_tokens": 1930,
-   "model_completion_tokens": 2057,
-   "cost_usd": 0.01115475,
+   "model_latency_s": 12.0,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 2930,
+   "cost_usd": 0.015172499999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2267,6 +2704,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2280,10 +2724,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.4,
-   "model_latency_s": 15.09,
-   "model_prompt_tokens": 1936,
-   "model_completion_tokens": 2541,
-   "cost_usd": 0.013219249999999998,
+   "model_latency_s": 11.27,
+   "model_prompt_tokens": 2173,
+   "model_completion_tokens": 2722,
+   "cost_usd": 0.01428475,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2301,6 +2745,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2314,10 +2765,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.3,
-   "model_latency_s": 18.11,
-   "model_prompt_tokens": 1938,
-   "model_completion_tokens": 2625,
-   "cost_usd": 0.01357875,
+   "model_latency_s": 17.76,
+   "model_prompt_tokens": 2184,
+   "model_completion_tokens": 3910,
+   "cost_usd": 0.0193475,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2335,6 +2786,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2348,10 +2806,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.58,
-   "model_latency_s": 15.71,
-   "model_prompt_tokens": 1924,
-   "model_completion_tokens": 2316,
-   "cost_usd": 0.012248,
+   "model_latency_s": 12.75,
+   "model_prompt_tokens": 2171,
+   "model_completion_tokens": 3075,
+   "cost_usd": 0.0157825,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2369,6 +2827,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2382,10 +2847,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.85,
-   "model_latency_s": 14.68,
-   "model_prompt_tokens": 1938,
-   "model_completion_tokens": 2214,
-   "cost_usd": 0.011831999999999999,
+   "model_latency_s": 12.73,
+   "model_prompt_tokens": 2193,
+   "model_completion_tokens": 3030,
+   "cost_usd": 0.015618749999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2403,6 +2868,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2416,10 +2888,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.22,
-   "model_latency_s": 14.27,
-   "model_prompt_tokens": 1935,
-   "model_completion_tokens": 2154,
-   "cost_usd": 0.01157325,
+   "model_latency_s": 10.61,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2630,
+   "cost_usd": 0.01390875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2437,6 +2909,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2450,10 +2929,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.36,
-   "model_latency_s": 14.06,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2046,
-   "cost_usd": 0.0111055,
+   "model_latency_s": 10.36,
+   "model_prompt_tokens": 2174,
+   "model_completion_tokens": 2496,
+   "cost_usd": 0.0133255,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2471,6 +2950,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2484,10 +2970,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.54,
-   "model_latency_s": 19.54,
-   "model_prompt_tokens": 1935,
-   "model_completion_tokens": 2924,
-   "cost_usd": 0.01484575,
+   "model_latency_s": 11.14,
+   "model_prompt_tokens": 2181,
+   "model_completion_tokens": 2764,
+   "cost_usd": 0.01447325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2505,6 +2991,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2518,10 +3011,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.31,
-   "model_latency_s": 16.67,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2555,
-   "cost_usd": 0.0132725,
+   "model_latency_s": 13.8,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 3285,
+   "cost_usd": 0.01668125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2539,6 +3032,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2552,10 +3052,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.3,
-   "model_latency_s": 13.27,
-   "model_prompt_tokens": 1942,
-   "model_completion_tokens": 2343,
-   "cost_usd": 0.01238525,
+   "model_latency_s": 12.83,
+   "model_prompt_tokens": 2195,
+   "model_completion_tokens": 2802,
+   "cost_usd": 0.01465225,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2573,6 +3073,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2586,10 +3093,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.1,
-   "model_latency_s": 15.73,
-   "model_prompt_tokens": 1926,
-   "model_completion_tokens": 2674,
-   "cost_usd": 0.013772,
+   "model_latency_s": 10.02,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 2445,
+   "cost_usd": 0.01311125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2607,6 +3114,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2620,10 +3134,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.04,
-   "model_latency_s": 15.76,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2187,
-   "cost_usd": 0.0117085,
+   "model_latency_s": 11.25,
+   "model_prompt_tokens": 2178,
+   "model_completion_tokens": 2488,
+   "cost_usd": 0.0132965,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2641,6 +3155,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2654,10 +3175,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.64,
-   "model_latency_s": 14.01,
-   "model_prompt_tokens": 1919,
-   "model_completion_tokens": 1951,
-   "cost_usd": 0.010690499999999999,
+   "model_latency_s": 11.08,
+   "model_prompt_tokens": 2169,
+   "model_completion_tokens": 2746,
+   "cost_usd": 0.014381749999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2675,6 +3196,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2688,10 +3216,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.11,
-   "model_latency_s": 16.06,
-   "model_prompt_tokens": 1921,
-   "model_completion_tokens": 2286,
-   "cost_usd": 0.012116749999999999,
+   "model_latency_s": 10.03,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 2398,
+   "cost_usd": 0.0129115,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2709,6 +3237,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2722,10 +3257,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.65,
-   "model_latency_s": 13.19,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2193,
-   "cost_usd": 0.011730250000000001,
+   "model_latency_s": 10.81,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 2544,
+   "cost_usd": 0.013532,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2743,6 +3278,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2756,10 +3298,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.11,
-   "model_latency_s": 12.06,
-   "model_prompt_tokens": 1917,
-   "model_completion_tokens": 2040,
-   "cost_usd": 0.01106625,
+   "model_latency_s": 10.94,
+   "model_prompt_tokens": 2175,
+   "model_completion_tokens": 2725,
+   "cost_usd": 0.0143,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2777,6 +3319,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2790,10 +3339,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.09,
-   "model_latency_s": 10.72,
-   "model_prompt_tokens": 1922,
-   "model_completion_tokens": 2162,
-   "cost_usd": 0.011591,
+   "model_latency_s": 10.12,
+   "model_prompt_tokens": 2174,
+   "model_completion_tokens": 2463,
+   "cost_usd": 0.01318525,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2811,6 +3360,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2824,10 +3380,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.54,
-   "model_latency_s": 14.49,
-   "model_prompt_tokens": 1923,
-   "model_completion_tokens": 2278,
-   "cost_usd": 0.012085249999999999,
+   "model_latency_s": 11.94,
+   "model_prompt_tokens": 2171,
+   "model_completion_tokens": 2651,
+   "cost_usd": 0.0139805,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2845,6 +3401,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2858,10 +3421,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.05,
-   "model_latency_s": 11.89,
-   "model_prompt_tokens": 1929,
-   "model_completion_tokens": 2040,
-   "cost_usd": 0.01108125,
+   "model_latency_s": 12.44,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 2988,
+   "cost_usd": 0.015418999999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2879,6 +3442,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2892,10 +3462,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.12,
-   "model_latency_s": 10.67,
-   "model_prompt_tokens": 1918,
-   "model_completion_tokens": 1888,
-   "cost_usd": 0.0104215,
+   "model_latency_s": 11.32,
+   "model_prompt_tokens": 2172,
+   "model_completion_tokens": 2641,
+   "cost_usd": 0.01393925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2913,6 +3483,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2926,10 +3503,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.09,
-   "model_latency_s": 12.17,
-   "model_prompt_tokens": 1920,
-   "model_completion_tokens": 2028,
-   "cost_usd": 0.011019,
+   "model_latency_s": 10.73,
+   "model_prompt_tokens": 2174,
+   "model_completion_tokens": 2511,
+   "cost_usd": 0.013389249999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2947,6 +3524,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2960,10 +3544,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.8,
-   "model_latency_s": 12.33,
-   "model_prompt_tokens": 1930,
-   "model_completion_tokens": 1824,
-   "cost_usd": 0.0101645,
+   "model_latency_s": 11.08,
+   "model_prompt_tokens": 2183,
+   "model_completion_tokens": 2512,
+   "cost_usd": 0.01340475,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2981,6 +3565,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2994,10 +3585,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.32,
-   "model_latency_s": 14.06,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2079,
-   "cost_usd": 0.0112495,
+   "model_latency_s": 10.67,
+   "model_prompt_tokens": 2179,
+   "model_completion_tokens": 2388,
+   "cost_usd": 0.01287275,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3015,6 +3606,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3028,10 +3626,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.09,
-   "model_latency_s": 14.4,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2541,
-   "cost_usd": 0.01320925,
+   "model_latency_s": 11.11,
+   "model_prompt_tokens": 2187,
+   "model_completion_tokens": 2352,
+   "cost_usd": 0.01272975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3049,6 +3647,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3062,10 +3667,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.09,
-   "model_latency_s": 16.25,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2581,
-   "cost_usd": 0.013379249999999999,
+   "model_latency_s": 11.04,
+   "model_prompt_tokens": 2180,
+   "model_completion_tokens": 2562,
+   "cost_usd": 0.0136135,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3083,6 +3688,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3096,10 +3708,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.67,
-   "model_latency_s": 11.64,
-   "model_prompt_tokens": 1927,
-   "model_completion_tokens": 2577,
-   "cost_usd": 0.013361,
+   "model_latency_s": 16.31,
+   "model_prompt_tokens": 2174,
+   "model_completion_tokens": 3739,
+   "cost_usd": 0.01860825,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3117,6 +3729,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3130,10 +3749,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.12,
-   "model_latency_s": 16.39,
-   "model_prompt_tokens": 1936,
-   "model_completion_tokens": 3303,
-   "cost_usd": 0.01645775,
+   "model_latency_s": 15.08,
+   "model_prompt_tokens": 2186,
+   "model_completion_tokens": 3211,
+   "cost_usd": 0.016379249999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3151,6 +3770,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3164,10 +3790,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.18,
-   "model_latency_s": 11.75,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2223,
-   "cost_usd": 0.01185775,
+   "model_latency_s": 11.07,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2632,
+   "cost_usd": 0.013917249999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3185,6 +3811,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3198,10 +3831,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.21,
-   "model_latency_s": 13.8,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2651,
-   "cost_usd": 0.013676750000000001,
+   "model_latency_s": 11.31,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2496,
+   "cost_usd": 0.01333925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3219,6 +3852,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3232,10 +3872,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.17,
-   "model_latency_s": 14.3,
-   "model_prompt_tokens": 1920,
-   "model_completion_tokens": 2423,
-   "cost_usd": 0.01269775,
+   "model_latency_s": 14.88,
+   "model_prompt_tokens": 2170,
+   "model_completion_tokens": 2595,
+   "cost_usd": 0.01374125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3253,6 +3893,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3266,10 +3913,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.83,
-   "model_latency_s": 12.42,
-   "model_prompt_tokens": 1949,
-   "model_completion_tokens": 2513,
-   "cost_usd": 0.0131165,
+   "model_latency_s": 11.53,
+   "model_prompt_tokens": 2199,
+   "model_completion_tokens": 2688,
+   "cost_usd": 0.01417275,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3287,6 +3934,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3300,10 +3954,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.71,
-   "model_latency_s": 14.43,
-   "model_prompt_tokens": 1935,
-   "model_completion_tokens": 2515,
-   "cost_usd": 0.0131075,
+   "model_latency_s": 18.32,
+   "model_prompt_tokens": 2182,
+   "model_completion_tokens": 2942,
+   "cost_usd": 0.015231,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3321,6 +3975,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3334,10 +3995,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.09,
-   "model_latency_s": 14.21,
-   "model_prompt_tokens": 1944,
-   "model_completion_tokens": 2357,
-   "cost_usd": 0.01244725,
+   "model_latency_s": 12.37,
+   "model_prompt_tokens": 2195,
+   "model_completion_tokens": 2646,
+   "cost_usd": 0.01398925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3355,6 +4016,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3368,10 +4036,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.49,
-   "model_latency_s": 14.86,
-   "model_prompt_tokens": 1937,
-   "model_completion_tokens": 2411,
-   "cost_usd": 0.012668,
+   "model_latency_s": 14.15,
+   "model_prompt_tokens": 2187,
+   "model_completion_tokens": 2842,
+   "cost_usd": 0.01481225,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3389,6 +4057,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3402,10 +4077,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.69,
-   "model_latency_s": 13.78,
-   "model_prompt_tokens": 1928,
-   "model_completion_tokens": 2386,
-   "cost_usd": 0.0125505,
+   "model_latency_s": 14.93,
+   "model_prompt_tokens": 2173,
+   "model_completion_tokens": 2392,
+   "cost_usd": 0.01288225,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3423,6 +4098,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3436,10 +4118,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.12,
-   "model_latency_s": 19.23,
-   "model_prompt_tokens": 1937,
-   "model_completion_tokens": 2212,
-   "cost_usd": 0.01182225,
+   "model_latency_s": 15.64,
+   "model_prompt_tokens": 2182,
+   "model_completion_tokens": 3070,
+   "cost_usd": 0.015774999999999997,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3457,6 +4139,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3470,10 +4159,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.25,
-   "model_latency_s": 12.16,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2327,
-   "cost_usd": 0.0123035,
+   "model_latency_s": 25.76,
+   "model_prompt_tokens": 2183,
+   "model_completion_tokens": 3758,
+   "cost_usd": 0.01870025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3491,6 +4180,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3504,10 +4200,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.6,
-   "model_latency_s": 12.78,
-   "model_prompt_tokens": 1931,
-   "model_completion_tokens": 2320,
-   "cost_usd": 0.01227375,
+   "model_latency_s": 21.85,
+   "model_prompt_tokens": 2176,
+   "model_completion_tokens": 3357,
+   "cost_usd": 0.01698725,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3525,6 +4221,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3538,10 +4241,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.27,
-   "model_latency_s": 13.61,
-   "model_prompt_tokens": 1927,
-   "model_completion_tokens": 2079,
-   "cost_usd": 0.011244500000000001,
+   "model_latency_s": 20.62,
+   "model_prompt_tokens": 2173,
+   "model_completion_tokens": 3204,
+   "cost_usd": 0.01633325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3559,6 +4262,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3572,10 +4282,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.04,
-   "model_latency_s": 15.52,
-   "model_prompt_tokens": 1933,
-   "model_completion_tokens": 2746,
-   "cost_usd": 0.01408675,
+   "model_latency_s": 17.64,
+   "model_prompt_tokens": 2182,
+   "model_completion_tokens": 2761,
+   "cost_usd": 0.01446175,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3593,6 +4303,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3606,10 +4323,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.16,
-   "model_latency_s": 9.97,
-   "model_prompt_tokens": 1945,
-   "model_completion_tokens": 2399,
-   "cost_usd": 0.012627,
+   "model_latency_s": 15.3,
+   "model_prompt_tokens": 2192,
+   "model_completion_tokens": 2835,
+   "cost_usd": 0.01478875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3627,6 +4344,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3640,10 +4364,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 3.27,
-   "model_latency_s": 11.95,
-   "model_prompt_tokens": 1934,
-   "model_completion_tokens": 2615,
-   "cost_usd": 0.01353125,
+   "model_latency_s": 13.58,
+   "model_prompt_tokens": 2185,
+   "model_completion_tokens": 2619,
+   "cost_usd": 0.013862,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3661,6 +4385,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3674,10 +4405,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 6.09,
-   "model_latency_s": 16.77,
-   "model_prompt_tokens": 2767,
-   "model_completion_tokens": 2428,
-   "cost_usd": 0.013777749999999998,
+   "model_latency_s": 11.78,
+   "model_prompt_tokens": 3036,
+   "model_completion_tokens": 2371,
+   "cost_usd": 0.013871749999999999,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3699,6 +4430,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -3716,10 +4454,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 207.92,
-   "model_latency_s": 11.33,
-   "model_prompt_tokens": 2349,
-   "model_completion_tokens": 2285,
-   "cost_usd": 0.0126475,
+   "model_latency_s": 19.0,
+   "model_prompt_tokens": 2617,
+   "model_completion_tokens": 3082,
+   "cost_usd": 0.01636975,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3740,6 +4478,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -3757,10 +4502,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.9,
-   "model_latency_s": 11.91,
-   "model_prompt_tokens": 2576,
-   "model_completion_tokens": 2385,
-   "cost_usd": 0.01335625,
+   "model_latency_s": 11.98,
+   "model_prompt_tokens": 2846,
+   "model_completion_tokens": 2663,
+   "cost_usd": 0.01487525,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3781,6 +4526,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -3798,10 +4550,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.91,
-   "model_latency_s": 10.2,
-   "model_prompt_tokens": 2566,
-   "model_completion_tokens": 2076,
-   "cost_usd": 0.0120305,
+   "model_latency_s": 11.37,
+   "model_prompt_tokens": 2850,
+   "model_completion_tokens": 2787,
+   "cost_usd": 0.01540725,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3823,6 +4575,13 @@
    "prompt_guard_error": null,
    "explain_decoded": true,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -3840,10 +4599,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.93,
-   "model_latency_s": 18.42,
-   "model_prompt_tokens": 2293,
-   "model_completion_tokens": 2909,
-   "cost_usd": 0.0152295,
+   "model_latency_s": 12.48,
+   "model_prompt_tokens": 2545,
+   "model_completion_tokens": 3080,
+   "cost_usd": 0.01627125,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3863,6 +4622,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -3881,10 +4647,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.99,
-   "model_latency_s": 30.03,
-   "model_prompt_tokens": 2345,
-   "model_completion_tokens": 4227,
-   "cost_usd": 0.020895999999999998,
+   "model_latency_s": 20.94,
+   "model_prompt_tokens": 2599,
+   "model_completion_tokens": 4309,
+   "cost_usd": 0.021561999999999998,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3904,6 +4670,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -3922,10 +4695,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.95,
-   "model_latency_s": 25.4,
-   "model_prompt_tokens": 2258,
-   "model_completion_tokens": 3910,
-   "cost_usd": 0.01944,
+   "model_latency_s": 23.25,
+   "model_prompt_tokens": 2515,
+   "model_completion_tokens": 4918,
+   "cost_usd": 0.02404525,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3945,6 +4718,13 @@
    "prompt_guard_error": null,
    "explain_decoded": true,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -3962,10 +4742,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.93,
-   "model_latency_s": 25.5,
-   "model_prompt_tokens": 2486,
-   "model_completion_tokens": 4271,
-   "cost_usd": 0.02125925,
+   "model_latency_s": 19.62,
+   "model_prompt_tokens": 2746,
+   "model_completion_tokens": 4257,
+   "cost_usd": 0.02152475,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -3986,6 +4766,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:4"
@@ -4004,10 +4791,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.92,
-   "model_latency_s": 23.22,
-   "model_prompt_tokens": 2283,
-   "model_completion_tokens": 3343,
-   "cost_usd": 0.0170615,
+   "model_latency_s": 15.22,
+   "model_prompt_tokens": 2539,
+   "model_completion_tokens": 3480,
+   "cost_usd": 0.01796375,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4027,6 +4814,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4044,10 +4838,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 2.97,
-   "model_latency_s": 23.03,
-   "model_prompt_tokens": 2232,
-   "model_completion_tokens": 3950,
-   "cost_usd": 0.0195775,
+   "model_latency_s": 23.36,
+   "model_prompt_tokens": 2490,
+   "model_completion_tokens": 4844,
+   "cost_usd": 0.0236995,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4067,6 +4861,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4084,10 +4885,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 2.95,
-   "model_latency_s": 40.5,
-   "model_prompt_tokens": 2248,
-   "model_completion_tokens": 5900,
-   "cost_usd": 0.027885,
+   "model_latency_s": 19.22,
+   "model_prompt_tokens": 2511,
+   "model_completion_tokens": 4314,
+   "cost_usd": 0.02147325,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4107,6 +4908,13 @@
    "prompt_guard_error": null,
    "explain_decoded": true,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -4120,15 +4928,15 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 2.96,
-   "model_latency_s": 23.25,
-   "model_prompt_tokens": 2193,
-   "model_completion_tokens": 3480,
-   "cost_usd": 0.017531249999999998,
+   "model_latency_s": 21.9,
+   "model_prompt_tokens": 2460,
+   "model_completion_tokens": 4568,
+   "cost_usd": 0.022489000000000002,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
     "analysis": "Blocked",
-    "full": "Blocked"
+    "full": "Needs review"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -4136,13 +4944,20 @@
    "cleared": [],
    "predicted_domains": [],
    "prediction_error": null,
-   "llm_verdict": "malicious",
+   "llm_verdict": "suspicious",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -4158,10 +4973,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.92,
-   "model_latency_s": 13.4,
-   "model_prompt_tokens": 2850,
-   "model_completion_tokens": 2392,
-   "cost_usd": 0.013728500000000001,
+   "model_latency_s": 10.73,
+   "model_prompt_tokens": 3109,
+   "model_completion_tokens": 2616,
+   "cost_usd": 0.01500425,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4183,6 +4998,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:6"
    ],
@@ -4200,10 +5022,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 9.94,
-   "model_latency_s": 38.95,
-   "model_prompt_tokens": 2299,
-   "model_completion_tokens": 5589,
-   "cost_usd": 0.026627,
+   "model_latency_s": 17.32,
+   "model_prompt_tokens": 2563,
+   "model_completion_tokens": 3429,
+   "cost_usd": 0.017777,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4223,6 +5045,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -4241,10 +5070,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 2.95,
-   "model_latency_s": 22.28,
-   "model_prompt_tokens": 2152,
-   "model_completion_tokens": 3792,
-   "cost_usd": 0.018806,
+   "model_latency_s": 17.43,
+   "model_prompt_tokens": 2404,
+   "model_completion_tokens": 3660,
+   "cost_usd": 0.01856,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4264,6 +5093,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -4279,10 +5115,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.91,
-   "model_latency_s": 14.44,
-   "model_prompt_tokens": 2397,
-   "model_completion_tokens": 2823,
-   "cost_usd": 0.014994,
+   "model_latency_s": 13.52,
+   "model_prompt_tokens": 2656,
+   "model_completion_tokens": 3351,
+   "cost_usd": 0.01756175,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4304,6 +5140,13 @@
    "prompt_guard_error": null,
    "explain_decoded": null,
    "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4321,10 +5164,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 12.09,
-   "model_latency_s": 17.55,
-   "model_prompt_tokens": 4187,
-   "model_completion_tokens": 3072,
-   "cost_usd": 0.01828975,
+   "model_latency_s": 15.71,
+   "model_prompt_tokens": 4504,
+   "model_completion_tokens": 4000,
+   "cost_usd": 0.022629999999999997,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4347,6 +5190,13 @@
    "prompt_guard_error": null,
    "explain_decoded": true,
    "explain_attributed": true,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.sh:4",
@@ -4367,10 +5217,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 9.56,
-   "model_latency_s": 22.55,
-   "model_prompt_tokens": 5081,
-   "model_completion_tokens": 3864,
-   "cost_usd": 0.022773250000000002,
+   "model_latency_s": 14.78,
+   "model_prompt_tokens": 5397,
+   "model_completion_tokens": 3941,
+   "cost_usd": 0.023495500000000002,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4393,6 +5243,13 @@
    "prompt_guard_error": null,
    "explain_decoded": true,
    "explain_attributed": true,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
    "guilty_lines": [
     "package.json:5",
     "payloads/r02-shai-hulud/node_modules/tinycolor-recon/bundle.js:11",
