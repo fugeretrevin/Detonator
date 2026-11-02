@@ -344,3 +344,10 @@ def test_install_script_opening_bait_is_high():
 
 def test_npm_itself_reading_npmrc_is_normal():
     assert evaluate(bait_result(10)) == []
+
+
+def test_nested_npm_run_reading_npmrc_is_not_credential_theft():
+    # Real re2 install: install-from-cache spawns `npm run verify-build`, a nested npm that
+    # reads ~/.npmrc as config. It descends from a lifecycle shell but must not fire.
+    res = DetonateResult.model_validate_json((FIXTURES / "detonate_real_re2.json").read_text())
+    assert "CRED_FILE_ACCESS" not in {h.rule_id for h in evaluate(res)}

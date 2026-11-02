@@ -1,7 +1,7 @@
 {
- "commit": "b45e980",
+ "commit": "b6aa20c",
  "dirty": false,
- "scored_at": "2026-11-01 17:04 UTC",
+ "scored_at": "2026-11-01 23:59 UTC",
  "rows": [
   {
    "id": "lodash",
@@ -9,6 +9,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.42,
+   "model_latency_s": 10.44,
+   "model_prompt_tokens": 1942,
+   "model_completion_tokens": 2369,
+   "cost_usd": 0.01249575,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -23,6 +28,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -35,6 +42,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.7,
+   "model_latency_s": 9.44,
+   "model_prompt_tokens": 1929,
+   "model_completion_tokens": 1981,
+   "cost_usd": 0.0108305,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -49,6 +61,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0017,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -61,6 +75,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.3,
+   "model_latency_s": 9.13,
+   "model_prompt_tokens": 1932,
+   "model_completion_tokens": 2151,
+   "cost_usd": 0.01155675,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -75,6 +94,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -87,6 +108,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 4.98,
+   "model_latency_s": 10.84,
+   "model_prompt_tokens": 1931,
+   "model_completion_tokens": 2294,
+   "cost_usd": 0.01216325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -101,6 +127,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -113,6 +141,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 19.82,
+   "model_latency_s": 14.08,
+   "model_prompt_tokens": 2420,
+   "model_completion_tokens": 2928,
+   "cost_usd": 0.015469,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -129,6 +162,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "puppeteer"
@@ -144,6 +179,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 21.06,
+   "model_latency_s": 17.31,
+   "model_prompt_tokens": 3027,
+   "model_completion_tokens": 3592,
+   "cost_usd": 0.019049749999999997,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -153,13 +193,11 @@
     "NET_UNLISTED_DOMAIN"
    ],
    "cleared": [
-    "playwright.download.prss.microsoft.com"
+    "cdn.playwright.dev"
    ],
    "predicted_domains": [
-    "playwright.azureedge.net",
-    "playwright-akamai.azureedge.net",
-    "playwright-verizon.azureedge.net",
-    "playwright.download.prss.microsoft.com"
+    "cdn.playwright.dev",
+    "playwright.azureedge.net"
    ],
    "prediction_error": null,
    "llm_verdict": "benign",
@@ -167,6 +205,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "playwright-chromium"
@@ -184,6 +224,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 12.63,
+   "model_latency_s": 13.61,
+   "model_prompt_tokens": 2254,
+   "model_completion_tokens": 2874,
+   "cost_usd": 0.015032,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -198,6 +243,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "electron"
@@ -214,6 +261,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 26.12,
+   "model_latency_s": 14.6,
+   "model_prompt_tokens": 2360,
+   "model_completion_tokens": 2917,
+   "cost_usd": 0.01534725,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
@@ -234,6 +286,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "@prisma/engines",
@@ -250,6 +304,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 4.59,
+   "model_latency_s": 16.58,
+   "model_prompt_tokens": 2138,
+   "model_completion_tokens": 3446,
+   "cost_usd": 0.017318,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -264,6 +323,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "esbuild"
@@ -278,6 +339,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.02,
+   "model_latency_s": 10.94,
+   "model_prompt_tokens": 2129,
+   "model_completion_tokens": 2519,
+   "cost_usd": 0.013367,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -292,6 +358,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "@swc/core"
@@ -306,6 +374,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 6.27,
+   "model_latency_s": 16.09,
+   "model_prompt_tokens": 1962,
+   "model_completion_tokens": 3202,
+   "cost_usd": 0.016061,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -320,6 +393,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0014,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -332,6 +407,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.38,
+   "model_latency_s": 13.13,
+   "model_prompt_tokens": 2369,
+   "model_completion_tokens": 2799,
+   "cost_usd": 0.014857,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -346,6 +426,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0011,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "bcrypt"
@@ -360,6 +442,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 6.22,
+   "model_latency_s": 20.75,
+   "model_prompt_tokens": 2364,
+   "model_completion_tokens": 3733,
+   "cost_usd": 0.01882025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -374,6 +461,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0004,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "sqlite3"
@@ -390,6 +479,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.56,
+   "model_latency_s": 15.38,
+   "model_prompt_tokens": 2363,
+   "model_completion_tokens": 3290,
+   "cost_usd": 0.01693625,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -404,6 +498,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0011,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "canvas"
@@ -420,6 +516,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 36.37,
+   "model_latency_s": 26.05,
+   "model_prompt_tokens": 3521,
+   "model_completion_tokens": 4942,
+   "cost_usd": 0.02540475,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
@@ -440,6 +541,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "cypress"
@@ -455,6 +558,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 8.82,
+   "model_latency_s": 23.64,
+   "model_prompt_tokens": 2414,
+   "model_completion_tokens": 5098,
+   "cost_usd": 0.024683999999999998,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -464,13 +572,17 @@
     "NET_UNLISTED_DOMAIN"
    ],
    "cleared": [],
-   "predicted_domains": [],
+   "predicted_domains": [
+    "edgedl.me.gvt1.com"
+   ],
    "prediction_error": null,
    "llm_verdict": "benign",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "chromedriver"
@@ -487,6 +599,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.74,
+   "model_latency_s": 29.5,
+   "model_prompt_tokens": 2366,
+   "model_completion_tokens": 5477,
+   "cost_usd": 0.02623475,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -501,6 +618,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "ffmpeg-static"
@@ -517,6 +636,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 4.41,
+   "model_latency_s": 13.92,
+   "model_prompt_tokens": 2105,
+   "model_completion_tokens": 3013,
+   "cost_usd": 0.015436499999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -533,6 +657,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "@sentry/cli"
@@ -547,6 +673,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 4.5,
+   "model_latency_s": 15.63,
+   "model_prompt_tokens": 2085,
+   "model_completion_tokens": 3078,
+   "cost_usd": 0.01568775,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -561,6 +692,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0004,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "core-js"
@@ -575,6 +708,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.3,
+   "model_latency_s": 10.62,
+   "model_prompt_tokens": 1937,
+   "model_completion_tokens": 2199,
+   "cost_usd": 0.011767,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -589,6 +727,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0005,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -601,6 +741,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.75,
+   "model_latency_s": 14.76,
+   "model_prompt_tokens": 2109,
+   "model_completion_tokens": 2924,
+   "cost_usd": 0.01506325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -615,6 +760,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "es5-ext"
@@ -629,6 +776,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 4.35,
+   "model_latency_s": 13.87,
+   "model_prompt_tokens": 1944,
+   "model_completion_tokens": 3008,
+   "cost_usd": 0.015214,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -643,6 +795,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -655,6 +809,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.07,
+   "model_latency_s": 17.99,
+   "model_prompt_tokens": 1935,
+   "model_completion_tokens": 3591,
+   "cost_usd": 0.017680500000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -669,6 +828,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -681,6 +842,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 7.85,
+   "model_latency_s": 9.46,
+   "model_prompt_tokens": 2098,
+   "model_completion_tokens": 2192,
+   "cost_usd": 0.011938500000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -695,6 +861,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "msw"
@@ -709,6 +877,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.11,
+   "model_latency_s": 12.94,
+   "model_prompt_tokens": 1995,
+   "model_completion_tokens": 2347,
+   "cost_usd": 0.0124685,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -723,6 +896,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0008,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -735,6 +910,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 3.85,
+   "model_latency_s": 15.89,
+   "model_prompt_tokens": 2087,
+   "model_completion_tokens": 3300,
+   "cost_usd": 0.01663375,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -749,10 +929,2642 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0009,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "lefthook"
    ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "better-sqlite3",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 1,
+   "detonation_s": 7.74,
+   "model_latency_s": 16.55,
+   "model_prompt_tokens": 3054,
+   "model_completion_tokens": 3458,
+   "cost_usd": 0.018514,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0004,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "better-sqlite3"
+   ],
+   "domains": [
+    "github.com",
+    "nodejs.org",
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "bufferutil",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.25,
+   "model_latency_s": 17.55,
+   "model_prompt_tokens": 2384,
+   "model_completion_tokens": 3565,
+   "cost_usd": 0.01813125,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "bufferutil"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "utf-8-validate",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.21,
+   "model_latency_s": 14.43,
+   "model_prompt_tokens": 2425,
+   "model_completion_tokens": 2884,
+   "cost_usd": 0.01528825,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "utf-8-validate"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "parcel-watcher",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.0,
+   "model_latency_s": 16.89,
+   "model_prompt_tokens": 2124,
+   "model_completion_tokens": 2906,
+   "cost_usd": 0.0150055,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0019,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@parcel/watcher"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "napi-rs-canvas",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.39,
+   "model_latency_s": 13.83,
+   "model_prompt_tokens": 2001,
+   "model_completion_tokens": 2744,
+   "cost_usd": 0.014163249999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "argon2",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 1,
+   "detonation_s": 6.23,
+   "model_latency_s": 15.52,
+   "model_prompt_tokens": 3678,
+   "model_completion_tokens": 3198,
+   "cost_usd": 0.018189,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "argon2"
+   ],
+   "domains": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "ssh2",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.89,
+   "model_latency_s": 15.23,
+   "model_prompt_tokens": 3253,
+   "model_completion_tokens": 3294,
+   "cost_usd": 0.01806575,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "cpu-features",
+    "ssh2"
+   ],
+   "domains": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "cpu-features",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 1,
+   "detonation_s": 3.28,
+   "model_latency_s": 25.03,
+   "model_prompt_tokens": 2069,
+   "model_completion_tokens": 4470,
+   "cost_usd": 0.02158375,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "cpu-features"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "sentry-profiling-node",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 8.57,
+   "model_latency_s": 19.17,
+   "model_prompt_tokens": 2150,
+   "model_completion_tokens": 3503,
+   "cost_usd": 0.01757525,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@sentry/node-cpu-profiler"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "playwright",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.82,
+   "model_latency_s": 19.39,
+   "model_prompt_tokens": 1957,
+   "model_completion_tokens": 3883,
+   "cost_usd": 0.018949,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [
+    "cdn.playwright.dev",
+    "playwright.azureedge.net",
+    "playwright.download.prss.microsoft.com"
+   ],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "re2",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 7.08,
+   "model_latency_s": 25.81,
+   "model_prompt_tokens": 3014,
+   "model_completion_tokens": 5398,
+   "cost_usd": 0.026708999999999997,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:2"
+   ],
+   "script_runs": [
+    "re2"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
+  },
+  {
+   "id": "keytar",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.92,
+   "model_latency_s": 16.77,
+   "model_prompt_tokens": 2363,
+   "model_completion_tokens": 3297,
+   "cost_usd": 0.016966,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "keytar"
+   ],
+   "domains": [
+    "github.com",
+    "registry.npmjs.org",
+    "release-assets.githubusercontent.com"
+   ]
+  },
+  {
+   "id": "node-pty",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 1,
+   "detonation_s": 6.46,
+   "model_latency_s": 15.26,
+   "model_prompt_tokens": 2984,
+   "model_completion_tokens": 2883,
+   "cost_usd": 0.01598275,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "node-pty"
+   ],
+   "domains": [
+    "nodejs.org",
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "zeromq",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.2,
+   "model_latency_s": 19.57,
+   "model_prompt_tokens": 2077,
+   "model_completion_tokens": 3898,
+   "cost_usd": 0.01916275,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "zeromq"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "napi-rs-snappy",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.28,
+   "model_latency_s": 14.96,
+   "model_prompt_tokens": 1971,
+   "model_completion_tokens": 2837,
+   "cost_usd": 0.014521,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "classic-level",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.85,
+   "model_latency_s": 20.64,
+   "model_prompt_tokens": 2378,
+   "model_completion_tokens": 4162,
+   "cost_usd": 0.020661,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0031,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "classic-level"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "web-tree-sitter",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.14,
+   "model_latency_s": 12.36,
+   "model_prompt_tokens": 1949,
+   "model_completion_tokens": 2449,
+   "cost_usd": 0.0128445,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "sass-embedded",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 7.28,
+   "model_latency_s": 36.42,
+   "model_prompt_tokens": 2119,
+   "model_completion_tokens": 7217,
+   "cost_usd": 0.033321,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0182,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@parcel/watcher"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "swc-cli",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 11.78,
+   "model_latency_s": 11.97,
+   "model_prompt_tokens": 2114,
+   "model_completion_tokens": 2510,
+   "cost_usd": 0.013309999999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@swc/core"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "turbo",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.49,
+   "model_latency_s": 17.41,
+   "model_prompt_tokens": 1941,
+   "model_completion_tokens": 3131,
+   "cost_usd": 0.015733,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "webpack",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 9.04,
+   "model_latency_s": 11.21,
+   "model_prompt_tokens": 1924,
+   "model_completion_tokens": 2380,
+   "cost_usd": 0.01252,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "rollup",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.8,
+   "model_latency_s": 14.63,
+   "model_prompt_tokens": 1965,
+   "model_completion_tokens": 3043,
+   "cost_usd": 0.015389,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0015,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "vite",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 10.87,
+   "model_latency_s": 14.6,
+   "model_prompt_tokens": 1962,
+   "model_completion_tokens": 2950,
+   "cost_usd": 0.01499,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0041,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "parcel",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 19.2,
+   "model_latency_s": 18.61,
+   "model_prompt_tokens": 3083,
+   "model_completion_tokens": 3419,
+   "cost_usd": 0.018384499999999998,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "@parcel/watcher",
+    "@swc/core",
+    "lmdb"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "terser",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.88,
+   "model_latency_s": 10.36,
+   "model_prompt_tokens": 1942,
+   "model_completion_tokens": 2482,
+   "cost_usd": 0.012976,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.1006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "postcss",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.31,
+   "model_latency_s": 11.66,
+   "model_prompt_tokens": 1931,
+   "model_completion_tokens": 2456,
+   "cost_usd": 0.01285175,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "tailwindcss",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.39,
+   "model_latency_s": 11.87,
+   "model_prompt_tokens": 1940,
+   "model_completion_tokens": 2693,
+   "cost_usd": 0.01387025,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "autoprefixer",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.51,
+   "model_latency_s": 8.98,
+   "model_prompt_tokens": 1946,
+   "model_completion_tokens": 2114,
+   "cost_usd": 0.011417,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "prettier",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.08,
+   "model_latency_s": 12.93,
+   "model_prompt_tokens": 1929,
+   "model_completion_tokens": 2673,
+   "cost_usd": 0.0137715,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "eslint",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.91,
+   "model_latency_s": 10.39,
+   "model_prompt_tokens": 1927,
+   "model_completion_tokens": 2244,
+   "cost_usd": 0.01194575,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "vitest",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 13.04,
+   "model_latency_s": 16.48,
+   "model_prompt_tokens": 1960,
+   "model_completion_tokens": 3498,
+   "cost_usd": 0.0173165,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0044,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "mocha",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.17,
+   "model_latency_s": 14.53,
+   "model_prompt_tokens": 1934,
+   "model_completion_tokens": 2771,
+   "cost_usd": 0.014194249999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "chai",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.07,
+   "model_latency_s": 9.25,
+   "model_prompt_tokens": 1922,
+   "model_completion_tokens": 2254,
+   "cost_usd": 0.011982,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "ts-node",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.87,
+   "model_latency_s": 13.75,
+   "model_prompt_tokens": 1933,
+   "model_completion_tokens": 2962,
+   "cost_usd": 0.01500475,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "tsx",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.79,
+   "model_latency_s": 27.61,
+   "model_prompt_tokens": 2134,
+   "model_completion_tokens": 5741,
+   "cost_usd": 0.02706675,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "esbuild"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "nx",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 13.83,
+   "model_latency_s": 18.22,
+   "model_prompt_tokens": 2356,
+   "model_completion_tokens": 3744,
+   "cost_usd": 0.018857,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [
+    "nx"
+   ],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "fastify",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.03,
+   "model_latency_s": 9.68,
+   "model_prompt_tokens": 1936,
+   "model_completion_tokens": 2414,
+   "cost_usd": 0.0126795,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0022,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "koa",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.4,
+   "model_latency_s": 14.39,
+   "model_prompt_tokens": 1932,
+   "model_completion_tokens": 2693,
+   "cost_usd": 0.01386025,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0012,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "nestjs-core",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.3,
+   "model_latency_s": 10.09,
+   "model_prompt_tokens": 1935,
+   "model_completion_tokens": 2177,
+   "cost_usd": 0.011671,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "vue",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.58,
+   "model_latency_s": 10.29,
+   "model_prompt_tokens": 1925,
+   "model_completion_tokens": 2397,
+   "cost_usd": 0.0125935,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0027,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "svelte",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.85,
+   "model_latency_s": 9.11,
+   "model_prompt_tokens": 1938,
+   "model_completion_tokens": 2240,
+   "cost_usd": 0.011942499999999998,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0023,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "preact",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.22,
+   "model_latency_s": 11.08,
+   "model_prompt_tokens": 1937,
+   "model_completion_tokens": 2218,
+   "cost_usd": 0.01184775,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0047,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "axios",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.36,
+   "model_latency_s": 10.59,
+   "model_prompt_tokens": 1925,
+   "model_completion_tokens": 2429,
+   "cost_usd": 0.0127295,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "node-fetch",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.54,
+   "model_latency_s": 9.76,
+   "model_prompt_tokens": 1935,
+   "model_completion_tokens": 2196,
+   "cost_usd": 0.01175175,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "got",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.31,
+   "model_latency_s": 10.72,
+   "model_prompt_tokens": 1920,
+   "model_completion_tokens": 2286,
+   "cost_usd": 0.012115500000000001,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.1673,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "undici",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.3,
+   "model_latency_s": 9.19,
+   "model_prompt_tokens": 1939,
+   "model_completion_tokens": 2126,
+   "cost_usd": 0.01145925,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "ws",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.1,
+   "model_latency_s": 10.38,
+   "model_prompt_tokens": 1927,
+   "model_completion_tokens": 2204,
+   "cost_usd": 0.01177575,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0016,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "socket-io",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.04,
+   "model_latency_s": 10.42,
+   "model_prompt_tokens": 1931,
+   "model_completion_tokens": 2242,
+   "cost_usd": 0.01194225,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0004,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "chalk",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.64,
+   "model_latency_s": 12.23,
+   "model_prompt_tokens": 1923,
+   "model_completion_tokens": 2511,
+   "cost_usd": 0.0130755,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "commander",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.11,
+   "model_latency_s": 10.58,
+   "model_prompt_tokens": 1929,
+   "model_completion_tokens": 2357,
+   "cost_usd": 0.0124285,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "yargs",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.65,
+   "model_latency_s": 13.81,
+   "model_prompt_tokens": 1933,
+   "model_completion_tokens": 2649,
+   "cost_usd": 0.0136745,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "debug",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.11,
+   "model_latency_s": 9.36,
+   "model_prompt_tokens": 1916,
+   "model_completion_tokens": 1997,
+   "cost_usd": 0.01088225,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "uuid",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.09,
+   "model_latency_s": 9.52,
+   "model_prompt_tokens": 1922,
+   "model_completion_tokens": 2153,
+   "cost_usd": 0.01155275,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "zod",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.54,
+   "model_latency_s": 8.82,
+   "model_prompt_tokens": 1921,
+   "model_completion_tokens": 1907,
+   "cost_usd": 0.010506,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "dotenv",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.05,
+   "model_latency_s": 10.39,
+   "model_prompt_tokens": 1925,
+   "model_completion_tokens": 2146,
+   "cost_usd": 0.011526749999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "cors",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.12,
+   "model_latency_s": 10.23,
+   "model_prompt_tokens": 1922,
+   "model_completion_tokens": 2237,
+   "cost_usd": 0.01190975,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0219,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "helmet",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.09,
+   "model_latency_s": 9.72,
+   "model_prompt_tokens": 1923,
+   "model_completion_tokens": 2219,
+   "cost_usd": 0.0118345,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "pino",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.8,
+   "model_latency_s": 12.17,
+   "model_prompt_tokens": 1933,
+   "model_completion_tokens": 2493,
+   "cost_usd": 0.013011499999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0021,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "winston",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.32,
+   "model_latency_s": 9.8,
+   "model_prompt_tokens": 1930,
+   "model_completion_tokens": 2313,
+   "cost_usd": 0.01224275,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "nanoid",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.09,
+   "model_latency_s": 9.4,
+   "model_prompt_tokens": 1931,
+   "model_completion_tokens": 2091,
+   "cost_usd": 0.011300500000000002,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "semver",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.09,
+   "model_latency_s": 9.59,
+   "model_prompt_tokens": 1932,
+   "model_completion_tokens": 2138,
+   "cost_usd": 0.011501500000000001,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0173,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "glob",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.67,
+   "model_latency_s": 10.97,
+   "model_prompt_tokens": 1923,
+   "model_completion_tokens": 2415,
+   "cost_usd": 0.0126675,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "chokidar",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.12,
+   "model_latency_s": 14.17,
+   "model_prompt_tokens": 1937,
+   "model_completion_tokens": 2938,
+   "cost_usd": 0.01490775,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "fs-extra",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.18,
+   "model_latency_s": 9.42,
+   "model_prompt_tokens": 1927,
+   "model_completion_tokens": 2125,
+   "cost_usd": 0.01144,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "execa",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.21,
+   "model_latency_s": 9.67,
+   "model_prompt_tokens": 1927,
+   "model_completion_tokens": 2218,
+   "cost_usd": 0.01183525,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "yaml",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.17,
+   "model_latency_s": 10.13,
+   "model_prompt_tokens": 1920,
+   "model_completion_tokens": 2162,
+   "cost_usd": 0.0115885,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0012,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "fast-glob",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.83,
+   "model_latency_s": 13.64,
+   "model_prompt_tokens": 1948,
+   "model_completion_tokens": 2982,
+   "cost_usd": 0.0151085,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "jsonwebtoken",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.71,
+   "model_latency_s": 12.22,
+   "model_prompt_tokens": 1934,
+   "model_completion_tokens": 2607,
+   "cost_usd": 0.013497249999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "bcryptjs",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.09,
+   "model_latency_s": 9.41,
+   "model_prompt_tokens": 1943,
+   "model_completion_tokens": 2124,
+   "cost_usd": 0.01145575,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "ioredis",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.49,
+   "model_latency_s": 10.71,
+   "model_prompt_tokens": 1940,
+   "model_completion_tokens": 2334,
+   "cost_usd": 0.0123445,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "pg",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.69,
+   "model_latency_s": 10.7,
+   "model_prompt_tokens": 1933,
+   "model_completion_tokens": 2171,
+   "cost_usd": 0.011643,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "mysql2",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.12,
+   "model_latency_s": 11.55,
+   "model_prompt_tokens": 1930,
+   "model_completion_tokens": 2515,
+   "cost_usd": 0.013101249999999998,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "mongoose",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.25,
+   "model_latency_s": 10.69,
+   "model_prompt_tokens": 1927,
+   "model_completion_tokens": 2380,
+   "cost_usd": 0.01252375,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "knex",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.6,
+   "model_latency_s": 14.14,
+   "model_prompt_tokens": 1928,
+   "model_completion_tokens": 2861,
+   "cost_usd": 0.01456925,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "graphql",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.27,
+   "model_latency_s": 10.41,
+   "model_prompt_tokens": 1926,
+   "model_completion_tokens": 2335,
+   "cost_usd": 0.01233125,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "rxjs",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 4.04,
+   "model_latency_s": 8.19,
+   "model_prompt_tokens": 1929,
+   "model_completion_tokens": 1945,
+   "cost_usd": 0.0106775,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "date-fns",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.16,
+   "model_latency_s": 12.5,
+   "model_prompt_tokens": 1944,
+   "model_completion_tokens": 2644,
+   "cost_usd": 0.013666999999999999,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
+   "domains": [
+    "registry.npmjs.org"
+   ]
+  },
+  {
+   "id": "dayjs",
+   "kind": "benign",
+   "note": "",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.27,
+   "model_latency_s": 11.04,
+   "model_prompt_tokens": 1935,
+   "model_completion_tokens": 2547,
+   "cost_usd": 0.0132435,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0005,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [],
+   "script_runs": [],
    "domains": [
     "registry.npmjs.org"
    ]
@@ -763,12 +3575,18 @@
    "note": "E4: curl exfil of env to a raw IP",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 6.09,
+   "model_latency_s": 9.5,
+   "model_prompt_tokens": 2762,
+   "model_completion_tokens": 2109,
+   "cost_usd": 0.01241575,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
     "full": "Blocked"
    },
    "rules_fired": [
+    "DECOY_CREDENTIAL_SEEN",
     "EXEC_NET_TOOL",
     "NET_RAW_IP"
    ],
@@ -780,6 +3598,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -796,6 +3616,11 @@
    "note": "download-and-execute via wget | sh",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 207.92,
+   "model_latency_s": 10.74,
+   "model_prompt_tokens": 2346,
+   "model_completion_tokens": 2315,
+   "cost_usd": 0.012771250000000001,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -813,6 +3638,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -829,6 +3656,11 @@
    "note": "bash /dev/tcp reverse shell",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.9,
+   "model_latency_s": 9.39,
+   "model_prompt_tokens": 2580,
+   "model_completion_tokens": 2333,
+   "cost_usd": 0.01314025,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -846,6 +3678,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -862,6 +3696,11 @@
    "note": "base64-decoded command piped to sh",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.91,
+   "model_latency_s": 10.41,
+   "model_prompt_tokens": 2574,
+   "model_completion_tokens": 2424,
+   "cost_usd": 0.0135195,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -880,6 +3719,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0008,
    "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -896,6 +3737,11 @@
    "note": "pure-JS raw socket, no external tools",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.93,
+   "model_latency_s": 14.34,
+   "model_prompt_tokens": 2293,
+   "model_completion_tokens": 3667,
+   "cost_usd": 0.018451,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -912,6 +3758,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0017,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -929,6 +3777,11 @@
    "note": "env exfil over HTTPS from node",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.99,
+   "model_latency_s": 15.74,
+   "model_prompt_tokens": 2345,
+   "model_completion_tokens": 3507,
+   "cost_usd": 0.017835999999999998,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -945,6 +3798,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.4147,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -962,6 +3817,11 @@
    "note": "address built from char codes, module name split",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.95,
+   "model_latency_s": 18.14,
+   "model_prompt_tokens": 2252,
+   "model_completion_tokens": 3874,
+   "cost_usd": 0.019279499999999998,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -978,6 +3838,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0009,
    "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -994,6 +3856,11 @@
    "note": "credential-file read + exfil",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.93,
+   "model_latency_s": 17.54,
+   "model_prompt_tokens": 2486,
+   "model_completion_tokens": 3618,
+   "cost_usd": 0.018484,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1011,6 +3878,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0248,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:4"
@@ -1028,6 +3897,11 @@
    "note": "non-node interpreter opens the socket",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.92,
+   "model_latency_s": 13.17,
+   "model_prompt_tokens": 2287,
+   "model_completion_tokens": 2995,
+   "cost_usd": 0.0155875,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1044,6 +3918,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -1060,6 +3936,11 @@
    "note": "cloud metadata credential probe (blocked by Chamber iptables)",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 2.97,
+   "model_latency_s": 19.84,
+   "model_prompt_tokens": 2231,
+   "model_completion_tokens": 4134,
+   "cost_usd": 0.02035825,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1076,6 +3957,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.1811,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -1092,6 +3975,11 @@
    "note": "data encoded into DNS labels; no TCP connection at all",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 24.74,
+   "model_prompt_tokens": 2246,
+   "model_completion_tokens": 4975,
+   "cost_usd": 0.02395125,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1108,6 +3996,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0055,
    "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -1120,6 +4010,11 @@
    "note": "exfil to a resolvable domain (dummy body) instead of a raw IP",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 2.96,
+   "model_latency_s": 14.28,
+   "model_prompt_tokens": 2195,
+   "model_completion_tokens": 3017,
+   "cost_usd": 0.015566,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -1136,6 +4031,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -1150,12 +4047,18 @@
    "note": "exfil + prompt injection in body and package.json",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 5.92,
+   "model_latency_s": 12.94,
+   "model_prompt_tokens": 2845,
+   "model_completion_tokens": 2616,
+   "cost_usd": 0.01467425,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
     "full": "Blocked"
    },
    "rules_fired": [
+    "DECOY_CREDENTIAL_SEEN",
     "EXEC_NET_TOOL",
     "NET_RAW_IP"
    ],
@@ -1167,6 +4070,8 @@
    "injection_flagged": true,
    "prompt_guard_max": 0.0098,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:6"
    ],
@@ -1183,6 +4088,11 @@
    "note": "payload fires 4 s after the script starts",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 9.94,
+   "model_latency_s": 15.19,
+   "model_prompt_tokens": 2300,
+   "model_completion_tokens": 3347,
+   "cost_usd": 0.01709975,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1199,6 +4109,8 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0013,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -1216,6 +4128,11 @@
    "note": "env exfil over UDP (no TCP connection at all)",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 15.07,
+   "model_prompt_tokens": 2150,
+   "model_completion_tokens": 3482,
+   "cost_usd": 0.017486,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1232,7 +4149,50 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.9917,
    "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
    "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "m16-token-header",
+   "kind": "malicious",
+   "note": "steals $GITHUB_TOKEN from the environment, sends it in a header",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.91,
+   "model_latency_s": 11.77,
+   "model_prompt_tokens": 2399,
+   "model_completion_tokens": 2565,
+   "cost_usd": 0.0139,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "DECOY_CREDENTIAL_SEEN",
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.001,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "guilty_lines": [
+    "package.json:5"
+   ],
    "script_runs": [
     "(project)"
    ],
@@ -1246,6 +4206,11 @@
    "note": "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 12.09,
+   "model_latency_s": 10.36,
+   "model_prompt_tokens": 4183,
+   "model_completion_tokens": 2626,
+   "cost_usd": 0.01638925,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1265,8 +4230,12 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0041,
    "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": true,
    "guilty_lines": [
-    "package.json:5"
+    "package.json:5",
+    "payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.sh:4",
+    "payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.sh:6"
    ],
    "script_runs": [
     "ua-parser-js"
@@ -1282,6 +4251,11 @@
    "note": "Shai-Hulud (Sept 2025): real TruffleHog from GitHub, secrets to webhook.site",
    "status": "completed",
    "exit_code": 0,
+   "detonation_s": 9.56,
+   "model_latency_s": 12.78,
+   "model_prompt_tokens": 5072,
+   "model_completion_tokens": 3161,
+   "cost_usd": 0.01977425,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -1301,8 +4275,12 @@
    "injection_flagged": false,
    "prompt_guard_max": 0.0038,
    "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": true,
    "guilty_lines": [
-    "package.json:5"
+    "package.json:5",
+    "payloads/r02-shai-hulud/node_modules/tinycolor-recon/bundle.js:11",
+    "payloads/r02-shai-hulud/node_modules/tinycolor-recon/bundle.js:23"
    ],
    "script_runs": [
     "tinycolor-recon"

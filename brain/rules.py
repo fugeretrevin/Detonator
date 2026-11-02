@@ -242,13 +242,25 @@ def _exfil_service_hits(result: DetonateResult) -> list[RuleHit]:
     return list(hits.values())
 
 
+def _is_npm_process(pid: int, execs: list[ExecEvent]) -> bool:
+    """npm/npx reading ~/.npmrc is config, not theft, even when a dependency's install script
+    spawned a nested `npm run ...` (seen with re2's install-from-cache)."""
+    e = next((e for e in execs if e.pid == pid), None)
+    if not e:
+        return False
+    return _basename(e.binary) in {"npm", "npx"} or "npm-cli.js" in e.args or "/npm/bin/" in e.args
+
+
 def _credential_hits(result: DetonateResult) -> list[RuleHit]:
-    """Bait credential files opened by an install script (npm itself reads ~/.npmrc at
-    startup, so only processes descended from a lifecycle script count)."""
+    """Bait credential files opened by an install script. Excluded: npm itself (top-level or a
+    nested `npm run`), which reads ~/.npmrc as config. A real theft reads it from the
+    dependency's own code (a plain node process, not npm)."""
     hits: list[RuleHit] = []
     seen: set[str] = set()
     for f in result.file_events:
         if f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
+            continue
+        if _is_npm_process(f.pid, result.exec_events):
             continue
         seen.add(f.path)
         where = f.path.replace("/home/runner", "~")

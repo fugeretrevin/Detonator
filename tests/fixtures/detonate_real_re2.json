@@ -1,0 +1,228 @@
+{
+ "job_id": "16795096-729e-4839-93d7-7c34b081e608",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 7.08,
+ "exec_events": [
+  {
+   "ts": "2026-11-01T23:47:56.099860733Z",
+   "pid": 97872,
+   "ppid": 97847,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh npm install --no-audit --no-fund re2",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T23:47:56.102226697Z",
+   "pid": 97872,
+   "ppid": 97872,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund re2",
+   "parent_binary": "/usr/local/bin/docker-entrypoint.sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T23:47:56.103294431Z",
+   "pid": 97872,
+   "ppid": 97872,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund re2",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.003568166Z",
+   "pid": 97923,
+   "ppid": 97872,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"install-from-cache --artifact build/Release/re2.node --host-var RE2_DOWNLOAD_MIRROR --skip-path-var RE2_DOWNLOAD_SKIP_PATH --skip-ver-var RE2_DOWNLOAD_SKIP_VER || node-gyp -j max rebuild\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.004535752Z",
+   "pid": 97924,
+   "ppid": 97923,
+   "binary": "/work/node_modules/.bin/install-from-cache",
+   "args": "node /work/node_modules/.bin/install-from-cache --artifact build/Release/re2.node --host-var RE2_DOWNLOAD_MIRROR --skip-path-var RE2_DOWNLOAD_SKIP_PATH --skip-ver-var RE2_DOWNLOAD_SKIP_VER",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.005336822Z",
+   "pid": 97924,
+   "ppid": 97924,
+   "binary": "/usr/local/bin/node",
+   "args": "/work/node_modules/.bin/install-from-cache --artifact build/Release/re2.node --host-var RE2_DOWNLOAD_MIRROR --skip-path-var RE2_DOWNLOAD_SKIP_PATH --skip-ver-var RE2_DOWNLOAD_SKIP_VER",
+   "parent_binary": "/work/node_modules/.bin/install-from-cache",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.054526795Z",
+   "pid": 97935,
+   "ppid": 97924,
+   "binary": "/usr/bin/getconf",
+   "args": "GNU_LIBC_VERSION",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:48:00.363976145Z",
+   "pid": 97936,
+   "ppid": 97924,
+   "binary": "/bin/sh",
+   "args": "-c \"\"/usr/local/bin/node\" \"/usr/local/lib/node_modules/npm/bin/npm-cli.js\" run verify-build\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:48:00.365261212Z",
+   "pid": 97937,
+   "ppid": 97936,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/lib/node_modules/npm/bin/npm-cli.js run verify-build",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:48:00.531678367Z",
+   "pid": 97948,
+   "ppid": 97937,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/verify-build.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  },
+  {
+   "ts": "2026-11-01T23:48:00.532730831Z",
+   "pid": 97949,
+   "ppid": 97948,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/verify-build.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/node_modules/re2"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-01T23:47:56.598344817Z",
+   "pid": 97872,
+   "binary": "/usr/local/bin/node",
+   "daddr": "104.16.4.34",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "registry.npmjs.org",
+   "protocol": "tcp"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.114255863Z",
+   "pid": 97924,
+   "binary": "/usr/local/bin/node",
+   "daddr": "140.82.112.3",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "github.com",
+   "protocol": "tcp"
+  },
+  {
+   "ts": "2026-11-01T23:47:59.131639773Z",
+   "pid": 97924,
+   "binary": "/usr/local/bin/node",
+   "daddr": "185.199.111.133",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": "release-assets.githubusercontent.com",
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [
+  {
+   "ts": "2026-11-01T23:47:56Z",
+   "domain": "registry.npmjs.org",
+   "answers": [
+    "104.16.4.34",
+    "104.16.1.34",
+    "104.16.5.34",
+    "104.16.0.34",
+    "104.16.9.34",
+    "104.16.6.34",
+    "104.16.3.34",
+    "104.16.7.34",
+    "104.16.2.34",
+    "104.16.8.34",
+    "104.16.10.34",
+    "104.16.11.34"
+   ]
+  },
+  {
+   "ts": "2026-11-01T23:47:59Z",
+   "domain": "github.com",
+   "answers": [
+    "140.82.112.3"
+   ]
+  },
+  {
+   "ts": "2026-11-01T23:47:59Z",
+   "domain": "release-assets.githubusercontent.com",
+   "answers": [
+    "185.199.111.133",
+    "185.199.110.133",
+    "185.199.109.133",
+    "185.199.108.133"
+   ]
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-01T23:47:56.215277420Z",
+   "pid": 97872,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-01T23:48:00.477987362Z",
+   "pid": 97937,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/node_modules/.bin/install-from-cache",
+   "package": ".bin",
+   "sha256": "2f6bc8874ddfbcd76985f64e686458f5a566361f260ba254fa90c5db41ffe453",
+   "content": "#!/usr/bin/env node\n\nimport {promises as fsp} from 'node:fs';\nimport path from 'node:path';\nimport {pathToFileURL} from 'node:url';\nimport zlib from 'node:zlib';\nimport {promisify} from 'node:util';\nimport http from 'node:http';\nimport https from 'node:https';\nimport {exec, spawnSync} from 'node:child_process';\nimport {createHash} from 'node:crypto';\n\n/** @type {import('child_process').SpawnSyncOptions} */\nconst spawnOptions = {encoding: 'utf8', env: process.env};\nconst getPlatform = () => {\n  let platform = process.env.npm_config_platform;\n  if (platform) return platform;\n  platform = process.platform;\n  if (platform !== 'linux') return platform;\n  // detecting musl using algorithm from https://github.com/lovell/detect-libc under Apache License 2.0\n  let result = spawnSync('getconf', ['GNU_LIBC_VERSION'], spawnOptions);\n  if (!result.status && !result.signal) return platform;\n  result = spawnSync('ldd', ['--version'], spawnOptions);\n  if (result.signal) return platform;\n  if ((!result.status && result.stdout.toString().indexOf('musl') >= 0) || (result.status === 1 && result.stderr.toString().indexOf('musl') >= 0))\n    return platform + '-musl';\n  return platform;\n};\n\nconst platform = getPlatform(),\n  platformArch = process.env.npm_config_platform_arch || process.arch,\n  platformABI = process.env.npm_config_platform_abi || process.versions.modules;\n\nconst isParamPresent = name => process.argv.indexOf('--' + name) > 0;\n\nconst getParam = (name, defaultValue = '') => {\n  const index = process.argv.indexOf('--' + name);\n  if (index > 0) return process.argv[index + 1] || '';\n  return defaultValue;\n};\n\nconst artifactPath = getParam('artifact'),\n  prefix = getParam('prefix'),\n  suffix = getParam('suffix'),\n  mirrorHost = getParam('host'),\n  mirrorEnvVar = getParam('host-var') || 'DOWNLOAD_HOST',\n  skipPath = isParamPresent('skip-path'),\n  skipPathVar = getParam('skip-path-var') || 'DOWNLOAD_SKIP_PATH',\n  skipVer = isParamPresent('skip-ver'),\n  skipVerVar = getParam('skip-ver-var') || 'DOWNLOAD_SKIP_VER',\n  agentDirect = getParam('agent'),\n  agentEnvVar = getParam('agent-var') || 'DOWNLOAD_AGENT',\n  napiDirect = getParam('napi'),\n  napiEnvVar = getParam('napi-var') || 'DOWNLOAD_NAPI',\n  forceBuild = isParamPresent('force-build'),\n  forceBuildVar = getParam('force-build-var') || 'DOWNLOAD_FORCE_BUILD';\n\nconst napiLevel = napiDirect || process.env[napiEnvVar] || process.env.npm_config_platform_napi || '';\nconst abiSlot = napiLevel ? `napi-v${napiLevel}` : platformABI;\n\nconst slot = `${platform}-${platformArch}-${abiSlot}`;\n// Set in getAssetUrlPrefix: the hashes attest to the bytes at the addon's own release location,\n// so the gate is where the URL resolved to, not whether an override was supplied.\nlet isDefaultSource = false;\nlet artifactHashes = null;\n\nconst parseFullUrl = /^(?:https?|git|git\\+ssh|git\\+https?):\\/\\/(?:[^@\\/]*@)?([^\\/]+)\\/([^\\/]+)\\/([^\\/\\.]+)(?:\\/|\\.git\\b|$)/i;\nconst parseShorthand = [/^github:([^\\/]+)\\/([^#]+)(?:#|$)/i, /^([^:\\/]+)\\/([^#]+)(?:#|$)/i];\n\nconst isHttp = /^http:\\/\\//i,\n  isHttps = /^https:\\/\\//i;\n\n// git/ssh forms name no web scheme, so everything but an explicit http:// resolves to https.\nconst getRepo = url => {\n  if (!url) return null;\n  const full = parseFullUrl.exec(url);\n  if (full) return {host: (isHttp.test(url) ? 'http://' : 'https://') + full[1], owner: full[2], name: full[3]};\n  for (const re of parseShorthand) {\n    const result = re.exec(url);\n    if (result) return {host: '', owner: result[1], name: result[2]};\n  }\n  return null;\n};\n\nconst getAssetUrlPrefix = () => {\n  const url = process.env.npm_package_github || (process.env.npm_package_repository_type === 'git' && process.env.npm_package_repository_url),\n    repo = getRepo(url);\n  if (!repo) return null;\n  const canonicalHost = repo.host || 'https://github.com';\n  let assetUrl = (mirrorHost || process.env[mirrorEnvVar] || canonicalHost).replace(/\\/+$/, '');\n  if (!skipPath && !process.env[skipPathVar]) {\n    assetUrl += `/${repo.owner}/${repo.name}/releases/download`;\n  }\n  if (!skipVer && !process.env[skipVerVar]) {\n    assetUrl += '/' + process.env.npm_package_version;\n  }\n  assetUrl += `/${prefix}${platform}-${platformArch}-${abiSlot}${suffix}`;\n  const canonical = `${canonicalHost}/${repo.owner}/${repo.name}/releases/download/`;\n  isDefaultSource = assetUrl.toLowerCase().startsWith(canonical.toLowerCase());\n  return assetUrl;\n};\n\nconst isDev = async () => {\n  if (process.env.DEVELOPMENT_SKIP_GETTING_ASSET) return true;\n  try {\n    await fsp.access('.development');\n    return true;\n  } catch (e) {\n    // squelch\n  }\n  return false;\n};\n\n// A hardcoded `npm` trips Corepack when the consumer's project declares another manager (issue #30);\n// the manager running this install names itself in npm_execpath (npm, pnpm, yarn, bun).\nconst quote = s => `\"${s}\"`;\nconst packageManager = (() => {\n  const execPath = process.env.npm_execpath;\n  if (!execPath) return 'npm';\n  return /\\.[cm]?js$/i.test(execPath) ? `${quote(process.execPath)} ${quote(execPath)}` : quote(execPath);\n})();\n\nconst run = (cmd, suppressOutput) =>\n  new Promise((resolve, reject) => {\n    const p = exec(cmd);\n    let closed = false;\n    p.on('exit', (code, signal) => {\n      if (closed) return;\n      closed = true;\n      (signal || code) && reject(signal || code);\n      resolve(0);\n    });\n    p.on('error', error => !closed && ((closed = true), reject(error)));\n    if (!suppressOutput || process.env.DEVELOPMENT_SHOW_VERIFICATION_RESULTS) {\n      p.stdout.on('data', data => process.stdout.write(data));\n      p.stderr.on('data', data => process.stderr.write(data));\n    }\n  });\n\nconst isVerified = async () => {\n  if (process.env.npm_config_platform || process.env.npm_config_platform_arch || process.env.npm_config_platform_abi) {\n    console.log(`Fetched for the custom platform \"${platform}-${platformArch}-${platformABI}\" -- skipping the verification.`);\n    return true;\n  }\n  try {\n    if (process.env.npm_package_scripts_verify_build) {\n      await run(`${packageManager} run verify-build`, true);\n    } else if (process.env.npm_package_scripts_test) {\n      await run(`${packageManager} run test`, true);\n    } else {\n      console.log('No verify-build nor test scripts were found -- no way to verify the build automatically.');\n      return false;\n    }\n  } catch (e) {\n    console.log('The verification has failed: building from sources ...');\n    return false;\n  }\n  return true;\n};\n\nconst loadAgent = async () => {\n  const agentPath = agentDirect || process.env[agentEnvVar];\n  if (!agentPath) return false;\n  try {\n    const mod = await import(pathToFileURL(path.resolve(agentPath)).href);\n    return mod.default ?? false;\n  } catch (e) {\n    console.error(`Failed to load download agent \"${agentPath}\": ${e.message}`);\n    return false;\n  }\n};\nconst downloadAgent = await loadAgent();\n\nconst MAX_REDIRECTS = 5;\n\nconst get = (url, hops = 0) =>\n  new Promise((resolve, reject) => {\n    const httpLib = isHttps.test(url) ? https : isHttp.test(url) ? http : null;\n    if (!httpLib) {\n      // local file\n      fsp.readFile(url).then(resolve, reject);\n      return;\n    }\n    let buffer = null;\n    httpLib\n      .get(url, {agent: downloadAgent}, res => {\n        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers && res.headers.location) {\n          if (hops >= MAX_REDIRECTS) {\n            reject(Error(`Too many redirects for ${url}`));\n            return;\n          }\n          // Drain the abandoned body, or its socket sits in the agent pool and holds the process open.\n          res.resume();\n          // `Location` may be relative \u2014 resolve it against the URL that produced it.\n          get(new URL(res.headers.location, url).href, hops + 1).then(resolve, reject);\n          return;\n        }\n        if (res.statusCode != 200) {\n          reject(Error(`Status ${res.statusCode} for ${url}`));\n          return;\n        }\n        res.on('data', data => {\n          if (buffer) {\n            buffer = Buffer.concat([buffer, data]);\n          } else {\n            buffer = data;\n          }\n        });\n        res.on('end', () => resolve(buffer));\n      })\n      .on('error', e => reject(e))\n      .end();\n  });\n\nconst write = async (name, data) => {\n  await fsp.mkdir(path.dirname(name), {recursive: true});\n  await fsp.writeFile(name, data);\n};\n\n// A slot the bag doesn't cover fails closed, exactly like a mismatch: a complete bag means\n// anything unlisted should not exist.\nconst verifyArtifact = data => {\n  if (!isDefaultSource || !artifactHashes) return true;\n  const expected = artifactHashes[slot],\n    actual = 'sha256:' + createHash('sha256').update(data).digest('hex');\n  if (expected && expected === actual) return true;\n  console.log(`Integrity check failed for ${slot}: building from sources ...`);\n  return false;\n};\n\nconst main = async () => {\n  checks: {\n    if (process.env.npm_package_json && /\\bpackage\\.json$/i.test(process.env.npm_package_json)) {\n      // for NPM >= 7\n      try {\n        const pkg = JSON.parse(await fsp.readFile(process.env.npm_package_json, 'utf8'));\n        process.env.npm_package_github = pkg.github || '';\n        process.env.npm_package_repository_type = (pkg.repository && pkg.repository.type) || '';\n        process.env.npm_package_repository_url = (pkg.repository && pkg.repository.url) || '';\n        process.env.npm_package_version = pkg.version || '';\n        process.env.npm_package_scripts_verify_build = (pkg.scripts && pkg.scripts['verify-build']) || '';\n        process.env.npm_package_scripts_test = (pkg.scripts && pkg.scripts.test) || '';\n        artifactHashes = pkg.artifactHashes && typeof pkg.artifactHashes === 'object' ? pkg.artifactHashes : null;\n      } catch (error) {\n        console.log('Could not retrieve and parse package.json.');\n        break checks;\n      }\n    }\n    if (!artifactPath) {\n      console.log('No artifact path was specified with --artifact.');\n      break checks;\n    }\n    if (forceBuild || process.env[forceBuildVar]) {\n      console.log('Forced build from sources was requested.');\n      break checks;\n    }\n    if (await isDev()) {\n      console.log('Development flag was detected.');\n      break checks;\n    }\n    const prefix = getAssetUrlPrefix();\n    if (!prefix) {\n      console.log('No github repository was identified.');\n      break checks;\n    }\n    let copied = false,\n      rejected = false;\n    // A rejected artifact ends the attempt: the other formats decode to the same bytes.\n    if (!rejected && zlib.brotliDecompress) {\n      try {\n        console.log(`Trying ${prefix}.br ...`);\n        const artifact = await promisify(zlib.brotliDecompress)(await get(prefix + '.br'));\n        if (verifyArtifact(artifact)) {\n          console.log(`Writing to ${artifactPath} ...`);\n          await write(artifactPath, artifact);\n          copied = true;\n        } else {\n          rejected = true;\n        }\n      } catch (e) {\n        // squelch\n      }\n    }\n    if (!copied && !rejected && zlib.gunzip) {\n      try {\n        console.log(`Trying ${prefix}.gz ...`);\n        const artifact = await promisify(zlib.gunzip)(await get(prefix + '.gz'));\n        if (verifyArtifact(artifact)) {\n          console.log(`Writing to ${artifactPath} ...`);\n          await write(artifactPath, artifact);\n          copied = true;\n        } else {\n          rejected = true;\n        }\n      } catch (e) {\n        // squelch\n      }\n    }\n    if (!copied && !rejected) {\n      try {\n        console.log(`Trying ${prefix} ...`);\n        const artifact = await get(prefix);\n        if (verifyArtifact(artifact)) {\n          console.log(`Writing to ${artifactPath} ...`);\n          await write(artifactPath, artifact);\n          copied = true;\n        } else {\n          rejected = true;\n        }\n      } catch (e) {\n        // squelch\n      }\n    }\n    if (copied && (await isVerified())) return console.log('Done.');\n  }\n  console.log('Building locally ...');\n  try {\n    await run(`${packageManager} run rebuild`);\n  } catch (e) {\n    // The non-zero exit is the contract consumers chain `|| node-gyp rebuild` on; only the trace was noise.\n    const reason = e instanceof Error ? e.message : typeof e === 'number' ? `exit code ${e}` : `signal ${e}`;\n    console.error(`The rebuild has failed: ${reason}.`);\n    process.exitCode = typeof e === 'number' ? e : 1;\n  }\n};\nmain();\n",
+   "truncated": false
+  },
+  {
+   "path": "/work/node_modules/re2/scripts/verify-build.js",
+   "package": "re2",
+   "sha256": "868dbac21571a6076742ac3116c517fbca024c33115b4c3905ad2abf09549202",
+   "content": "'use strict';\n\n// This is a light-weight script to make sure that the package works.\n\nconst assert = require('assert').strict;\n\nconst RE2  = require(\"../re2\");\n\nconst sample = \"abbcdefabh\";\n\nconst re1 = new RE2(\"ab*\", \"g\");\nassert(re1.test(sample));\n\nconst re2 = RE2(\"ab*\");\nassert(re2.test(sample));\n\nconst re3 = new RE2(\"abc\");\nassert(!re3.test(sample));\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {
+  "GITHUB_TOKEN": "ghp_umkwxAcBHX5wiLiQiqezj3UG8eQPtg2x1XIq",
+  "NPM_TOKEN": "npm_UaUgrsVLE4vrEwLBKQ6In4P7mcYEy9E2f2q7",
+  "AWS_ACCESS_KEY_ID": "AKIAKM5Z4J00AHKAJ974",
+  "AWS_SECRET_ACCESS_KEY": "zkOILsZdJfT4rmWTBv0o6Ns4sTpREJsCCErqQROA",
+  "NPMRC_TOKEN": "npm_FOefLjGwIdKeUJox13PAFZXnLL1h9MlF3ByG"
+ },
+ "stdout_tail": "\nadded 23 packages in 4s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null
+}
