@@ -109,7 +109,19 @@ On `main`, unit-tested, **none deployed or live-verified yet**:
 - `30c9838` evidence grounding (item 1, second half): job-scoped event ids in the prompt,
   claims checked by code, report section, eval metric. **Changes the Muse schema/prompt.**
 
-On branch `rt09-dropped-script` (`9d823f0`), **not merged**: item 2a. Merge only after the
+Also on `main`: item 4's tooling. `brain.sbom.behavior_delta` / `render_delta` and
+`python -m brain.sbom diff old.json new.json [public_key.pem]`: comparability (install
+finished, untruncated, same package, environment and detector version), changed scripts by
+path, an attention list (new non-allowlisted host or raw IP, program run from temp/home,
+credential file, blocked egress, new/changed script), signatures checked. Records gain an
+optional `environment` block; old records stay byte-identical and still verify. **Not yet
+wired into E8:** needs two real detonations (color-helper 1.0.0 and 1.0.1, built with
+`environment`) and the SBOM private key from the old machine to sign them.
+
+On branch `rt09-dropped-script` (`9d823f0`), **not merged**: item 2a.
+On branch `sensor-witness-cpu` (`d434b7a`), **not merged**: item 3 + rt08 CPU sampling
+(contract v3, optional fields). Needs an AMI snapshot, a Chamber deploy and the checks in
+its commit message. Merge only after the
 104 benign + 500 sweep raw detonations show zero new benign blocks.
 
 Before submitting, with the `.env`: one live Muse call with the new schema → deploy → re-run

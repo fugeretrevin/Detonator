@@ -120,3 +120,109 @@ def test_committed_records_verify():
 def test_no_private_key_committed():
     assert not list(SBOM_DIR.glob("*private*"))
     assert "PRIVATE KEY" not in (SBOM_DIR / "public_key.pem").read_text()
+
+
+# --- version delta ---
+
+from brain.report import esc  # noqa: E402
+from brain.sbom import behavior_delta, render_delta  # noqa: E402
+
+ENV = {"sandbox_image": "sha256:aaa", "node": "20.19.0", "npm": "10.8.2",
+       "command": "npm install --no-audit --no-fund"}  # fmt: skip
+
+
+def rec(res: DetonateResult, version: str, env=ENV, commit="abc1234") -> dict:
+    return build_record("color-helper", version, res, detector_commit=commit,
+                        detonated_at="2026-11-02T00:00:00Z", environment=env)  # fmt: skip
+
+
+def script(sha: str, path="/work/node_modules/color-helper/install.js") -> ExecutedScript:
+    return ExecutedScript(path=path, package="color-helper", sha256=sha, content="x")
+
+
+def bad_release() -> DetonateResult:
+    raw = ConnectEvent(ts="t", pid=1, binary="/usr/local/bin/node", daddr="203.0.113.10",
+                       dport=4444, family="AF_INET", resolved_domain=None)  # fmt: skip
+    dropped = ExecEvent(ts="t", pid=3, ppid=1, binary="/tmp/x/miner", args="", parent_binary="sh",
+                        uid=10001, cwd="/work")  # fmt: skip
+    cred = FileEvent(
+        ts="t", pid=1, binary="/usr/local/bin/node", path="/home/runner/.aws/credentials"
+    )
+    res = result(scripts=[script("b" * 64)], files=[cred])
+    return res.model_copy(update={"connect_events": [*res.connect_events, raw],
+                                  "exec_events": [*res.exec_events, dropped]})  # fmt: skip
+
+
+def test_bad_release_is_flagged_for_attention_but_not_called_malicious():
+    d = behavior_delta(
+        rec(result(scripts=[script("a" * 64)]), "1.0.0"), rec(bad_release(), "1.0.1")
+    )
+    assert d.comparability == "comparable" and d.reasons == []
+    joined = " ".join(d.attention)
+    for want in ("new raw IP contacted at install: 203.0.113.10",
+                 "temp/home directory: /tmp/x/miner",
+                 "new credential file opened: /home/runner/.aws/credentials",
+                 "install script changed: /work/node_modules/color-helper/install.js"):  # fmt: skip
+        assert want in joined
+    assert d.changed_scripts == [{"path": "/work/node_modules/color-helper/install.js",
+                                  "old_sha256": "a" * 64, "new_sha256": "b" * 64}]  # fmt: skip
+    md = render_delta(d)
+    assert "malicious" not in md.lower() and "not a verdict" in md
+
+
+def test_same_behavior_is_reported_unchanged():
+    same = result(scripts=[script("a" * 64)])
+    d = behavior_delta(rec(same, "1.0.0"), rec(same, "1.0.1"))
+    assert d.unchanged and d.attention == []
+    assert "No change in observed install-time behavior" in render_delta(d)
+
+
+def test_new_vendor_cdn_is_a_change_not_an_alarm_if_allowlisted():
+    d = behavior_delta(
+        rec(result(host="registry.npmjs.org"), "1"), rec(result(host="github.com"), "2")
+    )
+    assert d.changes["added_hosts"] == ["github.com"] and d.attention == []
+
+
+def test_environment_mismatch_is_partially_comparable():
+    newer_npm = {**ENV, "npm": "11.0.0"}
+    d = behavior_delta(rec(result(), "1"), rec(result(), "2", env=newer_npm))
+    assert d.comparability == "partially_comparable"
+    assert any("npm differs" in r for r in d.reasons)
+
+
+def test_missing_environment_or_detector_change_is_partially_comparable():
+    d = behavior_delta(rec(result(), "1", env=None), rec(result(), "2", commit="def5678"))
+    assert d.comparability == "partially_comparable" and len(d.reasons) == 2
+
+
+def test_failed_or_truncated_install_is_incomparable():
+    failed = result().model_copy(update={"exit_code": 1})
+    truncated = result().model_copy(update={"truncated": True})
+    for broken in (failed, truncated):
+        d = behavior_delta(rec(result(), "1"), rec(broken, "2"))
+        assert d.comparability == "incomparable"
+        assert "Not compared" in render_delta(d)
+
+
+def test_bad_signature_makes_it_incomparable():
+    priv, pub = keypair()
+    old, new = sign(rec(result(), "1"), priv), sign(rec(result(), "2"), priv)
+    assert behavior_delta(old, new, pub).signatures == {"old": True, "new": True}
+    tampered = {**new, "version": "2-evil"}
+    d = behavior_delta(old, tampered, pub)
+    assert d.signatures["new"] is False and d.comparability == "incomparable"
+
+
+def test_environment_is_optional_and_old_records_are_byte_identical():
+    assert "environment" not in rec(result(), "1", env=None)
+    assert rec(result(), "1")["environment"] == dict(sorted(ENV.items()))
+    # build_record without environment = the schema the committed records were signed under
+    assert test_committed_records_verify() is None
+
+
+def test_rendered_values_are_escaped():
+    hostile = result(host="evil.example|<img src=x>`")
+    d = behavior_delta(rec(result(), "1"), rec(hostile, "2"))
+    md = render_delta(d)
+    assert "<img" not in md and esc("evil.example|<img src=x>`", 160) in md
