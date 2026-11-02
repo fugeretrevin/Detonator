@@ -81,6 +81,10 @@ flowchart LR
    203.0.113.10:4444"). Low findings the old version already produced are suppressed, so
    routine bumps stay quiet; high/critical are never suppressed.
 
+10. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
+    that doesn't exist (a name an attacker could register — "slopsquatting") or was first
+    published in the last week. Low severity, so a human reviews before it installs.
+
 ## Why it's hard to fool
 
 - **The AI can explain, but it can't be talked out of kernel facts.** PR title, body, and

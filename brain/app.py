@@ -91,6 +91,13 @@ class ModalDictDeduper:
 
 
 @functools.cache
+def _new_package_resolver():
+    from brain.newpkg import registry_resolver
+
+    return registry_resolver()
+
+
+@functools.cache
 def github() -> GitHubClient:
     # Cached per container so installation tokens are reused across warm requests.
     return GitHubClient(os.environ["GITHUB_APP_ID"], os.environ["GITHUB_PRIVATE_KEY"])
@@ -182,6 +189,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             files=files,
             guard=guard,
             base_result=base_result,
+            new_package_resolver=_new_package_resolver(),
         )
         final = analysis.final
         logger.info(

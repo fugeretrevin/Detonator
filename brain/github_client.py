@@ -61,6 +61,11 @@ _DEP_LINE_RE = re.compile(
     r'^\+\s*"(@?[a-z0-9][\w.-]*(?:/[\w.-]+)?)"\s*:\s*"([\^~<>=*\dvx]|latest|next|npm:|git|https?:)'
 )
 _NOT_DEPS = frozenset({"name", "version", "main", "type", "license", "node", "npm"})
+# Registry-resolvable specs only (semver ranges, tags, npm: aliases) — not git/https/file,
+# which legitimately don't exist on the registry. Used for the new-package signal.
+_REGISTRY_DEP_RE = re.compile(
+    r'^\+\s*"(@?[a-z0-9][\w.-]*(?:/[\w.-]+)?)"\s*:\s*"(?:npm:[^"]+|[\^~<>=*\dvx]|latest|next)'
+)
 
 
 def added_dependencies(files: list[ChangedFile]) -> list[str]:
@@ -73,6 +78,26 @@ def added_dependencies(files: list[ChangedFile]) -> list[str]:
             m = _DEP_LINE_RE.match(line)
             if m and m.group(1) not in _NOT_DEPS and m.group(1) not in names:
                 names.append(m.group(1))
+    return names[:30]
+
+
+def added_registry_dependencies(files: list[ChangedFile]) -> list[str]:
+    """Added deps that resolve to the npm registry (for the new-package signal). An npm:
+    alias is reported under its *target* name, which is what actually gets installed."""
+    names: list[str] = []
+    for f in files:
+        if _basename(f.filename) != "package.json" or not f.patch:
+            continue
+        for line in f.patch.splitlines():
+            m = _REGISTRY_DEP_RE.match(line)
+            if not m or m.group(1) in _NOT_DEPS:
+                continue
+            name = m.group(1)
+            alias = re.search(r'"\s*:\s*"npm:(@?[a-z0-9][\w.-]*(?:/[\w.-]+)?)@', line)
+            if alias:
+                name = alias.group(1)
+            if name not in names:
+                names.append(name)
     return names[:30]
 
 

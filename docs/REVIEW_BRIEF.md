@@ -125,6 +125,7 @@ Chamber sinkhole.
 | `CRED_FILE_ACCESS` | high | a non-npm process descended from an install script opens a planted bait credential (npm/npx reading `~/.npmrc` as config doesn't count) |
 | `DECOY_CREDENTIAL_SEEN` | critical | a per-run fake token appears in a process's args, a DNS name, or the install's output (harvested and used/sent) |
 | `DECOY_TOOL_INVOKED` | high | the install ran a decoy CLI (`gh`, `aws`, `claude`, `gemini`, `trufflehog`) planted on PATH |
+| `DEP_NEW_PACKAGE` | low | an added registry dependency that doesn't exist on npm (hallucinated/typosquat) or was first published < 7 days ago |
 | `NET_UNLISTED_DOMAIN` | low | connect to a named domain not on the allowlist (npm/yarn registries, GitHub and its release/object hosts, nodejs.org) |
 | `TELEMETRY_TRUNCATED` | low | event caps hit or log rotated: a flood could be hiding something |
 

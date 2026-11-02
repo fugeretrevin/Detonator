@@ -7,9 +7,10 @@ from brain.decoys import decoy_hits, redact, redact_text
 from brain.differential import Differential
 from brain.differential import diff as differential_diff
 from brain.enrich import enrich_connects
-from brain.github_client import ChangedFile, PrMetadata
+from brain.github_client import ChangedFile, PrMetadata, added_registry_dependencies
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
 from brain.llm import LlmOutcome, Usage
+from brain.newpkg import Resolver, new_package_hits
 from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
@@ -83,9 +84,15 @@ def analyze(
     files: list[ChangedFile] = (),
     guard: GuardOutcome | None = None,
     base_result: DetonateResult | None = None,
+    new_package_resolver: "Resolver | None" = None,
 ) -> Analysis:
     result = enrich(result)
-    raw_hits = evaluate(result, allowed_cidrs=allowed_cidrs) + decoy_hits(result)
+    added = added_registry_dependencies(list(files))
+    raw_hits = (
+        evaluate(result, allowed_cidrs=allowed_cidrs)
+        + decoy_hits(result)
+        + new_package_hits(added, new_package_resolver)
+    )
     raw_hits.sort(key=lambda h: (-h.severity, h.ts))
     # Rules see the raw result; everything shown to the model or posted sees decoys redacted.
     rule_hits = [replace(h, evidence=redact_text(h.evidence, result)) for h in raw_hits]
