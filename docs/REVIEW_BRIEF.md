@@ -334,19 +334,19 @@ Typical detonation 3–20 s; a full check completes in well under a minute.
 
 ## 7. Evaluation [Eval]
 
-122 real detonations, re-run Nov 1–2 on the current Chamber (TLS, signed responses, DNS
+142 real detonations, re-run Nov 1–2 on the current Chamber (TLS, signed responses, DNS
 capture and sinkhole, non-TCP egress blocked, per-run canary credentials and decoy tools),
-**scored at commit `0aff394` (clean tree, same code as deployed)** with `muse-spark-1.3`
+**scored at commit `a96c8a1` (clean tree, same code as deployed, every run carrying a per-job sensor witness)** with `muse-spark-1.3`
 and Prompt Guard 2. Four setups: rules only; rules + Intent Contract; rules + analysis with
 *no* contract (the isolating arm); full (contract + Prompt Guard + Muse analysis, i.e.
 production).
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
 |---|---|---|---|---|---|
-| Benign (104) | rules | 95 | 5 | **0** | 4 |
-| Benign (104) | + contract | 97 | 3 | **0** | 4 |
-| Benign (104) | + analysis (no contract) | 95 | 5 | **0** | 4 |
-| Benign (104) | full | 97 | 3 | **0** | 4 |
+| Benign (104) | rules | 94 | 4 | **0** | 6 |
+| Benign (104) | + contract | 95 | 3 | **0** | 6 |
+| Benign (104) | + analysis (no contract) | 94 | 4 | **0** | 6 |
+| Benign (104) | full | 95 | 3 | **0** | 6 |
 | Simulated attacks (16) | rules | 0 | 1 | 15 | 0 |
 | Simulated attacks (16) | + contract | 0 | 1 | 15 | 0 |
 | Simulated attacks (16) | + analysis (no contract) | 0 | 0 | **16** | 0 |

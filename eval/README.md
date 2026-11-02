@@ -1,6 +1,6 @@
 # Evaluation
 
-122 real detonations on the Chamber (Tetragon + DNS capture), scored by the production
+142 real detonations on the Chamber (Tetragon + DNS capture), scored by the production
 pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.md](results.md).
 
 - **Benign (104):** popular packages, 35 of which run install scripts (puppeteer,
@@ -16,30 +16,48 @@ pipeline with the real model (`muse-spark-1.3`). Full per-case table: [results.m
 
 ## Results
 
-**Scored 2026-11-02 20:56 UTC at commit `a5183c9`** (clean tree) with `muse-spark-1.3` and
-Llama Prompt Guard 2, on 122 detonations on the current Chamber: TLS, signed responses, DNS
-capture and sinkhole, non-TCP egress blocked, per-run canary credentials and decoy tools.
-`results.json` carries the same stamp.
+**Scored 2026-11-02 22:39 UTC at commit `a96c8a1`** (clean tree) with `muse-spark-1.3` and
+Llama Prompt Guard 2, on **all 142 cases freshly detonated on the contract-v3 Chamber**: TLS,
+signed responses, DNS capture and sinkhole, non-TCP egress blocked, per-run canary credentials
+and decoy tools, **and a per-job sensor witness**. `results.json` carries the same stamp.
+
+**Every run in this table carries a verified sensor witness.** 139 of 142 recorded both the
+start and end marker; the 3 that recorded only the start (`biome`, `cypress`, `gm08-cpu-miner`)
+are exactly the 3 that hit the timeout and were killed, so their end marker never ran — which is
+the witness reporting truncated observation, correctly. No run was missing its start marker.
 
 Four arms, so the two model uses can be told apart: `analysis` is the model reasoning over the
 telemetry with **no** Intent Contract.
 
 | Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |
 |---|---|---|---|---|---|
-| benign (104) | rules | 95 | 5 | **0** | 4 |
-| benign (104) | rules + Intent Contract | 97 | 3 | **0** | 4 |
-| benign (104) | rules + analysis (no contract) | 95 | 5 | **0** | 4 |
-| benign (104) | full (contract + Prompt Guard + analysis) | 95 | 5 | **0** | 4 |
+| benign (104) | rules | 94 | 4 | **0** | 6 |
+| benign (104) | rules + Intent Contract | 95 | 3 | **0** | 6 |
+| benign (104) | rules + analysis (no contract) | 94 | 4 | **0** | 6 |
+| benign (104) | full (contract + Prompt Guard + analysis) | 95 | 3 | **0** | 6 |
 | simulated attacks (16) | rules | 0 | 1 | 15 | 0 |
 | simulated attacks (16) | rules + Intent Contract | 0 | 1 | 15 | 0 |
 | simulated attacks (16) | rules + analysis (no contract) | 0 | 0 | **16** | 0 |
-| simulated attacks (16) | full | 0 | 1 | 15 | 0 |
+| simulated attacks (16) | full | 0 | 0 | **16** | 0 |
 | real-incident reconstructions (2) | all four arms | 0 | 0 | **2** | 0 |
+| red team, author (10) | rules / contract | 4 | 0 | 6 | 0 |
+| red team, author (10) | analysis / full | 1 | 0 | **9** | 0 |
+| red team, independent (10) | rules / contract | 4 | 0 | 5 | 1 |
+| red team, independent (10) | analysis / full | 0 | 0 | **10** | 0 |
 
-> **One scored run is a sample, not a fact.** Temperature 0 is not determinism, and this table
-> is a single pass. An earlier pass of the identical telemetry gave benign 97/3 and attacks
-> 16/16 in the `full` arm, with no model errors either time. `REPEAT.md` measures the spread
-> over five trials; read the two together, and prefer the repeatability numbers for any claim.
+The author red-team row is 6 blocked by rules, not 5, because the merged `EXEC_DROPPED_BINARY`
+change now catches `rt09` on kernel facts alone. The independent row shows 1 ⏱️ under
+rules/contract because `gm08-cpu-miner` hit the timeout this run; the model still blocked it.
+
+> **One scored run is a sample, not a fact.** Temperature 0 is not determinism. The `full`
+> attack row is 16/16 here and was 15/16 on the previous pass of the same telemetry, with no
+> model errors either time — `m12` alternates between `malicious` and `suspicious`.
+> `REPEAT.md` / `REPEAT_CORE.md` measure the spread over five trials. **Prefer the
+> repeatability numbers for any claim**, and read this table as one draw from them.
+- **6 benign are ⏱️, not ✅.** Four are native builds that exit 1 with no C toolchain in the
+  image (`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`); two (`biome`, `cypress`) hit
+  the install timeout. None was blocked. This is a limit of our sandbox, not a judgement about
+  those packages — and it is why "104/104 clean" is never the right phrasing.
 
 - **Repeatability (5 trials per case on identical telemetry, `REPEAT.md` / `REPEAT_CORE.md`).**
   Red team, 20 cases: flip rate **1/20** (only `gm08-cpu-miner`), worst case **2/20 attacks
@@ -51,7 +69,7 @@ telemetry with **no** Intent Contract.
   returns `malicious` (HIGH) or `suspicious` (LOW) on that call. So the honest claims are
   **16/16 attacks in 3 of 5 trials, 15/16 in the worst**, and **19/20 red team in 4 of 5
   trials, 18/20 in the worst** — never a flat 16/16 or 19/20.
-- **Evidence grounding holds across every trial:** 394/394 claims in the scored run, and
+- **Evidence grounding holds across every trial:** 452/452 claims in the scored run, and
   251/251 and 380/380 summed over the two 5-trial sets — 0% unsupported, no case naming a host
   or IP absent from both the telemetry and the diff. Measured by `brain/evidence.py`, which
   rejects an event id that isn't in that job's index (ids are an HMAC of the job id, so a PR

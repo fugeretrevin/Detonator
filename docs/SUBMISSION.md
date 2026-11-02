@@ -195,14 +195,28 @@ can notice and a source scanner cannot.
 
 ### The evaluation
 
-**122 real detonations** on real infrastructure, scored by the production pipeline with the
+**142 real detonations** on real infrastructure, scored by the production pipeline with the
 real models. Full per-case table and methodology: [eval/README.md](../eval/README.md).
 
 | Set | Rules only | + Intent Contract | Full pipeline |
 |---|---|---|---|
-| **104 popular packages** (35 run install scripts) | **0 blocked**, 5 ⚠️, 4 ⏱️ | **0 blocked**, 3 ⚠️, 4 ⏱️ | **0 blocked**, 5 ⚠️, 4 ⏱️ |
+| **104 popular packages** (35 run install scripts) | **0 blocked**, 4 ⚠️, 6 ⏱️ | **0 blocked**, 3 ⚠️, 6 ⏱️ | **0 blocked**, 3 ⚠️, 6 ⏱️ |
 | **16 simulated install-time attacks** | 15 blocked | 15 blocked | **16 blocked in 3 of 5 trials, 15 in the worst** |
 | **2 reconstructions of real incidents** | 2 blocked | 2 blocked | **2 blocked** |
+| **10 red-team, written by us to target our blind spots** | 6 blocked | 6 blocked | **9 blocked** |
+| **10 red-team, written by a model that never saw our rules** | 5 blocked, 1 ⏱️ | 5 blocked, 1 ⏱️ | **10 blocked** |
+
+**Every one of those 142 runs carries a per-job sensor witness.** The sandbox execs a
+nonce-marked marker before and after the install; a missing marker fails the check closed
+instead of passing as a quiet install, because "no events" and "nothing happened" are not the
+same thing. 139 runs recorded both markers, and the 3 that recorded only the first are exactly
+the 3 that hit the timeout and were killed.
+
+**And 452 of 452 factual claims the model made cite a real kernel event of the right type** —
+none rejected, no invented hosts or IPs. Code checks that, not trust: every event carries an id
+that is an HMAC of the job id (so a PR author can't forge one), an `observed` claim must cite an
+event of its own type, and a claim drawn from the diff rather than from runtime is labelled
+`source_inferred` so it is never presented as something the kernel watched happen.
 
 **We re-ran the model five times per case on identical telemetry, because temperature 0 is not
 determinism** ([`eval/REPEAT.md`](../eval/REPEAT.md)). Across 24 attack and boundary-benign
@@ -338,7 +352,7 @@ GitHub App (checks, review comments, branch protection) · Python 3.11, FastAPI,
 ## Before you submit (checklist — delete this section when pasting)
 
 1. **Re-run the full eval at the final commit** and update every figure above plus the commit
-   hash in `eval/README.md`. The numbers here are from commit `0aff394`. Re-stamp if you change
+   hash in `eval/README.md`. The numbers here are from commit `a96c8a1`. Re-stamp if you change
    *detection logic* — anything under `brain/`, `shared/`, `chamber/`, or `eval/cases.py`.
    Commits that only touch docs or the generated result files do not change the numbers and do
    not invalidate the stamp.

@@ -179,15 +179,24 @@ It *does* catch our ua-parser-js reconstruction — because that attack has had 
 since 2021. Advisory databases are retrospective; PR Detonator blocked all five from behavior
 alone, which is what you need the first time an attack runs.
 
-**Evaluation (122 real detonations, scored 2026-11-02 at commit `a5183c9`,
+**Evaluation (142 real detonations, scored 2026-11-02 at commit `a96c8a1`,
 [details](eval/README.md)):** **0 of 104 popular packages blocked** (35 of which run install
 scripts: puppeteer, electron, prisma, cypress, re2, ...); **16 of 16 simulated install-time
 attacks blocked in 3 of 5 trials, 15 of 16 in the worst**; and **defanged reconstructions of
 two real incidents, ua-parser-js (2021) and the Shai-Hulud npm worm (2025), both blocked and
-blamed on the version-bump line**. Muse decoded the payload in 5/5 obfuscated attacks and named
-the right dependency in 2/2. Cost ~$0.015 per PR. Scaling to 104 packages surfaced one false
-positive (a dependency's nested `npm` reading `~/.npmrc`), now fixed. Rules alone block 15 of
-16 attacks; the model catches the last (exfil to a resolvable domain).
+blamed on the version-bump line**. On the red-team sets the full pipeline blocks 9/10 (author)
+and 10/10 (independent, written by a model that never saw the rules). Muse decoded the payload
+in 5/5 obfuscated attacks and named the right dependency in 2/2. Cost ~$0.018 per PR. Scaling
+to 104 packages surfaced one false positive (a dependency's nested `npm` reading `~/.npmrc`),
+now fixed. Rules alone block 15 of 16 attacks; the model catches the last (exfil to a
+resolvable domain).
+
+Every one of those 142 runs carries a **per-job sensor witness**: the sandbox execs a
+nonce-marked marker before and after the install, and a missing marker fails the check closed
+rather than passing as quiet. 139 recorded both markers; the 3 that recorded only the first are
+exactly the 3 that hit the timeout and were killed. And **452 of 452** factual claims Muse made
+cite a real kernel event of the right type, with none rejected and no invented hosts — checked
+by code, not taken on trust ([how](eval/README.md)).
 
 **We quote a range because we measured one.** Re-running the model five times per case on
 identical telemetry ([eval/REPEAT.md](eval/REPEAT.md)) gives a flip rate of 1/24 on attacks and
@@ -196,10 +205,11 @@ is unstable: `m12` exfiltrates to an ordinary resolvable domain that the rules c
 LOW, so its verdict depends on whether Muse returns `malicious` or `suspicious`. Temperature 0
 is not determinism, and a single run would have let us publish the luckier number.
 
-Of those 104 benign packages, **95 are verified clean, 5 need review and 4 are "could not
-verify"** — `better-sqlite3`, `argon2`, `cpu-features` and `node-pty` fail to compile in this
-sandbox, and we refuse to call an install clean that we never watched finish. That is a limit
-of our sandbox, not a mark against those packages, and none of them was blocked.
+Of those 104 benign packages, **95 are verified clean, 3 need review and 6 are "could not
+verify"** — four (`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`) fail to compile
+without a C toolchain in the image and two (`biome`, `cypress`) hit the install timeout. We
+refuse to call an install clean that we never watched finish. That is a limit of our sandbox,
+not a mark against those packages, and none of them was blocked.
 
 End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.com/pr-detonator-demo/demo-target/pulls)):
 

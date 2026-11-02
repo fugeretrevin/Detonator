@@ -1,7 +1,7 @@
 {
- "commit": "a5183c9",
+ "commit": "a96c8a1",
  "dirty": false,
- "scored_at": "2026-11-02 20:56 UTC",
+ "scored_at": "2026-11-02 22:39 UTC",
  "rows": [
   {
    "id": "lodash",
@@ -9,11 +9,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.42,
-   "model_latency_s": 12.22,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2407,
-   "cost_usd": 0.012961,
+   "detonation_s": 3.48,
+   "model_latency_s": 27.0,
+   "model_prompt_tokens": 2235,
+   "model_completion_tokens": 2381,
+   "cost_usd": 0.012912999999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -38,6 +38,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -50,11 +52,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.7,
-   "model_latency_s": 15.28,
-   "model_prompt_tokens": 2183,
-   "model_completion_tokens": 2780,
-   "cost_usd": 0.01454375,
+   "detonation_s": 9.81,
+   "model_latency_s": 31.12,
+   "model_prompt_tokens": 2235,
+   "model_completion_tokens": 2962,
+   "cost_usd": 0.01538225,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -79,6 +81,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.4,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -91,11 +95,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.3,
-   "model_latency_s": 14.64,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2994,
-   "cost_usd": 0.015455749999999999,
+   "detonation_s": 5.36,
+   "model_latency_s": 29.67,
+   "model_prompt_tokens": 2231,
+   "model_completion_tokens": 2699,
+   "cost_usd": 0.0142595,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -120,6 +124,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.82,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -132,11 +138,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.98,
-   "model_latency_s": 15.34,
-   "model_prompt_tokens": 2184,
-   "model_completion_tokens": 2922,
-   "cost_usd": 0.0151485,
+   "detonation_s": 34.34,
+   "model_latency_s": 26.03,
+   "model_prompt_tokens": 2227,
+   "model_completion_tokens": 2424,
+   "cost_usd": 0.01308575,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -161,6 +167,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -173,11 +181,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 19.82,
-   "model_latency_s": 27.71,
-   "model_prompt_tokens": 2705,
-   "model_completion_tokens": 4445,
-   "cost_usd": 0.0222725,
+   "detonation_s": 124.77,
+   "model_latency_s": 64.35,
+   "model_prompt_tokens": 2747,
+   "model_completion_tokens": 5706,
+   "cost_usd": 0.02768425,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -204,6 +212,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 21.31,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "puppeteer"
@@ -219,11 +229,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 21.06,
-   "model_latency_s": 34.81,
-   "model_prompt_tokens": 3359,
-   "model_completion_tokens": 5317,
-   "cost_usd": 0.026796,
+   "detonation_s": 21.88,
+   "model_latency_s": 55.49,
+   "model_prompt_tokens": 3467,
+   "model_completion_tokens": 4581,
+   "cost_usd": 0.023802999999999998,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -249,12 +259,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 26.01,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "playwright-chromium"
@@ -272,11 +284,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 12.63,
-   "model_latency_s": 19.62,
-   "model_prompt_tokens": 2546,
-   "model_completion_tokens": 3248,
-   "cost_usd": 0.0169865,
+   "detonation_s": 13.79,
+   "model_latency_s": 39.69,
+   "model_prompt_tokens": 2600,
+   "model_completion_tokens": 3482,
+   "cost_usd": 0.0180485,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -301,6 +313,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 9.67,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "electron"
@@ -317,11 +331,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 26.12,
-   "model_latency_s": 21.22,
-   "model_prompt_tokens": 2653,
-   "model_completion_tokens": 3423,
-   "cost_usd": 0.017863999999999998,
+   "detonation_s": 29.73,
+   "model_latency_s": 31.84,
+   "model_prompt_tokens": 2707,
+   "model_completion_tokens": 2990,
+   "cost_usd": 0.01609125,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Clean",
@@ -346,12 +360,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 5,
-    "supported": 5,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 25.07,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@prisma/engines",
@@ -368,11 +384,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.59,
-   "model_latency_s": 18.0,
-   "model_prompt_tokens": 2409,
-   "model_completion_tokens": 3059,
-   "cost_usd": 0.016012000000000002,
+   "detonation_s": 18.83,
+   "model_latency_s": 36.93,
+   "model_prompt_tokens": 2464,
+   "model_completion_tokens": 3315,
+   "cost_usd": 0.01716875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -397,6 +413,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.97,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "esbuild"
@@ -411,11 +429,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.02,
-   "model_latency_s": 16.05,
-   "model_prompt_tokens": 2397,
+   "detonation_s": 7.71,
+   "model_latency_s": 32.47,
+   "model_prompt_tokens": 2443,
    "model_completion_tokens": 2947,
-   "cost_usd": 0.015521,
+   "cost_usd": 0.0155785,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -440,6 +458,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.24,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@swc/core"
@@ -454,11 +474,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.27,
-   "model_latency_s": 22.3,
-   "model_prompt_tokens": 2218,
-   "model_completion_tokens": 3709,
-   "cost_usd": 0.01853575,
+   "detonation_s": 16.69,
+   "model_latency_s": 42.78,
+   "model_prompt_tokens": 2270,
+   "model_completion_tokens": 3572,
+   "cost_usd": 0.0180185,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -483,6 +503,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.49,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -495,11 +517,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.38,
-   "model_latency_s": 19.32,
-   "model_prompt_tokens": 2661,
-   "model_completion_tokens": 3543,
-   "cost_usd": 0.018384,
+   "detonation_s": 4.31,
+   "model_latency_s": 37.59,
+   "model_prompt_tokens": 2713,
+   "model_completion_tokens": 3492,
+   "cost_usd": 0.01823225,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -524,6 +546,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.83,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "bcrypt"
@@ -538,11 +562,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.22,
-   "model_latency_s": 19.04,
-   "model_prompt_tokens": 2672,
-   "model_completion_tokens": 3500,
-   "cost_usd": 0.018215000000000002,
+   "detonation_s": 7.13,
+   "model_latency_s": 49.5,
+   "model_prompt_tokens": 2717,
+   "model_completion_tokens": 4500,
+   "cost_usd": 0.02252125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -567,6 +591,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.57,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "sqlite3"
@@ -583,11 +609,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.56,
-   "model_latency_s": 20.12,
-   "model_prompt_tokens": 2660,
-   "model_completion_tokens": 3769,
-   "cost_usd": 0.01934325,
+   "detonation_s": 26.93,
+   "model_latency_s": 55.89,
+   "model_prompt_tokens": 2708,
+   "model_completion_tokens": 4973,
+   "cost_usd": 0.02452025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -606,12 +632,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.68,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "canvas"
@@ -626,18 +654,18 @@
    "id": "cypress",
    "kind": "benign",
    "note": "",
-   "status": "completed",
-   "exit_code": 0,
-   "detonation_s": 36.37,
-   "model_latency_s": 29.11,
-   "model_prompt_tokens": 3947,
-   "model_completion_tokens": 5631,
-   "cost_usd": 0.0288655,
+   "status": "timeout",
+   "exit_code": null,
+   "detonation_s": 242.55,
+   "model_latency_s": 120.93,
+   "model_prompt_tokens": 4047,
+   "model_completion_tokens": 5091,
+   "cost_usd": 0.026695499999999997,
    "outcomes": {
-    "rules": "Needs review",
-    "contract": "Clean",
-    "analysis": "Needs review",
-    "full": "Needs review"
+    "rules": "Could not verify",
+    "contract": "Could not verify",
+    "analysis": "Could not verify",
+    "full": "Could not verify"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -657,12 +685,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 9.08,
+   "sensor_witness": false,
    "guilty_lines": [],
    "script_runs": [
     "cypress"
@@ -678,11 +708,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 8.82,
-   "model_latency_s": 28.83,
-   "model_prompt_tokens": 2695,
-   "model_completion_tokens": 5132,
-   "cost_usd": 0.02517975,
+   "detonation_s": 67.07,
+   "model_latency_s": 49.2,
+   "model_prompt_tokens": 2748,
+   "model_completion_tokens": 4207,
+   "cost_usd": 0.02131475,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
@@ -703,12 +733,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 5.74,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "chromedriver"
@@ -725,11 +757,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.74,
-   "model_latency_s": 36.62,
-   "model_prompt_tokens": 2708,
-   "model_completion_tokens": 6850,
-   "cost_usd": 0.0324975,
+   "detonation_s": 22.28,
+   "model_latency_s": 69.02,
+   "model_prompt_tokens": 2850,
+   "model_completion_tokens": 5717,
+   "cost_usd": 0.027859750000000003,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -738,11 +770,7 @@
    },
    "rules_fired": [],
    "cleared": [],
-   "predicted_domains": [
-    "evermeet.cx",
-    "www.gyan.dev",
-    "johnvansickle.com"
-   ],
+   "predicted_domains": [],
    "prediction_error": null,
    "llm_verdict": "benign",
    "llm_error": null,
@@ -752,12 +780,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "ffmpeg-static"
@@ -774,11 +804,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.41,
-   "model_latency_s": 20.03,
-   "model_prompt_tokens": 2369,
-   "model_completion_tokens": 4147,
-   "cost_usd": 0.020586,
+   "detonation_s": 23.63,
+   "model_latency_s": 51.38,
+   "model_prompt_tokens": 2410,
+   "model_completion_tokens": 4131,
+   "cost_usd": 0.02056925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -805,6 +835,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.45,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@sentry/cli"
@@ -819,11 +851,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.5,
-   "model_latency_s": 26.94,
-   "model_prompt_tokens": 2360,
-   "model_completion_tokens": 5070,
-   "cost_usd": 0.0244975,
+   "detonation_s": 5.13,
+   "model_latency_s": 48.7,
+   "model_prompt_tokens": 2394,
+   "model_completion_tokens": 4105,
+   "cost_usd": 0.02043875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -848,6 +880,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "core-js"
@@ -862,11 +896,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.3,
-   "model_latency_s": 13.28,
-   "model_prompt_tokens": 2191,
-   "model_completion_tokens": 2669,
-   "cost_usd": 0.014082,
+   "detonation_s": 5.28,
+   "model_latency_s": 33.75,
+   "model_prompt_tokens": 2240,
+   "model_completion_tokens": 3071,
+   "cost_usd": 0.01585175,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -891,6 +925,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.87,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -903,22 +939,22 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.75,
-   "model_latency_s": 22.25,
-   "model_prompt_tokens": 2369,
-   "model_completion_tokens": 4253,
-   "cost_usd": 0.0210365,
+   "detonation_s": 7.72,
+   "model_latency_s": 39.64,
+   "model_prompt_tokens": 2424,
+   "model_completion_tokens": 3683,
+   "cost_usd": 0.018682749999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
     "analysis": "Clean",
-    "full": "Needs review"
+    "full": "Clean"
    },
    "rules_fired": [],
    "cleared": [],
    "predicted_domains": [],
    "prediction_error": null,
-   "llm_verdict": "suspicious",
+   "llm_verdict": "benign",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0006,
@@ -932,6 +968,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.21,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "es5-ext"
@@ -946,11 +984,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.35,
-   "model_latency_s": 18.64,
-   "model_prompt_tokens": 2194,
-   "model_completion_tokens": 3623,
-   "cost_usd": 0.01814025,
+   "detonation_s": 6.34,
+   "model_latency_s": 32.17,
+   "model_prompt_tokens": 2245,
+   "model_completion_tokens": 2923,
+   "cost_usd": 0.015229,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -975,6 +1013,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.79,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -987,11 +1027,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.07,
-   "model_latency_s": 32.97,
-   "model_prompt_tokens": 2196,
-   "model_completion_tokens": 6227,
-   "cost_usd": 0.02920975,
+   "detonation_s": 4.27,
+   "model_latency_s": 103.55,
+   "model_prompt_tokens": 2237,
+   "model_completion_tokens": 3638,
+   "cost_usd": 0.01825775,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1016,6 +1056,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.68,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1028,11 +1070,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 7.85,
-   "model_latency_s": 14.69,
-   "model_prompt_tokens": 2361,
-   "model_completion_tokens": 3295,
-   "cost_usd": 0.016954999999999998,
+   "detonation_s": 61.76,
+   "model_latency_s": 31.34,
+   "model_prompt_tokens": 2479,
+   "model_completion_tokens": 2878,
+   "cost_usd": 0.01533025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1051,12 +1093,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 5.99,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "msw"
@@ -1069,18 +1113,18 @@
    "id": "biome",
    "kind": "benign",
    "note": "",
-   "status": "completed",
-   "exit_code": 0,
-   "detonation_s": 5.11,
-   "model_latency_s": 12.36,
-   "model_prompt_tokens": 2257,
-   "model_completion_tokens": 2729,
-   "cost_usd": 0.0144195,
+   "status": "timeout",
+   "exit_code": null,
+   "detonation_s": 242.58,
+   "model_latency_s": 32.84,
+   "model_prompt_tokens": 2308,
+   "model_completion_tokens": 2851,
+   "cost_usd": 0.015001750000000001,
    "outcomes": {
-    "rules": "Clean",
-    "contract": "Clean",
-    "analysis": "Clean",
-    "full": "Clean"
+    "rules": "Could not verify",
+    "contract": "Could not verify",
+    "analysis": "Could not verify",
+    "full": "Could not verify"
    },
    "rules_fired": [],
    "cleared": [],
@@ -1100,6 +1144,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.38,
+   "sensor_witness": false,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1112,11 +1158,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.85,
-   "model_latency_s": 18.05,
-   "model_prompt_tokens": 2343,
-   "model_completion_tokens": 3758,
-   "cost_usd": 0.01890025,
+   "detonation_s": 12.63,
+   "model_latency_s": 31.26,
+   "model_prompt_tokens": 2387,
+   "model_completion_tokens": 2622,
+   "cost_usd": 0.014127250000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1141,6 +1187,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.28,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "lefthook"
@@ -1155,11 +1203,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 1,
-   "detonation_s": 7.74,
-   "model_latency_s": 18.87,
-   "model_prompt_tokens": 3404,
-   "model_completion_tokens": 3111,
-   "cost_usd": 0.01747675,
+   "detonation_s": 35.29,
+   "model_latency_s": 53.0,
+   "model_prompt_tokens": 3447,
+   "model_completion_tokens": 4618,
+   "cost_usd": 0.02393525,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1178,12 +1226,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 5.07,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "better-sqlite3"
@@ -1200,11 +1250,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.25,
-   "model_latency_s": 24.09,
-   "model_prompt_tokens": 2690,
-   "model_completion_tokens": 3801,
-   "cost_usd": 0.01951675,
+   "detonation_s": 4.15,
+   "model_latency_s": 42.17,
+   "model_prompt_tokens": 2733,
+   "model_completion_tokens": 3815,
+   "cost_usd": 0.01963,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1223,12 +1273,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.77,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "bufferutil"
@@ -1243,11 +1295,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.21,
-   "model_latency_s": 22.86,
-   "model_prompt_tokens": 2716,
-   "model_completion_tokens": 4441,
-   "cost_usd": 0.02226925,
+   "detonation_s": 3.37,
+   "model_latency_s": 48.05,
+   "model_prompt_tokens": 2761,
+   "model_completion_tokens": 4357,
+   "cost_usd": 0.021968500000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1272,6 +1324,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "utf-8-validate"
@@ -1286,11 +1340,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.0,
-   "model_latency_s": 17.69,
-   "model_prompt_tokens": 2404,
-   "model_completion_tokens": 3326,
-   "cost_usd": 0.0171405,
+   "detonation_s": 10.51,
+   "model_latency_s": 42.29,
+   "model_prompt_tokens": 2455,
+   "model_completion_tokens": 3665,
+   "cost_usd": 0.018645000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1315,6 +1369,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.18,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher"
@@ -1329,11 +1385,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.39,
-   "model_latency_s": 16.16,
-   "model_prompt_tokens": 2256,
-   "model_completion_tokens": 3039,
-   "cost_usd": 0.01573575,
+   "detonation_s": 19.03,
+   "model_latency_s": 32.26,
+   "model_prompt_tokens": 2318,
+   "model_completion_tokens": 2626,
+   "cost_usd": 0.014058,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1358,6 +1414,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.21,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1370,11 +1428,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 1,
-   "detonation_s": 6.23,
-   "model_latency_s": 21.7,
-   "model_prompt_tokens": 4096,
-   "model_completion_tokens": 3950,
-   "cost_usd": 0.0219075,
+   "detonation_s": 8.2,
+   "model_latency_s": 49.65,
+   "model_prompt_tokens": 4142,
+   "model_completion_tokens": 4394,
+   "cost_usd": 0.023851999999999998,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1399,6 +1457,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.85,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "argon2"
@@ -1414,11 +1474,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.89,
-   "model_latency_s": 30.72,
-   "model_prompt_tokens": 3617,
-   "model_completion_tokens": 5493,
-   "cost_usd": 0.0278665,
+   "detonation_s": 10.94,
+   "model_latency_s": 27.33,
+   "model_prompt_tokens": 3670,
+   "model_completion_tokens": 2354,
+   "cost_usd": 0.014592,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1443,6 +1503,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.6,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "cpu-features",
@@ -1459,11 +1521,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 1,
-   "detonation_s": 3.28,
-   "model_latency_s": 21.86,
-   "model_prompt_tokens": 2326,
-   "model_completion_tokens": 4395,
-   "cost_usd": 0.02158625,
+   "detonation_s": 3.87,
+   "model_latency_s": 83.52,
+   "model_prompt_tokens": 2383,
+   "model_completion_tokens": 6841,
+   "cost_usd": 0.032053,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1488,6 +1550,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.93,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "cpu-features"
@@ -1502,11 +1566,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 8.57,
-   "model_latency_s": 16.34,
-   "model_prompt_tokens": 2423,
-   "model_completion_tokens": 3365,
-   "cost_usd": 0.017329999999999998,
+   "detonation_s": 13.4,
+   "model_latency_s": 47.62,
+   "model_prompt_tokens": 2472,
+   "model_completion_tokens": 4083,
+   "cost_usd": 0.020442750000000003,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1531,6 +1595,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 6.87,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@sentry/node-cpu-profiler"
@@ -1545,11 +1611,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.82,
-   "model_latency_s": 29.94,
-   "model_prompt_tokens": 2199,
-   "model_completion_tokens": 4480,
-   "cost_usd": 0.02178875,
+   "detonation_s": 27.15,
+   "model_latency_s": 68.06,
+   "model_prompt_tokens": 2240,
+   "model_completion_tokens": 5380,
+   "cost_usd": 0.025665,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1559,8 +1625,8 @@
    "rules_fired": [],
    "cleared": [],
    "predicted_domains": [
-    "cdn.playwright.dev",
-    "playwright.azureedge.net"
+    "playwright.azureedge.net",
+    "cdn.playwright.dev"
    ],
    "prediction_error": null,
    "llm_verdict": "benign",
@@ -1571,12 +1637,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.86,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1589,11 +1657,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 7.08,
-   "model_latency_s": 17.4,
-   "model_prompt_tokens": 3215,
-   "model_completion_tokens": 3475,
-   "cost_usd": 0.0187875,
+   "detonation_s": 18.29,
+   "model_latency_s": 46.7,
+   "model_prompt_tokens": 3260,
+   "model_completion_tokens": 3753,
+   "cost_usd": 0.02002525,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1612,12 +1680,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 5,
-    "supported": 5,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 4.74,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "re2"
@@ -1634,11 +1704,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.92,
-   "model_latency_s": 15.19,
-   "model_prompt_tokens": 2667,
-   "model_completion_tokens": 3337,
-   "cost_usd": 0.017516,
+   "detonation_s": 17.6,
+   "model_latency_s": 37.12,
+   "model_prompt_tokens": 2709,
+   "model_completion_tokens": 3343,
+   "cost_usd": 0.017594,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1663,6 +1733,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.38,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "keytar"
@@ -1679,11 +1751,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 1,
-   "detonation_s": 6.46,
-   "model_latency_s": 23.88,
-   "model_prompt_tokens": 3335,
-   "model_completion_tokens": 4670,
-   "cost_usd": 0.02401625,
+   "detonation_s": 13.65,
+   "model_latency_s": 48.36,
+   "model_prompt_tokens": 3379,
+   "model_completion_tokens": 4071,
+   "cost_usd": 0.0215255,
    "outcomes": {
     "rules": "Could not verify",
     "contract": "Could not verify",
@@ -1702,12 +1774,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 5,
-    "supported": 5,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 5.28,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "node-pty"
@@ -1723,11 +1797,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.2,
-   "model_latency_s": 19.61,
-   "model_prompt_tokens": 2350,
-   "model_completion_tokens": 3681,
-   "cost_usd": 0.01858175,
+   "detonation_s": 4.46,
+   "model_latency_s": 45.28,
+   "model_prompt_tokens": 2392,
+   "model_completion_tokens": 3924,
+   "cost_usd": 0.019667,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1746,12 +1820,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.71,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "zeromq"
@@ -1766,11 +1842,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.28,
-   "model_latency_s": 18.64,
-   "model_prompt_tokens": 2223,
-   "model_completion_tokens": 3197,
-   "cost_usd": 0.016366,
+   "detonation_s": 6.04,
+   "model_latency_s": 36.16,
+   "model_prompt_tokens": 2262,
+   "model_completion_tokens": 3157,
+   "cost_usd": 0.016244750000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1795,6 +1871,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.0,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1807,11 +1885,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.85,
-   "model_latency_s": 30.87,
-   "model_prompt_tokens": 2673,
-   "model_completion_tokens": 5239,
-   "cost_usd": 0.025606999999999998,
+   "detonation_s": 10.56,
+   "model_latency_s": 46.97,
+   "model_prompt_tokens": 2727,
+   "model_completion_tokens": 4145,
+   "cost_usd": 0.021025000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1836,6 +1914,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.47,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "classic-level"
@@ -1850,11 +1930,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.14,
-   "model_latency_s": 17.36,
-   "model_prompt_tokens": 2200,
-   "model_completion_tokens": 3158,
-   "cost_usd": 0.0161715,
+   "detonation_s": 4.19,
+   "model_latency_s": 42.11,
+   "model_prompt_tokens": 2242,
+   "model_completion_tokens": 3839,
+   "cost_usd": 0.01911825,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1873,12 +1953,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.78,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -1891,11 +1973,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 7.28,
-   "model_latency_s": 23.7,
-   "model_prompt_tokens": 2390,
-   "model_completion_tokens": 4759,
-   "cost_usd": 0.023213249999999998,
+   "detonation_s": 8.5,
+   "model_latency_s": 34.5,
+   "model_prompt_tokens": 2446,
+   "model_completion_tokens": 2746,
+   "cost_usd": 0.014728,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1914,12 +1996,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 4.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher"
@@ -1934,11 +2018,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 11.78,
-   "model_latency_s": 15.58,
-   "model_prompt_tokens": 2384,
-   "model_completion_tokens": 3027,
-   "cost_usd": 0.01584475,
+   "detonation_s": 94.01,
+   "model_latency_s": 42.12,
+   "model_prompt_tokens": 2435,
+   "model_completion_tokens": 3745,
+   "cost_usd": 0.01896,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -1963,6 +2047,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 8.25,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@swc/core"
@@ -1977,11 +2063,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.49,
-   "model_latency_s": 21.85,
-   "model_prompt_tokens": 2197,
-   "model_completion_tokens": 4327,
-   "cost_usd": 0.021136000000000002,
+   "detonation_s": 21.09,
+   "model_latency_s": 43.25,
+   "model_prompt_tokens": 2238,
+   "model_completion_tokens": 3617,
+   "cost_usd": 0.01816975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2006,6 +2092,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.73,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2018,11 +2106,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 9.04,
-   "model_latency_s": 13.09,
-   "model_prompt_tokens": 2172,
-   "model_completion_tokens": 2507,
-   "cost_usd": 0.01336975,
+   "detonation_s": 10.77,
+   "model_latency_s": 26.05,
+   "model_prompt_tokens": 2220,
+   "model_completion_tokens": 2448,
+   "cost_usd": 0.013179,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2047,6 +2135,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 7.11,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2059,11 +2149,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.8,
-   "model_latency_s": 14.62,
-   "model_prompt_tokens": 2217,
-   "model_completion_tokens": 3040,
-   "cost_usd": 0.01569125,
+   "detonation_s": 5.6,
+   "model_latency_s": 27.52,
+   "model_prompt_tokens": 2272,
+   "model_completion_tokens": 2779,
+   "cost_usd": 0.014650749999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2088,6 +2178,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2100,11 +2192,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 10.87,
-   "model_latency_s": 21.8,
-   "model_prompt_tokens": 2216,
-   "model_completion_tokens": 3821,
-   "cost_usd": 0.01900925,
+   "detonation_s": 14.83,
+   "model_latency_s": 66.72,
+   "model_prompt_tokens": 2269,
+   "model_completion_tokens": 5216,
+   "cost_usd": 0.02500425,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2129,6 +2221,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 6.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2141,11 +2235,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 19.2,
-   "model_latency_s": 26.97,
-   "model_prompt_tokens": 3445,
-   "model_completion_tokens": 4641,
-   "cost_usd": 0.0240305,
+   "detonation_s": 24.26,
+   "model_latency_s": 58.0,
+   "model_prompt_tokens": 3498,
+   "model_completion_tokens": 4738,
+   "cost_usd": 0.024509000000000003,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2170,6 +2264,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 13.26,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "@parcel/watcher",
@@ -2186,11 +2282,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.88,
-   "model_latency_s": 17.29,
-   "model_prompt_tokens": 2181,
-   "model_completion_tokens": 3124,
-   "cost_usd": 0.01600325,
+   "detonation_s": 13.03,
+   "model_latency_s": 31.46,
+   "model_prompt_tokens": 2225,
+   "model_completion_tokens": 2955,
+   "cost_usd": 0.015340000000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2215,6 +2311,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.43,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2227,11 +2325,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.31,
-   "model_latency_s": 14.86,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2558,
-   "cost_usd": 0.01360275,
+   "detonation_s": 3.79,
+   "model_latency_s": 28.8,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 2754,
+   "cost_usd": 0.014492000000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2256,6 +2354,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.86,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2268,11 +2368,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.39,
-   "model_latency_s": 15.94,
-   "model_prompt_tokens": 2190,
-   "model_completion_tokens": 3059,
-   "cost_usd": 0.01573825,
+   "detonation_s": 6.26,
+   "model_latency_s": 28.56,
+   "model_prompt_tokens": 2231,
+   "model_completion_tokens": 2832,
+   "cost_usd": 0.014824750000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2297,6 +2397,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.11,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2309,11 +2411,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.51,
-   "model_latency_s": 15.06,
-   "model_prompt_tokens": 2196,
-   "model_completion_tokens": 3203,
-   "cost_usd": 0.01635775,
+   "detonation_s": 5.2,
+   "model_latency_s": 28.09,
+   "model_prompt_tokens": 2244,
+   "model_completion_tokens": 2786,
+   "cost_usd": 0.0146455,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2338,6 +2440,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.21,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2351,10 +2455,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 4.08,
-   "model_latency_s": 13.81,
-   "model_prompt_tokens": 2181,
-   "model_completion_tokens": 2853,
-   "cost_usd": 0.0148515,
+   "model_latency_s": 27.94,
+   "model_prompt_tokens": 2232,
+   "model_completion_tokens": 2782,
+   "cost_usd": 0.0146135,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2379,6 +2483,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.96,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2391,11 +2497,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.91,
-   "model_latency_s": 12.66,
-   "model_prompt_tokens": 2170,
-   "model_completion_tokens": 2545,
-   "cost_usd": 0.01352875,
+   "detonation_s": 8.39,
+   "model_latency_s": 26.53,
+   "model_prompt_tokens": 2218,
+   "model_completion_tokens": 2558,
+   "cost_usd": 0.013644,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2420,6 +2526,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.93,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2432,11 +2540,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 13.04,
-   "model_latency_s": 17.89,
-   "model_prompt_tokens": 2220,
-   "model_completion_tokens": 3875,
-   "cost_usd": 0.01924375,
+   "detonation_s": 15.19,
+   "model_latency_s": 53.96,
+   "model_prompt_tokens": 2278,
+   "model_completion_tokens": 4861,
+   "cost_usd": 0.02350675,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2461,6 +2569,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 8.0,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2473,11 +2583,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.17,
-   "model_latency_s": 14.17,
-   "model_prompt_tokens": 2177,
-   "model_completion_tokens": 2550,
-   "cost_usd": 0.01355875,
+   "detonation_s": 5.07,
+   "model_latency_s": 41.43,
+   "model_prompt_tokens": 2235,
+   "model_completion_tokens": 3716,
+   "cost_usd": 0.01858675,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2502,6 +2612,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.18,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2514,11 +2626,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.07,
-   "model_latency_s": 11.28,
-   "model_prompt_tokens": 2174,
-   "model_completion_tokens": 2558,
-   "cost_usd": 0.013589,
+   "detonation_s": 3.59,
+   "model_latency_s": 28.64,
+   "model_prompt_tokens": 2217,
+   "model_completion_tokens": 2835,
+   "cost_usd": 0.01482,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2543,6 +2655,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2555,11 +2669,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.87,
-   "model_latency_s": 12.92,
-   "model_prompt_tokens": 2180,
-   "model_completion_tokens": 2515,
-   "cost_usd": 0.013413749999999999,
+   "detonation_s": 7.07,
+   "model_latency_s": 24.53,
+   "model_prompt_tokens": 2231,
+   "model_completion_tokens": 2383,
+   "cost_usd": 0.012916500000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2584,6 +2698,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 4.05,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2596,11 +2712,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.79,
-   "model_latency_s": 20.39,
-   "model_prompt_tokens": 2410,
-   "model_completion_tokens": 3886,
-   "cost_usd": 0.019528,
+   "detonation_s": 5.1,
+   "model_latency_s": 38.24,
+   "model_prompt_tokens": 2456,
+   "model_completion_tokens": 3225,
+   "cost_usd": 0.01677625,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2619,12 +2735,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.58,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "esbuild"
@@ -2639,11 +2757,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 13.83,
-   "model_latency_s": 19.57,
-   "model_prompt_tokens": 2653,
-   "model_completion_tokens": 3957,
-   "cost_usd": 0.0201335,
+   "detonation_s": 12.14,
+   "model_latency_s": 41.12,
+   "model_prompt_tokens": 2704,
+   "model_completion_tokens": 3711,
+   "cost_usd": 0.019151750000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2662,12 +2780,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 9.58,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "nx"
@@ -2682,11 +2802,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.03,
-   "model_latency_s": 12.0,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 2930,
-   "cost_usd": 0.015172499999999998,
+   "detonation_s": 6.15,
+   "model_latency_s": 28.65,
+   "model_prompt_tokens": 2229,
+   "model_completion_tokens": 2668,
+   "cost_usd": 0.01412525,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2711,6 +2831,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.35,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2723,11 +2845,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.4,
-   "model_latency_s": 11.27,
-   "model_prompt_tokens": 2173,
-   "model_completion_tokens": 2722,
-   "cost_usd": 0.01428475,
+   "detonation_s": 4.61,
+   "model_latency_s": 25.94,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 2458,
+   "cost_usd": 0.013234,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2752,6 +2874,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.68,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2764,11 +2888,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.3,
-   "model_latency_s": 17.76,
-   "model_prompt_tokens": 2184,
-   "model_completion_tokens": 3910,
-   "cost_usd": 0.0193475,
+   "detonation_s": 6.63,
+   "model_latency_s": 34.63,
+   "model_prompt_tokens": 2239,
+   "model_completion_tokens": 3311,
+   "cost_usd": 0.0168705,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2787,12 +2911,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.77,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2805,11 +2931,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.58,
-   "model_latency_s": 12.75,
-   "model_prompt_tokens": 2171,
-   "model_completion_tokens": 3075,
-   "cost_usd": 0.0157825,
+   "detonation_s": 5.78,
+   "model_latency_s": 31.76,
+   "model_prompt_tokens": 2220,
+   "model_completion_tokens": 3079,
+   "cost_usd": 0.01586075,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2834,6 +2960,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.61,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2846,11 +2974,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.85,
-   "model_latency_s": 12.73,
-   "model_prompt_tokens": 2193,
-   "model_completion_tokens": 3030,
-   "cost_usd": 0.015618749999999999,
+   "detonation_s": 5.33,
+   "model_latency_s": 26.08,
+   "model_prompt_tokens": 2235,
+   "model_completion_tokens": 2430,
+   "cost_usd": 0.01312125,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2875,6 +3003,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.09,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2887,11 +3017,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.22,
-   "model_latency_s": 10.61,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2630,
-   "cost_usd": 0.01390875,
+   "detonation_s": 3.28,
+   "model_latency_s": 31.23,
+   "model_prompt_tokens": 2241,
+   "model_completion_tokens": 3100,
+   "cost_usd": 0.015976249999999997,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2916,6 +3046,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2928,11 +3060,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.36,
-   "model_latency_s": 10.36,
-   "model_prompt_tokens": 2174,
-   "model_completion_tokens": 2496,
-   "cost_usd": 0.0133255,
+   "detonation_s": 4.6,
+   "model_latency_s": 31.07,
+   "model_prompt_tokens": 2223,
+   "model_completion_tokens": 2794,
+   "cost_usd": 0.01465325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2957,6 +3089,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -2969,11 +3103,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.54,
-   "model_latency_s": 11.14,
-   "model_prompt_tokens": 2181,
-   "model_completion_tokens": 2764,
-   "cost_usd": 0.01447325,
+   "detonation_s": 3.47,
+   "model_latency_s": 26.54,
+   "model_prompt_tokens": 2237,
+   "model_completion_tokens": 2604,
+   "cost_usd": 0.01386325,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -2998,6 +3132,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.1,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3010,11 +3146,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.31,
-   "model_latency_s": 13.8,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 3285,
-   "cost_usd": 0.01668125,
+   "detonation_s": 4.46,
+   "model_latency_s": 33.31,
+   "model_prompt_tokens": 2227,
+   "model_completion_tokens": 2873,
+   "cost_usd": 0.014994,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3039,6 +3175,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.73,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3051,11 +3189,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.3,
-   "model_latency_s": 12.83,
-   "model_prompt_tokens": 2195,
-   "model_completion_tokens": 2802,
-   "cost_usd": 0.01465225,
+   "detonation_s": 3.27,
+   "model_latency_s": 33.57,
+   "model_prompt_tokens": 2236,
+   "model_completion_tokens": 3304,
+   "cost_usd": 0.016837,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3080,6 +3218,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3092,11 +3232,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.1,
-   "model_latency_s": 10.02,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 2445,
-   "cost_usd": 0.01311125,
+   "detonation_s": 3.13,
+   "model_latency_s": 34.72,
+   "model_prompt_tokens": 2227,
+   "model_completion_tokens": 3098,
+   "cost_usd": 0.01595025,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3121,6 +3261,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3133,11 +3275,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.04,
-   "model_latency_s": 11.25,
-   "model_prompt_tokens": 2178,
-   "model_completion_tokens": 2488,
-   "cost_usd": 0.0132965,
+   "detonation_s": 4.96,
+   "model_latency_s": 32.5,
+   "model_prompt_tokens": 2226,
+   "model_completion_tokens": 2988,
+   "cost_usd": 0.015481499999999999,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3162,6 +3304,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.85,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3174,11 +3318,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.64,
-   "model_latency_s": 11.08,
-   "model_prompt_tokens": 2169,
-   "model_completion_tokens": 2746,
-   "cost_usd": 0.014381749999999999,
+   "detonation_s": 3.09,
+   "model_latency_s": 40.33,
+   "model_prompt_tokens": 2242,
+   "model_completion_tokens": 3671,
+   "cost_usd": 0.01840425,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3197,12 +3341,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3215,11 +3361,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.11,
-   "model_latency_s": 10.03,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 2398,
-   "cost_usd": 0.0129115,
+   "detonation_s": 3.1,
+   "model_latency_s": 28.2,
+   "model_prompt_tokens": 2222,
+   "model_completion_tokens": 2580,
+   "cost_usd": 0.0137425,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3244,6 +3390,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3256,11 +3404,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.65,
-   "model_latency_s": 10.81,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 2544,
-   "cost_usd": 0.013532,
+   "detonation_s": 3.72,
+   "model_latency_s": 31.33,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 2871,
+   "cost_usd": 0.01498925,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3285,6 +3433,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.91,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3297,11 +3447,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.11,
-   "model_latency_s": 10.94,
-   "model_prompt_tokens": 2175,
-   "model_completion_tokens": 2725,
-   "cost_usd": 0.0143,
+   "detonation_s": 3.12,
+   "model_latency_s": 30.53,
+   "model_prompt_tokens": 2224,
+   "model_completion_tokens": 2711,
+   "cost_usd": 0.014301749999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3326,6 +3476,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3338,11 +3490,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.09,
-   "model_latency_s": 10.12,
-   "model_prompt_tokens": 2174,
-   "model_completion_tokens": 2463,
-   "cost_usd": 0.01318525,
+   "detonation_s": 3.11,
+   "model_latency_s": 35.25,
+   "model_prompt_tokens": 2212,
+   "model_completion_tokens": 3152,
+   "cost_usd": 0.016161000000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3367,6 +3519,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3379,11 +3533,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.54,
-   "model_latency_s": 11.94,
-   "model_prompt_tokens": 2171,
-   "model_completion_tokens": 2651,
-   "cost_usd": 0.0139805,
+   "detonation_s": 3.6,
+   "model_latency_s": 25.64,
+   "model_prompt_tokens": 2216,
+   "model_completion_tokens": 2316,
+   "cost_usd": 0.012613,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3408,6 +3562,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.18,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3420,11 +3576,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.05,
-   "model_latency_s": 12.44,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 2988,
-   "cost_usd": 0.015418999999999999,
+   "detonation_s": 3.1,
+   "model_latency_s": 33.25,
+   "model_prompt_tokens": 2218,
+   "model_completion_tokens": 2990,
+   "cost_usd": 0.01548,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3449,6 +3605,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3461,11 +3619,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.12,
-   "model_latency_s": 11.32,
-   "model_prompt_tokens": 2172,
-   "model_completion_tokens": 2641,
-   "cost_usd": 0.01393925,
+   "detonation_s": 3.33,
+   "model_latency_s": 33.89,
+   "model_prompt_tokens": 2229,
+   "model_completion_tokens": 3178,
+   "cost_usd": 0.016292749999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3490,6 +3648,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3502,11 +3662,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.09,
-   "model_latency_s": 10.73,
-   "model_prompt_tokens": 2174,
-   "model_completion_tokens": 2511,
-   "cost_usd": 0.013389249999999998,
+   "detonation_s": 3.1,
+   "model_latency_s": 25.15,
+   "model_prompt_tokens": 2215,
+   "model_completion_tokens": 2412,
+   "cost_usd": 0.01301975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3531,6 +3691,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3543,11 +3705,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.8,
-   "model_latency_s": 11.08,
-   "model_prompt_tokens": 2183,
-   "model_completion_tokens": 2512,
-   "cost_usd": 0.01340475,
+   "detonation_s": 3.87,
+   "model_latency_s": 35.44,
+   "model_prompt_tokens": 2234,
+   "model_completion_tokens": 3158,
+   "cost_usd": 0.016214,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3572,6 +3734,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.85,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3584,11 +3748,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.32,
-   "model_latency_s": 10.67,
-   "model_prompt_tokens": 2179,
-   "model_completion_tokens": 2388,
-   "cost_usd": 0.01287275,
+   "detonation_s": 4.58,
+   "model_latency_s": 45.56,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 4112,
+   "cost_usd": 0.0202635,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3613,6 +3777,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.66,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3625,11 +3791,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.09,
-   "model_latency_s": 11.11,
-   "model_prompt_tokens": 2187,
-   "model_completion_tokens": 2352,
-   "cost_usd": 0.01272975,
+   "detonation_s": 3.12,
+   "model_latency_s": 29.15,
+   "model_prompt_tokens": 2234,
+   "model_completion_tokens": 2661,
+   "cost_usd": 0.01410175,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3654,6 +3820,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3666,11 +3834,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.09,
-   "model_latency_s": 11.04,
-   "model_prompt_tokens": 2180,
-   "model_completion_tokens": 2562,
-   "cost_usd": 0.0136135,
+   "detonation_s": 3.11,
+   "model_latency_s": 29.05,
+   "model_prompt_tokens": 2235,
+   "model_completion_tokens": 2735,
+   "cost_usd": 0.0144175,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3695,6 +3863,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3707,11 +3877,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.67,
-   "model_latency_s": 16.31,
-   "model_prompt_tokens": 2174,
-   "model_completion_tokens": 3739,
-   "cost_usd": 0.01860825,
+   "detonation_s": 3.76,
+   "model_latency_s": 43.35,
+   "model_prompt_tokens": 2224,
+   "model_completion_tokens": 3882,
+   "cost_usd": 0.0192785,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3730,12 +3900,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.97,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3748,11 +3920,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.12,
-   "model_latency_s": 15.08,
-   "model_prompt_tokens": 2186,
-   "model_completion_tokens": 3211,
-   "cost_usd": 0.016379249999999998,
+   "detonation_s": 3.19,
+   "model_latency_s": 40.47,
+   "model_prompt_tokens": 2247,
+   "model_completion_tokens": 4191,
+   "cost_usd": 0.0206205,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3777,6 +3949,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3789,11 +3963,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.18,
-   "model_latency_s": 11.07,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2632,
-   "cost_usd": 0.013917249999999999,
+   "detonation_s": 3.24,
+   "model_latency_s": 29.69,
+   "model_prompt_tokens": 2238,
+   "model_completion_tokens": 2588,
+   "cost_usd": 0.0137965,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3818,6 +3992,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3830,11 +4006,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.21,
-   "model_latency_s": 11.31,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2496,
-   "cost_usd": 0.01333925,
+   "detonation_s": 4.04,
+   "model_latency_s": 31.53,
+   "model_prompt_tokens": 2237,
+   "model_completion_tokens": 3011,
+   "cost_usd": 0.015593000000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3859,6 +4035,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.39,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3871,11 +4049,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.17,
-   "model_latency_s": 14.88,
-   "model_prompt_tokens": 2170,
-   "model_completion_tokens": 2595,
-   "cost_usd": 0.01374125,
+   "detonation_s": 3.19,
+   "model_latency_s": 27.01,
+   "model_prompt_tokens": 2224,
+   "model_completion_tokens": 2440,
+   "cost_usd": 0.013149999999999998,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3900,6 +4078,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3912,11 +4092,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.83,
-   "model_latency_s": 11.53,
-   "model_prompt_tokens": 2199,
-   "model_completion_tokens": 2688,
-   "cost_usd": 0.01417275,
+   "detonation_s": 3.95,
+   "model_latency_s": 31.89,
+   "model_prompt_tokens": 2243,
+   "model_completion_tokens": 2826,
+   "cost_usd": 0.014814250000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3941,6 +4121,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.81,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3953,11 +4135,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.71,
-   "model_latency_s": 18.32,
-   "model_prompt_tokens": 2182,
-   "model_completion_tokens": 2942,
-   "cost_usd": 0.015231,
+   "detonation_s": 3.9,
+   "model_latency_s": 30.08,
+   "model_prompt_tokens": 2238,
+   "model_completion_tokens": 2464,
+   "cost_usd": 0.0132695,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -3982,6 +4164,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.77,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -3994,11 +4178,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.09,
-   "model_latency_s": 12.37,
-   "model_prompt_tokens": 2195,
-   "model_completion_tokens": 2646,
-   "cost_usd": 0.01398925,
+   "detonation_s": 3.07,
+   "model_latency_s": 36.06,
+   "model_prompt_tokens": 2245,
+   "model_completion_tokens": 3274,
+   "cost_usd": 0.01672075,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4023,6 +4207,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4035,11 +4221,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.49,
-   "model_latency_s": 14.15,
-   "model_prompt_tokens": 2187,
-   "model_completion_tokens": 2842,
-   "cost_usd": 0.01481225,
+   "detonation_s": 3.6,
+   "model_latency_s": 37.23,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 3097,
+   "cost_usd": 0.015949750000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4064,6 +4250,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.01,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4076,11 +4264,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.69,
-   "model_latency_s": 14.93,
-   "model_prompt_tokens": 2173,
-   "model_completion_tokens": 2392,
-   "cost_usd": 0.01288225,
+   "detonation_s": 5.16,
+   "model_latency_s": 47.74,
+   "model_prompt_tokens": 2223,
+   "model_completion_tokens": 3972,
+   "cost_usd": 0.01965975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4105,6 +4293,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.26,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4117,11 +4307,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.12,
-   "model_latency_s": 15.64,
-   "model_prompt_tokens": 2182,
-   "model_completion_tokens": 3070,
-   "cost_usd": 0.015774999999999997,
+   "detonation_s": 5.37,
+   "model_latency_s": 41.07,
+   "model_prompt_tokens": 2241,
+   "model_completion_tokens": 2612,
+   "cost_usd": 0.013902250000000001,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4146,6 +4336,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.34,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4158,11 +4350,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.25,
-   "model_latency_s": 25.76,
-   "model_prompt_tokens": 2183,
-   "model_completion_tokens": 3758,
-   "cost_usd": 0.01870025,
+   "detonation_s": 5.36,
+   "model_latency_s": 32.07,
+   "model_prompt_tokens": 2231,
+   "model_completion_tokens": 2670,
+   "cost_usd": 0.01413625,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4187,6 +4379,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.94,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4199,11 +4393,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.6,
-   "model_latency_s": 21.85,
-   "model_prompt_tokens": 2176,
-   "model_completion_tokens": 3357,
-   "cost_usd": 0.01698725,
+   "detonation_s": 5.04,
+   "model_latency_s": 31.73,
+   "model_prompt_tokens": 2221,
+   "model_completion_tokens": 2370,
+   "cost_usd": 0.01284875,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4228,6 +4422,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 2.31,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4240,11 +4436,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.27,
-   "model_latency_s": 20.62,
-   "model_prompt_tokens": 2173,
-   "model_completion_tokens": 3204,
-   "cost_usd": 0.01633325,
+   "detonation_s": 3.82,
+   "model_latency_s": 34.08,
+   "model_prompt_tokens": 2226,
+   "model_completion_tokens": 2896,
+   "cost_usd": 0.0150905,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4269,6 +4465,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.0,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4281,11 +4479,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 4.04,
-   "model_latency_s": 17.64,
-   "model_prompt_tokens": 2182,
-   "model_completion_tokens": 2761,
-   "cost_usd": 0.01446175,
+   "detonation_s": 8.31,
+   "model_latency_s": 35.87,
+   "model_prompt_tokens": 2230,
+   "model_completion_tokens": 3098,
+   "cost_usd": 0.015954,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4310,6 +4508,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.86,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4322,11 +4522,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.16,
-   "model_latency_s": 15.3,
-   "model_prompt_tokens": 2192,
-   "model_completion_tokens": 2835,
-   "cost_usd": 0.01478875,
+   "detonation_s": 5.14,
+   "model_latency_s": 43.23,
+   "model_prompt_tokens": 2243,
+   "model_completion_tokens": 3720,
+   "cost_usd": 0.018613750000000002,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4351,6 +4551,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 3.09,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4363,11 +4565,11 @@
    "note": "",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 3.27,
-   "model_latency_s": 13.58,
-   "model_prompt_tokens": 2185,
-   "model_completion_tokens": 2619,
-   "cost_usd": 0.013862,
+   "detonation_s": 3.35,
+   "model_latency_s": 35.08,
+   "model_prompt_tokens": 2234,
+   "model_completion_tokens": 3060,
+   "cost_usd": 0.0157975,
    "outcomes": {
     "rules": "Clean",
     "contract": "Clean",
@@ -4392,6 +4594,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [],
    "domains": [
@@ -4404,11 +4608,11 @@
    "note": "E4: curl exfil of env to a raw IP",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 6.09,
-   "model_latency_s": 11.78,
-   "model_prompt_tokens": 3036,
-   "model_completion_tokens": 2371,
-   "cost_usd": 0.013871749999999999,
+   "detonation_s": 5.89,
+   "model_latency_s": 32.75,
+   "model_prompt_tokens": 3079,
+   "model_completion_tokens": 3017,
+   "cost_usd": 0.016671,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4431,12 +4635,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.6,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4453,11 +4659,11 @@
    "note": "download-and-execute via wget | sh",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 207.92,
-   "model_latency_s": 19.0,
-   "model_prompt_tokens": 2617,
-   "model_completion_tokens": 3082,
-   "cost_usd": 0.01636975,
+   "detonation_s": 207.91,
+   "model_latency_s": 33.08,
+   "model_prompt_tokens": 2661,
+   "model_completion_tokens": 2818,
+   "cost_usd": 0.01530275,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4479,12 +4685,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.75,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4501,11 +4709,11 @@
    "note": "bash /dev/tcp reverse shell",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.9,
-   "model_latency_s": 11.98,
-   "model_prompt_tokens": 2846,
-   "model_completion_tokens": 2663,
-   "cost_usd": 0.01487525,
+   "detonation_s": 5.88,
+   "model_latency_s": 30.75,
+   "model_prompt_tokens": 2897,
+   "model_completion_tokens": 2987,
+   "cost_usd": 0.016316,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4527,12 +4735,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 2,
+    "supported": 2,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.59,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4549,11 +4759,11 @@
    "note": "base64-decoded command piped to sh",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.91,
-   "model_latency_s": 11.37,
-   "model_prompt_tokens": 2850,
-   "model_completion_tokens": 2787,
-   "cost_usd": 0.01540725,
+   "detonation_s": 5.9,
+   "model_latency_s": 33.14,
+   "model_prompt_tokens": 2896,
+   "model_completion_tokens": 2944,
+   "cost_usd": 0.016132,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4576,12 +4786,14 @@
    "explain_decoded": true,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 4,
+    "supported": 4,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.6,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4598,11 +4810,11 @@
    "note": "pure-JS raw socket, no external tools",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.93,
-   "model_latency_s": 12.48,
-   "model_prompt_tokens": 2545,
-   "model_completion_tokens": 3080,
-   "cost_usd": 0.01627125,
+   "detonation_s": 5.94,
+   "model_latency_s": 30.37,
+   "model_prompt_tokens": 2595,
+   "model_completion_tokens": 3014,
+   "cost_usd": 0.01605325,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4629,6 +4841,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -4646,11 +4860,11 @@
    "note": "env exfil over HTTPS from node",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.99,
-   "model_latency_s": 20.94,
-   "model_prompt_tokens": 2599,
-   "model_completion_tokens": 4309,
-   "cost_usd": 0.021561999999999998,
+   "detonation_s": 6.01,
+   "model_latency_s": 44.39,
+   "model_prompt_tokens": 2650,
+   "model_completion_tokens": 4041,
+   "cost_usd": 0.02048675,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4677,6 +4891,8 @@
     "source_inferred": 1,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.68,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -4695,10 +4911,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 5.95,
-   "model_latency_s": 23.25,
-   "model_prompt_tokens": 2515,
-   "model_completion_tokens": 4918,
-   "cost_usd": 0.02404525,
+   "model_latency_s": 52.12,
+   "model_prompt_tokens": 2565,
+   "model_completion_tokens": 4764,
+   "cost_usd": 0.02345325,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4719,12 +4935,14 @@
    "explain_decoded": true,
    "explain_attributed": null,
    "grounding": {
-    "claims": 2,
-    "supported": 2,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4741,11 +4959,11 @@
    "note": "credential-file read + exfil",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.93,
-   "model_latency_s": 19.62,
-   "model_prompt_tokens": 2746,
-   "model_completion_tokens": 4257,
-   "cost_usd": 0.02152475,
+   "detonation_s": 5.95,
+   "model_latency_s": 50.55,
+   "model_prompt_tokens": 2799,
+   "model_completion_tokens": 4398,
+   "cost_usd": 0.02219025,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4773,6 +4991,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:4"
@@ -4790,11 +5010,11 @@
    "note": "non-node interpreter opens the socket",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.92,
-   "model_latency_s": 15.22,
-   "model_prompt_tokens": 2539,
-   "model_completion_tokens": 3480,
-   "cost_usd": 0.01796375,
+   "detonation_s": 6.78,
+   "model_latency_s": 32.72,
+   "model_prompt_tokens": 2588,
+   "model_completion_tokens": 2883,
+   "cost_usd": 0.01548775,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4815,12 +5035,14 @@
    "explain_decoded": null,
    "explain_attributed": null,
    "grounding": {
-    "claims": 3,
-    "supported": 3,
+    "claims": 2,
+    "supported": 2,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 1.49,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4838,10 +5060,10 @@
    "status": "completed",
    "exit_code": 0,
    "detonation_s": 2.97,
-   "model_latency_s": 23.36,
-   "model_prompt_tokens": 2490,
-   "model_completion_tokens": 4844,
-   "cost_usd": 0.0236995,
+   "model_latency_s": 60.24,
+   "model_prompt_tokens": 2540,
+   "model_completion_tokens": 5111,
+   "cost_usd": 0.024896750000000002,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4868,6 +5090,8 @@
     "source_inferred": 1,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.66,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -4884,11 +5108,11 @@
    "note": "data encoded into DNS labels; no TCP connection at all",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 2.95,
-   "model_latency_s": 19.22,
-   "model_prompt_tokens": 2511,
-   "model_completion_tokens": 4314,
-   "cost_usd": 0.02147325,
+   "detonation_s": 2.91,
+   "model_latency_s": 54.89,
+   "model_prompt_tokens": 2558,
+   "model_completion_tokens": 4619,
+   "cost_usd": 0.02282825,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -4909,12 +5133,14 @@
    "explain_decoded": true,
    "explain_attributed": null,
    "grounding": {
-    "claims": 2,
-    "supported": 2,
+    "claims": 3,
+    "supported": 3,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -4927,16 +5153,16 @@
    "note": "exfil to a resolvable domain (dummy body) instead of a raw IP",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 2.96,
-   "model_latency_s": 21.9,
-   "model_prompt_tokens": 2460,
-   "model_completion_tokens": 4568,
-   "cost_usd": 0.022489000000000002,
+   "detonation_s": 2.99,
+   "model_latency_s": 42.83,
+   "model_prompt_tokens": 2503,
+   "model_completion_tokens": 3664,
+   "cost_usd": 0.01870075,
    "outcomes": {
     "rules": "Needs review",
     "contract": "Needs review",
     "analysis": "Blocked",
-    "full": "Needs review"
+    "full": "Blocked"
    },
    "rules_fired": [
     "NET_UNLISTED_DOMAIN"
@@ -4944,7 +5170,7 @@
    "cleared": [],
    "predicted_domains": [],
    "prediction_error": null,
-   "llm_verdict": "suspicious",
+   "llm_verdict": "malicious",
    "llm_error": null,
    "injection_flagged": false,
    "prompt_guard_max": 0.0007,
@@ -4958,6 +5184,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -4972,11 +5200,11 @@
    "note": "exfil + prompt injection in body and package.json",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.92,
-   "model_latency_s": 10.73,
-   "model_prompt_tokens": 3109,
-   "model_completion_tokens": 2616,
-   "cost_usd": 0.01500425,
+   "detonation_s": 5.91,
+   "model_latency_s": 32.78,
+   "model_prompt_tokens": 3168,
+   "model_completion_tokens": 3230,
+   "cost_usd": 0.0176875,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5005,6 +5233,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.6,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:6"
    ],
@@ -5021,11 +5251,11 @@
    "note": "payload fires 4 s after the script starts",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 9.94,
-   "model_latency_s": 17.32,
-   "model_prompt_tokens": 2563,
-   "model_completion_tokens": 3429,
-   "cost_usd": 0.017777,
+   "detonation_s": 9.97,
+   "model_latency_s": 46.78,
+   "model_prompt_tokens": 2610,
+   "model_completion_tokens": 4019,
+   "cost_usd": 0.02034325,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5052,6 +5282,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "scripts/setup.js:2"
@@ -5069,11 +5301,11 @@
    "note": "env exfil over UDP (no TCP connection at all)",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 2.95,
-   "model_latency_s": 17.43,
-   "model_prompt_tokens": 2404,
-   "model_completion_tokens": 3660,
-   "cost_usd": 0.01856,
+   "detonation_s": 2.92,
+   "model_latency_s": 48.08,
+   "model_prompt_tokens": 2454,
+   "model_completion_tokens": 4210,
+   "cost_usd": 0.02096,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5100,6 +5332,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
    "guilty_lines": [],
    "script_runs": [
     "(project)"
@@ -5114,11 +5348,11 @@
    "note": "steals $GITHUB_TOKEN from the environment, sends it in a header",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 5.91,
-   "model_latency_s": 13.52,
-   "model_prompt_tokens": 2656,
-   "model_completion_tokens": 3351,
-   "cost_usd": 0.01756175,
+   "detonation_s": 5.93,
+   "model_latency_s": 36.5,
+   "model_prompt_tokens": 2709,
+   "model_completion_tokens": 3302,
+   "cost_usd": 0.01741975,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5147,6 +5381,8 @@
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.6,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5"
    ],
@@ -5163,11 +5399,11 @@
    "note": "ua-parser-js 0.7.29 (Oct 2021): geofenced miner download via preinstall",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 12.09,
-   "model_latency_s": 15.71,
-   "model_prompt_tokens": 4504,
-   "model_completion_tokens": 4000,
-   "cost_usd": 0.022629999999999997,
+   "detonation_s": 12.05,
+   "model_latency_s": 36.55,
+   "model_prompt_tokens": 4548,
+   "model_completion_tokens": 3281,
+   "cost_usd": 0.01962925,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5191,12 +5427,14 @@
    "explain_decoded": true,
    "explain_attributed": true,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 0.86,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "payloads/r01-ua-parser-js/node_modules/ua-parser-js/preinstall.sh:4",
@@ -5216,11 +5454,11 @@
    "note": "Shai-Hulud (Sept 2025): real TruffleHog from GitHub, secrets to webhook.site",
    "status": "completed",
    "exit_code": 0,
-   "detonation_s": 9.56,
-   "model_latency_s": 14.78,
-   "model_prompt_tokens": 5397,
-   "model_completion_tokens": 3941,
-   "cost_usd": 0.023495500000000002,
+   "detonation_s": 10.09,
+   "model_latency_s": 43.29,
+   "model_prompt_tokens": 5440,
+   "model_completion_tokens": 4284,
+   "cost_usd": 0.025006999999999998,
    "outcomes": {
     "rules": "Blocked",
     "contract": "Blocked",
@@ -5244,12 +5482,14 @@
    "explain_decoded": true,
    "explain_attributed": true,
    "grounding": {
-    "claims": 4,
-    "supported": 4,
+    "claims": 5,
+    "supported": 5,
     "rejected": 0,
     "source_inferred": 0,
     "unsupported_mentions": 0
    },
+   "cpu_s": 4.83,
+   "sensor_witness": true,
    "guilty_lines": [
     "package.json:5",
     "payloads/r02-shai-hulud/node_modules/tinycolor-recon/bundle.js:11",
@@ -5263,6 +5503,937 @@
     "release-assets.githubusercontent.com",
     "webhook.site"
    ]
+  },
+  {
+   "id": "rt01-env-https",
+   "kind": "redteam",
+   "note": "control: env exfil over HTTPS to a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.0,
+   "model_latency_s": 48.78,
+   "model_prompt_tokens": 2628,
+   "model_completion_tokens": 4157,
+   "cost_usd": 0.02095225,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0022,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.68,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt02-ssh-key",
+   "kind": "redteam",
+   "note": "control: reads the bait SSH key and exfiltrates it",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.96,
+   "model_latency_s": 35.24,
+   "model_prompt_tokens": 2801,
+   "model_completion_tokens": 3259,
+   "cost_usd": 0.017352,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:3"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt03-revshell",
+   "kind": "redteam",
+   "note": "control: /dev/tcp reverse shell",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.91,
+   "model_latency_s": 27.61,
+   "model_prompt_tokens": 2893,
+   "model_completion_tokens": 2533,
+   "cost_usd": 0.014381499999999998,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_INTERACTIVE_SHELL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.6,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt04-fetch-exec",
+   "kind": "redteam",
+   "note": "control: download-and-execute",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 207.93,
+   "model_latency_s": 29.96,
+   "model_prompt_tokens": 2659,
+   "model_completion_tokens": 2834,
+   "cost_usd": 0.01536825,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.7,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt05-charcode",
+   "kind": "redteam",
+   "note": "control: char-code obfuscated raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.98,
+   "model_latency_s": 49.68,
+   "model_prompt_tokens": 2545,
+   "model_completion_tokens": 4168,
+   "cost_usd": 0.02089525,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "rt06-persist-rcfile",
+   "kind": "redteam",
+   "note": "GAP: writes a persistence line to ~/.bashrc; no network at install",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.26,
+   "model_latency_s": 45.76,
+   "model_prompt_tokens": 2361,
+   "model_completion_tokens": 4011,
+   "cost_usd": 0.019998,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.68,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt07-self-propagate",
+   "kind": "redteam",
+   "note": "GAP: modifies a sibling node_modules package; no network at install",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.92,
+   "model_latency_s": 51.81,
+   "model_prompt_tokens": 2384,
+   "model_completion_tokens": 4089,
+   "cost_usd": 0.02035825,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0013,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt08-local-miner",
+   "kind": "redteam",
+   "note": "GAP: local CPU miner, no egress and no dropped binary",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 10.95,
+   "model_latency_s": 37.03,
+   "model_prompt_tokens": 2318,
+   "model_completion_tokens": 3297,
+   "cost_usd": 0.01690975,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Clean",
+    "full": "Clean"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "benign",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0006,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 8.16,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt09-dropped-binary",
+   "kind": "redteam",
+   "note": "writes a stage to /tmp, chmods +x and runs it (expect EXEC_DROPPED_BINARY)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.94,
+   "model_latency_s": 59.93,
+   "model_prompt_tokens": 2670,
+   "model_completion_tokens": 5098,
+   "cost_usd": 0.025004,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_DROPPED_BINARY"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "rt10-ci-dormant",
+   "kind": "redteam",
+   "note": "GAP: sandbox-aware; dormant when CI is detected",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.94,
+   "model_latency_s": 69.01,
+   "model_prompt_tokens": 2369,
+   "model_completion_tokens": 5636,
+   "cost_usd": 0.02691425,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm01-env-exfil",
+   "kind": "redteam-ind",
+   "note": "g1: environment-variable exfiltration via HTTP POST to a raw IP",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.98,
+   "model_latency_s": 86.1,
+   "model_prompt_tokens": 2641,
+   "model_completion_tokens": 6732,
+   "cost_usd": 0.03191225,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0432,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:2"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.1"
+   ]
+  },
+  {
+   "id": "gm02-cred-harvest",
+   "kind": "redteam-ind",
+   "note": "g2: harvest ~/.ssh and ~/.aws credential files, upload them",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.98,
+   "model_latency_s": 49.44,
+   "model_prompt_tokens": 2702,
+   "model_completion_tokens": 4200,
+   "cost_usd": 0.0212275,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:6"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm03-obfuscated-exec",
+   "kind": "redteam-ind",
+   "note": "g3: base64 payload decoded in-memory and run via child_process.exec",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.96,
+   "model_latency_s": 44.28,
+   "model_prompt_tokens": 2907,
+   "model_completion_tokens": 3719,
+   "cost_usd": 0.0194395,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL",
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.66,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.10"
+   ]
+  },
+  {
+   "id": "gm04-rcfile-persist",
+   "kind": "redteam-ind",
+   "note": "g4: shell-profile modification (~/.bashrc, ~/.zshrc) for persistence",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.92,
+   "model_latency_s": 53.26,
+   "model_prompt_tokens": 2370,
+   "model_completion_tokens": 4149,
+   "cost_usd": 0.02059575,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm05-cron-inject",
+   "kind": "redteam-ind",
+   "note": "g5: cron-job injection fetching a script from a .invalid host",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.9,
+   "model_latency_s": 36.27,
+   "model_prompt_tokens": 2227,
+   "model_completion_tokens": 2941,
+   "cost_usd": 0.015283,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0015,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 1,
+    "supported": 1,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm06-binary-drop",
+   "kind": "redteam-ind",
+   "note": "g6: download an external binary, chmod +x, run it detached",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.96,
+   "model_latency_s": 49.0,
+   "model_prompt_tokens": 2846,
+   "model_completion_tokens": 4075,
+   "cost_usd": 0.02087625,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0009,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.63,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:4",
+    "scripts/setup.js:8"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.50"
+   ]
+  },
+  {
+   "id": "gm07-recon",
+   "kind": "redteam-ind",
+   "note": "g7: host fingerprinting (uname/whoami/ifconfig) written out and sent",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.92,
+   "model_latency_s": 41.88,
+   "model_prompt_tokens": 2766,
+   "model_completion_tokens": 3568,
+   "cost_usd": 0.0186215,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "EXEC_NET_TOOL"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0063,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm08-cpu-miner",
+   "kind": "redteam-ind",
+   "note": "g8: detached background process doing heavy hashing (simulated cryptominer)",
+   "status": "timeout",
+   "exit_code": null,
+   "detonation_s": 242.76,
+   "model_latency_s": 62.94,
+   "model_prompt_tokens": 2487,
+   "model_completion_tokens": 5084,
+   "cost_usd": 0.024715749999999998,
+   "outcomes": {
+    "rules": "Could not verify",
+    "contract": "Could not verify",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0014,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 36.32,
+   "sensor_witness": false,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm09-backdoor-listen",
+   "kind": "redteam-ind",
+   "note": "g9: opens a listening TCP server (backdoor / bind shell)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 5.97,
+   "model_latency_s": 55.22,
+   "model_prompt_tokens": 2372,
+   "model_completion_tokens": 4424,
+   "cost_usd": 0.021767,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0007,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "gm10-dep-tamper",
+   "kind": "redteam-ind",
+   "note": "g10: local supply-chain tampering \u2014 modifies a sibling node_modules package",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.96,
+   "model_latency_s": 53.89,
+   "model_prompt_tokens": 2435,
+   "model_completion_tokens": 4557,
+   "cost_usd": 0.022411,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.001,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
   }
  ]
 }
