@@ -7,11 +7,11 @@ import json
 import sys
 from pathlib import Path
 
-from eval.cases import CASES, INCIDENTS, MALICIOUS, REDTEAM
+from eval.cases import CASES, INCIDENTS, MALICIOUS, REDTEAM, REDTEAM_IND
 
 
 def main(checkout: Path, manifest: Path) -> None:
-    for case in MALICIOUS + INCIDENTS + REDTEAM:
+    for case in MALICIOUS + INCIDENTS + REDTEAM + REDTEAM_IND:
         for name, data in case.payload_files().items():
             dest = checkout / "payloads" / case.id / name
             dest.parent.mkdir(parents=True, exist_ok=True)
