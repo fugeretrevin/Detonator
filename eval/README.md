@@ -74,6 +74,13 @@ rules/contract because `gm08-cpu-miner` hit the timeout this run; the model stil
   or IP absent from both the telemetry and the diff. Measured by `brain/evidence.py`, which
   rejects an event id that isn't in that job's index (ids are an HMAC of the job id, so a PR
   author can't forge one) and requires an `observed` claim to cite an event of its own type.
+  **What that number does and does not cover.** It checks every entry in `key_evidence`, which
+  must cite an event of the right type, plus a regex for hostnames and IPs anywhere in the
+  prose. It does **not** check other factual assertions made in prose without a citation — a
+  sentence like *"it appended to `~/.bashrc`"* when nothing did would pass. So read it as a
+  measure of **citation discipline and the absence of invented hosts**, not as total factual
+  accuracy. Widening it to file paths, package and process names and ports is planned
+  (`docs/WEAKPOINTS.md`, W4).
 - **We measured whether CPU time could close the `rt08` gap, and it can't.** With cgroup
   sampling on all 142 cases, `rt08-local-miner` used **8.16 s** of CPU while **eight benign
   packages used more** — playwright-chromium 26.0, prisma 25.1, puppeteer 21.3, parcel 13.3,

@@ -212,11 +212,17 @@ instead of passing as a quiet install, because "no events" and "nothing happened
 same thing. 139 runs recorded both markers, and the 3 that recorded only the first are exactly
 the 3 that hit the timeout and were killed.
 
-**And 452 of 452 factual claims the model made cite a real kernel event of the right type** —
+**And 452 of 452 cited claims the model made point at a real kernel event of the right type** —
 none rejected, no invented hosts or IPs. Code checks that, not trust: every event carries an id
 that is an HMAC of the job id (so a PR author can't forge one), an `observed` claim must cite an
 event of its own type, and a claim drawn from the diff rather than from runtime is labelled
 `source_inferred` so it is never presented as something the kernel watched happen.
+
+To be precise about that figure, because it is easy to overstate: it covers every entry in the
+model's `key_evidence` plus any hostname or IP appearing in its prose. It does not police other
+uncited prose assertions, so it measures **citation discipline and the absence of invented
+network facts** rather than total factual accuracy. Widening the checker is planned, and the
+gap is written down in [`docs/WEAKPOINTS.md`](WEAKPOINTS.md).
 
 **We re-ran the model five times per case on identical telemetry, because temperature 0 is not
 determinism** ([`eval/REPEAT.md`](../eval/REPEAT.md)). Across 24 attack and boundary-benign

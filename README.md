@@ -194,9 +194,11 @@ resolvable domain).
 Every one of those 142 runs carries a **per-job sensor witness**: the sandbox execs a
 nonce-marked marker before and after the install, and a missing marker fails the check closed
 rather than passing as quiet. 139 recorded both markers; the 3 that recorded only the first are
-exactly the 3 that hit the timeout and were killed. And **452 of 452** factual claims Muse made
-cite a real kernel event of the right type, with none rejected and no invented hosts — checked
-by code, not taken on trust ([how](eval/README.md)).
+exactly the 3 that hit the timeout and were killed. And **452 of 452** of Muse's *cited* claims
+point at a real kernel event of the right type, with none rejected and no invented hosts —
+checked by code, not taken on trust. That figure covers cited evidence plus any host or IP in
+the prose, so it measures citation discipline rather than total factual accuracy
+([how, and what it misses](eval/README.md)).
 
 **We quote a range because we measured one.** Re-running the model five times per case on
 identical telemetry ([eval/REPEAT.md](eval/REPEAT.md)) gives a flip rate of 1/24 on attacks and
