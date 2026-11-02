@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (322 tests, all passing).
+- **[Test]** covered by the automated test suite (331 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -217,6 +217,19 @@ benign blocks.
   Contract from clearing anything; it never changes a verdict by itself. Indirect injection
   is covered by Muse's own `injection_attempt` flag and by the rules floor.
 
+### 4.7 Differential detonation [Test, Live]
+
+For a dependency-affecting public PR, the Brain also detonates the **base commit** (the PR's
+`base.sha`, cached by SHA so repeated PRs against one base reuse it) and compares:
+- A **LOW** finding the base already produced is **pre-existing**, suppressed from the verdict
+  and shown as context — so a routine bump whose old version already hit some CDN stays quiet.
+- **HIGH/CRITICAL findings are never suppressed**, even if the base also had them.
+- The report lists **behaviors new in this PR** (host:port, exec, dns, file not seen on base).
+- Best effort: if the base doesn't detonate cleanly, nothing is suppressed and the PR is
+  judged on its own behavior. Private repos are skipped.
+[Live: E8 reports "New at install: `tcp:203.0.113.10:4444`"; base `main` (color-helper 1.0.0)
+detonated clean and was cached; E1–E7 unchanged.]
+
 ## 5. Security of the system itself [Design unless noted]
 
 - PR content is untrusted everywhere: prompts (fenced, neutralized), logs, and comments. Every
@@ -374,6 +387,7 @@ The first version of this brief listed 15 open issues. Status after the fix pass
 2. **Behavioral SBOM:** a signed per-version record of what each package does at install
    (hosts, executables, scripts). Lockfiles pin bytes; this pins behavior.
 3. **Differential detonation:** base vs head; report only behavior the PR introduced.
+   (Shipped — see 4.7.)
 4. **Kill on detect:** Tetragon enforcement (SIGKILL on `/dev/tcp`, dropped binaries).
 5. **More ecosystems:** pip (`setup.py`), cargo build scripts, gem extensions, GitHub Actions.
 6. **Distribution:** one-click GitHub App plus self-hosted Chamber (Terraform), TLS/mTLS for
@@ -407,7 +421,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            322 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            331 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

