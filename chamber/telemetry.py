@@ -27,6 +27,8 @@ class ParsedTelemetry:
     connect_events: list[ConnectEvent]
     truncated: bool
     file_events: list[FileEvent] = field(default_factory=list)
+    witness_pre: bool = False  # saw `/bin/true pre-<nonce>` from this container
+    witness_post: bool = False
 
 
 def _in_container(process: dict, container_id: str) -> bool:
@@ -34,7 +36,26 @@ def _in_container(process: dict, container_id: str) -> bool:
     return bool(short) and container_id.startswith(short)
 
 
-def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
+def witness_command(command: list[str], nonce: str) -> list[str]:
+    """Wrap the install so the container execs a harmless marker before and after it.
+    `/bin/true` by path: a bare `true` is a shell builtin and execs nothing. The wrapper
+    exits with the install's own status."""
+    script = f'/bin/true pre-{nonce}; "$@"; rc=$?; /bin/true post-{nonce}; exit $rc'
+    return ["/bin/sh", "-c", script, "detonator-witness", *command]
+
+
+def _is_wrapper(proc: dict, parent: dict, container_id: str, nonce: str) -> bool:
+    """The container's first process: a shell started from *outside* the container (the
+    runtime), carrying both markers. Everything a payload starts has a parent inside."""
+    return (
+        proc.get("binary", "").rsplit("/", 1)[-1] in ("sh", "dash", "bash")
+        and not _in_container(parent, container_id)
+        and f"pre-{nonce}" in proc.get("arguments", "")
+        and f"post-{nonce}" in proc.get("arguments", "")
+    )
+
+
+def parse_events(lines: Iterable[str], container_id: str, nonce: str = "") -> ParsedTelemetry:
     execs: list[ExecEvent] = []
     connects: list[ConnectEvent] = []
     truncated = False
@@ -44,6 +65,8 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
     seen_connects: set[tuple[str, str, int]] = set()
     files: list[FileEvent] = []
     seen_files: set[tuple[int, str]] = set()
+    pre = post = False
+    wrapper_pids: set[int] = set()
 
     for line in lines:
         line = line.strip()
@@ -59,7 +82,23 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
             proc, parent = body.get("process", {}), body.get("parent") or {}
             if not _in_container(proc, container_id):
                 continue
-            key = (proc.get("binary", ""), proc.get("arguments", ""))
+            args = proc.get("arguments", "")
+            if nonce and _is_wrapper(proc, parent, container_id, nonce):
+                # Our wrapper (parent outside the container): about the sensor, not the install.
+                wrapper_pids.add(int(proc.get("pid", 0)))
+                continue
+            if (
+                nonce
+                and parent.get("pid") in wrapper_pids
+                and proc.get("binary", "").endswith("/true")
+            ):
+                if args in (f"pre-{nonce}", f"post-{nonce}"):
+                    pre = pre or args == f"pre-{nonce}"
+                    post = post or args == f"post-{nonce}"
+                    continue
+            # Anything else is kept, nonce or not: sandbox code can read the nonce, and must
+            # not be able to hide its own execs by quoting it.
+            key = (proc.get("binary", ""), args)
             if key in seen_execs:
                 continue
             seen_execs.add(key)
@@ -123,7 +162,7 @@ def parse_events(lines: Iterable[str], container_id: str) -> ParsedTelemetry:
                 )
             )
 
-    return ParsedTelemetry(execs, connects, truncated, files)
+    return ParsedTelemetry(execs, connects, truncated, files, pre, post)
 
 
 class LogTail:

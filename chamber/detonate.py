@@ -8,6 +8,7 @@ PR-derived values (clone URL, SHA).
 import base64
 import os
 import re
+import secrets
 import shutil
 import subprocess
 import time
@@ -17,9 +18,16 @@ from pathlib import Path
 from chamber.decoys import DECOY_BIN, decoy_env, make_decoys, write_bait_files
 from chamber.dns import name_connects, parse_dns_log
 from chamber.egress import parse_kernel_log, read_kernel_log
+from chamber.resources import CgroupSampler
 from chamber.scripts import collect_executed_scripts
-from chamber.telemetry import LogTail, parse_events
-from shared.contract import MAX_CONNECT_EVENTS, MAX_TAIL_CHARS, DetonateRequest, DetonateResult
+from chamber.telemetry import LogTail, parse_events, witness_command
+from shared.contract import (
+    MAX_CONNECT_EVENTS,
+    MAX_TAIL_CHARS,
+    DetonateRequest,
+    DetonateResult,
+    SensorWitness,
+)
 
 JOB_ID_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -138,7 +146,9 @@ def docker_run_args(
     src: Path,
     decoys: dict[str, str] | None = None,
     bait: dict[str, Path] | None = None,
+    nonce: str | None = None,
 ) -> list[str]:
+    command = witness_command(req.command, nonce) if nonce else req.command
     return [
         "docker", "run", "-d", "--name", name,
         "--network", cfg.network, "--ip", cfg.sandbox_ip,
@@ -156,7 +166,7 @@ def docker_run_args(
         "-e", "npm_config_update_notifier=false",
         # Fake, per-run: none of these is a real credential (chamber/decoys.py).
         *decoy_args(cfg, decoys),
-        cfg.image, *req.command,
+        cfg.image, *command,
     ]  # fmt: skip
 
 
@@ -175,6 +185,8 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
     stdout = stderr = ""
     execs, connects, queries, files, scripts, truncated = [], [], [], [], [], False
     decoys = make_decoys()
+    nonce = secrets.token_hex(8)  # per job; marks the sensor witness execs (SensorWitness)
+    sensor = resources = None
 
     def result() -> DetonateResult:
         return DetonateResult(
@@ -183,7 +195,7 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
             connect_events=connects, dns_queries=queries, file_events=files,
             executed_scripts=scripts, decoys=decoys,
             stdout_tail=_tail(stdout), stderr_tail=_tail(stderr), truncated=truncated,
-            error=error,
+            error=error, sensor=sensor, resources=resources,
         )  # fmt: skip
 
     try:
@@ -201,11 +213,12 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         dns_tail.start()
         started = time.monotonic()  # duration measures the detonation itself
         wall_start = time.time()
-        proc = _docker(*docker_run_args(req, cfg, name, src, decoys, bait)[1:])
+        proc = _docker(*docker_run_args(req, cfg, name, src, decoys, bait, nonce)[1:])
         if proc.returncode != 0:
             status, error = "error", f"docker run failed: {proc.stderr.strip()[:300]}"
             return result()
         container_id = proc.stdout.strip()
+        sampler = CgroupSampler(container_id).start()
 
         try:
             waited = _docker("wait", name, timeout=req.timeout_s)
@@ -213,6 +226,7 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
         except subprocess.TimeoutExpired:
             status = "timeout"
             _docker("kill", name)
+        resources = sampler.stop()
 
         logs = subprocess.run(["docker", "logs", name], capture_output=True, timeout=30)
         stdout = logs.stdout.decode("utf-8", errors="replace")
@@ -220,7 +234,8 @@ def run(req: DetonateRequest, cfg: Config | None = None) -> DetonateResult:
 
         time.sleep(FLUSH_WAIT_S)  # let Tetragon flush the last events
         lines, rotated = tail.read_new()
-        parsed = parse_events(lines, container_id)
+        parsed = parse_events(lines, container_id, nonce)
+        sensor = SensorWitness(pre_seen=parsed.witness_pre, post_seen=parsed.witness_post)
         dns_lines, dns_rotated = dns_tail.read_new()
         dns = parse_dns_log(dns_lines, cfg.sandbox_ip)
         execs, queries, files = parsed.exec_events, dns.queries, parsed.file_events

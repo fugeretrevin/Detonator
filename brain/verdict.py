@@ -60,6 +60,14 @@ def unverified_reason(result: DetonateResult) -> str:
         return "the telemetry hit its event cap and was truncated, so behaviour may be missing"
     if not result.exec_events:
         return "no process events were recorded at all, so the sensor was blind to this run"
+    # v3 Chambers prove the sensor saw this container at both ends (SensorWitness). A v2
+    # Chamber sends no witness; then the checks above are all we have.
+    if result.sensor is not None and not result.sensor.pre_seen:
+        return "the sensor never recorded this container's start marker, so it may have been blind"
+    if result.sensor is not None and not result.sensor.post_seen:
+        return (
+            "the sensor never recorded this container's end marker, so late events may be missing"
+        )
     return ""
 
 
