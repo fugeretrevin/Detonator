@@ -44,12 +44,23 @@ def witness_command(command: list[str], nonce: str) -> list[str]:
     return ["/bin/sh", "-c", script, "detonator-witness", *command]
 
 
-def _is_wrapper(proc: dict, parent: dict, container_id: str, nonce: str) -> bool:
-    """The container's first process: a shell started from *outside* the container (the
-    runtime), carrying both markers. Everything a payload starts has a parent inside."""
+def _is_wrapper(
+    proc: dict, parent: dict, container_id: str, nonce: str, roots: set[int]
+) -> bool:
+    """Our witness shell, carrying both markers, started at the top of the container.
+
+    "At the top" means its parent is either outside the container (the runtime started it
+    directly) or is itself a container root — the sandbox image declares an ENTRYPOINT, so the
+    real tree is `docker-entrypoint.sh` → our shell → `/bin/true`, and requiring the parent to
+    be outside missed it entirely.
+
+    This is what a payload cannot forge. `roots` only ever contains processes whose own parent
+    was outside the container, and everything a payload starts descends from the install
+    command, which is already a child of this wrapper — so a payload's `sh` can never have a
+    root (or external) parent, however it quotes the nonce."""
     return (
         proc.get("binary", "").rsplit("/", 1)[-1] in ("sh", "dash", "bash")
-        and not _in_container(parent, container_id)
+        and (not _in_container(parent, container_id) or parent.get("pid") in roots)
         and f"pre-{nonce}" in proc.get("arguments", "")
         and f"post-{nonce}" in proc.get("arguments", "")
     )
@@ -67,6 +78,10 @@ def parse_events(lines: Iterable[str], container_id: str, nonce: str = "") -> Pa
     seen_files: set[tuple[int, str]] = set()
     pre = post = False
     wrapper_pids: set[int] = set()
+    # Container roots: in-container processes whose own parent is outside it. Tetragon logs a
+    # parent before its child, so collecting these as we go is enough to spot the wrapper that
+    # the image's ENTRYPOINT starts.
+    root_pids: set[int] = set()
 
     for line in lines:
         line = line.strip()
@@ -83,8 +98,10 @@ def parse_events(lines: Iterable[str], container_id: str, nonce: str = "") -> Pa
             if not _in_container(proc, container_id):
                 continue
             args = proc.get("arguments", "")
-            if nonce and _is_wrapper(proc, parent, container_id, nonce):
-                # Our wrapper (parent outside the container): about the sensor, not the install.
+            if not _in_container(parent, container_id):
+                root_pids.add(int(proc.get("pid", 0)))
+            if nonce and _is_wrapper(proc, parent, container_id, nonce, root_pids):
+                # Our witness shell: this is about the sensor, not about the install.
                 wrapper_pids.add(int(proc.get("pid", 0)))
                 continue
             if (

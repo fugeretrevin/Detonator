@@ -77,6 +77,43 @@ def test_wrapper_lookalike_started_inside_the_sandbox_is_kept():
     assert any("curl evil" in e.args for e in parsed.exec_events)
 
 
+ENTRYPOINT = "/usr/local/bin/docker-entrypoint.sh"
+
+
+def entrypoint_lines(*extra: str) -> list[str]:
+    """The tree a real run produces: the image declares an ENTRYPOINT, so our witness shell is
+    a child of that, not of the runtime."""
+    return [
+        exec_line(999, ENTRYPOINT, f"{ENTRYPOINT} /bin/sh -c ...", SHIM),
+        exec_line(1000, "/bin/sh", WRAPPER_ARGS, inside(999, ENTRYPOINT)),
+        exec_line(1001, "/bin/true", f"pre-{NONCE}", inside(1000, "/bin/sh")),
+        exec_line(1002, "/usr/local/bin/npm", "install", inside(1000, "/bin/sh")),
+        *extra,
+        exec_line(1099, "/bin/true", f"post-{NONCE}", inside(1000, "/bin/sh")),
+    ]
+
+
+def test_witness_is_recognised_through_the_image_entrypoint():
+    """Regression: the sandbox image has an ENTRYPOINT, so the witness shell's parent is
+    inside the container. Requiring the parent to be *outside* made every real run report
+    pre_seen=False, which fails closed as "Could not verify" on every pull request."""
+    parsed = parse_events(entrypoint_lines(), CONTAINER, NONCE)
+    assert parsed.witness_pre and parsed.witness_post
+    # The entrypoint is real telemetry and stays; our shell and both markers do not.
+    assert [e.binary for e in parsed.exec_events] == [ENTRYPOINT, "/usr/local/bin/npm"]
+
+
+def test_payload_cannot_pose_as_the_wrapper_under_the_entrypoint():
+    """The relaxed check still only trusts a container *root's* child. A payload descends from
+    npm, so its shell has neither an external nor a root parent, however it quotes the nonce."""
+    fake = exec_line(1080, "/bin/sh", WRAPPER_ARGS, inside(1002, "/usr/local/bin/npm"))
+    parsed = parse_events(entrypoint_lines(fake), CONTAINER, NONCE)
+    assert any(e.pid == 1080 for e in parsed.exec_events)  # kept, not treated as the wrapper
+    faked = exec_line(1081, "/bin/true", f"post-{NONCE}", inside(1080, "/bin/sh"))
+    only_pre = parse_events([*entrypoint_lines()[:-1], fake, faked], CONTAINER, NONCE)
+    assert only_pre.witness_pre and not only_pre.witness_post
+
+
 def test_markers_from_another_container_are_ignored():
     other = "f" * 31
     lines = [exec_line(1000, "/usr/bin/dash", WRAPPER_ARGS, SHIM, docker=other),
