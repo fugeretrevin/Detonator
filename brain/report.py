@@ -15,6 +15,7 @@ from brain.intent import IntentContract
 from brain.investigator import Investigation
 from brain.llm import LlmOutcome
 from brain.pinpoint import GuiltyLine, ScriptRun
+from brain.policy import POLICY_PATH, Policy
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.rules import RuleHit, Severity
 from brain.verdict import FinalVerdict
@@ -261,6 +262,22 @@ def _investigation_section(inv: "Investigation") -> list[str]:
     return lines
 
 
+def _policy_section(policy: "Policy", final: FinalVerdict) -> list[str]:
+    """What this repository's own policy contributed (read from the base branch)."""
+    lines = ["### Repository policy", "",
+             f"From `{esc(policy.source or POLICY_PATH, 80)}` on the base branch."]  # fmt: skip
+    if policy.allowed_domains:
+        hosts = ", ".join(esc(d, 60) for d in policy.allowed_domains)
+        lines.append(f"- Extra hosts treated as normal for this project: {hosts} "
+                     "(low-severity only; kernel findings are unaffected).")  # fmt: skip
+    if policy.blocks_needs_review:
+        extra = " — this check fails rather than passing" if final.title == "Needs review" else ""
+        lines.append(f"- `needs_review: block`: a ⚠️ verdict is not mergeable here{extra}.")
+    for w in policy.warnings[:5]:
+        lines.append(f"- ⚠️ {esc(w, 160)}")
+    return lines + [""]
+
+
 def render(
     final: FinalVerdict,
     hits: list[RuleHit],
@@ -275,6 +292,7 @@ def render(
     guard: GuardOutcome | None = None,
     differential: "Differential | None" = None,
     investigation: "Investigation | None" = None,
+    policy: "Policy | None" = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -344,6 +362,9 @@ def render(
 
     if result.connect_events:
         lines += ["### Network activity", "", *_network_rows(result), ""]
+
+    if policy is not None and (policy.configured or policy.warnings):
+        lines += _policy_section(policy, final)
 
     model_note = llm.model if v else f"{llm.model} (unavailable: {esc(llm.error, 80)}; rules only)"
     lines += [

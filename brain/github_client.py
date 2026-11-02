@@ -16,6 +16,7 @@ COMMENT_MARKER = "<!-- pr-detonator -->"
 MAX_DIFF_CHARS = 30_000
 MAX_BODY_CHARS = 2_000
 MAX_SUMMARY_CHARS = 65_000
+MAX_POLICY_CHARS = 8_000
 TOKEN_REFRESH_MARGIN_S = 300
 
 LOCKFILES = frozenset({"package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "pnpm-lock.yaml"})
@@ -288,6 +289,22 @@ class GitHubClient:
             json={"body": body},
         )
         return int(resp.json()["id"])
+
+    def get_file(
+        self, installation_id: int, owner: str, repo: str, path: str, ref: str
+    ) -> str | None:
+        """A text file's contents at an exact ref, or None if absent/too big/not text.
+        Used for the repo policy, which is read from the base branch only."""
+        try:
+            resp = self._request(
+                installation_id, "GET", f"/repos/{owner}/{repo}/contents/{path}",
+                params={"ref": ref}, headers={"Accept": "application/vnd.github.raw"},
+            )  # fmt: skip
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code in (403, 404):
+                return None  # no policy file, or too large for the raw endpoint
+            raise
+        return resp.text[:MAX_POLICY_CHARS]
 
     def upsert_comment(
         self,

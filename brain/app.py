@@ -28,6 +28,7 @@ from brain.pipeline import (
     analyze,
     detonate_request,
 )
+from brain.policy import POLICY_PATH, Policy, parse_policy
 from brain.report import render_line_comment, with_run_history
 from brain.runlog import build_record
 from brain.webhook import PullRequestEvent, handle_webhook, parse_allowed_accounts
@@ -149,7 +150,9 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
         summary = f"Detonator setup error (`{type(exc).__name__}`), job `{job_id}`."
         gh.complete_check_run(*loc, check_run_id, "failure", "Could not verify this PR", summary)
         raise
-    request = detonate_request(event, job_id, private_token=private_token)
+    policy = _repo_policy(gh, event)
+    request = detonate_request(event, job_id, private_token=private_token,
+                               timeout_s=policy.timeout_s)  # fmt: skip
     if request is None:
         logger.info(
             "job=%s %s/%s#%s private repo: not detonated",
@@ -191,6 +194,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             base_result=base_result,
             new_package_resolver=_new_package_resolver(),
             investigator=_investigate,
+            policy=policy,
         )
         final = analysis.final
         logger.info(
@@ -362,6 +366,21 @@ def _base_detonation(chamber, event: PullRequestEvent, metadata: PrMetadata):
     except Exception:
         logger.exception("base detonation failed for %s", key)
         return None
+
+
+def _repo_policy(gh: GitHubClient, event: PullRequestEvent) -> Policy:
+    """`.github/detonator.yml` from the **base** branch (never the head: the PR author
+    controls that). Best effort — no policy, or a broken one, means defaults."""
+    if not event.base_sha:
+        return Policy()
+    try:
+        text = gh.get_file(
+            event.installation_id, event.owner, event.repo, POLICY_PATH, event.base_sha
+        )
+    except Exception:
+        logger.exception("could not read %s", POLICY_PATH)
+        return Policy()
+    return parse_policy(text) if text else Policy()
 
 
 def _investigate(hits, result):

@@ -86,7 +86,11 @@ flowchart LR
     script) and writes the reviewer a triage note — "puppeteer, published 2013, maintainers
     unchanged, install.mjs only downloads a browser from a known CDN". It can escalate to
     blocked but never clear a finding.
-11. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
+11. **Per-repo policy**: `.github/detonator.yml`, read from the **base** branch only (never
+    the PR's head), lets a repo name hosts that are normal for it and switch "needs review"
+    from a passing neutral to a failing check. It can only tighten review, never silence a
+    kernel finding.
+12. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
     that doesn't exist (a name an attacker could register — "slopsquatting") or was first
     published in the last week. Low severity, so a human reviews before it installs.
 

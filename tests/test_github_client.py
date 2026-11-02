@@ -273,3 +273,29 @@ def test_upsert_merge_sees_the_previous_body(keypair):
 
     make_client(pem, handler).upsert_comment(1, "o", "r", 5, "new", merge=merge)
     assert seen == [ours["body"]]
+
+
+def test_get_file_reads_an_exact_ref_and_tolerates_absence(keypair):
+    pem, _ = keypair
+    seen = {}
+
+    def contents(request):
+        seen["ref"] = request.url.params.get("ref")
+        seen["accept"] = request.headers.get("Accept")
+        return httpx.Response(200, text="needs_review: block\n")
+
+    client = make_client(
+        pem, routed({("GET", "/repos/o/r/contents/.github/detonator.yml"): contents})
+    )
+    text = client.get_file(1, "o", "r", ".github/detonator.yml", "b" * 40)
+    assert text == "needs_review: block\n"
+    assert seen["ref"] == "b" * 40  # the BASE sha we asked for, never the head
+    assert seen["accept"] == "application/vnd.github.raw"
+
+    missing = make_client(
+        pem,
+        routed(
+            {("GET", "/repos/o/r/contents/.github/detonator.yml"): lambda r: httpx.Response(404)}
+        ),
+    )
+    assert missing.get_file(1, "o", "r", ".github/detonator.yml", "b" * 40) is None

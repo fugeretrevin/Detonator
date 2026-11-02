@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (348 tests, all passing).
+- **[Test]** covered by the automated test suite (360 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -231,6 +231,22 @@ For a dependency-affecting public PR, the Brain also detonates the **base commit
 [Live: E8 reports "New at install: `tcp:203.0.113.10:4444`"; base `main` (color-helper 1.0.0)
 detonated clean and was cached; E1–E7 unchanged.]
 
+### 4.9 Per-repository policy [Test, Live]
+
+`.github/detonator.yml`, read **from the base branch only** (the PR author controls the head,
+so a policy read from there would let an attacker allowlist their own exfil host):
+- `allowed_domains`: hosts that are normal for this project. They widen only the LOW
+  `NET_UNLISTED_DOMAIN` allowlist — a high/critical kernel finding is never silenced, and a
+  raw IP is rejected outright (raw-IP connects are HIGH, so allowlisting one would mislead).
+- `needs_review: pass | block`: `block` makes a ⚠️ verdict fail the check instead of being a
+  mergeable neutral — the answer to "needs review is mergeable" for teams who want it strict.
+- `timeout_s`: 1..300.
+Every field is validated; anything malformed, unknown or out of range is ignored with a
+warning shown in the report, so a broken policy can neither weaken a review nor break it.
+[Live: PR #15 targets a branch whose policy sets `needs_review: block`; the same puppeteer
+install that is a passing ⚠️ against `main` returns **conclusion `failure`** there, and the
+report names the policy source.]
+
 ### 4.8 Investigator agent, ⚠️ only [Test, Live]
 
 A ⚠️ verdict means "a human must decide", so Muse gets three read-only tools and a bounded
@@ -441,7 +457,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            348 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            360 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

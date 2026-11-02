@@ -13,9 +13,10 @@ from brain.investigator import Investigation
 from brain.llm import LlmOutcome, Usage
 from brain.newpkg import Resolver, new_package_hits
 from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
+from brain.policy import DEFAULT_TIMEOUT_S, Policy
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
-from brain.rules import RuleHit, evaluate
+from brain.rules import DEFAULT_ALLOWED_DOMAINS, RuleHit, evaluate
 from brain.verdict import FinalVerdict, combine
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateRequest, DetonateResult
@@ -33,7 +34,11 @@ PRIVATE_REPO_SUMMARY = (
 
 
 def detonate_request(
-    event: PullRequestEvent, job_id: str, *, private_token: str | None = None
+    event: PullRequestEvent,
+    job_id: str,
+    *,
+    private_token: str | None = None,
+    timeout_s: int = DEFAULT_TIMEOUT_S,
 ) -> DetonateRequest | None:
     """None means: don't detonate (a private repo without a token we may send).
 
@@ -46,6 +51,7 @@ def detonate_request(
         clone_url=event.head_clone_url,
         head_sha=event.head_sha,
         clone_token=private_token if event.repo_private else None,
+        timeout_s=timeout_s,
     )
 
 
@@ -90,11 +96,16 @@ def analyze(
     base_result: DetonateResult | None = None,
     new_package_resolver: "Resolver | None" = None,
     investigator: Investigator | None = None,
+    policy: Policy | None = None,
 ) -> Analysis:
     result = enrich(result)
     added = added_registry_dependencies(list(files))
+    # A repo's own policy (base branch only) may name extra normal hosts. It widens the
+    # allowlist the LOW unlisted-domain rule uses; high/critical rules are unaffected.
+    policy = policy or Policy()
+    domains = DEFAULT_ALLOWED_DOMAINS + policy.allowed_domains
     raw_hits = (
-        evaluate(result, allowed_cidrs=allowed_cidrs)
+        evaluate(result, allowed_domains=domains, allowed_cidrs=allowed_cidrs)
         + decoy_hits(result)
         + new_package_hits(added, new_package_resolver)
     )
@@ -123,10 +134,13 @@ def analyze(
         investigation = investigator(hits, view)
         if investigation is not None:
             final = combine(hits, outcome, view, extra_level=investigation.level)
+    if policy.blocks_needs_review and final.title == "Needs review":
+        # The repo opted into strict mode: a ⚠️ must not be mergeable here.
+        final = replace(final, conclusion="failure")
     report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty, script_runs=script_runs(hits, view),
                     guard=guard, differential=differential,
-                    investigation=investigation)  # fmt: skip
+                    investigation=investigation, policy=policy)  # fmt: skip
     usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
     if investigation is not None:
         usages += investigation.usages
