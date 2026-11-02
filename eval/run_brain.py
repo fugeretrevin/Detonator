@@ -126,7 +126,7 @@ def score(case: Case, result: DetonateResult, client: LlmClient, cidrs) -> dict:
 def summarize(rows: list[dict]) -> list[str]:
     out = ["| Set | Setup | ✅ Clean | ⚠️ Needs review | ❌ Blocked | ⏱️ Could not verify |",
            "|---|---|---|---|---|---|"]  # fmt: skip
-    for kind in ("benign", "malicious", "incident"):
+    for kind in ("benign", "malicious", "incident", "redteam"):
         subset = [r for r in rows if r["kind"] == kind]
         for cfg in CONFIGS:
             counts = {t: sum(r["outcomes"][cfg] == t for r in subset) for t in ICON}

