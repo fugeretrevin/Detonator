@@ -14,11 +14,12 @@ from brain.intent import IntentContract, PredictionOutcome, apply_contract, eval
 from brain.investigator import Investigation
 from brain.llm import LlmOutcome, Usage
 from brain.newpkg import Resolver, new_package_hits
-from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
+from brain.pinpoint import GuiltyLine, find_guilty_lines, script_runs
 from brain.policy import DEFAULT_TIMEOUT_S, Policy
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
 from brain.rules import DEFAULT_ALLOWED_DOMAINS, RuleHit, evaluate
+from brain.sampling import sample_analysis
 from brain.verdict import FinalVerdict, combine
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateRequest, DetonateResult
@@ -100,6 +101,7 @@ def analyze(
     new_package_resolver: "Resolver | None" = None,
     investigator: Investigator | None = None,
     policy: Policy | None = None,
+    samples: int = 1,
 ) -> Analysis:
     result = enrich(result)
     added = added_registry_dependencies(list(files))
@@ -128,8 +130,7 @@ def analyze(
         base_hits = evaluate(base_view, allowed_cidrs=allowed_cidrs)
         hits, differential = differential_diff(hits, base_hits, result, base_view)
     guilty = find_guilty_lines(hits, result, list(files))
-    outcome = llm(metadata, hits, view, diff, contract.for_prompt(),
-                  guilty=for_prompt(guilty) or None)  # fmt: skip
+    outcome = sample_analysis(llm, metadata, hits, view, diff, contract, guilty, samples=samples)
     final = combine(hits, outcome, view)
     # Code, not the model, decides which of its claims the kernel record supports. Report only.
     grounding = (check_evidence(outcome.verdict, build_index(view), corpus_for(view, diff))

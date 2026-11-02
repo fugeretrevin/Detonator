@@ -153,6 +153,29 @@ syscalls per CPU-second, whereas a compiler does constant file I/O; (2) **proces
 work** — a detached child still burning CPU after the install's main process exits; (3)
 **absence of progress artifacts** — real builds write object files.
 
+**Candidate (1) was tested on the v3 telemetry and is insufficient as currently measurable.**
+Using observable events per CPU-second as a proxy for syscall density:
+
+| case | ev/cpu_s |
+|---|---|
+| `gm08-cpu-miner` (detached) | 0.19 |
+| prisma | 0.48 |
+| puppeteer | 0.52 |
+| playwright-chromium | 0.69 |
+| **`rt08-local-miner` (inline)** | **0.74** |
+
+A threshold at rt08's density also flags prisma, puppeteer and playwright-chromium. The cause is
+specific and fixable: **`file_events` only covers decoy and bait paths, not general file I/O**,
+so a compiler's constant writes are invisible to us and a package unpacking a browser looks as
+quiet as a miner. We are not measuring the quantity that would separate them. (It does separate
+`gm08` cleanly at 0.19, but the model already catches gm08.)
+
+So candidate (1) is only viable *after* recording a real work signal — a syscall counter, or
+general `openat`/`write` counts rather than decoy-path matches. That is a meaningful telemetry
+volume and noise increase and needs its own cap and benchmark, which is why it is not a
+pre-deadline change. Candidates (2) and (3) remain untested and are now the cheaper next step,
+since both can be derived from data we already collect.
+
 **Acceptance.** A pre-registered holdout of ≥10 CPU-heavy benign cases (node-gyp builds, wasm
 builds, large minification, image processing) and ≥5 safe mining stand-ins, built *before* any
 threshold is chosen. Signal must separate them with **zero** benign hard blocks and ≤1 benign

@@ -23,6 +23,9 @@ from collections import Counter
 from collections.abc import Callable
 from pathlib import Path
 
+# W2 (docs/WEAKPOINTS.md): how many analysis calls the `sampled` arm keeps the worst of.
+SAMPLES_FOR_SAMPLED_ARM = 3
+
 LENIENCY = {"Clean": 0, "Needs review": 1, "Could not verify": 2, "Blocked": 3}
 MERGEABLE = ("Clean", "Needs review")
 
@@ -44,15 +47,18 @@ def run_trials(
     grounding: list[dict] = []
     errors = 0
     for _ in range(trials):
-        prediction = predict_fn(meta) if "full" in arms else None
+        prediction = predict_fn(meta) if ("full" in arms or "sampled" in arms) else None
         for arm in arms:
             kwargs = dict(common, guard=guard)
-            if arm == "full":
+            if arm in ("full", "sampled"):
                 kwargs["prediction"] = prediction
+            if arm == "sampled":
+                # W2: identical to `full` but keeps the worst of N analysis calls.
+                kwargs["samples"] = SAMPLES_FOR_SAMPLED_ARM
             a = analyze_fn(result, meta, diff, llm, **kwargs)
             outcomes[arm].append(a.final.title)
             errors += a.llm.error is not None
-            if arm == "full" and a.grounding is not None:
+            if arm in ("full", "sampled") and a.grounding is not None:
                 grounding.append(a.grounding.summary())
     return {"id": case.id, "kind": case.kind, "outcomes": outcomes, "grounding": grounding,
             "llm_errors": errors}  # fmt: skip
@@ -89,7 +95,7 @@ def summarize(rows: list[dict], arm: str, trials: int) -> list[str]:
         f"- **Benign blocks (worst case):** {len(blocked)}/{len(benign)} benign cases were "
         "Blocked in at least one trial" + (f" ({', '.join(blocked[:12])})" if blocked else ""),
     ]
-    g = [x for r in rows for x in r["grounding"]] if arm == "full" else []
+    g = [x for r in rows for x in r["grounding"]] if arm in ("full", "sampled") else []
     claims = sum(x["claims"] for x in g)
     if claims:
         rejected = sum(x["rejected"] for x in g)
@@ -115,7 +121,7 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--only", default="")
     parser.add_argument("--out", default="eval/REPEAT")
     args = parser.parse_args(argv)
-    arms = tuple(a for a in args.arms.split(",") if a in ("full", "analysis"))
+    arms = tuple(a for a in args.arms.split(",") if a in ("full", "analysis", "sampled"))
 
     # Heavy imports here so the summary logic above stays importable in tests.
     from concurrent.futures import ThreadPoolExecutor
