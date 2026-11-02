@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (331 tests, all passing).
+- **[Test]** covered by the automated test suite (348 tests, all passing).
 - **[Design]** a property of the code or configuration, not separately measured.
 - **[Unverified]** believed true but not tested.
 
@@ -231,6 +231,24 @@ For a dependency-affecting public PR, the Brain also detonates the **base commit
 [Live: E8 reports "New at install: `tcp:203.0.113.10:4444`"; base `main` (color-helper 1.0.0)
 detonated clean and was cached; E1–E7 unchanged.]
 
+### 4.8 Investigator agent, ⚠️ only [Test, Live]
+
+A ⚠️ verdict means "a human must decide", so Muse gets three read-only tools and a bounded
+budget (≤ 6 tool calls, 60 s) to write that human a triage note:
+- `registry_info(name)` — first/last publish, publish age, maintainer logins for the latest
+  and previous version plus a changed flag, declared install hooks (npm registry).
+- `host_info(host)` — our own classification: allowlisted registry/GitHub, known package CDN,
+  shared-hosting suffix, known exfil/tunnel service.
+- `get_executed_script(path)` — the script the sandbox actually captured (untrusted code).
+It then returns structured JSON (`risk`, `note`, `facts`). **Escalate-only:** `malicious`
+raises the verdict to Blocked; `benign`/`suspicious`/`unclear` can never clear a finding.
+Tool results are fenced and neutralized like the diff; the report shows the note plus a
+collapsed tool log. Any failure (API, tool, timeout) leaves the verdict untouched.
+[Live: **E9** "Add PDF export with puppeteer" (#13) → ⚠️ Needs review with 4 tool calls and
+"puppeteer … since 2013, maintainers unchanged … install.mjs only calls downloadBrowsers();
+storage.googleapis.com is a known package CDN" → risk benign, verdict unchanged. Same result
+offline on the eval's puppeteer and chromedriver telemetry.]
+
 ## 5. Security of the system itself [Design unless noted]
 
 - PR content is untrusted everywhere: prompts (fenced, neutralized), logs, and comments. Every
@@ -270,6 +288,7 @@ comment instead of adding a new one.
 | E7 install that hangs forever | #10 | 🛑 Could not verify (timeout fails closed) |
 | E8 Dependabot-style "Bump color-helper 1.0.0 → 1.0.1" where 1.0.1's postinstall opens a raw socket | #12 | 🛑 Blocked; inline comment on the bumped line naming `color-helper` |
 | Base for E8: add harmless color-helper 1.0.0 | #11 | ✅ Clean, merged |
+| E9 "Add PDF export with puppeteer" (real CDN download) | #13 | ⚠️ Needs review + investigator triage note (4 tool calls, risk benign, verdict unchanged) |
 
 Typical detonation 3–20 s; a full check completes in well under a minute.
 
@@ -422,7 +441,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            331 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            348 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

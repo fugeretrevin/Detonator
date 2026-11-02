@@ -81,7 +81,12 @@ flowchart LR
    203.0.113.10:4444"). Low findings the old version already produced are suppressed, so
    routine bumps stay quiet; high/critical are never suppressed.
 
-10. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
+10. **Investigator agent** (⚠️ only): when the verdict is "needs review", Muse gets three
+    read-only tools (npm registry facts, our host classification, the captured install
+    script) and writes the reviewer a triage note — "puppeteer, published 2013, maintainers
+    unchanged, install.mjs only downloads a browser from a known CDN". It can escalate to
+    blocked but never clear a finding.
+11. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
     that doesn't exist (a name an attacker could register — "slopsquatting") or was first
     published in the last week. Low severity, so a human reviews before it installs.
 

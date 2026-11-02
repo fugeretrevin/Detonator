@@ -1,6 +1,7 @@
 """Combine rule severity and LLM verdict into a check conclusion (BUILD_PLAN A5).
 
-final = max(rule_level, llm_level). The LLM can raise severity but never lower a rule hit.
+final = max(rule_level, llm_level, investigator_level). Model output can raise severity but
+never lower a rule hit.
 An unfinished detonation (timeout/error) fails closed: "Could not verify" is a failure.
 """
 
@@ -32,10 +33,17 @@ def llm_level(verdict: LlmVerdict) -> Severity:
     return Severity.NONE
 
 
-def combine(hits: list[RuleHit], llm: LlmOutcome, result: DetonateResult) -> FinalVerdict:
+def combine(
+    hits: list[RuleHit],
+    llm: LlmOutcome,
+    result: DetonateResult,
+    extra_level: Severity | None = None,
+) -> FinalVerdict:
+    """`extra_level` is a further model-derived escalation (the investigator agent). Like the
+    LLM verdict it can only raise the level, never lower a rule hit."""
     rule_level = max_severity(hits)
     model_level = llm_level(llm.verdict) if llm.verdict else None
-    level = max(rule_level, model_level or Severity.NONE)
+    level = max(rule_level, model_level or Severity.NONE, extra_level or Severity.NONE)
     verified = result.status == "completed"
 
     if level >= Severity.HIGH:

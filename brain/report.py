@@ -12,6 +12,7 @@ import unicodedata
 from brain.differential import Differential
 from brain.github_client import COMMENT_MARKER
 from brain.intent import IntentContract
+from brain.investigator import Investigation
 from brain.llm import LlmOutcome
 from brain.pinpoint import GuiltyLine, ScriptRun
 from brain.prompt_guard import GuardOutcome, flagged
@@ -233,6 +234,33 @@ def _differential_section(diff: "Differential") -> list[str]:
     return lines + [""]
 
 
+RISK_ICON = {"benign": "🟢", "unclear": "🟡", "suspicious": "🟠", "malicious": "🔴"}
+
+
+def _investigation_section(inv: "Investigation") -> list[str]:
+    """Triage note for a ⚠️ PR, with the agent's tool calls collapsed underneath."""
+    if inv.error or not inv.risk:
+        why = esc(inv.error or "no result", 60)
+        return ["### Triage", "",
+                f"The investigator agent was unavailable ({why}); the findings above stand.",
+                ""]  # fmt: skip
+    lines = [
+        "### Triage",
+        "",
+        f"{RISK_ICON.get(inv.risk, '')} **{esc(inv.risk, 20)}** — {esc(inv.note, 600)}",
+        "",
+    ]
+    if inv.facts:
+        lines += [f"- {esc(f, 200)}" for f in inv.facts[:5]] + [""]
+    if inv.tool_log:
+        lines += ["<details><summary>What the agent checked "
+                  f"({len(inv.tool_log)} tool calls)</summary>", ""]  # fmt: skip
+        for call, out in inv.tool_log:
+            lines.append(f"- `{esc(call, 120)}` → {esc(out, 200)}")
+        lines += ["", "</details>", ""]
+    return lines
+
+
 def render(
     final: FinalVerdict,
     hits: list[RuleHit],
@@ -246,6 +274,7 @@ def render(
     script_runs: list[ScriptRun] | None = None,
     guard: GuardOutcome | None = None,
     differential: "Differential | None" = None,
+    investigation: "Investigation | None" = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -282,6 +311,9 @@ def render(
             f"“{esc(top.snippet, 160)}”. The Intent Contract cleared nothing for this PR.",
             "",
         ]
+
+    if investigation is not None:
+        lines += _investigation_section(investigation)
 
     if differential is not None:
         lines += _differential_section(differential)

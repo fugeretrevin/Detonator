@@ -371,6 +371,44 @@ class LlmClient:
                 error = f"invalid model output ({type(exc).__name__})"
         return None, error, usage()
 
+    def tool_turn(
+        self, messages: list[dict], tools: list[dict]
+    ) -> tuple[dict | None, str | None, Usage]:
+        """One tool-calling turn. Returns (assistant message, error, usage). The caller runs
+        the tools and loops; no retry here (a retried turn would re-run side-effect-free
+        lookups but waste the budget)."""
+        payload = {
+            "model": self.model,
+            "temperature": 0,
+            "messages": messages,
+            "tools": tools,
+            "tool_choice": "auto",
+        }
+        started = time.monotonic()
+        try:
+            resp = self._http.post("/chat/completions", json=payload)
+            resp.raise_for_status()
+            body = resp.json()
+            u = body.get("usage") or {}
+            details = u.get("completion_tokens_details") or {}
+            usage = Usage(
+                self.model,
+                int(u.get("prompt_tokens") or 0),
+                int(u.get("completion_tokens") or 0),
+                int(details.get("reasoning_tokens") or 0),
+                round(time.monotonic() - started, 2),
+                1,
+            )
+            return body["choices"][0]["message"], None, usage
+        except httpx.HTTPStatusError as exc:
+            error = f"HTTP {exc.response.status_code}"
+        except httpx.HTTPError as exc:
+            error = type(exc).__name__
+        except (ValueError, KeyError, IndexError, TypeError) as exc:
+            error = f"invalid model output ({type(exc).__name__})"
+        return None, error, Usage(self.model, latency_s=round(time.monotonic() - started, 2),
+                                  attempts=1)  # fmt: skip
+
     def analyze(
         self,
         metadata: PrMetadata,

@@ -9,6 +9,7 @@ from brain.differential import diff as differential_diff
 from brain.enrich import enrich_connects
 from brain.github_client import ChangedFile, PrMetadata, added_registry_dependencies
 from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
+from brain.investigator import Investigation
 from brain.llm import LlmOutcome, Usage
 from brain.newpkg import Resolver, new_package_hits
 from brain.pinpoint import GuiltyLine, find_guilty_lines, for_prompt, script_runs
@@ -21,6 +22,8 @@ from shared.contract import DetonateRequest, DetonateResult
 
 # (metadata, hits, result, diff, contract, *, guilty=...) -> outcome
 Analyzer = Callable[..., LlmOutcome]
+# (hits, result) -> Investigation | None; only called for a "Needs review" verdict
+Investigator = Callable[[list[RuleHit], DetonateResult], "Investigation | None"]
 
 PRIVATE_REPO_TITLE = "Could not verify"
 PRIVATE_REPO_SUMMARY = (
@@ -59,6 +62,7 @@ class Analysis:
     guilty: list[GuiltyLine]
     usages: list[Usage]  # every model call this PR made (prediction + analysis)
     differential: "Differential | None" = None  # base-vs-head comparison, when the base ran
+    investigation: "Investigation | None" = None  # triage note, only for ⚠️ verdicts
 
     @property
     def cost_usd(self) -> float | None:
@@ -85,6 +89,7 @@ def analyze(
     guard: GuardOutcome | None = None,
     base_result: DetonateResult | None = None,
     new_package_resolver: "Resolver | None" = None,
+    investigator: Investigator | None = None,
 ) -> Analysis:
     result = enrich(result)
     added = added_registry_dependencies(list(files))
@@ -112,9 +117,18 @@ def analyze(
     outcome = llm(metadata, hits, view, diff, contract.for_prompt(),
                   guilty=for_prompt(guilty) or None)  # fmt: skip
     final = combine(hits, outcome, view)
+    # A ⚠️ verdict means a human must decide: give them a triage note. Escalate-only.
+    investigation = None
+    if investigator is not None and final.title == "Needs review":
+        investigation = investigator(hits, view)
+        if investigation is not None:
+            final = combine(hits, outcome, view, extra_level=investigation.level)
     report = render(final, hits, outcome, view, job_id=job_id, contract=contract,
                     cleared=cleared, guilty=guilty, script_runs=script_runs(hits, view),
-                    guard=guard, differential=differential)  # fmt: skip
+                    guard=guard, differential=differential,
+                    investigation=investigation)  # fmt: skip
     usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
+    if investigation is not None:
+        usages += investigation.usages
     return Analysis(final, hits, outcome, view, report, contract, cleared, rule_hits, guilty,
-                    usages, differential)  # fmt: skip
+                    usages, differential, investigation)  # fmt: skip

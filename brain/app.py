@@ -190,6 +190,7 @@ def detonate_job(event: PullRequestEvent, check_run_id: int) -> None:
             guard=guard,
             base_result=base_result,
             new_package_resolver=_new_package_resolver(),
+            investigator=_investigate,
         )
         final = analysis.final
         logger.info(
@@ -360,6 +361,18 @@ def _base_detonation(chamber, event: PullRequestEvent, metadata: PrMetadata):
         return result
     except Exception:
         logger.exception("base detonation failed for %s", key)
+        return None
+
+
+def _investigate(hits, result):
+    """Triage a ⚠️ PR with the investigator agent. Best effort: on any failure the verdict
+    stands as it was (the agent can only ever escalate)."""
+    from brain.investigator import investigate
+
+    try:
+        return investigate(llm_client_from_env(), hits, result)
+    except Exception:
+        logger.exception("investigator agent failed")
         return None
 
 
