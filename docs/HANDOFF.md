@@ -259,21 +259,30 @@ there is no visible difference to a judge opening a PR. Deploy it with the next 
 in `brain/pipeline.py` and flows only into the rendered report, so it can never move a verdict —
 the eval tables stamped at `a96c8a1` still hold and need no re-score.
 
-**Checked exhaustively at `8f2b657`, so nobody needs to repeat it.** `python
-scripts/release_ledger.py` lists every code file touched since the eval stamp, which is the right
-prompt but not the answer. Running it down, file by file:
+**Re-checked at `1a73403`.** `python scripts/release_ledger.py` lists every code file touched
+since the eval stamp, which is the right prompt but not the answer — and that list has grown
+from 7 files to 14, so the earlier version of this table (written at `8f2b657`) was stale.
+**Do not hand-audit this any more:** `python -m eval.score_rules <telemetry> --verify` re-derives
+the stamped `rules` column from the recorded telemetry and names any disagreement. It currently
+reports **141 of 142 agreeing, with one recorded difference**, which is the answer this table
+used to approximate.
 
 | Changed since `a96c8a1` | Moves a verdict? |
 |---|---|
-| `brain/rules.py` | **No.** Zero non-comment changed lines — a rationale block for `CPU_REVIEW_THRESHOLD_S`, which was already `None` |
-| `eval/cases.py` | **No.** One comment about the rt08 CPU measurement |
+| `brain/rules.py` — `EXEC_SCHEDULED_PERSISTENCE` | **Yes, one case.** `gm05-cron-inject` Clean → Blocked at the rules level. Measured 0 matches in 604 uncurated packages and 0 of 104 benign. Its `full` verdict was already Blocked, so no published figure changes. Recorded in `eval/score_rules.py::KNOWN_DRIFT` |
+| `brain/rules.py` — `FILE_PERSISTENCE` | **No, on this telemetry.** The policy was not loaded on Nov 2, so no recorded record carries those `file_events`. It *does* move `gm04`/`rt06` on telemetry captured after the deploy — see `eval/PERSISTENCE.md` |
+| `brain/intent.py` — W13 second key | **No.** A conjunct can only shrink what gets cleared, and all three hosts ever cleared are on the vendor list; pinned by `test_the_fix_changes_no_verdict_in_the_stamped_evaluation` |
+| `brain/timeline.py`, `brain/report.py` | **No.** Built after `combine()` and passed only to `render()`; all five attack fixtures keep their verdicts |
 | `brain/evidence.py` | **No.** Grounding is computed after `combine()` and feeds only the report |
 | `brain/sampling.py`, `brain/pipeline.py` | **No.** `MODEL_SAMPLES = 1`, so the band is never entered |
-| `brain/runlog.py` | **No.** Escapes a float on the dashboard |
-| `chamber/detonate.py`, `chamber/telemetry.py` | **No.** Strict input tightenings that reject nothing the harness sends; not deployed anyway |
+| `brain/runlog.py`, `brain/sbom.py` | **No.** Dashboard escaping and the SBOM CLI's terminal rendering |
+| `chamber/detonate.py`, `chamber/telemetry.py` | **No.** Strict input tightenings that reject nothing the harness sends; still not deployed |
+| `chamber/policies/persistence-files.yaml`, `chamber/provision/setup.sh` | **No** retroactively — a new tracing policy cannot change telemetry already recorded |
+| `eval/cases.py` | **No.** One comment about the rt08 CPU measurement |
 
-So the stamped tables are current. Re-run the eval only if `brain/rules.py`, `brain/verdict.py`,
-`brain/intent.py` or `eval/cases.py` gain a *behavioural* change.
+So the stamped tables still hold, with the one recorded `gm05` exception. Re-run the full eval
+only when a *behavioural* change lands that `score_rules --verify` flags as an unexplained
+disagreement.
 
 ## 6. Raw detonation results
 
