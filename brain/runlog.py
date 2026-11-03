@@ -92,7 +92,7 @@ def render_dashboard(records: list[dict]) -> str:
             f"<td title='{_esc(rec.get('title', ''))}'>{_esc(rec.get('title', '')[:60])}</td>"
             f"<td>{icon} {_esc(rec.get('verdict', ''))}</td>"
             f"<td class='rules'>{rules}</td>"
-            f"<td>{rec.get('detonation_s', '')}s</td><td>{cost}</td>"
+            f"<td>{_esc(rec.get('detonation_s', ''))}s</td><td>{cost}</td>"
             "</tr>"
         )
 
