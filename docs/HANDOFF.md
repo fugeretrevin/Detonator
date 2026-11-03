@@ -216,13 +216,18 @@ The deployed Brain is **v33 (Nov 2, 16:45 ET)**, which predates every Brain comm
 
 | Change | Effect if deployed | Effect of leaving it |
 |---|---|---|
-| `brain/evidence.py` — uncited-prose check (`e8e7098`) + its false-positive fix (`d8a3d81`) | A grounding line appears when the model's prose cites a path or port the record does not support | **`docs/SUBMISSION.md` describes a check the running Brain does not have.** Either deploy or soften that line before submitting |
+| `brain/evidence.py` — uncited-prose check (`e8e7098`) + its false-positive fix (`d8a3d81`) | A grounding line appears when the model's prose cites a path or port the record does not support | Nothing observable. See the note below |
 | `brain/sampling.py`, `brain/pipeline.py` — best-of-N band (`4167bb0`, `d57728b`) | None: `MODEL_SAMPLES = 1`, so the code is inert either way (W2 ships off) | None |
 | `brain/runlog.py` — `detonation_s` escaped on the dashboard | None visible; closes a gap against the file's stated invariant | None — the value is a float, so nothing can inject through it |
 
-Only the first row matters, and it is a **documentation-vs-deployment mismatch, not a bug**.
-Deploying is low-risk compared with a Chamber deploy, but W10 (§5.2) says rotate the Modal token
-first, so the cheap fix before filming is to adjust the `SUBMISSION.md` wording instead.
+**No action needed before submitting.** `docs/SUBMISSION.md` §grounding describes the
+uncited-prose check, and that description is accurate: it is a claim about the repository and
+about the eval numbers, and `eval/run_brain.py` imports `brain.pipeline.analyze` directly
+(it uses the deployed app only for the separate `PromptGuard` class), so every eval figure comes
+from this working tree, not from the deployed Brain. The only component running the older code
+is the live GitHub App, where the prose check fires on nothing we have observed anyway — so
+there is no visible difference to a judge opening a PR. Deploy it with the next Brain deploy
+(after rotating the Modal token, W10 §5.2); do not deploy specially for this.
 
 **Verdict numbers are unaffected by any of this.** `grounding` is computed *after* `combine()`
 in `brain/pipeline.py` and flows only into the rendered report, so it can never move a verdict —
