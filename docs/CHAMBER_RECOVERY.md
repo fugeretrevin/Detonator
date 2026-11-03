@@ -36,9 +36,15 @@ templates → Create image*. Name it `pr-detonator-chamber-<date>`. Leave "no re
 you can afford the restart (a quiesced image is more trustworthy), and take it while no
 detonation is running.
 
-Also note, **now**, whether `3.223.99.234` is an **Elastic IP** or an ephemeral public IP. If it
-is ephemeral, a stop/start already changes it and breaks TLS — in which case allocate an Elastic
-IP and associate it *before* you ever need this document.
+**Answered, Nov 3, 2026: `3.223.99.234` is an Elastic IP** (owner-confirmed). So a stop/start
+does **not** change the address, and the pinned certificate keeps verifying across a reboot.
+Recovery does not need a new cert or a Modal secret update — it needs the EIP **reassociated** to
+whatever instance you bring up. Step 4's certificate-regeneration path is the fallback for
+losing the EIP itself, not the normal case.
+
+The snapshot above is still not taken, and that is now the whole of the exposure: the Elastic IP
+guarantees the address will be right once something is running at it, not that there is anything
+to launch.
 
 ## 1. Triage: is the box actually gone?
 

@@ -15,7 +15,7 @@ touches the Chamber or a live check.
 | W3 | 6 of 104 benign unverifiable | Medium | After |
 | W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
-| W6 | Single Chamber VM, no tested restore | **High** (demo-day risk) | Before |
+| W6 | Single Chamber VM, no tested restore | High (demo-day risk) — **lower since Nov 3: the IP is Elastic, so TLS pinning survives a reboot**; the missing AMI is what's left | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
 | W8 | Sandbox egress is open TCP | Medium (honestly documented) | After |
 | W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
@@ -394,8 +394,8 @@ Blocked by rules alone, and they fall into three groups:
 
 | Why the rules miss it | Cases | What would close it |
 |---|---|---|
-| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`) — **policy written Nov 3, not deployed**; `gm10`, `rt07` (sibling package tamper) still open | `persistence-files.yaml` for the first two; a write-only filter with a volume benchmark for the others |
-| Tetragon traces `tcp_connect`, not `bind`/`listen` | `gm09` (backdoor listener) | A `listen`/`bind` tracing policy |
+| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`) — **closed Nov 3: policy deployed, rule at HIGH, both now Blocked**; `gm10`, `rt07` (sibling package tamper) still open | `persistence-files.yaml` did the first two; a write-only filter with a volume benchmark for the others |
+| Tetragon traces `tcp_connect`, not `bind`/`listen` | `gm09` (backdoor listener) | A `listen`/`bind` tracing policy — but see the note below: this case binds loopback only |
 | CPU only, or nothing observable at all | `rt08`, `gm08` (miners), `rt10` (dormant by design) | W5 above; `rt10` has nothing to see and is correctly model-caught |
 | Observable, and now caught | `gm05` (cron injection) | **Done** — `EXEC_SCHEDULED_PERSISTENCE` |
 
@@ -509,6 +509,26 @@ doesn't cost money or confuse the Brain.
 
 **Gate: before the deadline.** It costs one snapshot and about half an hour, and it is the
 difference between a bad hour and a lost submission. **Ask before creating any AWS resource.**
+
+### Nov 3: the address is an **Elastic IP** — owner confirmed
+
+This was the open question `docs/CHAMBER_RECOVERY.md` told us to answer "now", and it removes the
+worst failure mode. `3.223.99.234` is allocated, not ephemeral, so:
+
+- **A stop/start no longer changes the address**, which means the Brain's pinned certificate
+  (`CHAMBER_CA_PEM`, with `IP Address:3.223.99.234` as a SAN) keeps verifying. The scenario where
+  every check silently becomes "Could not verify" because the IP moved is off the table for a
+  reboot, and for a restore as long as the EIP is reassociated.
+- Recovery therefore reduces to: launch from the AMI, **reassociate the Elastic IP**, restart the
+  services, check `/health`. No certificate regeneration and no Modal secret update — which was
+  the slow, error-prone half of step 4 in the runbook.
+
+**What is still open in W6 is the snapshot itself.** There is no AMI, so a restore has nothing to
+restore *from*; the EIP only guarantees the address will be right once something is running at
+it. That remains an AWS-console action, and the drill in step 3 remains unrehearsed.
+
+Severity is accordingly lower than it was — the failure mode is now "rebuild from scratch under
+time pressure" rather than "rebuild and then discover TLS no longer verifies".
 
 ---
 

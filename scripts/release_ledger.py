@@ -124,11 +124,15 @@ OWNER_FIELDS: tuple[tuple[str, str], ...] = (
         "Sandbox image digest",
         _SSH + "docker image inspect --format '{{index .RepoDigests 0}}' detonator-sandbox:latest",
     ),
-    ("Chamber address persistence", "AWS console: is the Chamber IP Elastic or ephemeral? (W6)"),
+    (
+        "AMI snapshot id",
+        "AWS console (W6) — the last open half of W6; the address question is "
+        "settled: 3.223.99.234 is an Elastic IP, so TLS pinning survives a "
+        "reboot",
+    ),  # fmt: skip
     ("Demo video URL", "paste into docs/SUBMISSION.md, then confirm it plays signed out (W1)"),
     ("Demo PR head SHAs", "the exact SHAs the recorded check runs belong to"),
     ("Modal token rotated", "owner confirms; do before any deploy (W10)"),
-    ("AMI snapshot id", "AWS console (W6)"),
     ("SBOM signing key backed up", "owner confirms, off this machine and out of the repo"),
 )
 
