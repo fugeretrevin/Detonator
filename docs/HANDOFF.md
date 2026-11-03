@@ -190,6 +190,24 @@ package identifiers out of this repo (they're in the owner's sent mail).
 2. **Rotate the Modal token** before deploying (§3 step 2).
 3. **Record the demo**, paste the URL, confirm the rules (§3 step 9).
 
+## 5b. Chamber code in `main` that is NOT on the box
+
+Two hardening changes to `chamber/detonate.py` are committed but **not deployed**. The running
+Chamber still has the old `validate`. Both are strict tightenings that reject nothing the Brain
+or the eval harness actually sends, so the divergence is harmless and there is **no need to
+redeploy before filming** — a Chamber deploy carries real risk (see
+[`CHAMBER_RECOVERY.md`](CHAMBER_RECOVERY.md), the IP-SAN trap), and these buy defence-in-depth
+on a boundary only the HMAC-signing Brain can reach.
+
+| Change | What it rejects | Verified against |
+|---|---|---|
+| `JOB_ID_RE` requires an alphanumeric first char | `job_id` starting `-` (was not exploitable) | uuid4 shape |
+| Command tail allowlisted token by token | `--ignore-scripts`, `--prefix /etc`, `--registry=…`, non-package args | all 142 real `eval/cases.py` commands + `registry_sweep` specs |
+
+Deploy them with the next Chamber deploy that happens for another reason. If you do deploy,
+re-run one benign and one attack case afterwards — the command allowlist is on the hot path for
+every detonation.
+
 ## 6. Raw detonation results
 
 Scored outputs are committed (`eval/results.json`, `eval/REDTEAM.json`, `eval/SWEEP*.json`);

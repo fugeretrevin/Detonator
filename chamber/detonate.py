@@ -36,6 +36,18 @@ JOB_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]{0,63}$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 CLONE_URL_RE = re.compile(r"^https://github\.com/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+(\.git)?$")
 ALLOWED_COMMAND_HEADS = (["npm", "install"], ["npm", "ci"])
+# Everything after the head is checked token by token. An allowlist, so an npm flag we have
+# not considered fails closed instead of quietly changing what the sandbox does: the worst case
+# is `--ignore-scripts`, which would make a detonation prove nothing at all, since install
+# hooks are the entire thing being watched for.
+ALLOWED_BARE_FLAGS = frozenset({"--no-audit", "--no-fund", "--no-progress"})
+# Flags taking a value, each with its own constraint on that value. `--prefix` is used by the
+# eval harness to install a payload fixture into a subdirectory of the work tree, so the value
+# must stay relative and inside it - `--prefix /etc` is the thing to keep out.
+ALLOWED_VALUE_FLAGS = ("--prefix",)
+# `lodash@4.17.21`, `@babel/core@7.0.0`: eval/registry_sweep.py pins one package per run.
+PKG_SPEC_RE = re.compile(r"^(?:@[a-z0-9~-][\w.-]*/)?[a-z0-9~-][\w.-]*(?:@[\w.^~<>=*|-]+)?$")
+SAFE_REL_PATH_RE = re.compile(r"^[A-Za-z0-9._][\w./@+-]*$")
 MAX_TIMEOUT_S = 300
 SANDBOX_UID = 10001
 FLUSH_WAIT_S = 2.0
@@ -91,6 +103,36 @@ class InvalidRequest(ValueError):
     pass
 
 
+def _safe_rel_path(value: str) -> bool:
+    """Relative, inside the work tree, no traversal."""
+    return (
+        bool(SAFE_REL_PATH_RE.match(value))
+        and ".." not in value.split("/")
+        and not value.startswith("/")
+    )
+
+
+def _validate_command_tail(tail: list[str]) -> None:
+    """Each token after `npm install` must be an allowed flag, an allowed flag's value, or a
+    package spec. Checking only the head left `npm install --ignore-scripts` valid."""
+    i = 0
+    while i < len(tail):
+        tok = tail[i]
+        if tok in ALLOWED_VALUE_FLAGS:
+            if i + 1 >= len(tail):
+                raise InvalidRequest(f"command flag {tok} needs a value")
+            if not _safe_rel_path(tail[i + 1]):
+                raise InvalidRequest(f"command flag {tok} value must be a relative path")
+            i += 2
+            continue
+        if tok.startswith("-"):
+            if tok not in ALLOWED_BARE_FLAGS:
+                raise InvalidRequest(f"command flag not allowed: {tok[:40]!r}")
+        elif not PKG_SPEC_RE.match(tok):
+            raise InvalidRequest(f"command argument is not a package spec: {tok[:40]!r}")
+        i += 1
+
+
 def validate(req: DetonateRequest) -> None:
     if not JOB_ID_RE.match(req.job_id):
         raise InvalidRequest("bad job_id")
@@ -98,8 +140,10 @@ def validate(req: DetonateRequest) -> None:
         raise InvalidRequest("head_sha must be a full 40-char hex SHA")
     if not CLONE_URL_RE.match(req.clone_url):
         raise InvalidRequest("clone_url must be https://github.com/<owner>/<repo>")
-    if not any(req.command[: len(h)] == h for h in ALLOWED_COMMAND_HEADS):
+    head = next((h for h in ALLOWED_COMMAND_HEADS if req.command[: len(h)] == h), None)
+    if head is None:
         raise InvalidRequest("command must start with npm install / npm ci")
+    _validate_command_tail(req.command[len(head) :])
     if not 1 <= req.timeout_s <= MAX_TIMEOUT_S:
         raise InvalidRequest(f"timeout_s must be 1..{MAX_TIMEOUT_S}")
 

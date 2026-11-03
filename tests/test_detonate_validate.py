@@ -170,16 +170,87 @@ def test_the_default_command_passes_validation():
     assert DetonateRequest.model_fields["command"].default[:2] == ["npm", "install"]
 
 
-def test_only_the_head_of_the_command_is_checked_which_is_a_real_gap():
-    """Documented, not endorsed. `validate` checks the *prefix*, so extra npm flags pass -
-    including `--ignore-scripts`, which would make the detonation prove nothing because
-    install hooks are the entire thing we are watching for.
+@pytest.mark.parametrize(
+    "flag",
+    [
+        "--ignore-scripts",  # the one that matters: install hooks are what we watch for
+        "--global",
+        "-g",
+        "--registry=http://evil.test",
+        "--userconfig=/tmp/evil-npmrc",
+        "--globalconfig=/tmp/evil-npmrc",
+        "--before=2020-01-01",
+        "--omit=dev",
+        "--foreground-scripts",
+        "-",
+    ],
+)
+def test_a_flag_outside_the_allowlist_is_rejected(flag):
+    """This was the gap: `validate` used to check only the command's *head*, so every one of
+    these passed. `--ignore-scripts` is the worst - it would make a detonation prove nothing
+    while still reporting a clean run."""
+    with pytest.raises(InvalidRequest, match="command"):
+        validate(req(command=["npm", "install", flag]))
 
-    This is safe today only because the Chamber accepts HMAC-signed requests and the Brain
-    builds the command itself; a PR author cannot reach this field. If the Chamber ever takes
-    a request from anywhere else, this check needs to be an exact-match allowlist."""
-    validate(req(command=["npm", "install", "--ignore-scripts"]))
-    validate(req(command=["npm", "install", "--prefix", "/etc"]))
+
+@pytest.mark.parametrize(
+    "value",
+    [
+        "/etc",  # absolute: escapes the work tree
+        "/",
+        "../../etc",
+        "..",
+        "payloads/../../etc",
+        "-rf",
+        "$(id)",
+        "a;b",
+    ],
+)
+def test_a_prefix_outside_the_work_tree_is_rejected(value):
+    with pytest.raises(InvalidRequest, match="command"):
+        validate(req(command=["npm", "install", "--prefix", value]))
+
+
+def test_prefix_needs_a_value():
+    with pytest.raises(InvalidRequest, match="command"):
+        validate(req(command=["npm", "install", "--prefix"]))
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        ["npm", "install"],
+        ["npm", "ci"],
+        ["npm", "install", "--no-audit", "--no-fund"],
+        ["npm", "install", "--no-audit", "--no-fund", "lodash@4.17.21"],
+        ["npm", "install", "--no-audit", "--no-fund", "@babel/core@7.0.0"],
+        ["npm", "install", "--no-audit", "--no-fund", "left-pad"],
+        # eval/cases.py builds exactly this for a payload fixture.
+        ["npm", "install", "--no-audit", "--no-fund", "--prefix", "payloads/m01-curl-env"],
+    ],
+)
+def test_the_commands_we_actually_send_are_accepted(command):
+    validate(req(command=command))
+
+
+@pytest.mark.parametrize(
+    "arg",
+    ["; rm -rf /", "$(id)", "`id`", "a b", "../x", "http://evil.test/x.tgz", "file:///etc"],
+)
+def test_a_trailing_argument_that_is_not_a_package_spec_is_rejected(arg):
+    with pytest.raises(InvalidRequest, match="command"):
+        validate(req(command=["npm", "install", arg]))
+
+
+def test_every_real_eval_case_command_still_validates():
+    """The regression guard for this tightening: if the allowlist is too strict, the whole
+    142-case eval harness stops working. Asserted against the real case definitions rather
+    than a remembered list of flags."""
+    from eval.cases import CASES
+
+    assert len(CASES) > 100, "guard is only meaningful against the full case set"
+    for case in CASES.values():
+        validate(req(command=case.command))
 
 
 # --- timeout ------------------------------------------------------------------------------

