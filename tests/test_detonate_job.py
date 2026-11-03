@@ -40,7 +40,14 @@ from dataclasses import dataclass
 
 import pytest
 
-from brain.pipeline import PRIVATE_REPO_TITLE
+# `brain/app.py` imports the Modal SDK at module scope, and these tests import `brain.app`
+# inside their fixtures. Without the SDK they would therefore fail *at run time* rather than be
+# skipped, which an independent reviewer reads as 21 broken tests rather than 21 unrunnable
+# ones. `modal` is in requirements-dev.txt, so a correctly provisioned environment runs them
+# all; this only makes the degraded case legible. Module scope, so it gates collection.
+pytest.importorskip("modal", reason="Modal SDK not installed; see requirements-dev.txt")
+
+from brain.pipeline import PRIVATE_REPO_TITLE  # noqa: E402
 from brain.verdict import FinalVerdict
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateResult

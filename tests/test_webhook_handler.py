@@ -23,6 +23,10 @@ from pathlib import Path
 
 import pytest
 
+# See the note in tests/test_detonate_job.py: `brain.app` needs the Modal SDK, which these
+# tests import inside a fixture, so without it they fail at run time instead of skipping.
+pytest.importorskip("modal", reason="Modal SDK not installed; see requirements-dev.txt")
+
 FIXTURES = Path(__file__).parent / "fixtures"
 SECRET = "webhook-secret"
 CHECK_ID = 4242
