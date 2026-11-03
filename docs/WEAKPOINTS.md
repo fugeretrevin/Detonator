@@ -298,6 +298,54 @@ threshold is chosen. Signal must separate them with **zero** benign hard blocks 
 
 **Gate: after judging.** `rt08` stays a reported miss, which is already in the write-up.
 
+### Nov 3: the gap is now measured, and it is telemetry, not rules
+
+With the raw telemetry pulled off the Chamber (`docs/HANDOFF.md` §6) and re-scored offline by
+`eval/score_rules.py`, the rules-level misses are no longer a guess. Ten attack cases are not
+Blocked by rules alone, and they fall into three groups:
+
+| Why the rules miss it | Cases | What would close it |
+|---|---|---|
+| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`), `gm10`, `rt07` (sibling package tamper) | General file-write telemetry in the Chamber |
+| Tetragon traces `tcp_connect`, not `bind`/`listen` | `gm09` (backdoor listener) | A `listen`/`bind` tracing policy |
+| CPU only, or nothing observable at all | `rt08`, `gm08` (miners), `rt10` (dormant by design) | W5 above; `rt10` has nothing to see and is correctly model-caught |
+| Observable, and now caught | `gm05` (cron injection) | **Done** — `EXEC_SCHEDULED_PERSISTENCE` |
+
+**`m12-domain-exfil` stays model-caught deliberately.** Its payload sends a dummy body, so it
+never touches the decoy credentials; from telemetry alone a `POST` to `example.com` is
+indistinguishable from a benign telemetry ping. A rule here would be fitted to the test case
+rather than to the behaviour, so it was not written.
+
+So four of the ten misses share **one** root cause: `file_events` covers only the planted bait
+credential files. That is the same cause W5 identifies for the miner gap ("a compiler's constant
+writes are invisible to us"), which makes general file-write telemetry the highest-value single
+change available — it would newly catch four red-team cases *and* unblock W5's candidate (1).
+It is a Chamber change, so it needs a deploy and a re-detonation, and stays gated.
+
+### `EXEC_SCHEDULED_PERSISTENCE`, added Nov 3
+
+Five candidate signals were measured against **3342 exec events across 742 recorded installs**
+(the 142 eval cases plus the 100- and 500-package registry sweeps; 604 of those are uncurated
+packages straight off the npm feed) *before* any was written:
+
+| Candidate | Attacks | Benign (104) | Uncurated (604) | Decision |
+|---|---|---|---|---|
+| cron / systemd / `at` | 1 | **0** | **0** | **Shipped** (HIGH) |
+| `chmod +x` | 0 | 0 | **2** | Rejected — real packages do this |
+| `curl\|sh`, `wget\|sh` | 3 | 0 | 0 | No new catch: all three already Block |
+| base64 → shell | 1 | 0 | 0 | Already covered by `EXEC_DECODE_PIPE` |
+| `~/.bashrc`, `authorized_keys`, `nohup`, `LD_PRELOAD`, history tampering | **0** | 0 | 0 | No signal — those payloads use node's `fs` API, so argv cannot see them |
+
+Verdict impact, measured rather than argued: **exactly one case moves**, `gm05-cron-inject`
+Clean → Blocked at the rules level. Its `full` verdict was already Blocked, so **no published
+figure changes**. Recorded as the single entry in `eval/score_rules.py::KNOWN_DRIFT`, which
+fails if an unexplained disagreement with the stamped eval appears *or* if a listed one
+disappears. Mutation-tested 11/11.
+
+The first version of the pattern was too loose — a plain `\bcrontab\b` also matches
+`docs/crontab-format.md`, which a package shipping cron documentation would ship. Its own test
+caught that before it shipped; the pattern now matches only in command position.
+
 ---
 
 ## W6 — Single Chamber VM with no tested restore

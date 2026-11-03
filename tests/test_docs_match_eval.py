@@ -258,6 +258,28 @@ def test_the_demo_script_withholds_the_disclosed_package():
     )
 
 
+def test_the_documented_rule_count_matches_the_code():
+    """`docs/SUBMISSION.md` claimed "15 deterministic rules" while the code had 16, and nobody
+    noticed because nothing derived the number. Counted from the source instead."""
+    import re
+    from pathlib import Path as _Path
+
+    ids: set[str] = set()
+    for module in sorted((ROOT / "brain").glob("*.py")):
+        src = _Path(module).read_text(encoding="utf-8")
+        ids |= set(re.findall(r"""RuleHit\(\s*["']([A-Z][A-Z0-9_]+)""", src))
+        ids |= set(re.findall(r"""hit\(\s*["']([A-Z][A-Z0-9_]+)""", src))
+    assert len(ids) >= 10, f"the rule-id scan found only {sorted(ids)}; the pattern has rotted"
+
+    text = normalised(ROOT / "docs" / "SUBMISSION.md")
+    m = re.search(r"(\d+) deterministic rules", text)
+    assert m, "SUBMISSION no longer states a rule count"
+    assert int(m.group(1)) == len(ids), (
+        f"SUBMISSION says {m.group(1)} deterministic rules; brain/ defines {len(ids)}: "
+        f"{', '.join(sorted(ids))}"
+    )
+
+
 def test_the_caveat_the_generators_emit_says_both_required_things():
     """Guards the constant itself: the per-document test above would pass vacuously if the
     generators started emitting a caveat that no longer made either point."""

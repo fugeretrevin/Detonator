@@ -350,11 +350,48 @@ def _script_operand(event: ExecEvent) -> str | None:
     return None
 
 
+# Install-time scheduling. A package has no reason to register a cron job, a systemd unit or an
+# `at` job while installing: the point of the technique is code that runs *after* the install is
+# over, when nothing is watching. That makes it persistence, not configuration.
+#
+# Measured before being written, across every recorded install available (3342 exec events in
+# 742 installs: the 142 eval cases plus the 100- and 500-package registry sweeps, 604 of which
+# are uncurated packages straight off the npm feed). Exactly one match -
+# `gm05-cron-inject` - and **zero** among the 104 popular packages or the 604 uncurated ones.
+#
+# Also measured and deliberately *not* turned into rules, so the negative results are on record:
+#   - `chmod +x`              2 uncurated false positives (a real package marking a vendored
+#                             binary executable). Rejected.
+#   - `curl|sh` / `wget|sh`   3 attack matches, 0 false positives - but all three already Block
+#                             on EXEC_NET_TOOL or EXEC_DECODE_PIPE, so a rule buys no new catch.
+#   - `~/.bashrc`, `authorized_keys`, `nohup`, `LD_PRELOAD`, history tampering
+#                             no matches at all, including in the four red-team cases that do
+#                             exactly these things: they use node's `fs` API, not a shell, so
+#                             argv cannot see them. Closing that needs general file-write
+#                             telemetry in the Chamber (see docs/WEAKPOINTS.md W5), not a rule.
+# Matched in *command position* - start of string, or after a shell separator or quote - and
+# not as a substring of a path or package name. A plain `\bcrontab\b` also fires on
+# `docs/crontab-format.md`, which a package shipping cron documentation would ship; that was a
+# real false positive, caught by this rule's own test before it shipped. Likewise `at` needs a
+# following `now`/`-f`, so `npm run at-build` and the words "scheduled at build time" are not
+# scheduling, and `systemctl` needs `enable`/`start`, so reading status is not registering.
+_CMD_START = r"(?:^|[\s;&|(`'\"])"
+SCHEDULE_PERSIST_RE = re.compile(
+    rf"{_CMD_START}(?:crontab|systemd-run)(?=\s|$)"
+    r"|/etc/cron[./]|/var/spool/cron"
+    rf"|{_CMD_START}systemctl\s+(?:--user\s+)?(?:enable|start)\b"
+    rf"|{_CMD_START}at\s+(?:now\b|-f\b)"
+)
+# Binaries whose mere execution is the scheduling call, so a path prefix is fine here.
+SCHEDULER_BINARIES = frozenset({"crontab", "systemd-run"})
+
+
 def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     hits: list[RuleHit] = []
     name = _basename(event.binary)
     args = event.args
-    cmd = _clip(f"{event.binary} {args}".strip())
+    full = f"{event.binary} {args}".strip()  # unclipped: a match can sit past the evidence cap
+    cmd = _clip(full)
 
     def hit(rule_id: str, severity: Severity, why: str) -> None:
         hits.append(
@@ -384,6 +421,10 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
         args
     ):
         hit("EXEC_DECODE_PIPE", Severity.HIGH, "decoded payload piped into a shell")
+
+    if name in SCHEDULER_BINARIES or SCHEDULE_PERSIST_RE.search(full):
+        hit("EXEC_SCHEDULED_PERSISTENCE", Severity.HIGH,
+            "registered a scheduled job during install (runs after the install ends)")  # fmt: skip
 
     return hits
 

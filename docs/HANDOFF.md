@@ -3,7 +3,7 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **820 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **872 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
 merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
 every divergence and say what each one would change; neither blocks submitting. Run
@@ -267,6 +267,25 @@ tar -xzf eval-results-6.tgz
 
 Re-score: `.venv\Scripts\python -m eval.run_brain <dir> eval/results` (needs
 `LLAMA_API_KEY` and the deployed Modal app; score from a clean tree).
+
+**Rules-only re-score, free and offline** — `eval/score_rules.py`. This is the one to reach for
+while changing a rule, because it answers "does this hard-block anything benign" with no model,
+no Modal and no cost, in about a second:
+
+```powershell
+scp chamber:/tmp/v3-out.tgz .    # the 142-case set the current eval was scored from
+tar -xzf v3-out.tgz
+.venv\Scripts\python -m eval.score_rules v3-out --verify            # reproduces the stamp
+.venv\Scripts\python -m eval.score_rules v3-out --baseline base.json
+#   ... change a rule ...
+.venv\Scripts\python -m eval.score_rules v3-out --compare base.json # what moved
+```
+
+`--verify` re-derives the stamped `rules` column from the telemetry and fails on any
+disagreement not listed in `KNOWN_DRIFT` with a measurement behind it. Run it first: if the
+harness cannot reproduce the committed numbers, its verdict on a *change* is worthless too.
+Point it at `sweep-out`/`sweep500` as well for 604 uncurated packages of false-positive
+denominator.
 
 ## 7. Gotchas
 
