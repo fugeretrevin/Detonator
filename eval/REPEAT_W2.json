@@ -1,0 +1,3918 @@
+{
+ "commit": "24bc587",
+ "dirty": true,
+ "scored_at": "2026-11-02 23:51 UTC",
+ "trials": 5,
+ "arms": [
+  "full",
+  "sampled"
+ ],
+ "rows": [
+  {
+   "id": "puppeteer",
+   "kind": "benign",
+   "outcomes": {
+    "full": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ],
+    "sampled": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "playwright-chromium",
+   "kind": "benign",
+   "outcomes": {
+    "full": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ],
+    "sampled": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "prisma",
+   "kind": "benign",
+   "outcomes": {
+    "full": [
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean"
+    ],
+    "sampled": [
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "chromedriver",
+   "kind": "benign",
+   "outcomes": {
+    "full": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ],
+    "sampled": [
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review",
+     "Needs review"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m01-curl-env",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m02-wget-sh",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m03-devtcp",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m04-b64-sh",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m05-node-net",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m06-node-https-env",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m07-charcode",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m08-npmrc",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m09-perl",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m10-imds",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m11-dns-exfil",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m12-domain-exfil",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Needs review",
+     "Needs review",
+     "Blocked",
+     "Needs review"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m13-injection",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m14-delayed",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m15-udp-exfil",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "m16-token-header",
+   "kind": "malicious",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "r01-ua-parser-js",
+   "kind": "incident",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "r02-shai-hulud",
+   "kind": "incident",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt01-env-https",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt02-ssh-key",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt03-revshell",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt04-fetch-exec",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt05-charcode",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt06-persist-rcfile",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt07-self-propagate",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt08-local-miner",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean"
+    ],
+    "sampled": [
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean",
+     "Clean"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt09-dropped-binary",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "rt10-ci-dormant",
+   "kind": "redteam",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm01-env-exfil",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm02-cred-harvest",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm03-obfuscated-exec",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm04-rcfile-persist",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm05-cron-inject",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm06-binary-drop",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm07-recon",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm08-cpu-miner",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm09-backdoor-listen",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 2,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 1,
+     "supported": 1,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "gm10-dep-tamper",
+   "kind": "redteam-ind",
+   "outcomes": {
+    "full": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ],
+    "sampled": [
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked",
+     "Blocked"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    },
+    {
+     "claims": 2,
+     "supported": 2,
+     "rejected": 0,
+     "source_inferred": 1,
+     "unsupported_mentions": 0
+    }
+   ],
+   "llm_errors": 0
+  }
+ ]
+}

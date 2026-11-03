@@ -21,6 +21,7 @@ A sample that errors is not a vote: errors are dropped, and only if *every* samp
 the outcome stay an error (which `verdict.py` then treats as model-unavailable).
 """
 
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 
 from brain.llm import LlmOutcome
@@ -43,12 +44,31 @@ def worst(outcomes: list[LlmOutcome]) -> LlmOutcome:
 
 
 def sample_analysis(
-    llm, metadata, hits, view, diff, contract, guilty, *, samples: int | None = None
+    llm,
+    metadata,
+    hits,
+    view,
+    diff,
+    contract,
+    guilty,
+    *,
+    samples: int | None = None,
+    needs_more: Callable[[LlmOutcome], bool] | None = None,
 ) -> LlmOutcome:
-    """Call the analysis `samples` times and keep the worst answer.
+    """Call the analysis once, then re-sample only if `needs_more` says the answer is borderline.
 
-    `samples<=1` calls exactly once and returns it, so the default path is unchanged — no extra
-    latency, no extra cost, and no behavioural difference from calling `llm` directly."""
+    `samples<=1` calls exactly once, so the default path is unchanged — no extra latency, no
+    extra cost, no behavioural difference from calling `llm` directly.
+
+    Why conditional. Sampling every PR three times measured at **$0.045–$0.054 per PR** against
+    a pre-registered $0.04 budget, so unconditional N=3 was rejected on cost. But the flip only
+    ever *matters* in the ⚠️ band: a Blocked verdict cannot be undone by a worse sample
+    (`combine` takes a max), and ⚠️ was about 4 of 142 cases in the eval. Re-sampling only
+    there buys the same stability for roughly a tenth of a cent per PR on average.
+
+    `needs_more` receives the first outcome and returns True to draw the rest. The caller owns
+    that decision because only it knows the rules floor; `pipeline.analyze` passes a predicate
+    that fires when the combined verdict would be "Needs review"."""
     from brain.pinpoint import for_prompt
 
     n = MODEL_SAMPLES if samples is None else samples
@@ -58,8 +78,10 @@ def sample_analysis(
         return llm(metadata, hits, view, diff, contract.for_prompt(),
                    guilty=for_prompt(guilty) or None)  # fmt: skip
 
-    if n == 1:
-        return once()
-    # Concurrent: the samples are independent, so N calls cost one call's latency.
-    with ThreadPoolExecutor(max_workers=n) as pool:
-        return worst([f.result() for f in [pool.submit(once) for _ in range(n)]])
+    first = once()
+    if n == 1 or (needs_more is not None and not needs_more(first)):
+        return first
+    # Independent samples, so the remaining N-1 cost one call's latency between them.
+    with ThreadPoolExecutor(max_workers=n - 1) as pool:
+        rest = [f.result() for f in [pool.submit(once) for _ in range(n - 1)]]
+    return worst([first, *rest])

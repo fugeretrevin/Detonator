@@ -130,7 +130,14 @@ def analyze(
         base_hits = evaluate(base_view, allowed_cidrs=allowed_cidrs)
         hits, differential = differential_diff(hits, base_hits, result, base_view)
     guilty = find_guilty_lines(hits, result, list(files))
-    outcome = sample_analysis(llm, metadata, hits, view, diff, contract, guilty, samples=samples)
+    # Re-sample only when the verdict would sit in the mergeable-but-flagged band: that is the
+    # only place a model flip changes the merge decision (Blocked can't be undone - combine
+    # takes a max - and Clean means no rule fired at all). Keeps the cost of stability off the
+    # 97% of PRs that are not borderline. See docs/WEAKPOINTS.md W2.
+    outcome = sample_analysis(
+        llm, metadata, hits, view, diff, contract, guilty, samples=samples,
+        needs_more=lambda o: combine(hits, o, view).title == "Needs review",
+    )  # fmt: skip
     final = combine(hits, outcome, view)
     # Code, not the model, decides which of its claims the kernel record supports. Report only.
     grounding = (check_evidence(outcome.verdict, build_index(view), corpus_for(view, diff))

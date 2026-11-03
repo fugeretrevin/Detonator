@@ -85,3 +85,47 @@ def test_samples_are_clamped_to_the_maximum():
 class _Contract:
     def for_prompt(self):
         return None
+
+
+# --- conditional re-sampling: pay for stability only in the borderline band ---
+
+
+def test_no_resample_when_the_first_answer_is_not_borderline():
+    """Unconditional N=3 measured at $0.045-0.054/PR against a $0.04 budget, so the default
+    path must stay a single call on the ~97% of PRs that are not borderline."""
+    calls = []
+
+    def llm(*a, **k):
+        calls.append(1)
+        return outcome("benign")
+
+    got = sample_analysis(llm, None, [], None, "", _Contract(), [],
+                          samples=3, needs_more=lambda o: False)  # fmt: skip
+    assert len(calls) == 1 and got.verdict.verdict == "benign"
+
+
+def test_resamples_and_escalates_when_the_first_answer_is_borderline():
+    answers = iter([outcome("suspicious"), outcome("malicious"), outcome("suspicious")])
+    calls = []
+
+    def llm(*a, **k):
+        calls.append(1)
+        return next(answers)
+
+    borderline = lambda o: o.verdict.verdict == "suspicious"  # noqa: E731
+    got = sample_analysis(llm, None, [], None, "", _Contract(), [],
+                          samples=3, needs_more=borderline)  # fmt: skip
+    assert len(calls) == 3
+    assert got.verdict.verdict == "malicious"  # m12's exact failure mode, stabilised
+
+
+def test_resampling_can_only_raise_severity_never_lower_it():
+    """If every extra sample is milder, the first answer still stands."""
+    answers = iter([outcome("malicious", 0.95), outcome("benign"), outcome("benign")])
+
+    def llm(*a, **k):
+        return next(answers)
+
+    got = sample_analysis(llm, None, [], None, "", _Contract(), [],
+                          samples=3, needs_more=lambda o: True)  # fmt: skip
+    assert llm_level(got.verdict) == Severity.CRITICAL
