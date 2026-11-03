@@ -120,6 +120,28 @@ a benign native build an escalation to Blocked would be a false accusation.
 If a benign case escalates, narrow the band to unverified cases *that already carry a rule hit*
 rather than keeping the wider version — do not relax condition 3.
 
+### Verdict: W2 ships **off**. `MODEL_SAMPLES = 1`.
+
+The re-run of the widened band was **abandoned unmeasured**. It ran 80 minutes against an
+expected ~20 (4 established HTTPS connections, 6 s of CPU — provider-side throttling, almost
+certainly from the extra concurrent samples), and was killed under the 2× rule rather than left
+to burn API spend.
+
+So acceptance **1 and 3 are unmeasured for the widened band**, and the gate is explicit that all
+four must pass on a measured run. Therefore the default stays 1 and sampling is off in
+production. Shipping it would mean flipping a verdict-affecting default, hours before filming, on
+the strength of a measurement I could not obtain — which is precisely what the standing trade at
+the bottom of this document warns against.
+
+What is actually in the repo: the mechanism, the band, 8 tests including the `gm08` and
+`Clean`-exclusion cases, and a priced cost model. All of it inert at `MODEL_SAMPLES = 1`. The
+honest public claim is unchanged and already published — *`m12` is Blocked in 3 of 5 trials, and
+we quote the distribution rather than the best run.*
+
+**If anyone resumes this:** re-run `--arms full,sampled` with `max_workers=1` in
+`eval/repeat.py` to avoid the throttling, and check condition 3 first — the 6 benign
+`Could not verify` native-build packages are the ones at risk from the widening.
+
 ---
 
 ## W3 — 6 of 104 benign packages cannot be verified
