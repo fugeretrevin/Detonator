@@ -171,22 +171,57 @@ draw rather than literally the first of `sampled[i]`'s three. It is a Monte Carl
 5 trials, which cannot distinguish a flip rate of 0 from a few percent. Evidence toward
 acceptance 1, not the measured run the gate asks for.
 
-**Acceptance 3 is still unmeasured, and now precisely scoped.** All **6 of 6** at-risk packages
-(`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`, `biome`, `cypress`) are **absent** from
-that 42-case corpus — so its clean benign column says nothing about the condition that matters.
-Settling it needs only those six, sampled arm, 5 trials: about 120 model calls, **≈$1.50**, not
-the $25 full re-score. The telemetry for all six is already in the recorded set:
+### Nov 3: acceptance 3 measured, with the real band code
+
+The 6 at-risk packages were absent from the 42-case corpus, so they were run on their own —
+`eval/REPEAT_W2_NATIVE.{json,md}`, stamped clean at `8057a42`, 5 trials, `sampled` arm, 120
+model calls for about **$1.50** rather than the $25 a full re-score costs.
+
+| Package | Outcome across 5 trials |
+|---|---|
+| `better-sqlite3`, `argon2`, `cpu-features`, `node-pty`, `biome`, `cypress` | `Could not verify` ×5 — **0 Blocked, 0 flips** |
+
+This is a measurement of the **widened band itself**, not of unconditional N=3: at this commit
+`brain/sampling.py::sample_analysis` draws one sample and re-samples only when `needs_more`
+fires, and `pipeline.analyze` passes the `BORDERLINE_TITLES` predicate. The abandoned round-2
+run is therefore no longer wholly missing.
+
+**And the population acceptance 2 and 3 have to cover is 10, not 104.** The band cannot touch a
+case whose first sample is not borderline — it returns that sample unchanged, which
+`tests/test_sampling.py::test_clean_is_never_resampled_because_that_is_where_the_volume_is` and
+`test_no_resample_when_the_first_answer_is_not_borderline` pin in code. So the 94 benign cases
+that read Clean at N=1 are unaffected *by construction*, and the only benign cases the band can
+reach are the 4 at ⚠️ and the 6 unverified. Both groups are now measured:
+
+| Benign group | Measured | Result |
+|---|---|---|
+| 4 at ⚠️ (`puppeteer`, `playwright-chromium`, `chromedriver`, `prisma`) | round 1 | ⚠️ ×5, **0 Blocked** |
+| 6 unverified native builds | Nov 3 | `Could not verify` ×5, **0 Blocked** |
+| 94 Clean at N=1 | not needed | never re-sampled, by construction |
+
+Residual, stated rather than glossed: a benign case that normally reads Clean but *occasionally*
+draws a borderline first sample would enter the band on that trial. That path is unmeasured for
+the 94. It is second-order — the same case can already draw a bad sample at N=1 — but it is not
+nothing.
+
+### Verdict: W2 still ships **off**, `MODEL_SAMPLES = 1`.
+
+What is measured: acceptance **2**, **3** (for every benign case the band can reach) and **4**
+(priced at $0.0212/PR worst case against the $0.04 budget).
+
+What is not: **acceptance 1**, flip rate 0 on the attack cases, *with the band code*. The 0/38
+figure above is a reconstruction from recorded arms plus the monotonicity proof — strong, but the
+gate asks for a measured run and says so for a reason. Closing it is one more targeted run, since
+a Blocked case never re-samples and so costs a single analysis call:
 
 ```powershell
-python -m eval.repeat <telemetry-dir> --trials 5 --arms sampled `
-  --only better-sqlite3,argon2,cpu-features,node-pty,biome,cypress --out eval/REPEAT_W2_NATIVE
+python -m eval.repeat <telemetry-dir> --trials 5 --arms sampled --workers 1 `
+  --only m01-...,m16-...,r01-ua-parser-js,r02-shai-hulud --out eval/REPEAT_W2_ATTACKS
 ```
 
-### Verdict unchanged: W2 still ships **off**, `MODEL_SAMPLES = 1`.
-
-Three conditions satisfied and one missing is not four, and the gate says all four on a measured
-run. `tests/test_band_sim.py` asserts the default is still 1, so nobody can mistake the
-simulation for the measurement.
+≈190 calls, **≈$2.50** for the 18 malicious + incident cases. Until then the default stays 1,
+and `tests/test_band_sim.py` asserts it, so nobody can mistake three conditions plus a proof for
+four conditions measured.
 
 ---
 

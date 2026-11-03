@@ -1,0 +1,347 @@
+{
+ "commit": "8057a42",
+ "dirty": false,
+ "scored_at": "2026-11-03 17:48 UTC",
+ "trials": 5,
+ "arms": [
+  "sampled"
+ ],
+ "rows": [
+  {
+   "id": "cypress",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "biome",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "better-sqlite3",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "argon2",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "cpu-features",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 5,
+     "supported": 5,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  },
+  {
+   "id": "node-pty",
+   "kind": "benign",
+   "outcomes": {
+    "sampled": [
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify",
+     "Could not verify"
+    ]
+   },
+   "grounding": [
+    {
+     "claims": 3,
+     "supported": 3,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    },
+    {
+     "claims": 4,
+     "supported": 4,
+     "rejected": 0,
+     "source_inferred": 0,
+     "unsupported_mentions": 0,
+     "uncited": 0
+    }
+   ],
+   "llm_errors": 0
+  }
+ ]
+}

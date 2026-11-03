@@ -112,13 +112,32 @@ def test_no_benign_case_present_is_blocked_in_any_trial(data):
         assert "Blocked" not in band_outcomes(row), row["id"]
 
 
-def test_acceptance_three_cannot_be_settled_because_its_population_is_absent(data):
-    """The finding that keeps W2 off. W2 names the 6 benign "Could not verify" native-build
-    packages as the population the widened band puts at risk, and not one of them is in this
-    42-case corpus - so a clean result here says nothing about the condition that matters."""
+def test_the_at_risk_packages_were_measured_separately_and_stayed_unblocked():
+    """Acceptance 3, closed on Nov 3 by `eval/REPEAT_W2_NATIVE.json`: the 6 packages absent
+    from the 42-case corpus, run on their own with the real band code at `8057a42`."""
+    path = DATA.parent / "REPEAT_W2_NATIVE.json"
+    if not path.exists():  # pragma: no cover - committed
+        pytest.skip("eval/REPEAT_W2_NATIVE.json not present")
+    native = json.loads(path.read_text(encoding="utf-8"))
+    assert native["dirty"] is False, "a dirty stamp makes the run unattributable"
+    assert native["arms"] == ["sampled"] and native["trials"] == 5
+    ids = {r["id"] for r in native["rows"]}
+    assert ids == set(AT_RISK_BENIGN), f"expected the 6 at-risk packages, got {sorted(ids)}"
+    for row in native["rows"]:
+        outcomes = row["outcomes"]["sampled"]
+        assert "Blocked" not in outcomes, f"{row['id']} escalated to Blocked: {outcomes}"
+        assert len(set(outcomes)) == 1, f"{row['id']} flipped: {outcomes}"
+
+
+def test_this_corpus_alone_could_not_have_settled_acceptance_three(data):
+    """Why a separate run was needed at all. W2 names the 6 benign "Could not verify"
+    native-build packages as the population the widened band puts at risk, and not one of them
+    is in this 42-case corpus - so its clean benign column said nothing about the condition
+    that mattered. The previous version of this test was named as though acceptance 3 were
+    unsettleable; it is settled, just not from here (see the test above)."""
     present = {r["id"] for r in data["rows"]}
     assert not (set(AT_RISK_BENIGN) & present), (
-        "an at-risk package is now in the corpus; acceptance 3 may be measurable - re-check"
+        "an at-risk package is now in this corpus; the separate run may be redundant - re-check"
     )
 
 
