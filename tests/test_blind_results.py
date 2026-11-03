@@ -15,9 +15,13 @@ from eval.score_blind import DEFAULT_DIR, score
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "eval" / "BLIND_RESULTS.md"
 
-# The four cases the writeup states the deterministic rules miss, and why. If the rules change,
-# this list is what must be reconciled with the doc.
-EXPECTED_MISSES = {"bc03-git-hook", "bc04-git-alias", "bc08-dns-exfil", "bc10-git-proxy"}
+# What the CURRENT deterministic rules miss on the blind set. bc04 and bc10 were in the original
+# miss set but are now caught by EXEC_GIT_CONFIG_PERSIST (W14), so only two remain. If the rules
+# change again, this is what must be reconciled with the doc.
+EXPECTED_MISSES = {"bc03-git-hook", "bc08-dns-exfil"}
+# The misses as first detonated, which the model-arm run (blind_model_arm.json) was scored
+# against. Frozen record, so this stays four.
+ORIGINAL_MISSES = {"bc03-git-hook", "bc04-git-alias", "bc08-dns-exfil", "bc10-git-proxy"}
 
 
 @pytest.fixture(scope="module")
@@ -39,10 +43,12 @@ def test_the_rules_floor_split_matches_the_writeup(scored):
     )
 
 
-def test_the_writeup_states_the_six_four_split(scored):
+def test_the_writeup_states_the_current_rules_floor_split(scored):
     caught = sum(1 for v in scored.values() if v["verdict"] in ("Blocked", "Needs review"))
+    assert caught == 8, f"current rules floor is {caught}/10; update the doc and this test"
     text = " ".join(RESULTS.read_text(encoding="utf-8").split())
-    assert f"{caught} of 10" in text or f"{caught} of {len(scored)}" in text
+    assert f"{caught} of 10" in text, "the doc must state the current 8/10 rules floor"
+    assert "6 of 10" in text, "the doc should still record the original 6/10 before the fix"
 
 
 def test_every_missed_case_was_actually_observed_not_just_unrecorded(scored):
@@ -53,12 +59,13 @@ def test_every_missed_case_was_actually_observed_not_just_unrecorded(scored):
         assert scored[cid]["exec"] >= 1, f"{cid} has no exec events; the miss would be a blind run"
 
 
-def test_the_git_config_misses_captured_the_git_exec(scored):
-    """W14's claim: the `git config` exec IS recorded (so evidence exists), the rules just do not
-    read it. bc04 and bc10 run git config, so they have the extra exec beyond the npm baseline."""
-    # npm baseline is ~3 execs (entrypoint, npm, node); a git config adds more.
-    assert scored["bc04-git-alias"]["exec"] >= 3
-    assert scored["bc10-git-proxy"]["exec"] >= 3
+def test_the_git_config_cases_are_now_caught_by_the_rule(scored):
+    """W14 partly closed: bc04 and bc10 run `git config`, whose args EXEC_GIT_CONFIG_PERSIST now
+    reads. Both should block at the rules floor."""
+    assert scored["bc04-git-alias"]["verdict"] == "Blocked"
+    assert "EXEC_GIT_CONFIG_PERSIST" in scored["bc04-git-alias"]["rules"]
+    assert scored["bc10-git-proxy"]["verdict"] == "Blocked"
+    assert "EXEC_GIT_CONFIG_PERSIST" in scored["bc10-git-proxy"]["rules"]
 
 
 def test_the_dns_miss_captured_the_query(scored):
@@ -95,11 +102,10 @@ def model_rows() -> dict[str, dict]:
     return {r["id"]: r for r in json.loads(MODEL_ARM.read_text(encoding="utf-8"))["rows"]}
 
 
-def test_the_full_pipeline_flags_every_rules_floor_miss(model_rows):
-    """The recorded full-pipeline run: each case the rules missed is flagged (Blocked or
-    Needs-review) once the model reads the source. If this regresses, the doc's headline is
-    wrong."""
-    for cid in EXPECTED_MISSES:
+def test_the_full_pipeline_flags_every_original_miss(model_rows):
+    """The recorded full-pipeline run: each case the rules missed *at first detonation* is
+    flagged (Blocked or Needs-review) once the model reads the source."""
+    for cid in ORIGINAL_MISSES:
         full = model_rows[cid]["outcomes"]["full"]
         assert full in ("Blocked", "Needs review"), f"{cid} full-pipeline verdict is {full}"
 

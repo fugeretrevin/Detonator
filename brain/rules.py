@@ -461,6 +461,29 @@ SCHEDULE_PERSIST_RE = re.compile(
 # Binaries whose mere execution is the scheduling call, so a path prefix is fine here.
 SCHEDULER_BINARIES = frozenset({"crontab", "systemd-run"})
 
+# W14: `git config` writes that arrange code to run on *later* git activity. An install has no
+# reason to touch any of these, and they are dormant at install time, so no behavioural rule
+# (connect, dropped binary) catches them — the egress fires on the next git use. Found by the
+# held-out blind corpus (bc04 git alias, bc10 http.proxy); see docs/WEAKPOINTS.md W14 and
+# eval/BLIND_RESULTS.md.
+#
+# Measured before shipping, exactly like EXEC_SCHEDULED_PERSISTENCE: across all 742 recorded
+# installs (142 eval + 100- and 500-package uncurated sweeps), `git config` appears **zero**
+# times, dangerous or otherwise. A normal `npm install` never runs it, so this is clean
+# separation with 0 false positives, not a guess.
+#
+# Scope note: this is defence in depth. The *full pipeline* already flags bc04/bc10 (the model
+# reads the visible command); this makes the catch deterministic and independent of a model
+# draw, and turns bc10 from mergeable needs-review into a block. It does NOT cover bc03 (a
+# `.git/hooks/` file write, which needs a Chamber tracing-policy change) — that stays gated.
+GIT_CONFIG_PERSIST_RE = re.compile(
+    r"\bgit\s+config\b(?:(?!\n).)*?"
+    r"(?:http\.proxy|https\.proxy|core\.hookspath|core\.fsmonitor"
+    r"|alias\.[\w-]+\s+['\"]?\s*!"  # an alias whose value is a shell command (`!...`)
+    r"|url\.[^\s]+\.insteadof)",
+    re.I,
+)
+
 
 def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     hits: list[RuleHit] = []
@@ -501,6 +524,10 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     if name in SCHEDULER_BINARIES or SCHEDULE_PERSIST_RE.search(full):
         hit("EXEC_SCHEDULED_PERSISTENCE", Severity.HIGH,
             "registered a scheduled job during install (runs after the install ends)")  # fmt: skip
+
+    if GIT_CONFIG_PERSIST_RE.search(full):
+        hit("EXEC_GIT_CONFIG_PERSIST", Severity.HIGH,
+            "wrote a git config that runs code or reroutes traffic on later git use")  # fmt: skip
 
     return hits
 
