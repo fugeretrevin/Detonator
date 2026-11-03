@@ -21,8 +21,11 @@ systemctl enable --now docker >/dev/null
 
 echo "== tetragon"
 bash "$REPO/chamber/provision/install_tetragon.sh"
-install -m 0644 "$REPO/chamber/policies/tcp-connect.yaml" /etc/tetragon/tetragon.tp.d/
-install -m 0644 "$REPO/chamber/policies/credential-files.yaml" /etc/tetragon/tetragon.tp.d/
+# Every policy in chamber/policies/, by glob rather than one `install` line each: a new policy
+# file used to be silently left behind here, which is a Chamber that traces less than the repo
+# says it does. `tests/test_persistence_files.py` ties the policies to the rules that classify
+# them, and this makes provisioning follow the same list.
+install -m 0644 "$REPO"/chamber/policies/*.yaml /etc/tetragon/tetragon.tp.d/
 # Bigger export file so a rotation mid-detonation is very unlikely.
 echo 200 > /etc/tetragon/tetragon.conf.d/export-file-max-size-mb
 systemctl restart tetragon

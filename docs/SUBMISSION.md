@@ -325,7 +325,7 @@ and reporting what it found is the point.
 - **Per-repo policy**, read from the base branch only — never the PR's head, where the author
   could allowlist their own exfiltration host.
 
-17 deterministic rules, **872 automated tests**, and every fixture is recorded real output
+18 deterministic rules, **901 automated tests**, and every fixture is recorded real output
 (Tetragon events, dnsmasq logs, kernel firewall lines, Muse responses, GitHub patches).
 
 ---

@@ -3,7 +3,7 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **872 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **901 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
 merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
 every divergence and say what each one would change; neither blocks submitting. Run
@@ -193,6 +193,37 @@ package identifiers out of this repo (they're in the owner's sent mail).
 3. **Record the demo**, paste the URL, confirm the rules (§3 step 9).
 
 ## 5b. Chamber code in `main` that is NOT on the box
+
+### `persistence-files.yaml` — a new Tetragon policy, NOT loaded (added Nov 3)
+
+`chamber/policies/persistence-files.yaml` traces opens of shell startup files, cron spools and
+systemd units. Until it is on the box, `FILE_PERSISTENCE` **cannot fire at all**, so the rule is
+inert rather than wrong, and `eval/score_rules.py` confirms it changes no recorded verdict.
+
+Deploying it is additive and does not touch the working credential policy:
+
+```bash
+scp chamber/policies/persistence-files.yaml chamber:/tmp/
+ssh chamber 'sudo install -m 0644 /tmp/persistence-files.yaml /etc/tetragon/tetragon.tp.d/ \
+  && sudo systemctl restart tetragon && sleep 5 && sudo tetra tracingpolicy list'
+```
+
+**Then measure before trusting it.** The rule ships at **LOW** precisely because its
+false-positive rate is unknown: no recorded install contains a `file_event` for these paths, so
+the evidence that earned `EXEC_SCHEDULED_PERSISTENCE` its HIGH does not exist here. After
+deploying:
+
+1. Re-detonate the 104 benign controls and check **zero** raise `FILE_PERSISTENCE`. A
+   non-interactive `sh -c` reads none of these files, so zero is expected — expected is not
+   measured.
+2. Re-detonate `gm04-rcfile-persist` and `rt06-persist-rcfile`; both should now raise it.
+3. Check `truncated` stayed false everywhere. Event-cap flooding fails closed, so a noisy
+   policy would turn verdicts into "Could not verify" rather than failing loudly.
+4. Only then promote `FILE_PERSISTENCE_SEVERITY` to HIGH, and re-run
+   `python -m eval.score_rules <dir> --compare` to record what moved.
+
+Rollback is `rm /etc/tetragon/tetragon.tp.d/persistence-files.yaml && systemctl restart
+tetragon`; nothing else depends on it.
 
 Two hardening changes to `chamber/detonate.py` are committed but **not deployed**. The running
 Chamber still has the old `validate`. Both are strict tightenings that reject nothing the Brain

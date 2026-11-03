@@ -295,22 +295,91 @@ def _is_npm_process(pid: int, execs: list[ExecEvent]) -> bool:
     return _basename(e.binary) in {"npm", "npx"} or "npm-cli.js" in e.args or "/npm/bin/" in e.args
 
 
+# Paths reported by `chamber/policies/credential-files.yaml`: planted fakes, so an open is
+# theft, not configuration.
+BAIT_FILE_PREFIXES = (
+    "/home/runner/.npmrc",
+    "/home/runner/.aws/",
+    "/home/runner/.ssh/",
+    "/home/runner/.git-credentials",
+)
+# Paths reported by `chamber/policies/persistence-files.yaml`: files whose only purpose is to
+# make code run after the install is over. `tests/test_persistence_files.py` asserts these two
+# tuples cover every prefix those policies actually select, so a path cannot be traced by the
+# Chamber and then silently mislabelled here.
+PERSISTENCE_FILE_PREFIXES = (
+    "/home/runner/.bashrc",
+    "/home/runner/.zshrc",
+    "/home/runner/.profile",
+    "/home/runner/.bash_profile",
+    "/home/runner/.bash_login",
+    "/home/runner/.zshenv",
+    "/home/runner/.config/fish/",
+    "/etc/profile.d/",
+    "/etc/bash.bashrc",
+    "/etc/crontab",
+    "/etc/cron.d/",
+    "/etc/cron.hourly/",
+    "/etc/cron.daily/",
+    "/var/spool/cron/",
+    "/etc/systemd/system/",
+    "/home/runner/.config/systemd/",
+)
+
+# FILE_PERSISTENCE ships at LOW - ⚠️ needs review, mergeable - and not at HIGH, because its
+# false-positive rate is **not yet measured**. The rule cannot fire at all until
+# `persistence-files.yaml` is loaded on the Chamber, so there are no recorded `file_events` for
+# these paths in any of the 742 installs on record, which means the evidence that justified
+# EXEC_SCHEDULED_PERSISTENCE at HIGH does not exist for this one. Blocking on an unmeasured
+# signal is the mistake docs/WEAKPOINTS.md exists to prevent.
+#
+# Promotion to HIGH needs exactly what the other rules got: deploy the policy, re-detonate the
+# 104 benign controls, and confirm zero of them open one of these paths from an install script.
+# A non-interactive `sh -c` reads none of these files, so the expected count is zero - but
+# expected is not measured.
+FILE_PERSISTENCE_SEVERITY = Severity.LOW
+
+
+def _classify_file(path: str) -> str | None:
+    if path.startswith(BAIT_FILE_PREFIXES):
+        return "bait"
+    if path.startswith(PERSISTENCE_FILE_PREFIXES):
+        return "persistence"
+    return None
+
+
 def _credential_hits(result: DetonateResult) -> list[RuleHit]:
-    """Bait credential files opened by an install script. Excluded: npm itself (top-level or a
-    nested `npm run`), which reads ~/.npmrc as config. A real theft reads it from the
-    dependency's own code (a plain node process, not npm)."""
+    """Files opened by an install script that the Chamber's tracing policies single out.
+
+    Two classes, deliberately not one rule: a planted credential is theft, a shell startup file
+    is persistence, and calling a `.bashrc` "a planted fake credential" would be a false
+    statement in the comment a reviewer reads.
+
+    Excluded from the credential class: npm itself (top-level or a nested `npm run`), which
+    reads ~/.npmrc as config. A real theft reads it from the dependency's own code - a plain
+    node process, not npm. That exemption is **not** extended to persistence paths: npm has no
+    reason to write a shell startup file or a cron entry, so there is nothing to excuse.
+    """
     hits: list[RuleHit] = []
     seen: set[str] = set()
     for f in result.file_events:
-        if f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
+        kind = _classify_file(f.path)
+        if kind is None or f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
             continue
-        if _is_npm_process(f.pid, result.exec_events):
+        if kind == "bait" and _is_npm_process(f.pid, result.exec_events):
             continue
         seen.add(f.path)
         where = f.path.replace("/home/runner", "~")
-        why = f"{_basename(f.binary)} (pid {f.pid}) opened {where} (a planted fake credential)"
-        hits.append(RuleHit("CRED_FILE_ACCESS", Severity.HIGH, f"{why} from an install script",
-                            f.ts, f.pid, target=f.path))  # fmt: skip
+        who = f"{_basename(f.binary)} (pid {f.pid})"
+        if kind == "bait":
+            hits.append(RuleHit("CRED_FILE_ACCESS", Severity.HIGH,
+                                f"{who} opened {where} (a planted fake credential) "
+                                "from an install script", f.ts, f.pid, target=f.path))  # fmt: skip
+        else:
+            hits.append(RuleHit("FILE_PERSISTENCE", FILE_PERSISTENCE_SEVERITY,
+                                f"{who} opened {where} from an install script — a file whose "
+                                "purpose is to run code after the install ends",
+                                f.ts, f.pid, target=f.path))  # fmt: skip
     return hits
 
 

@@ -306,7 +306,7 @@ Blocked by rules alone, and they fall into three groups:
 
 | Why the rules miss it | Cases | What would close it |
 |---|---|---|
-| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`), `gm10`, `rt07` (sibling package tamper) | General file-write telemetry in the Chamber |
+| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`) — **policy written Nov 3, not deployed**; `gm10`, `rt07` (sibling package tamper) still open | `persistence-files.yaml` for the first two; a write-only filter with a volume benchmark for the others |
 | Tetragon traces `tcp_connect`, not `bind`/`listen` | `gm09` (backdoor listener) | A `listen`/`bind` tracing policy |
 | CPU only, or nothing observable at all | `rt08`, `gm08` (miners), `rt10` (dormant by design) | W5 above; `rt10` has nothing to see and is correctly model-caught |
 | Observable, and now caught | `gm05` (cron injection) | **Done** — `EXEC_SCHEDULED_PERSISTENCE` |
@@ -318,9 +318,44 @@ rather than to the behaviour, so it was not written.
 
 So four of the ten misses share **one** root cause: `file_events` covers only the planted bait
 credential files. That is the same cause W5 identifies for the miner gap ("a compiler's constant
-writes are invisible to us"), which makes general file-write telemetry the highest-value single
-change available — it would newly catch four red-team cases *and* unblock W5's candidate (1).
-It is a Chamber change, so it needs a deploy and a re-detonation, and stays gated.
+writes are invisible to us"), which makes file-write telemetry the highest-value single change
+available.
+
+### Nov 3: half of it is done, and the half that is left is a volume problem
+
+The four cases split cleanly, and only one half is safe to do without measurement:
+
+**Done (written, not deployed).** `chamber/policies/persistence-files.yaml` traces opens of
+shell startup files, cron spools and systemd units — the paths `gm04` and `rt06` append to. It
+reuses `security_file_open` and the same single `file` argument as the credential policy already
+running on the Chamber, so **no new Tetragon JSON shape** is involved; `CLAUDE.md` requires a
+recorded fixture before coding against an unverified shape, and none exists for a different
+probe. It is a *separate* policy rather than extra prefixes on the credential one, so deploying
+is additive and rollback does not disturb credential tracing. `FILE_PERSISTENCE` classifies
+those paths, with `CRED_FILE_ACCESS` left for the bait files — a `.bashrc` is not "a planted
+fake credential", and the old code would have said so.
+
+**Shipped at LOW, deliberately.** The rule cannot fire until the policy is on the box, so no
+recorded install contains a `file_event` for these paths and **its false-positive rate is
+unmeasured**. `EXEC_SCHEDULED_PERSISTENCE` earned HIGH on 0 matches across 604 uncurated
+packages; this has no such evidence, and blocking on an unmeasured signal is what these gates
+exist to prevent. `docs/HANDOFF.md` §5b records the deploy plus the four checks that would
+justify promoting it, and `FILE_PERSISTENCE_SEVERITY` is a single constant to flip.
+
+**Still open: sibling-package tampering (`gm10`, `rt07`).** These rewrite a file inside a
+*different* `node_modules` package. Tracing that needs writes under `/work/node_modules/`, which
+npm writes constantly — a `Prefix` selector there would report thousands of events per install,
+flood the cap, and because truncation fails closed, turn every verdict into "Could not verify".
+Closing it needs a write-only filter (not `security_file_open`, which fires on reads too) plus a
+volume benchmark, and a discriminator for the legitimate case: a postinstall script writing into
+its *own* package directory is normal, into a sibling's is not. The kernel-recorded `cwd` that
+`brain/pinpoint.py` already uses for attribution is the right basis. That is a genuine piece of
+work, not a prefix edit, and it stays gated.
+
+**`gm09`'s listener is also weaker than its label.** It binds `127.0.0.1:31337` — loopback only,
+unreachable from outside the sandbox. Catching it needs `bind`/`listen` tracing, but the case as
+written does not demonstrate a reachable backdoor, so it is not the strongest motivation for
+that work.
 
 ### `EXEC_SCHEDULED_PERSISTENCE`, added Nov 3
 
