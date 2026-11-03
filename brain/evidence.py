@@ -104,6 +104,7 @@ class Grounding:
     supported: list[CheckedClaim] = field(default_factory=list)
     rejected: list[Rejected] = field(default_factory=list)
     unsupported_mentions: list[str] = field(default_factory=list)  # hosts/IPs not on record
+    uncited: list[str] = field(default_factory=list)  # paths/ports asserted with no citation
 
     @property
     def claims(self) -> int:
@@ -116,6 +117,7 @@ class Grounding:
             "rejected": len(self.rejected),
             "source_inferred": sum(c.kind == "source_inferred" for c in self.supported),
             "unsupported_mentions": len(self.unsupported_mentions),
+            "uncited": len(self.uncited),
         }
 
 
@@ -140,7 +142,12 @@ def check(verdict, index: dict[str, Item], corpus: str) -> Grounding:
             continue
         supported.append(CheckedClaim(ev.event_type, ev.kind, ev.why_it_matters, matching))
     prose = " ".join((verdict.observed_behavior, verdict.explanation))
-    return Grounding(supported, rejected, unsupported_mentions(prose, corpus))
+    return Grounding(
+        supported,
+        rejected,
+        unsupported_mentions(prose, corpus),
+        uncited_claims(prose, corpus, index),
+    )
 
 
 def unsupported_mentions(prose: str, corpus: str) -> list[str]:
@@ -154,6 +161,50 @@ def unsupported_mentions(prose: str, corpus: str) -> list[str]:
         t = token.lower().rstrip(".")
         if t not in haystack and t not in found:
             found.append(t)
+    return found[:MAX_MENTIONS]
+
+
+# Uncited factual claims the prose can make that we can still check mechanically. Hosts and IPs
+# are handled above; these cover the classes a reader is most likely to take on trust.
+_PATH_RE = re.compile(
+    # `~/.bashrc` (one segment is enough after ~), or an absolute path of two or more segments.
+    # A bare `/tmp` or `/work` is not matched: too generic to mean anything on its own.
+    r"(?<![\w/])(?:~/[\w.@+-]+(?:/[\w.@+-]+)*|/[\w.-]+(?:/[\w.@+-]+)+)"
+)
+_PORT_RE = re.compile(r"(?:\bport\s+|:)(\d{2,5})\b")
+
+
+def _normalise_path(p: str) -> str:
+    # The model writes ~/.npmrc for what the kernel records as /home/runner/.npmrc, and may
+    # quote a relative tail of a longer path. Compare on the last two segments.
+    parts = [seg for seg in p.replace("~", "").split("/") if seg]
+    return "/".join(parts[-2:]) if len(parts) >= 2 else "/".join(parts)
+
+
+def uncited_claims(prose: str, corpus: str, index: dict[str, Item]) -> list[str]:
+    """Checkable facts asserted in prose without citing an event, that the record contradicts.
+
+    This is the gap the `key_evidence` check leaves: a sentence like *"it appended to
+    `~/.bashrc`"* cites nothing, so nothing above would catch it being false. We can only check
+    classes that are mechanically verifiable — file paths and ports — so this is a floor on
+    unsupported prose, never a proof of full factual accuracy."""
+    haystack = corpus.lower()
+    found: list[str] = []
+
+    for raw in _PATH_RE.findall(prose):
+        tail = _normalise_path(raw).lower()
+        if tail and tail not in haystack and raw.lower() not in haystack:
+            if raw not in found:
+                found.append(raw)
+
+    ports = {str(item.text.split(":")[-2]) for item in index.values() if item.source == "connect"}
+    ports |= {p for item in index.values() for p in re.findall(r":(\d{2,5})\b", item.text)}
+    for port in _PORT_RE.findall(prose):
+        # Years and common non-port numbers would be noise; only flag what looks like a port
+        # and is absent from every recorded connection.
+        if port not in ports and f":{port}" not in haystack and port not in found:
+            found.append(f"port {port}")
+
     return found[:MAX_MENTIONS]
 
 

@@ -1,7 +1,17 @@
 import json
 from pathlib import Path
 
-from brain.evidence import build_index, check, corpus_for, ids_by_source, unsupported_mentions
+import pytest
+
+from brain.evidence import (
+    Item,
+    build_index,
+    check,
+    corpus_for,
+    ids_by_source,
+    uncited_claims,
+    unsupported_mentions,
+)
 from brain.llm import Evidence, LlmOutcome, LlmVerdict, compact_telemetry, parse_response
 from brain.pipeline import analyze
 from brain.report import esc
@@ -138,3 +148,41 @@ def test_kernel_text_in_the_report_is_escaped():
     out = analyze(res, meta(), "", lambda *a, **k: LlmOutcome("m", verdict=v), job_id="j",
                   enrich=lambda r: r)  # fmt: skip
     assert "<img" not in out.report and "@octocat" not in out.report
+
+
+# --- W4(b): uncited prose claims (file paths, ports) ---
+# The key_evidence check only covers claims that cite an event. These cover the gap: a sentence
+# that asserts a path or port with no citation, which a reader would otherwise take on trust.
+
+
+def _idx():
+    return {"c1": Item("c1", "connect", "/usr/local/bin/node -> tcp:203.0.113.10:4444 (no DNS)")}
+
+
+_CORPUS = (
+    "/work/node_modules/color-helper/install.js\n/usr/local/bin/node\n"
+    "203.0.113.10\n/home/runner/.npmrc"
+)
+
+
+@pytest.mark.parametrize(
+    "prose, expected",
+    [
+        ("it ran /work/node_modules/color-helper/install.js", []),
+        ("it appended to ~/.bashrc for persistence", ["~/.bashrc"]),
+        ("connected to port 4444", []),
+        ("opened a listener on port 31337", ["port 31337"]),
+        ("it read ~/.npmrc and exfiltrated it", []),  # that path IS on record
+        ("it wrote into /tmp and /work", []),  # too generic to be a claim
+        ("spawned /usr/local/bin/node", []),
+    ],
+)
+def test_uncited_claims_flags_only_what_the_record_contradicts(prose, expected):
+    assert uncited_claims(prose, _CORPUS, _idx()) == expected
+
+
+def test_uncited_claims_appear_in_the_summary():
+    v = verdict(observed="it appended to ~/.bashrc", explanation="persistence")
+    g = check(v, _idx(), _CORPUS)
+    assert g.summary()["uncited"] == 1
+    assert "~/.bashrc" in g.uncited

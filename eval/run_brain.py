@@ -242,6 +242,7 @@ def grounding_quality(rows: list[dict]) -> list[str]:
     rejected = sum(x["rejected"] for x in g)
     inferred = sum(x["source_inferred"] for x in g)
     mentions = [r["id"] for r in rows if (r.get("grounding") or {}).get("unsupported_mentions")]
+    uncited = [r["id"] for r in rows if (r.get("grounding") or {}).get("uncited")]
     return [
         "### Evidence grounding (full pipeline)",
         "",
@@ -250,6 +251,9 @@ def grounding_quality(rows: list[dict]) -> list[str]:
         f"({rejected / claims:.0%} unsupported-claim rate).",
         f"- Cases whose summary names a host/IP absent from the record and diff: "
         f"{len(mentions)}" + (f" ({', '.join(mentions[:10])})" if mentions else ""),
+        f"- Cases asserting a file path or port in prose that the record contradicts "
+        f"(uncited, so the citation check above would not see it): {len(uncited)}"
+        + (f" ({', '.join(uncited[:10])})" if uncited else ""),
         "",
     ]
 
