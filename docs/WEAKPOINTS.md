@@ -77,6 +77,49 @@ with benign review noise, and the exchange rate is unknown until measured.
 keep N=1 and keep quoting the distribution — which is already honest and already published.
 Do **not** ship this on the assumption it helps.
 
+### Measured, round 1: unconditional N=3 — rejected on cost
+
+Quality passed and the feared tradeoff did not appear. Acceptance 2 came back **zero**: no
+benign case moved in the stricter direction at all (`prisma` Clean ×5, the three ⚠️ packages ⚠️
+×5).
+
+| | `full` (N=1) | `sampled` (worst of 3) |
+|---|---|---|
+| Flip rate | 1/42 (`m12`) | **0/42** |
+| Attacks mergeable, worst trial | 2/38 | **1/38** (`rt08` only) |
+| Benign Blocked, any trial | 0/4 | **0/4** |
+| Benign made stricter | — | **0** |
+
+**Acceptance 4 failed: $0.045–$0.054 per PR against the $0.04 budget.** That budget was
+pre-registered, so it binds — rejected rather than rewritten.
+
+### Round 2: re-sample only in the borderline band
+
+The flip only *matters* where another sample could still change what the reviewer is told.
+`BORDERLINE_TITLES = ("Needs review", "Could not verify")`; `Blocked` cannot be improved on
+(`combine` takes a max) and `Clean` is excluded because that is 67.6% of cases and measured
+perfectly stable across 42 × 5 × 2 trials.
+
+Priced on the scored 142: **9 in band (6.3%)**, so worst-case **$0.0212/PR** against the $0.04
+budget (upper bound — it charges each band member 2× its *whole-pipeline* cost, and only the
+analysis call repeats). Unconditional N=3 was $0.0544 for comparison. **Acceptance 4 passes.**
+
+**Band bug found by the round-2 measurement.** `gm08-cpu-miner` flipped Blocked ×4 / Could not
+verify ×1 in the `sampled` arm. Not a sampling regression: its install **timed out**, so
+`verified` is permanently False and `combine` can never title it "Needs review" — the first
+version of the band silently excluded it and all **7 unverified cases of 142** from re-sampling.
+That trial was plain N=1 variance. Hence "Could not verify" is in the band.
+
+**The new tradeoff this widening creates, pre-registered before the re-run.** All 6 benign
+`Could not verify` cases (native-build packages) now get 3× the chance of drawing a `malicious`
+sample. Both titles are already a `failure` conclusion, so the **merge gate does not move**
+either way; what moves is the label. For `gm08` that is a correction (it really is a miner); for
+a benign native build an escalation to Blocked would be a false accusation.
+
+**Acceptance for the widened band.** Acceptance 3 still binds: **benign Blocked must stay 0**.
+If a benign case escalates, narrow the band to unverified cases *that already carry a rule hit*
+rather than keeping the wider version — do not relax condition 3.
+
 ---
 
 ## W3 — 6 of 104 benign packages cannot be verified
@@ -137,6 +180,33 @@ Verdicts must remain unchanged: this is measurement, never control.
 **Rollback.** (a) is text. (b) is report-only by construction and can be deleted.
 
 **Gate: (a) before the deadline — do it today. (b) after judging.**
+
+### Measured: (b) does not pass its own acceptance, and the acceptance is why
+
+Implemented for file paths and ports. Over the 420 analyses recorded by the W2 repeat run it
+fired on **33**, which looked like the "non-trivial count" the acceptance asked for. It was not:
+hand-auditing the hits found **every one a false positive**, from two bugs.
+
+1. **Ports written without a colon.** The check asked whether `:9000` appeared in the corpus.
+   Source code does not write ports that way — `rt09` has `/dev/tcp/203.0.113.10/9000` and
+   `rt10` has `connect(4444, "203.0.113.10")`. Both ports were plainly on record and the model
+   described them accurately; the checker called the model unsupported.
+2. **Duplicate reporting.** The dedup test compared a bare port against labels of the form
+   `"port 9000"`, so a port named twice in one paragraph was listed twice.
+
+Both fixed, with the real corpus lines pinned as test cases. A port now counts as on record if
+the number appears anywhere in the corpus as its own number. That is deliberately loose: a
+missed catch is far cheaper here than telling a reviewer that a true statement was unsupported.
+
+**After the fix it fires on nothing** (8 inspected calls across `rt06`, `rt09`, `rt10`). So the
+acceptance condition "produces a non-trivial count" now **fails**, and the honest reading is:
+
+> On these cases the model does not assert file paths or ports that are absent from the record.
+> The check is a **regression guard**, not a detector that has found a real hallucination.
+
+That is a weaker claim than the commit that added it implied, and it is the claim the docs now
+make. The acceptance condition earned its keep: without it I would have shipped a check whose
+only output was 33 false accusations against our own model.
 
 ---
 

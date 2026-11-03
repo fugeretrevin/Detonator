@@ -219,10 +219,16 @@ event of its own type, and a claim drawn from the diff rather than from runtime 
 `source_inferred` so it is never presented as something the kernel watched happen.
 
 To be precise about that figure, because it is easy to overstate: it covers every entry in the
-model's `key_evidence` plus any hostname or IP appearing in its prose. It does not police other
-uncited prose assertions, so it measures **citation discipline and the absence of invented
-network facts** rather than total factual accuracy. Widening the checker is planned, and the
-gap is written down in [`docs/WEAKPOINTS.md`](WEAKPOINTS.md).
+model's `key_evidence`, plus any hostname, IP, file path or port appearing in its prose even
+when nothing is cited for it. It cannot police prose claims that are not mechanically
+checkable, so it measures **citation discipline and the absence of invented concrete facts**
+rather than total factual accuracy.
+
+The prose-level half of that has caught nothing real so far: across 420 recorded analyses it
+flagged 33 claims, all of which turned out to be the checker's own bug rather than the model's
+error (it looked for `:9000` and missed `/dev/tcp/10.0.0.1/9000`). Fixed, it now fires on
+nothing we have seen. So treat it as a **regression guard**, not as evidence that the model
+never embellishes — the full accounting is in [`docs/WEAKPOINTS.md`](WEAKPOINTS.md) W4.
 
 **We re-ran the model five times per case on identical telemetry, because temperature 0 is not
 determinism** ([`eval/REPEAT.md`](../eval/REPEAT.md)). Across 24 attack and boundary-benign

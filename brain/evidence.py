@@ -193,17 +193,22 @@ def uncited_claims(prose: str, corpus: str, index: dict[str, Item]) -> list[str]
 
     for raw in _PATH_RE.findall(prose):
         tail = _normalise_path(raw).lower()
-        if tail and tail not in haystack and raw.lower() not in haystack:
-            if raw not in found:
-                found.append(raw)
+        if tail and tail not in haystack and raw.lower() not in haystack and raw not in found:
+            found.append(raw)
 
     ports = {str(item.text.split(":")[-2]) for item in index.values() if item.source == "connect"}
     ports |= {p for item in index.values() for p in re.findall(r":(\d{2,5})\b", item.text)}
     for port in _PORT_RE.findall(prose):
-        # Years and common non-port numbers would be noise; only flag what looks like a port
-        # and is absent from every recorded connection.
-        if port not in ports and f":{port}" not in haystack and port not in found:
-            found.append(f"port {port}")
+        label = f"port {port}"
+        # A port is "on record" if the number appears anywhere in the corpus as its own number,
+        # not only as `:port`. Source code writes ports in forms a colon never catches -
+        # `/dev/tcp/203.0.113.10/9000`, `net.connect(4444, host)` - and an earlier version of
+        # this check flagged both as uncited while the model was describing the diff correctly.
+        # Deliberately loose: a stray number that happens to match is a missed catch, which is
+        # far cheaper here than telling a reviewer a true statement was unsupported.
+        on_record = port in ports or re.search(rf"(?<!\d){port}(?!\d)", haystack)
+        if not on_record and label not in found:
+            found.append(label)
 
     return found[:MAX_MENTIONS]
 
