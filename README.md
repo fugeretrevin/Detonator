@@ -263,7 +263,13 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Tests:** `python -m pytest` (1000 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
+- **Try it without credentials:** `python -m brain.replay dep` replays a real recorded
+  detonation through the real rules: the install's timeline, each finding under the event that
+  caused it, and the rules-only verdict. No VM, no GitHub, no API key, no network.
+  `python -m brain.replay` lists the six recordings; `--all` checks that each still reproduces
+  its verdict; `--live` plays one back at its recorded pace. Muse is the part it can't show,
+  since that needs a Meta API key.
+- **Tests:** `python -m pytest` (771 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`
