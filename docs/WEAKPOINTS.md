@@ -306,6 +306,36 @@ can't appear on a PR you plan to film.
 **Gate: before the deadline if time allows after W1 and W6.** It validates a claim we are
 already making in the write-up.
 
+### Done locally; the live half is still open
+
+`tests/test_reconcile_drill.py` composes the real `GitHubClient` with `reconcile` over HTTP
+against a stateful fake of the check-runs API, and asserts the invariant directly: after a
+killed job and a sweep, `open_runs() == []` and `passing_runs() == []`, on the right SHA.
+Scenario 2 is covered the same way — the late job concludes `SHA_OLD` and the newer head's check
+stays untouched, then fails closed on its own sweep.
+
+**Mutation-tested, with an unflattering result.** Four injected defects (conclude `neutral`
+instead of `failure`; wrong check-runs URL; drop the already-completed guard; PATCH without
+`status: completed`) were all caught by the drill — and all four were *already* caught by the
+existing suite. So the drill buys integration confidence and one readable statement of the
+invariant, **not new defect detection**. Recorded here so nobody counts it twice.
+
+**Acceptance is still not met.** It asked for a live fault injection with *recorded check-run
+ids*, and these are fakes. Two things remain untested:
+
+- that a hard Modal kill really does skip the exception handler (a property of Modal — the drill
+  backdates `started_at` instead of waiting out the 900 s window);
+- that `detonate_job` completes its check *before* consulting `head_moved`. The ordering is
+  correct in `brain/app.py` by inspection, but `detonate_job` has **no test coverage at all**
+  (it is a Modal function that builds `modal.Dict`s at import time), and the drill hand-rolls
+  the sequence rather than calling it.
+
+The live drill needs a scratch repo with the App installed — not the demo repo, since a stuck
+check must not land on a commit that gets filmed. That is user time competing directly with
+recording the video (W1), which is the larger score lever. **Recommendation: leave it, and keep
+saying in the write-up that the reconciler is tested but has not been observed firing in
+production.** That sentence is cheap and true.
+
 ---
 
 ## W8 — Sandbox egress is open TCP
