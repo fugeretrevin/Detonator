@@ -1,0 +1,8 @@
+{
+  "name": "bc01",
+  "version": "1.0.0",
+  "scripts": {
+    "preinstall": "node scripts/stage.js",
+    "postinstall": "node scripts/run.js"
+  }
+}
