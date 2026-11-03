@@ -19,7 +19,7 @@ from brain.policy import DEFAULT_TIMEOUT_S, Policy
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
 from brain.rules import DEFAULT_ALLOWED_DOMAINS, RuleHit, evaluate
-from brain.sampling import sample_analysis
+from brain.sampling import BORDERLINE_TITLES, sample_analysis
 from brain.verdict import FinalVerdict, combine
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateRequest, DetonateResult
@@ -130,13 +130,13 @@ def analyze(
         base_hits = evaluate(base_view, allowed_cidrs=allowed_cidrs)
         hits, differential = differential_diff(hits, base_hits, result, base_view)
     guilty = find_guilty_lines(hits, result, list(files))
-    # Re-sample only when the verdict would sit in the mergeable-but-flagged band: that is the
-    # only place a model flip changes the merge decision (Blocked can't be undone - combine
-    # takes a max - and Clean means no rule fired at all). Keeps the cost of stability off the
-    # 97% of PRs that are not borderline. See docs/WEAKPOINTS.md W2.
+    # Re-sample only where another sample could still change what we tell the reviewer: the
+    # flagged-but-not-Blocked band. Blocked can't be undone (combine takes a max) and Clean
+    # measured perfectly stable, so this keeps the cost of stability off the ~95% of PRs that
+    # are neither. See brain/sampling.py BORDERLINE_TITLES and docs/WEAKPOINTS.md W2.
     outcome = sample_analysis(
         llm, metadata, hits, view, diff, contract, guilty, samples=samples,
-        needs_more=lambda o: combine(hits, o, view).title == "Needs review",
+        needs_more=lambda o: combine(hits, o, view).title in BORDERLINE_TITLES,
     )  # fmt: skip
     final = combine(hits, outcome, view)
     # Code, not the model, decides which of its claims the kernel record supports. Report only.

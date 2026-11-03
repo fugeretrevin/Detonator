@@ -31,6 +31,22 @@ from brain.verdict import llm_level
 MODEL_SAMPLES = 1
 MAX_SAMPLES = 5
 
+# The verdict titles where one more sample could still change what the reviewer is told.
+#
+# "Blocked" is already the worst answer and `combine` takes a max, so no sample can move it.
+# "Clean" is excluded because that is where all the volume is (about 95% of PRs) and it showed
+# *zero* instability across 42 cases x 5 trials x 2 arms - paying 3x there bought nothing and
+# blew the cost budget.
+#
+# "Could not verify" has to be in the band even though it is already a failing conclusion. A
+# case whose install timed out or exited non-zero can never be titled "Needs review", so a
+# band of that title alone silently excludes every unverified case (7 of 142 in the v3 eval) no
+# matter how unstable its model verdict is - which is exactly how `gm08-cpu-miner` flipped
+# Blocked x4 / Could not verify x1. The merge gate is the same either way (both are `failure`),
+# but "we watched this install a crypto miner" and "we could not see" are very different
+# things to tell a reviewer, and only one of them is true.
+BORDERLINE_TITLES = ("Needs review", "Could not verify")
+
 
 def worst(outcomes: list[LlmOutcome]) -> LlmOutcome:
     """The most severe outcome, preferring a real verdict over an error.
@@ -67,8 +83,8 @@ def sample_analysis(
     there buys the same stability for roughly a tenth of a cent per PR on average.
 
     `needs_more` receives the first outcome and returns True to draw the rest. The caller owns
-    that decision because only it knows the rules floor; `pipeline.analyze` passes a predicate
-    that fires when the combined verdict would be "Needs review"."""
+    that decision because only it knows the rules floor and the detonation state;
+    `pipeline.analyze` passes a predicate that fires on `BORDERLINE_TITLES`."""
     from brain.pinpoint import for_prompt
 
     n = MODEL_SAMPLES if samples is None else samples

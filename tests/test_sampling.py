@@ -2,7 +2,7 @@
 
 from brain.llm import LlmOutcome, LlmVerdict
 from brain.rules import Severity
-from brain.sampling import MODEL_SAMPLES, sample_analysis, worst
+from brain.sampling import BORDERLINE_TITLES, MODEL_SAMPLES, sample_analysis, worst
 from brain.verdict import llm_level
 
 
@@ -117,6 +117,56 @@ def test_resamples_and_escalates_when_the_first_answer_is_borderline():
                           samples=3, needs_more=borderline)  # fmt: skip
     assert len(calls) == 3
     assert got.verdict.verdict == "malicious"  # m12's exact failure mode, stabilised
+
+
+def test_an_unverified_case_is_in_the_band_because_it_can_never_be_needs_review():
+    """gm08-cpu-miner's failure mode. Its install timed out, so `verified` is False and
+    `combine` titles it "Could not verify" or "Blocked" - never "Needs review". A band of that
+    one title excluded all 7 unverified cases of 142, letting gm08 flip Blocked x4 / Could not
+    verify x1 while nominally in the `sampled` arm."""
+    from brain.verdict import combine
+    from shared.contract import DetonateResult
+    from tests.conftest import NPM_EXEC
+
+    timed_out = DetonateResult(job_id="j", status="timeout", exit_code=None, duration_s=1,
+                               exec_events=[NPM_EXEC], connect_events=[], dns_queries=[],
+                               stdout_tail="", stderr_tail="")  # fmt: skip
+    assert combine([], outcome("suspicious"), timed_out).title == "Could not verify"
+    assert "Could not verify" in BORDERLINE_TITLES
+
+    answers = iter([outcome("suspicious"), outcome("malicious", 0.95), outcome("suspicious")])
+    calls = []
+
+    def llm(*a, **k):
+        calls.append(1)
+        return next(answers)
+
+    got = sample_analysis(llm, None, [], None, "", _Contract(), [], samples=3,
+                          needs_more=lambda o: combine([], o, timed_out).title
+                          in BORDERLINE_TITLES)  # fmt: skip
+    assert len(calls) == 3
+    assert combine([], got, timed_out).title == "Blocked"  # the truthful label, stably
+
+
+def test_clean_is_never_resampled_because_that_is_where_the_volume_is():
+    """The cost gate: Clean measured perfectly stable, and it is ~95% of PRs."""
+    from brain.verdict import combine
+    from shared.contract import DetonateResult
+    from tests.conftest import NPM_EXEC
+
+    ok = DetonateResult(job_id="j", status="completed", exit_code=0, duration_s=1,
+                        exec_events=[NPM_EXEC], connect_events=[], dns_queries=[],
+                        stdout_tail="", stderr_tail="")  # fmt: skip
+    assert combine([], outcome("benign"), ok).title == "Clean"
+    calls = []
+
+    def llm(*a, **k):
+        calls.append(1)
+        return outcome("benign")
+
+    sample_analysis(llm, None, [], None, "", _Contract(), [], samples=3,
+                    needs_more=lambda o: combine([], o, ok).title in BORDERLINE_TITLES)  # fmt: skip
+    assert len(calls) == 1
 
 
 def test_resampling_can_only_raise_severity_never_lower_it():

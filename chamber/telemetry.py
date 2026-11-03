@@ -44,9 +44,7 @@ def witness_command(command: list[str], nonce: str) -> list[str]:
     return ["/bin/sh", "-c", script, "detonator-witness", *command]
 
 
-def _is_wrapper(
-    proc: dict, parent: dict, container_id: str, nonce: str, roots: set[int]
-) -> bool:
+def _is_wrapper(proc: dict, parent: dict, container_id: str, nonce: str, roots: set[int]) -> bool:
     """Our witness shell, carrying both markers, started at the top of the container.
 
     "At the top" means its parent is either outside the container (the runtime started it
