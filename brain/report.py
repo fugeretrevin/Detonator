@@ -19,6 +19,8 @@ from brain.pinpoint import GuiltyLine, ScriptRun
 from brain.policy import POLICY_PATH, Policy
 from brain.prompt_guard import GuardOutcome, flagged
 from brain.rules import RuleHit, Severity
+from brain.timeline import MAX_STEPS as MAX_TIMELINE_STEPS
+from brain.timeline import Step
 from brain.verdict import FinalVerdict
 from shared.contract import DetonateResult, ExecEvent
 
@@ -287,6 +289,52 @@ def _grounding_section(g: "Grounding") -> list[str]:
     return lines + ["", "</details>", ""]
 
 
+_TIMELINE_ICON = {
+    "install": "▶",
+    "script": "📜",
+    "exec": "⚙",
+    "connect": "🌐",
+    "file": "📂",
+    "dns": "🔎",
+}
+
+
+def _timeline_section(steps: "list[Step]") -> list[str]:
+    """What the install did, in order. Report-only and deliberately verdict-free: the severity
+    lives in the rule findings above, and a reviewer reading a neutral sequence and drawing
+    their own conclusion is the whole point. Every value here came from a sandbox running
+    untrusted code, so actor/detail/package are escaped; `action` is chosen by
+    `brain/timeline.py`, never taken from the record."""
+    if len(steps) < 2:  # a single "install started" line is not a narrative
+        return []
+    shown, hidden = steps[:MAX_TIMELINE_STEPS], max(0, len(steps) - MAX_TIMELINE_STEPS)
+    lines = ["### What happened, in order", ""]
+    for s in shown:
+        when = f"`+{s.offset_s:.2f}s`" if s.offset_s is not None else "`?`"
+        icon = _TIMELINE_ICON.get(s.kind, "·")
+        parts = [when, icon, f"**{esc(s.actor, 40)}**", s.action]
+        if s.detail:
+            parts.append(f"`{esc(s.detail, 120)}`")
+        if s.package:
+            parts.append(f"— from `{esc(s.package, 60)}`")
+        if s.coarse:
+            parts.append("*(±1s)*")
+        lines.append("- " + " ".join(parts))
+    if hidden:
+        lines.append(f"- … {hidden} further event(s) not shown.")
+    notes = [
+        "Ordering is the kernel's own timestamps, not a reconstruction. DNS records only "
+        "resolve to the second, so those lines are marked *(±1s)* and are placed no earlier "
+        "than the run's first precisely-timed event.",
+    ]
+    if any(s.kind == "file" for s in steps):
+        notes.append(
+            "File lines cover the planted bait credential files only, not every file the "
+            "install touched."
+        )
+    return lines + ["", f"<sub>{' '.join(notes)}</sub>", ""]
+
+
 def _policy_section(policy: "Policy", final: FinalVerdict) -> list[str]:
     """What this repository's own policy contributed (read from the base branch)."""
     lines = ["### Repository policy", "",
@@ -321,6 +369,7 @@ def render(
     investigation: "Investigation | None" = None,
     policy: "Policy | None" = None,
     grounding: "Grounding | None" = None,
+    timeline: "list[Step] | None" = None,
 ) -> str:
     lines = [f"## PR Detonator: {HEADERS[final.title]}", ""]
 
@@ -402,6 +451,9 @@ def render(
             lines += [""]
     else:
         lines += ["No deterministic rule fired.", ""]
+
+    if timeline:
+        lines += _timeline_section(timeline)
 
     if result.connect_events:
         lines += ["### Network activity", "", *_network_rows(result), ""]

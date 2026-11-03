@@ -124,6 +124,12 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--arms", default="full")
     parser.add_argument("--only", default="")
     parser.add_argument("--out", default="eval/REPEAT")
+    parser.add_argument(
+        "--workers", type=int, default=4,
+        help="concurrent cases. The round-2 W2 run was abandoned after 80 minutes against an "
+             "expected 20, almost certainly provider-side throttling from the extra concurrent "
+             "samples, so use 1 for a `sampled` arm (docs/WEAKPOINTS.md W2).",
+    )  # fmt: skip
     args = parser.parse_args(argv)
     arms = tuple(a for a in args.arms.split(",") if a in ("full", "analysis", "sampled"))
 
@@ -146,6 +152,18 @@ def main(argv: list[str] | None = None) -> None:
         path = Path(args.results_dir) / f"{case.id}.json"
         if path.exists() and (not wanted or case.id in wanted):
             jobs.append((case, DetonateResult.model_validate_json(path.read_text())))
+    if not jobs:
+        # Silence here is expensive: the run reports "0 cases x N trials", every rate reads 0,
+        # and it looks like a clean pass. The usual cause is the directory nesting - the
+        # tarballs contain a folder of their own name, so the records are one level down.
+        nested = sorted(p.name for p in Path(args.results_dir).glob("*/*.json"))[:3]
+        hint = f" Found records one level down ({', '.join(nested)}…); point at that directory." \
+            if nested else ""  # fmt: skip
+        raise SystemExit(
+            f"no case records matched in {args.results_dir}"
+            + (f" for --only {args.only}" if wanted else "")
+            + f".{hint}"
+        )
 
     def one(job):
         case, result = job
@@ -155,7 +173,7 @@ def main(argv: list[str] | None = None) -> None:
                           lambda m: predict(client, m), guard, common)  # fmt: skip
 
     stamp = provenance()
-    with ThreadPoolExecutor(max_workers=4) as pool:
+    with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         rows = list(pool.map(one, jobs))
     Path(f"{args.out}.json").write_text(
         json.dumps({**stamp, "trials": args.trials, "arms": arms, "rows": rows}, indent=1)

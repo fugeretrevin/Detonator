@@ -22,7 +22,13 @@ schedule in Section 6; Section 1 overrides the original architecture doc.
 - Modal CLI: always go through `.venv\Scripts\python scripts\modal_cli.py <args>` — Norton re-signs TLS on this machine and plain `modal` fails cert verification (the wrapper uses the OS trust store).
 - Deploy Brain: `.venv\Scripts\python scripts\modal_cli.py deploy -m brain.app`
 - GitHub smoke test: `.venv\Scripts\python scripts/smoke_github.py`
-- Release archive: `git archive --format=zip -o pr-detonator-release.zip HEAD` — **never** zip the
-  working directory. Zipping the folder ignores `.gitignore` and ships `.env`, `.git/` and
-  `.venv/`; `git archive` includes only tracked files. Verify afterwards that the archive has no
-  `.env`, no `.git/`, no `.venv/`, and that the only `.pem` is `eval/sbom/public_key.pem`.
+- Release archive — **one command, which builds *and* verifies**:
+  `.venv\Scripts\python scripts\scan_release.py --keep detonator-submission.zip`
+  It runs `git archive` for you and then scans entry names **and file bytes**, exiting non-zero
+  on any finding. Add `--extra-patterns <file>` with the embargoed disclosure identifiers before
+  sharing the artifact; the default run cannot know them and says so.
+- **Never** zip the working directory. Zipping the folder ignores `.gitignore` and ships `.env`,
+  `.git/` and `.venv/`. This rule has now been broken twice: once producing the live `.env` that
+  is the origin of the Modal token rotation (W10), and once producing a 344 MB folder ZIP sent to
+  an outside reviewer, which an audit flagged as unsafe to distribute. The verified artifact from
+  the command above is **580 KB**. If you find yourself selecting the folder in Explorer, stop.

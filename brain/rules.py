@@ -295,22 +295,98 @@ def _is_npm_process(pid: int, execs: list[ExecEvent]) -> bool:
     return _basename(e.binary) in {"npm", "npx"} or "npm-cli.js" in e.args or "/npm/bin/" in e.args
 
 
+# Paths reported by `chamber/policies/credential-files.yaml`: planted fakes, so an open is
+# theft, not configuration.
+BAIT_FILE_PREFIXES = (
+    "/home/runner/.npmrc",
+    "/home/runner/.aws/",
+    "/home/runner/.ssh/",
+    "/home/runner/.git-credentials",
+)
+# Paths reported by `chamber/policies/persistence-files.yaml`: files whose only purpose is to
+# make code run after the install is over. `tests/test_persistence_files.py` asserts these two
+# tuples cover every prefix those policies actually select, so a path cannot be traced by the
+# Chamber and then silently mislabelled here.
+PERSISTENCE_FILE_PREFIXES = (
+    "/home/runner/.bashrc",
+    "/home/runner/.zshrc",
+    "/home/runner/.profile",
+    "/home/runner/.bash_profile",
+    "/home/runner/.bash_login",
+    "/home/runner/.zshenv",
+    "/home/runner/.config/fish/",
+    "/etc/profile.d/",
+    "/etc/bash.bashrc",
+    "/etc/crontab",
+    "/etc/cron.d/",
+    "/etc/cron.hourly/",
+    "/etc/cron.daily/",
+    "/var/spool/cron/",
+    "/etc/systemd/system/",
+    "/home/runner/.config/systemd/",
+)
+
+# HIGH, earned by measurement on Nov 3 rather than assumed. The rule shipped at LOW first,
+# because it cannot fire until `persistence-files.yaml` is loaded on the Chamber and so had no
+# false-positive evidence at all. The policy was then deployed and the measurement run:
+#
+#   - **0 of 104** benign controls open any of these paths from an install script, re-detonated
+#     live against the registry with the policy loaded.
+#   - `gm04-rcfile-persist` (`~/.bashrc` + `~/.zshrc`) and `rt06-persist-rcfile` (`~/.bashrc`)
+#     both raise it. Before this they fired **no rule at all** and scored Clean.
+#   - `truncated` stayed False on all 106 runs, so the policy does not flood the event cap -
+#     which matters because truncation fails closed and would turn verdicts into
+#     "Could not verify" rather than failing loudly.
+#   - Validity, checked before the result: every one of the 104 records carries `file_events`
+#     (npm reads ~/.npmrc on every install), 0 had a blind collector and 0 failed the sensor
+#     witness - so a zero count means "nothing opened these paths", not "tracing was dead".
+#
+# Known and accepted: the policy is host-global, so host shell startups reading
+# `/etc/bash.bashrc` also post events (7 observed, all `/bin/bash` outside any container). The
+# Chamber's parser filters to the job's container, so they cannot reach a verdict.
+FILE_PERSISTENCE_SEVERITY = Severity.HIGH
+
+
+def _classify_file(path: str) -> str | None:
+    if path.startswith(BAIT_FILE_PREFIXES):
+        return "bait"
+    if path.startswith(PERSISTENCE_FILE_PREFIXES):
+        return "persistence"
+    return None
+
+
 def _credential_hits(result: DetonateResult) -> list[RuleHit]:
-    """Bait credential files opened by an install script. Excluded: npm itself (top-level or a
-    nested `npm run`), which reads ~/.npmrc as config. A real theft reads it from the
-    dependency's own code (a plain node process, not npm)."""
+    """Files opened by an install script that the Chamber's tracing policies single out.
+
+    Two classes, deliberately not one rule: a planted credential is theft, a shell startup file
+    is persistence, and calling a `.bashrc` "a planted fake credential" would be a false
+    statement in the comment a reviewer reads.
+
+    Excluded from the credential class: npm itself (top-level or a nested `npm run`), which
+    reads ~/.npmrc as config. A real theft reads it from the dependency's own code - a plain
+    node process, not npm. That exemption is **not** extended to persistence paths: npm has no
+    reason to write a shell startup file or a cron entry, so there is nothing to excuse.
+    """
     hits: list[RuleHit] = []
     seen: set[str] = set()
     for f in result.file_events:
-        if f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
+        kind = _classify_file(f.path)
+        if kind is None or f.path in seen or not lifecycle_exec(f.pid, result.exec_events):
             continue
-        if _is_npm_process(f.pid, result.exec_events):
+        if kind == "bait" and _is_npm_process(f.pid, result.exec_events):
             continue
         seen.add(f.path)
         where = f.path.replace("/home/runner", "~")
-        why = f"{_basename(f.binary)} (pid {f.pid}) opened {where} (a planted fake credential)"
-        hits.append(RuleHit("CRED_FILE_ACCESS", Severity.HIGH, f"{why} from an install script",
-                            f.ts, f.pid, target=f.path))  # fmt: skip
+        who = f"{_basename(f.binary)} (pid {f.pid})"
+        if kind == "bait":
+            hits.append(RuleHit("CRED_FILE_ACCESS", Severity.HIGH,
+                                f"{who} opened {where} (a planted fake credential) "
+                                "from an install script", f.ts, f.pid, target=f.path))  # fmt: skip
+        else:
+            hits.append(RuleHit("FILE_PERSISTENCE", FILE_PERSISTENCE_SEVERITY,
+                                f"{who} opened {where} from an install script — a file whose "
+                                "purpose is to run code after the install ends",
+                                f.ts, f.pid, target=f.path))  # fmt: skip
     return hits
 
 
@@ -350,11 +426,48 @@ def _script_operand(event: ExecEvent) -> str | None:
     return None
 
 
+# Install-time scheduling. A package has no reason to register a cron job, a systemd unit or an
+# `at` job while installing: the point of the technique is code that runs *after* the install is
+# over, when nothing is watching. That makes it persistence, not configuration.
+#
+# Measured before being written, across every recorded install available (3342 exec events in
+# 742 installs: the 142 eval cases plus the 100- and 500-package registry sweeps, 604 of which
+# are uncurated packages straight off the npm feed). Exactly one match -
+# `gm05-cron-inject` - and **zero** among the 104 popular packages or the 604 uncurated ones.
+#
+# Also measured and deliberately *not* turned into rules, so the negative results are on record:
+#   - `chmod +x`              2 uncurated false positives (a real package marking a vendored
+#                             binary executable). Rejected.
+#   - `curl|sh` / `wget|sh`   3 attack matches, 0 false positives - but all three already Block
+#                             on EXEC_NET_TOOL or EXEC_DECODE_PIPE, so a rule buys no new catch.
+#   - `~/.bashrc`, `authorized_keys`, `nohup`, `LD_PRELOAD`, history tampering
+#                             no matches at all, including in the four red-team cases that do
+#                             exactly these things: they use node's `fs` API, not a shell, so
+#                             argv cannot see them. Closing that needs general file-write
+#                             telemetry in the Chamber (see docs/WEAKPOINTS.md W5), not a rule.
+# Matched in *command position* - start of string, or after a shell separator or quote - and
+# not as a substring of a path or package name. A plain `\bcrontab\b` also fires on
+# `docs/crontab-format.md`, which a package shipping cron documentation would ship; that was a
+# real false positive, caught by this rule's own test before it shipped. Likewise `at` needs a
+# following `now`/`-f`, so `npm run at-build` and the words "scheduled at build time" are not
+# scheduling, and `systemctl` needs `enable`/`start`, so reading status is not registering.
+_CMD_START = r"(?:^|[\s;&|(`'\"])"
+SCHEDULE_PERSIST_RE = re.compile(
+    rf"{_CMD_START}(?:crontab|systemd-run)(?=\s|$)"
+    r"|/etc/cron[./]|/var/spool/cron"
+    rf"|{_CMD_START}systemctl\s+(?:--user\s+)?(?:enable|start)\b"
+    rf"|{_CMD_START}at\s+(?:now\b|-f\b)"
+)
+# Binaries whose mere execution is the scheduling call, so a path prefix is fine here.
+SCHEDULER_BINARIES = frozenset({"crontab", "systemd-run"})
+
+
 def _exec_hits(event: ExecEvent) -> list[RuleHit]:
     hits: list[RuleHit] = []
     name = _basename(event.binary)
     args = event.args
-    cmd = _clip(f"{event.binary} {args}".strip())
+    full = f"{event.binary} {args}".strip()  # unclipped: a match can sit past the evidence cap
+    cmd = _clip(full)
 
     def hit(rule_id: str, severity: Severity, why: str) -> None:
         hits.append(
@@ -384,6 +497,10 @@ def _exec_hits(event: ExecEvent) -> list[RuleHit]:
         args
     ):
         hit("EXEC_DECODE_PIPE", Severity.HIGH, "decoded payload piped into a shell")
+
+    if name in SCHEDULER_BINARIES or SCHEDULE_PERSIST_RE.search(full):
+        hit("EXEC_SCHEDULED_PERSISTENCE", Severity.HIGH,
+            "registered a scheduled job during install (runs after the install ends)")  # fmt: skip
 
     return hits
 

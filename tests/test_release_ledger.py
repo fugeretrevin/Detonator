@@ -7,10 +7,36 @@ authenticates as the owner unless asked.
 """
 
 import re
+import subprocess
 
 import pytest
 
 from scripts import release_ledger as rl
+
+
+def _in_git_work_tree() -> bool:
+    """Is there a usable git repository here?
+
+    An independent audit ran this suite from an *extracted release archive*, which by design
+    contains no `.git` (that is the whole point of using `git archive`), and got two failures
+    here. They were environment-induced rather than real, but a reviewer's first run of the
+    suite should be clean or the genuine failures get lost in the noise - the same reason the
+    Modal-dependent tests skip instead of erroring. These skip instead.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--is-inside-work-tree"],
+            cwd=rl.ROOT, capture_output=True, text=True, timeout=30,
+        )  # fmt: skip
+    except (OSError, subprocess.SubprocessError):  # pragma: no cover - no git binary
+        return False
+    return out.returncode == 0 and out.stdout.strip() == "true"
+
+
+needs_git = pytest.mark.skipif(
+    not _in_git_work_tree(),
+    reason="no git work tree (e.g. running from an extracted release archive)",
+)
 
 
 def test_the_contract_version_is_read_from_the_source_not_hardcoded():
@@ -31,10 +57,19 @@ def test_the_stamped_model_is_reported():
     assert "muse" in rl.model_facts()["Model(s) in the stamped eval"].lower()
 
 
+@needs_git
 def test_git_facts_report_the_working_tree_state():
     facts = rl.git_facts()
     assert re.fullmatch(r"[0-9a-f]{40}", facts["Commit (HEAD)"])
     assert facts["Working tree"] in ("clean",) or "DIRTY" in facts["Working tree"]
+
+
+def test_git_facts_say_unknown_rather_than_crashing_without_a_repository():
+    """Whatever the environment, the ledger must still print. Every field is a string, so an
+    archive-extracted copy gets `unknown` rather than a traceback."""
+    facts = rl.git_facts()
+    assert set(facts) >= {"Commit (HEAD)", "Branch", "Working tree", "Unpushed commits"}
+    assert all(isinstance(v, str) and v for v in facts.values())
 
 
 def test_every_owner_only_field_names_the_command_that_answers_it():
@@ -89,6 +124,7 @@ def test_the_modal_flag_is_what_fills_that_field(capsys, monkeypatch):
     assert "Brain deployed version   " not in out.split("Needs the owner")[-1]
 
 
+@needs_git
 def test_drift_against_the_eval_stamp_is_reported_either_way():
     """Listing changed code files prompts the behavioural check; it does not conclude it. A
     comment-only edit to brain/rules.py appears here and changes no number, which is why the

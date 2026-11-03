@@ -30,17 +30,26 @@ dashboard open in tabs.
 
 > "This is a tool that reviews pull requests by *running* them. To test it, I pointed it at
 > a hundred npm packages published in the last few minutes — packages nobody had vetted.
-> Seventy-three of them installed on this platform; all seventy-three came back clean, and one
-> was flagged. That one, during install, connected to a hardcoded IP address with TLS
-> verification turned off and ran whatever came back. It isn't malware — it's a real package
-> with an unsafe fallback — but no advisory existed, nobody told us to look, and the behavior
-> alone gave it away. That's the whole idea."
+> Seventy-three of them installed on this platform, and all seventy-three came back clean.
+> Twenty-seven never installed at all — mostly binaries for other platforms. One of those
+> twenty-seven got blocked anyway, before it even finished, because what it had already done
+> was enough: it connected to a hardcoded IP address with TLS verification turned off and ran
+> whatever came back. It isn't malware — it's a real package with an unsafe fallback — but no
+> advisory existed, nobody told us to look, and the behavior alone gave it away. That's the
+> whole idea."
+
+**Say both denominators out loud.** The flagged package is *not* one of the 73 — it timed out,
+so it sits among the 27 that never completed. "73 of 73 clean and one flagged" in one breath
+reads like 74 packages were assessed, and an outside audit flagged exactly that as an apparent
+arithmetic conflict a judge could catch. The honest version is also the better one: the verdict
+did not need a finished install, which is what fail-closed evidence handling buys you.
 
 Show `eval/SWEEP.md` (the finding row) briefly — **safe to show**: that file records the package
-as `<withheld pending disclosure>` with its host redacted. Don't say the name (reported
-privately Nov 2, no reply yet). "73 of 73 clean, one flagged" is verified against
-`eval/SWEEP.json`: 73 rows with `exit_code 0`, all `Clean`; the other 27 are 24 that exited
-nonzero and 3 that timed out, all reported as **Could not verify**, never clean.
+as `<withheld pending disclosure>` with its host redacted, scopes its rates to the 73 that
+installed, and lists the finding under a separate "including ones that did not finish" heading.
+Don't say the name (reported privately Nov 2, no reply yet). Verified against `eval/SWEEP.json`:
+73 rows with `exit_code 0`, all `Clean`; the other 27 are 24 that exited nonzero and 3 that
+timed out — one of which is the finding.
 
 ## 0:25 – 0:45 · Why this, why now
 
@@ -95,7 +104,8 @@ calls downloadBrowsers(); storage.googleapis.com is a known package CDN."*
 Flash three things:
 - **104 popular packages: nothing hard-blocked** — 3 needs review, 6 we could not verify
   (`eval/results.md`). **100 uncurated live packages** (`eval/SWEEP.md`): 73 of 73 that
-  installed came back clean, one flagged. **500 off the registry feed** (`eval/SWEEP500.md`):
+  installed came back clean; one of the 27 that did not install was blocked. **500 off the
+  registry feed** (`eval/SWEEP500.md`):
   413 of the 421 that installed clean, 7 needs review, **1 blocked**.
 - **`npm audit` says "0 vulnerabilities"** on the same attacks (`eval/BASELINE.md`) — it is the
   default tool everyone already runs, and it has no advisory to go on yet; dwell time of real

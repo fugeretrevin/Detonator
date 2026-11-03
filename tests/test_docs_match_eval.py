@@ -245,6 +245,35 @@ def test_the_demo_scripts_sweep_figures_match_the_sweep_data():
     assert "413 of the 421" in text
 
 
+@pytest.mark.parametrize("rel", ("README.md", "docs/SUBMISSION.md", "demo/DEMO_SCRIPT.md"))
+def test_the_headline_sweep_claim_does_not_mix_denominators(rel):
+    """An outside audit caught this: the flagged package is **not** one of the 73 that
+    installed. It timed out, so it sits among the 27 that never completed. Saying "cleared 73
+    of 73 that installed, and flagged one" in one breath reads as though 74 packages were
+    assessed, which a judge could call an arithmetic conflict.
+
+    Verified from the data rather than assumed, so if a future sweep changes the shape this
+    test fails instead of silently permitting the old phrasing.
+    """
+    sweep = _sweep_rows("SWEEP.json")
+    installed = [r for r in sweep if r.get("status") == "completed" and r.get("exit_code") == 0]
+    blocked = [r for r in sweep if r.get("verdict") == "Blocked"]
+    assert len(installed) == 73 and len(blocked) == 1
+    assert blocked[0] not in installed, (
+        "the flagged package now IS among those that installed; this guard needs rewriting "
+        "and the headline wording can be simplified"
+    )
+
+    text = normalised(ROOT / rel)
+    # The two denominators must both be present near the claim.
+    assert "73" in text and "27" in text, (
+        f"{rel} states the 73 without accounting for the 27 that did not install"
+    )
+    for mixed in ("73 of 73 that installed, and flagged one",
+                  "cleared 73 of 73 that installed, and flagged one"):  # fmt: skip
+        assert mixed not in text, f"{rel} still mixes the denominators: {mixed!r}"
+
+
 def test_the_demo_script_withholds_the_disclosed_package():
     """The cold open puts eval/SWEEP.md on screen. That file must keep the identifier out, and
     the script must not carry it either. W11: the name is still under embargo."""
@@ -255,6 +284,111 @@ def test_the_demo_script_withholds_the_disclosed_package():
     assert "withheld" in blocked[0]["package"], (
         "the 100-package sweep's blocked row names the package pending disclosure; the demo "
         "script shows this file on camera"
+    )
+
+
+# --- the ablation table and the cost/latency line -----------------------------------------
+#
+# All three documents carried "benign needs-review 5 -> 3" for the Intent Contract when the
+# stamped arms say 4 -> 3, and the same three carried cost $0.0149/PR with detonation p50 4.5 s
+# and model p50 12.5 s when `eval/results.md` - the generated summary they cite - says $0.0181,
+# 5.9 s and 36.5 s. Both were figures from an earlier, smaller run that nobody refreshed. The
+# "5 -> 3" one mattered most: it made the model's contribution look twice its real size, in the
+# section whose whole job is justifying the model.
+
+ABLATION_DOCS = ("docs/SUBMISSION.md", "docs/REVIEW_BRIEF.md", "eval/README.md")
+
+
+@pytest.mark.parametrize("rel", ABLATION_DOCS)
+def test_no_document_overstates_the_intent_contract(rel, rows):
+    """The contract's effect is the difference between the `rules` and `contract` arms on the
+    benign cohort, recomputed here rather than trusted."""
+    benign = benign_rows(rows)
+    before = sum(1 for r in benign if r["outcomes"].get("rules") == "Needs review")
+    after = sum(1 for r in benign if r["outcomes"].get("contract") == "Needs review")
+    text = normalised(ROOT / rel)
+    assert f"{before} to {after}" in text or f"{before} → {after}" in text, (
+        f"{rel} should say the contract takes benign needs-review {before} -> {after}"
+    )
+    for wrong in (f"{before + 1} to {after}", f"{before + 1} → {after}"):
+        assert wrong not in text, f"{rel} still claims {wrong!r}; the stamped arms say {before}"
+
+
+def test_the_contract_moves_exactly_one_benign_case(rows):
+    """Guards the prose that names it. If a second case ever moves, the documents that say
+    "one case, prisma" become wrong."""
+    moved = [
+        r["id"] for r in benign_rows(rows)
+        if r["outcomes"].get("rules") != r["outcomes"].get("contract")
+    ]  # fmt: skip
+    assert moved == ["prisma"], f"the contract now moves {moved}"
+
+
+@pytest.mark.parametrize("rel", ABLATION_DOCS)
+def test_the_published_cost_per_pr_matches_the_stamped_runs(rel, rows):
+    import statistics
+
+    costs = [r["cost_usd"] for r in rows if r.get("cost_usd")]
+    mean = statistics.mean(costs)
+    text = normalised(ROOT / rel)
+    assert f"{mean:.4f}" in text, f"{rel} does not carry the stamped mean cost ${mean:.4f} per PR"
+    # Figures from the earlier, smaller run. `$0.015` is listed separately because rejecting
+    # only `0.0149` let a rounded restatement survive in REVIEW_BRIEF for another day: the
+    # document carried the corrected number in one place and the superseded one in another.
+    for superseded in ("0.0149", "$0.015 per PR", "~$0.015"):
+        assert superseded not in text, f"{rel} still carries the superseded cost {superseded!r}"
+
+
+@pytest.mark.parametrize("rel", ABLATION_DOCS)
+def test_the_cost_figure_is_scoped_to_model_spend(rel):
+    """An outside audit noted the figure is model API spend and excludes the detonation host's
+    compute and network, which dominates at this volume. Quoting it as "cost per PR" with no
+    scope reads as total cost of ownership."""
+    text = normalised(ROOT / rel)
+    if "0.0181" not in text:  # pragma: no cover - all three currently quote it
+        pytest.skip(f"{rel} no longer quotes the cost")
+    assert "model API spend" in text, f"{rel} quotes the cost without scoping it to API spend"
+
+
+@pytest.mark.parametrize("rel", ABLATION_DOCS)
+def test_no_document_carries_the_superseded_latency_figures(rel):
+    text = normalised(ROOT / rel)
+    for stale in ("p50 12.5", "p95 24.2", "p50 4.5 s", "p95 13.8"):
+        assert stale not in text, f"{rel} still carries the superseded latency figure {stale!r}"
+
+
+def test_nothing_claims_the_model_is_fully_overlapped_with_the_sandbox(rows):
+    """It is not: the analysis reads the telemetry, so it cannot start until the sandbox is
+    done, and it took longer than the detonation in almost every case."""
+    slower = sum(
+        1 for r in rows
+        if (r.get("model_latency_s") or 0) > (r.get("detonation_s") or 0)
+    )  # fmt: skip
+    assert slower > len(rows) * 0.8, "if the model is now usually faster, re-check this claim"
+    for rel in ABLATION_DOCS:
+        text = normalised(ROOT / rel)
+        assert "fully overlapped with the sandbox" not in text, f"{rel} claims full overlap"
+
+
+def test_the_documented_rule_count_matches_the_code():
+    """`docs/SUBMISSION.md` claimed "15 deterministic rules" while the code had 16, and nobody
+    noticed because nothing derived the number. Counted from the source instead."""
+    import re
+    from pathlib import Path as _Path
+
+    ids: set[str] = set()
+    for module in sorted((ROOT / "brain").glob("*.py")):
+        src = _Path(module).read_text(encoding="utf-8")
+        ids |= set(re.findall(r"""RuleHit\(\s*["']([A-Z][A-Z0-9_]+)""", src))
+        ids |= set(re.findall(r"""hit\(\s*["']([A-Z][A-Z0-9_]+)""", src))
+    assert len(ids) >= 10, f"the rule-id scan found only {sorted(ids)}; the pattern has rotted"
+
+    text = normalised(ROOT / "docs" / "SUBMISSION.md")
+    m = re.search(r"(\d+) deterministic rules", text)
+    assert m, "SUBMISSION no longer states a rule count"
+    assert int(m.group(1)) == len(ids), (
+        f"SUBMISSION says {m.group(1)} deterministic rules; brain/ defines {len(ids)}: "
+        f"{', '.join(sorted(ids))}"
     )
 
 

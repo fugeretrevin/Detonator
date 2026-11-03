@@ -1,0 +1,112 @@
+{
+ "job_id": "0a0bf6ec-1831-49f7-900f-f91036553816",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 12.01,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:32.062723632Z",
+   "pid": 286696,
+   "ppid": 286672,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-fc5b2db4c1364f4c; \"$@\"; rc=$?; /bin/true post-fc5b2db4c1364f4c; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc05-delayed-beacon",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:32.067447866Z",
+   "pid": 286735,
+   "ppid": 286696,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc05-delayed-beacon",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:32.068393090Z",
+   "pid": 286735,
+   "ppid": 286735,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc05-delayed-beacon",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:32.522694696Z",
+   "pid": 286754,
+   "ppid": 286735,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc05-delayed-beacon"
+  },
+  {
+   "ts": "2026-11-03T22:30:32.523643271Z",
+   "pid": 286755,
+   "ppid": 286754,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc05-delayed-beacon"
+  },
+  {
+   "ts": "2026-11-03T22:30:32.559087916Z",
+   "pid": 286762,
+   "ppid": 286755,
+   "binary": "/usr/local/bin/node",
+   "args": "/work/payloads/bc05-delayed-beacon/scripts/setup.js beacon",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc05-delayed-beacon"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-03T22:30:38.600587890Z",
+   "pid": 286762,
+   "binary": "/usr/local/bin/node",
+   "daddr": "203.0.113.40",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:32.183177396Z",
+   "pid": 286735,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc05-delayed-beacon/scripts/setup.js",
+   "package": null,
+   "sha256": "475a33b54b8e64c437f14ef4c0f2b50e92b845654d15916bd5d1b0cc4b8dd2e4",
+   "content": "const { fork } = require(\"child_process\");\nif (process.argv[2] === \"beacon\") {\n  // Runs after the parent (and npm install) has exited the trace window.\n  setTimeout(() => {\n    const s = require(\"net\").connect(443, \"203.0.113.40\");\n    s.setTimeout(3000, () => s.destroy());\n    s.on(\"error\", () => {});\n  }, 6000);\n} else {\n  const c = fork(__filename, [\"beacon\"], { detached: true, stdio: \"ignore\" });\n  c.unref();\n}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc05@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 9s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.76,
+  "peak_memory_mb": 49.4,
+  "samples": 20
+ }
+}

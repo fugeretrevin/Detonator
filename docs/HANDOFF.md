@@ -3,7 +3,7 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **771 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **1000 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
 merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
 every divergence and say what each one would change; neither blocks submitting. Run
@@ -194,6 +194,30 @@ package identifiers out of this repo (they're in the owner's sent mail).
 
 ## 5b. Chamber code in `main` that is NOT on the box
 
+### `persistence-files.yaml` — DEPLOYED and measured, Nov 3
+
+`chamber/policies/persistence-files.yaml` is **live on the Chamber** and installed to
+`/etc/tetragon/tetragon.tp.d/`, so it survives a restart. `FILE_PERSISTENCE` is at **HIGH**,
+promoted on the measurement in [`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md): **0 of 104**
+benign controls open a persistence path, `truncated` stayed false on all 106 runs, and
+`gm04-rcfile-persist` / `rt06-persist-rcfile` now **Block** where they previously fired no rule
+at all.
+
+It was loaded with `tetra tracingpolicy add` rather than a Tetragon restart — the existing
+sensors were never interrupted. Rollback:
+
+```bash
+ssh chamber 'sudo tetra tracingpolicy delete persistence-files \
+  && sudo rm -f /etc/tetragon/tetragon.tp.d/persistence-files.yaml'
+```
+
+**If you deploy a Tetragon policy again, do it in this order** (the earlier version of this
+section had it backwards): detonate the two or three cases that *should* fire it first, confirm
+the events arrive, and only then spend an hour on the benign denominator. And check validity
+before believing a clean false-positive count — npm reads `~/.npmrc` on every install, so a
+record with no `file_events` means tracing died, and a block of those would read as "zero false
+positives" for entirely the wrong reason.
+
 Two hardening changes to `chamber/detonate.py` are committed but **not deployed**. The running
 Chamber still has the old `validate`. Both are strict tightenings that reject nothing the Brain
 or the eval harness actually sends, so the divergence is harmless and there is **no need to
@@ -220,6 +244,7 @@ The deployed Brain is **v33 (Nov 2, 16:45 ET)**, which predates every Brain comm
 |---|---|---|
 | `brain/evidence.py` — uncited-prose check (`e8e7098`) + its false-positive fix (`d8a3d81`) | A grounding line appears when the model's prose cites a path or port the record does not support | Nothing observable. See the note below |
 | `brain/sampling.py`, `brain/pipeline.py` — best-of-N band (`4167bb0`, `d57728b`) | None: `MODEL_SAMPLES = 1`, so the code is inert either way (W2 ships off) | None |
+| `brain/evidence_manifest.py` — signable provenance record (new) | None: not wired into `pipeline.py`. It is a standalone capability with a CLI verifier, gated behind coordinator review before any pipeline wiring, per the v5 plan's Ticket A | None — nothing calls it in production yet |
 | `brain/runlog.py` — `detonation_s` escaped on the dashboard | None visible; closes a gap against the file's stated invariant | None — the value is a float, so nothing can inject through it |
 
 **No action needed before submitting.** `docs/SUBMISSION.md` §grounding describes the
@@ -235,21 +260,30 @@ there is no visible difference to a judge opening a PR. Deploy it with the next 
 in `brain/pipeline.py` and flows only into the rendered report, so it can never move a verdict —
 the eval tables stamped at `a96c8a1` still hold and need no re-score.
 
-**Checked exhaustively at `8f2b657`, so nobody needs to repeat it.** `python
-scripts/release_ledger.py` lists every code file touched since the eval stamp, which is the right
-prompt but not the answer. Running it down, file by file:
+**Re-checked at `1a73403`.** `python scripts/release_ledger.py` lists every code file touched
+since the eval stamp, which is the right prompt but not the answer — and that list has grown
+from 7 files to 14, so the earlier version of this table (written at `8f2b657`) was stale.
+**Do not hand-audit this any more:** `python -m eval.score_rules <telemetry> --verify` re-derives
+the stamped `rules` column from the recorded telemetry and names any disagreement. It currently
+reports **141 of 142 agreeing, with one recorded difference**, which is the answer this table
+used to approximate.
 
 | Changed since `a96c8a1` | Moves a verdict? |
 |---|---|
-| `brain/rules.py` | **No.** Zero non-comment changed lines — a rationale block for `CPU_REVIEW_THRESHOLD_S`, which was already `None` |
-| `eval/cases.py` | **No.** One comment about the rt08 CPU measurement |
+| `brain/rules.py` — `EXEC_SCHEDULED_PERSISTENCE` | **Yes, one case.** `gm05-cron-inject` Clean → Blocked at the rules level. Measured 0 matches in 604 uncurated packages and 0 of 104 benign. Its `full` verdict was already Blocked, so no published figure changes. Recorded in `eval/score_rules.py::KNOWN_DRIFT` |
+| `brain/rules.py` — `FILE_PERSISTENCE` | **No, on this telemetry.** The policy was not loaded on Nov 2, so no recorded record carries those `file_events`. It *does* move `gm04`/`rt06` on telemetry captured after the deploy — see `eval/PERSISTENCE.md` |
+| `brain/intent.py` — W13 second key | **No.** A conjunct can only shrink what gets cleared, and all three hosts ever cleared are on the vendor list; pinned by `test_the_fix_changes_no_verdict_in_the_stamped_evaluation` |
+| `brain/timeline.py`, `brain/report.py` | **No.** Built after `combine()` and passed only to `render()`; all five attack fixtures keep their verdicts |
 | `brain/evidence.py` | **No.** Grounding is computed after `combine()` and feeds only the report |
 | `brain/sampling.py`, `brain/pipeline.py` | **No.** `MODEL_SAMPLES = 1`, so the band is never entered |
-| `brain/runlog.py` | **No.** Escapes a float on the dashboard |
-| `chamber/detonate.py`, `chamber/telemetry.py` | **No.** Strict input tightenings that reject nothing the harness sends; not deployed anyway |
+| `brain/runlog.py`, `brain/sbom.py` | **No.** Dashboard escaping and the SBOM CLI's terminal rendering |
+| `chamber/detonate.py`, `chamber/telemetry.py` | **No.** Strict input tightenings that reject nothing the harness sends; still not deployed |
+| `chamber/policies/persistence-files.yaml`, `chamber/provision/setup.sh` | **No** retroactively — a new tracing policy cannot change telemetry already recorded |
+| `eval/cases.py` | **No.** One comment about the rt08 CPU measurement |
 
-So the stamped tables are current. Re-run the eval only if `brain/rules.py`, `brain/verdict.py`,
-`brain/intent.py` or `eval/cases.py` gain a *behavioural* change.
+So the stamped tables still hold, with the one recorded `gm05` exception. Re-run the full eval
+only when a *behavioural* change lands that `score_rules --verify` flags as an unexplained
+disagreement.
 
 ## 6. Raw detonation results
 
@@ -267,6 +301,31 @@ tar -xzf eval-results-6.tgz
 
 Re-score: `.venv\Scripts\python -m eval.run_brain <dir> eval/results` (needs
 `LLAMA_API_KEY` and the deployed Modal app; score from a clean tree).
+
+**Rules-only re-score, free and offline** — `eval/score_rules.py`. This is the one to reach for
+while changing a rule, because it answers "does this hard-block anything benign" with no model,
+no Modal and no cost, in about a second:
+
+**Mind the nesting.** `v3-out.tgz` contains a `v3-out/` directory, so extracting it into a
+folder of the same name gives `v3-out/v3-out/*.json`. `eval/score_rules.py` searches with
+`rglob` and finds them either way; **`eval/repeat.py` joins the path directly and will silently
+match zero cases**, printing a cheerful `0 cases × 5 trials` and spending nothing. Check the
+case count in the output before believing a clean result.
+
+```powershell
+scp chamber:/tmp/v3-out.tgz .    # the 142-case set the current eval was scored from
+tar -xzf v3-out.tgz              # -> ./v3-out/*.json  (142 files; verify with `ls v3-out`)
+.venv\Scripts\python -m eval.score_rules v3-out --verify            # reproduces the stamp
+.venv\Scripts\python -m eval.score_rules v3-out --baseline base.json
+#   ... change a rule ...
+.venv\Scripts\python -m eval.score_rules v3-out --compare base.json # what moved
+```
+
+`--verify` re-derives the stamped `rules` column from the telemetry and fails on any
+disagreement not listed in `KNOWN_DRIFT` with a measurement behind it. Run it first: if the
+harness cannot reproduce the committed numbers, its verdict on a *change* is worthless too.
+Point it at `sweep-out`/`sweep500` as well for 604 uncurated packages of false-positive
+denominator.
 
 ## 7. Gotchas
 

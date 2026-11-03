@@ -8,6 +8,10 @@ pythonpath = ["."]
 testpaths = ["tests"]
 
 [tool.ruff]
+# The Remotion workspace is the owner's JS/TS project for demo assets. Its one Python helper
+# follows its own style, and linting it only produced noise in this project's checks (154
+# findings, none of them about this codebase). Its node_modules is also ~16k files.
+exclude = ["detonator-motion-source"]
 line-length = 100
 target-version = "py311"
 

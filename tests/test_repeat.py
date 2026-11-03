@@ -75,3 +75,27 @@ def test_model_errors_are_counted():
     row, _ = trials(FakeCase("m01", "malicious"), ["Needs review"], error="HTTP 503")
     assert row["llm_errors"] == 3
     assert "Model errors across all trials: 3" in "\n".join(summarize([row], "full", 3))
+
+
+# --- the concurrency flag (W2 round 2 was lost to provider throttling) ---
+
+
+def test_the_worker_count_is_a_flag_rather_than_a_hardcoded_four():
+    """W2 records that the round-2 re-run took 80 minutes against an expected 20, almost
+    certainly provider-side throttling from the extra concurrent samples, and that whoever
+    resumed it should set `max_workers=1`. That instruction asked for a source edit, which is
+    not reproducible and not reviewable, so it is a `--workers` flag now.
+
+    This is a source-level guard: `main()` makes real API calls, so the flag cannot be
+    exercised in a unit test. What it protects against is a revert to the literal 4.
+    """
+    import inspect
+
+    from eval import repeat
+
+    source = inspect.getsource(repeat.main)
+    assert "max_workers=4" not in source, "the worker count is hardcoded again"
+    assert "args.workers" in source
+    assert "--workers" in source
+    # Clamped, so `--workers 0` cannot create a pool that never runs anything.
+    assert "max(1, args.workers)" in source

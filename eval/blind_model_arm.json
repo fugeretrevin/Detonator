@@ -1,0 +1,480 @@
+{
+ "rows": [
+  {
+   "id": "bc01-staged-hooks",
+   "kind": "redteam-blind",
+   "note": "staged multi-step: preinstall writes the egress script, postinstall runs it",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.06,
+   "model_latency_s": 37.52,
+   "model_prompt_tokens": 2980,
+   "model_completion_tokens": 4589,
+   "cost_usd": 0.02322825,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0034,
+   "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 4,
+    "supported": 4,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.72,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:6",
+    "scripts/stage.js:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.11"
+   ]
+  },
+  {
+   "id": "bc02-dead-drop",
+   "kind": "redteam-blind",
+   "note": "dead drop: harvests env and ~/.npmrc to node_modules/.cache, sends nothing",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.92,
+   "model_latency_s": 49.31,
+   "model_prompt_tokens": 2593,
+   "model_completion_tokens": 5984,
+   "cost_usd": 0.028673249999999997,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0445,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc03-git-hook",
+   "kind": "redteam-blind",
+   "note": "persistence: writes an executable .git/hooks/post-checkout that beacons later",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 34.96,
+   "model_prompt_tokens": 2410,
+   "model_completion_tokens": 3907,
+   "cost_usd": 0.01961725,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0025,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc04-git-alias",
+   "kind": "redteam-blind",
+   "note": "indirection: hides the egress inside a git alias that fires on later git use",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.92,
+   "model_latency_s": 38.11,
+   "model_prompt_tokens": 2354,
+   "model_completion_tokens": 4247,
+   "cost_usd": 0.020992249999999997,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0508,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc05-delayed-beacon",
+   "kind": "redteam-blind",
+   "note": "timing: detached child connects out 6s after npm install has already returned",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 12.01,
+   "model_latency_s": 29.98,
+   "model_prompt_tokens": 2899,
+   "model_completion_tokens": 4182,
+   "cost_usd": 0.02139725,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0021,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.76,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:5",
+    "scripts/setup.js:10"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 203.0.113.40"
+   ]
+  },
+  {
+   "id": "bc06-platform-gate",
+   "kind": "redteam-blind",
+   "note": "conditional: egress gated on process.platform === 'linux' to skip dev machines",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 6.01,
+   "model_latency_s": 45.65,
+   "model_prompt_tokens": 2647,
+   "model_completion_tokens": 6237,
+   "cost_usd": 0.029816,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "NET_RAW_IP"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.2555,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.65,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:4"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": [
+    "RAW 198.51.100.50"
+   ]
+  },
+  {
+   "id": "bc07-npm-token",
+   "kind": "redteam-blind",
+   "note": "secret harvest: reads _authToken from ~/.npmrc, base64s it, stages it to /tmp",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.94,
+   "model_latency_s": 45.17,
+   "model_prompt_tokens": 2675,
+   "model_completion_tokens": 5989,
+   "cost_usd": 0.028797,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "CRED_FILE_ACCESS"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0026,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.06,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:8"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc08-dns-exfil",
+   "kind": "redteam-blind",
+   "note": "DNS exfil: host identity hex-encoded into a label under a .invalid name",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 29.35,
+   "model_prompt_tokens": 2395,
+   "model_completion_tokens": 4005,
+   "cost_usd": 0.020014999999999998,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0008,
+   "prompt_guard_error": null,
+   "explain_decoded": true,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.64,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc09-path-shadow",
+   "kind": "redteam-blind",
+   "note": "PATH hijack: drops a `git` shim that beacons, prepends ~/.local/bin via ~/.bashrc",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 3.21,
+   "model_latency_s": 34.13,
+   "model_prompt_tokens": 2710,
+   "model_completion_tokens": 4494,
+   "cost_usd": 0.022487,
+   "outcomes": {
+    "rules": "Blocked",
+    "contract": "Blocked",
+    "analysis": "Blocked",
+    "full": "Blocked"
+   },
+   "rules_fired": [
+    "FILE_PERSISTENCE"
+   ],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "malicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.0056,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 3,
+    "supported": 3,
+    "rejected": 0,
+    "source_inferred": 1,
+    "unsupported_mentions": 0,
+    "uncited": 1
+   },
+   "cpu_s": 0.67,
+   "sensor_witness": true,
+   "guilty_lines": [
+    "package.json:5",
+    "scripts/setup.js:4"
+   ],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  },
+  {
+   "id": "bc10-git-proxy",
+   "kind": "redteam-blind",
+   "note": "config poison: sets global git http.proxy to a TEST-NET host (MITM of git traffic)",
+   "status": "completed",
+   "exit_code": 0,
+   "detonation_s": 2.95,
+   "model_latency_s": 76.47,
+   "model_prompt_tokens": 2534,
+   "model_completion_tokens": 9611,
+   "cost_usd": 0.04401425,
+   "outcomes": {
+    "rules": "Clean",
+    "contract": "Clean",
+    "analysis": "Blocked",
+    "full": "Needs review"
+   },
+   "rules_fired": [],
+   "cleared": [],
+   "predicted_domains": [],
+   "prediction_error": null,
+   "llm_verdict": "suspicious",
+   "llm_error": null,
+   "injection_flagged": false,
+   "prompt_guard_max": 0.002,
+   "prompt_guard_error": null,
+   "explain_decoded": null,
+   "explain_attributed": null,
+   "grounding": {
+    "claims": 2,
+    "supported": 2,
+    "rejected": 0,
+    "source_inferred": 0,
+    "unsupported_mentions": 0,
+    "uncited": 0
+   },
+   "cpu_s": 0.05,
+   "sensor_witness": true,
+   "guilty_lines": [],
+   "script_runs": [
+    "(project)"
+   ],
+   "domains": []
+  }
+ ]
+}

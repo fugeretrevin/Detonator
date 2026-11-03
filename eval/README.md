@@ -96,8 +96,12 @@ rules/contract because `gm08-cpu-miner` hit the timeout this run; the model stil
   playwright-chromium, chromedriver) all download from `storage.googleapis.com`, which is never
   auto-cleared.
 - **The ablation separates the two model uses, and each fixes something the other does not.**
-  The Intent Contract takes benign ⚠️ from 5 to 3 (it explains `binaries.prisma.sh` for a Prisma
-  bump and `download.cypress.io` for Cypress) and clears **no** attack: 15 → 15. The analysis
+  The Intent Contract takes benign ⚠️ from 4 to 3 and clears **no** attack: 15 → 15. That is one
+  case — `prisma`, whose install fetches engines from `binaries.prisma.sh`. It also clears
+  `download.cypress.io` for Cypress and `cdn.playwright.dev` for playwright-chromium, but
+  neither verdict changes: Cypress's install timed out (so it is ⏱️ either way) and
+  playwright-chromium also reaches `storage.googleapis.com`, which is never auto-cleared. The
+  analysis
   arm blocks 16/16 while leaving benign verdicts exactly where the rules left them: its one
   addition is **m12**, which exfiltrates to an ordinary *resolvable* domain that the rules can
   only rate LOW — so rules and contract both leave m12 a **mergeable** ⚠️.
@@ -108,8 +112,12 @@ rules/contract because `gm08-cpu-miner` hit the timeout this run; the model stil
 - **What Muse explained (ground truth, P1.5):** decoded the payload in **5/5** obfuscated
   attacks (base64, char-code, DNS-hex, and both reconstructions) and attributed **2/2**
   dependency-delivered attacks to the right package and file.
-- **Cost and latency (full pipeline):** **$0.0149 per PR** mean (muse-spark-1.3), ~2.2k in /
-  2.9k out tokens; detonation p50 4.5 s / p95 13.8 s; model latency p50 12.5 s / p95 24.2 s.
+- **Cost and latency (full pipeline):** **$0.0181 per PR** mean in **model API spend only**,
+  excluding detonation-host compute and network (muse-spark-1.3), 2516 in /
+  3524 out tokens mean, $2.57 for all 142 cases; detonation p50 5.9 s / p95 67.1 s; model
+  latency p50 36.5 s / p95 66.7 s. These are the figures in
+  [`results.md`](results.md#cost-and-latency-full-pipeline); the smaller numbers this line used
+  to carry were from an earlier, smaller run and were never refreshed.
 - New rules exercised: **m15** (UDP exfil) → `NET_NON_TCP_EGRESS`; **m16** (token in a curl
   header) → `DECOY_CREDENTIAL_SEEN` (critical); **m08** + Shai-Hulud → `CRED_FILE_ACCESS`.
 - **4 native packages are ⏱️ "could not verify", not ✅ Clean** (better-sqlite3, argon2,

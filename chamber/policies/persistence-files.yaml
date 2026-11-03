@@ -1,0 +1,57 @@
+# Opens of files whose only purpose is to make code run *later*: shell startup files, the
+# scheduler's spool, systemd units. A package that installs itself into one of these is
+# arranging to run after the install is over, when nothing is watching.
+#
+# Separate from credential-files.yaml on purpose, rather than adding prefixes to it:
+#   - the two policies mean different things, and the Brain raises a different rule for each
+#     (CRED_FILE_ACCESS vs FILE_PERSISTENCE), so one list would have to be re-split anyway;
+#   - deploying this is additive (`tetra tracingpolicy add`) and does not touch a policy that
+#     is already working on the live Chamber. If this one misbehaves it can be removed on its
+#     own, with credential tracing unaffected.
+#
+# Same kprobe and the same single argument as credential-files.yaml, so the event shape the
+# Brain parses (args[0].file_arg.path) is the one already verified on the Chamber. This policy
+# adds no new JSON shape to depend on - only more paths through a path that already works.
+#
+# Still selective, for the same reason: `security_file_open` on a broad prefix would report
+# every file npm writes into node_modules and flood the event cap, which fails closed and would
+# turn every verdict into "Could not verify". Covering sibling-package tampering needs a
+# write-only filter and its own volume benchmark; see docs/WEAKPOINTS.md W5.
+apiVersion: cilium.io/v1alpha1
+kind: TracingPolicy
+metadata:
+  name: "persistence-files"
+spec:
+  kprobes:
+  - call: "security_file_open"
+    syscall: false
+    args:
+    - index: 0
+      type: "file"
+    selectors:
+    - matchArgs:
+      - index: 0
+        operator: "Prefix"
+        values:
+        # Shell startup files. `gm04-rcfile-persist` appends to the first two; a
+        # non-interactive `sh -c` (which is all npm runs) does not read any of them, so an
+        # install touching one is not configuration.
+        - "/home/runner/.bashrc"
+        - "/home/runner/.zshrc"
+        - "/home/runner/.profile"
+        - "/home/runner/.bash_profile"
+        - "/home/runner/.bash_login"
+        - "/home/runner/.zshenv"
+        - "/home/runner/.config/fish/"
+        - "/etc/profile.d/"
+        - "/etc/bash.bashrc"
+        # Schedulers. The exec-level rule EXEC_SCHEDULED_PERSISTENCE catches `crontab` being
+        # run; this catches the spool being written directly, without spawning a process.
+        - "/etc/crontab"
+        - "/etc/cron.d/"
+        - "/etc/cron.hourly/"
+        - "/etc/cron.daily/"
+        - "/var/spool/cron/"
+        # systemd units, user and system.
+        - "/etc/systemd/system/"
+        - "/home/runner/.config/systemd/"

