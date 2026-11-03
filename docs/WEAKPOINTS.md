@@ -22,6 +22,7 @@ touches the Chamber or a live check.
 | W10 | Modal token not rotated | Medium | Before (1 min) |
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
+| W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | After |
 
 ---
 

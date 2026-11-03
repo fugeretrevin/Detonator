@@ -3,10 +3,12 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **432 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **758 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
-merged** (§3). **Nothing from Nov 2's second session is deployed:** the live Brain is still
-`caac170` and the live Chamber is still the Nov 1 build. Everything new is unit-tested only.
+merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
+every divergence and say what each one would change; neither blocks submitting. Run
+`python scripts/release_ledger.py` for the current identifiers instead of trusting a SHA
+quoted in prose: an earlier version of this line named a Brain commit that §5c superseded.
 
 Read this file top to bottom once. Then `CLAUDE.md` (working rules), `BUILD_PLAN.md`,
 `HARDENING_PLAN.md`, and `docs/REVIEW_BRIEF.md` for the full technical picture.

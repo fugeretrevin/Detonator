@@ -246,7 +246,7 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Tests:** `python -m pytest` (417 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
+- **Tests:** `python -m pytest` (758 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`
