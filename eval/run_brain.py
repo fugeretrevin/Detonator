@@ -35,6 +35,7 @@ from probe_llama import api_key  # noqa: E402
 
 from brain import prompt_guard as pg  # noqa: E402
 from brain.enrich import github_meta_cidrs  # noqa: E402
+from brain.evidence import GROUNDING_CAVEAT  # noqa: E402
 from brain.intent import predict  # noqa: E402
 from brain.llm import LlmClient, LlmOutcome  # noqa: E402
 from brain.pinpoint import script_runs  # noqa: E402
@@ -254,6 +255,8 @@ def grounding_quality(rows: list[dict]) -> list[str]:
         f"- Cases asserting a file path or port in prose that the record contradicts "
         f"(uncited, so the citation check above would not see it): {len(uncited)}"
         + (f" ({', '.join(uncited[:10])})" if uncited else ""),
+        "",
+        GROUNDING_CAVEAT,
         "",
     ]
 

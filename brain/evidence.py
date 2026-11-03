@@ -24,6 +24,19 @@ from dataclasses import dataclass, field
 
 from shared.contract import DetonateResult
 
+# W4(a) in docs/WEAKPOINTS.md makes this caveat mandatory everywhere the grounding number is
+# published, "regardless of anything else - it is a correction, not an improvement". It lives
+# next to the code that computes the metric, and the eval generators emit it, so a re-run
+# cannot publish the number without it. Asserted by tests/test_docs_match_eval.py.
+GROUNDING_CAVEAT = (
+    "> **What this number covers.** Every entry in the model's `key_evidence`, plus any "
+    "hostname, IP, file path or port appearing in its prose even when nothing is cited for it. "
+    "It cannot police prose claims that are not mechanically checkable, so it measures "
+    "**citation discipline and the absence of invented concrete facts**, not total factual "
+    "accuracy. The prose-level half has so far flagged nothing real (see W4 in "
+    "`docs/WEAKPOINTS.md`): it is a regression guard, not a detector with a catch to its name."
+)
+
 # event_type the model may claim -> the index sources that can support it
 SUPPORTS = {
     "exec": ("exec",),

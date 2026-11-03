@@ -13,7 +13,7 @@ touches the Chamber or a live check.
 | W1 | No demo video | **Highest** (25% of score, lowest-scoring category) | Before |
 | W2 | `m12` verdict is a coin flip | High (our headline number) | Before, if measured |
 | W3 | 6 of 104 benign unverifiable | Medium | After |
-| W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | Before (wording), After (checker) |
+| W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
 | W6 | Single Chamber VM, no tested restore | **High** (demo-day risk) | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
@@ -203,6 +203,26 @@ Verdicts must remain unchanged: this is measurement, never control.
 **Rollback.** (a) is text. (b) is report-only by construction and can be deleted.
 
 **Gate: (a) before the deadline — do it today. (b) after judging.**
+
+### (a) was only three-quarters done — completed Nov 3
+
+The prose documents carried the caveat. Four **generated** eval summaries published the figure
+bare: `eval/results.md`, `eval/REPEAT.md`, `eval/REPEAT_CORE.md` and `eval/REPEAT_W2.md`.
+`eval/results.md` is the first file a reviewer checking the numbers would open, and it said
+"0% unsupported-claim rate" with no statement of what the rate covers — exactly the overstatement
+this entry exists to prevent, in the one place it mattered most.
+
+Fixed at the source: the caveat is now `brain/evidence.py::GROUNDING_CAVEAT`, next to the code
+that computes the metric, and both `eval/run_brain.py` and `eval/repeat.py` emit it, so a re-run
+cannot drop it. The committed copies were updated to match. `tests/test_docs_match_eval.py`
+asserts that **every** document publishing a grounding ratio also states what it measures and
+what it excludes — seven documents, checked by phrase so rewording is allowed and deletion is
+not. Mutation-tested 5/5.
+
+Writing that test also found that the connective varies between documents ("not", "not as",
+"rather than total factual accuracy") and that `README.md` writes the ratio as "452 of 452"
+rather than "452/452" — which my first version of the check silently *skipped* instead of
+verifying. Both are now handled; a skip would have left the most-read document unguarded.
 
 ### Measured: (b) does not pass its own acceptance, and the acceptance is why
 

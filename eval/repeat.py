@@ -23,6 +23,8 @@ from collections import Counter
 from collections.abc import Callable
 from pathlib import Path
 
+from brain.evidence import GROUNDING_CAVEAT
+
 # W2 (docs/WEAKPOINTS.md): how many analysis calls the `sampled` arm keeps the worst of.
 SAMPLES_FOR_SAMPLED_ARM = 3
 
@@ -101,6 +103,8 @@ def summarize(rows: list[dict], arm: str, trials: int) -> list[str]:
         rejected = sum(x["rejected"] for x in g)
         out.append(f"- **Evidence grounding:** {claims - rejected}/{claims} claims supported "
                    f"across all trials ({rejected / claims:.0%} unsupported)")  # fmt: skip
+        # W4(a): the caveat travels with the number, in the generator so a re-run keeps it.
+        out += ["", GROUNDING_CAVEAT]
     errors = sum(r["llm_errors"] for r in rows)
     if errors:
         out.append(f"- Model errors across all trials: {errors} (scored as the pipeline does)")

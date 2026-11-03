@@ -33,6 +33,8 @@ Scored 2026-11-02 22:39 UTC at commit `a96c8a1` with muse-spark-1.3; detonations
 ### Evidence grounding (full pipeline)
 
 - **452/452** evidence claims cite a real kernel event of the right type (13 labelled source-only); **0** rejected (0% unsupported-claim rate).
+
+> **What this number covers.** Every entry in the model's `key_evidence`, plus any hostname, IP, file path or port appearing in its prose even when nothing is cited for it. It cannot police prose claims that are not mechanically checkable, so it measures **citation discipline and the absence of invented concrete facts**, not total factual accuracy. The prose-level half has so far flagged nothing real (see W4 in `docs/WEAKPOINTS.md`): it is a regression guard, not a detector with a catch to its name.
 - Cases whose summary names a host/IP absent from the record and diff: 0
 
 ### Cost and latency (full pipeline)

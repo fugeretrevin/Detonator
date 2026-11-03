@@ -137,3 +137,60 @@ def test_the_stamped_commit_is_recorded_in_the_results(rows):
     data = json.loads(RESULTS.read_text(encoding="utf-8"))
     assert re.fullmatch(r"[0-9a-f]{7,40}", data["commit"] or "")
     assert data.get("scored_at")
+
+
+# --- W4(a): the grounding caveat is mandatory wherever the number is published -------------
+
+GROUNDING_DOCS = (
+    "eval/results.md",
+    "eval/REPEAT.md",
+    "eval/REPEAT_CORE.md",
+    "eval/REPEAT_W2.md",
+    "eval/README.md",
+    "README.md",
+    "docs/SUBMISSION.md",
+)
+
+
+@pytest.mark.parametrize("rel", GROUNDING_DOCS)
+def test_every_published_grounding_number_carries_its_caveat(rel):
+    """W4(a) in docs/WEAKPOINTS.md: "Every place that number appears says what it covers and
+    what it does not. Mandatory regardless of anything else - it is a correction, not an
+    improvement."
+
+    It was only three-quarters done. The prose documents carried the caveat, but four
+    *generated* eval summaries published the figure bare - including `eval/results.md`, which
+    is the first file a reviewer checking the numbers would open. The generators now emit the
+    caveat (`brain/evidence.py::GROUNDING_CAVEAT`) so a re-run cannot drop it; this test covers
+    the committed copies and the hand-written docs, which no generator will fix.
+
+    Matched on the distinguishing phrases rather than the exact string, so rewording the
+    caveat for a particular audience does not fail the test while deleting it does.
+    """
+    text = normalised(ROOT / rel)
+    # "452/452" and "452 of 452" are both in use across these documents.
+    ratio = r"\b\d+\s*(?:/|of)\s*\d+\b"
+    publishes_number = re.search(rf"{ratio}.{{0,80}}claims", text) or re.search(
+        rf"claims.{{0,80}}{ratio}", text
+    )
+    if not publishes_number:
+        pytest.skip(f"{rel} no longer publishes a grounding ratio")
+
+    assert "citation discipline" in text, (
+        f"{rel} publishes the grounding ratio without saying what it measures; see W4(a)"
+    )
+    # The connective varies ("not", "not as", "rather than"); the clause is what matters.
+    assert re.search(r"(?:not(?: as)?|rather than) total factual accuracy", text), (
+        f"{rel} does not say what the grounding ratio excludes; see W4(a)"
+    )
+
+
+def test_the_caveat_the_generators_emit_says_both_required_things():
+    """Guards the constant itself: the per-document test above would pass vacuously if the
+    generators started emitting a caveat that no longer made either point."""
+    from brain.evidence import GROUNDING_CAVEAT
+
+    caveat = " ".join(GROUNDING_CAVEAT.split())
+    assert "citation discipline" in caveat
+    assert "not total factual accuracy" in caveat
+    assert caveat.startswith(">"), "it renders as a markdown blockquote in the eval summaries"
