@@ -29,7 +29,10 @@ from shared.contract import (
     SensorWitness,
 )
 
-JOB_ID_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
+# Must start alphanumeric: a leading hyphen is not exploitable today (job_id only ever reaches
+# a Path join and a container name that is always prefixed `det-`, so it can never be read as a
+# CLI flag) but it costs nothing to exclude, and real job ids are uuid4 which always start hex.
+JOB_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]{0,63}$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 CLONE_URL_RE = re.compile(r"^https://github\.com/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+(\.git)?$")
 ALLOWED_COMMAND_HEADS = (["npm", "install"], ["npm", "ci"])
