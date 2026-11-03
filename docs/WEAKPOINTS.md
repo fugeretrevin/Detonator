@@ -11,7 +11,7 @@ touches the Chamber or a live check.
 | # | Weak point | Severity | Gate |
 |---|---|---|---|
 | W1 | No demo video | **Highest** (25% of score, lowest-scoring category) | Before |
-| W2 | `m12` verdict is a coin flip | High (our headline number) | Before, if measured |
+| W2 | `m12` verdict is a coin flip | High (our headline number) | Ships **off**; 3 of 4 conditions now measured |
 | W3 | 6 of 104 benign unverifiable | Medium | After |
 | W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
@@ -142,6 +142,51 @@ we quote the distribution rather than the best run.*
 **If anyone resumes this:** re-run `--arms full,sampled` with `max_workers=1` in
 `eval/repeat.py` to avoid the throttling, and check condition 3 first — the 6 benign
 `Could not verify` native-build packages are the ones at risk from the widening.
+
+### Nov 3: three of the four conditions recovered from the recorded trials, free
+
+`eval/band_sim.py` reconstructs the widened band from the two arms already committed in
+`eval/REPEAT_W2.json` (42 cases × 5 trials), without another API call. The band draws one
+sample and re-samples only when that sample's verdict is borderline, so per trial it is
+`sampled[i] if full[i] in BORDERLINE_TITLES else full[i]`.
+
+| | `full` (N=1) | `sampled` (worst of 3) | **band (reconstructed)** |
+|---|---|---|---|
+| Attack flips | 1/38 (`m12`) | 1/38 (`gm08`) | **0/38** |
+| Attacks mergeable, worst trial | 2/38 | 1/38 | **1/38** (`rt08` only) |
+| Benign Blocked, any trial | 0/4 | 0/4 | **0/4** |
+
+The band is better than *both* recorded arms on flip rate, and it settles the case W2 exists
+for: `m12-domain-exfil` goes from Blocked ×4 / Needs review ×1 to **Blocked ×5**. It also avoids
+`gm08`'s flip, which the unconditional arm had, because `gm08` is Blocked at N=1 and so is never
+re-sampled.
+
+**One part is a proof rather than an estimate.** The band either keeps the single sample's
+verdict or raises it with `max`, so no attack can become *more* mergeable than at N=1 — for any
+N, on any corpus, independent of these trials. Acceptance 1's safety direction holds by
+construction, and a test checks it against the data as well.
+
+**What this is not.** The two arms were scored as separate runs, so `full[i]` is an independent
+draw rather than literally the first of `sampled[i]`'s three. It is a Monte Carlo estimate over
+5 trials, which cannot distinguish a flip rate of 0 from a few percent. Evidence toward
+acceptance 1, not the measured run the gate asks for.
+
+**Acceptance 3 is still unmeasured, and now precisely scoped.** All **6 of 6** at-risk packages
+(`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`, `biome`, `cypress`) are **absent** from
+that 42-case corpus — so its clean benign column says nothing about the condition that matters.
+Settling it needs only those six, sampled arm, 5 trials: about 120 model calls, **≈$1.50**, not
+the $25 full re-score. The telemetry for all six is already in the recorded set:
+
+```powershell
+python -m eval.repeat <telemetry-dir> --trials 5 --arms sampled `
+  --only better-sqlite3,argon2,cpu-features,node-pty,biome,cypress --out eval/REPEAT_W2_NATIVE
+```
+
+### Verdict unchanged: W2 still ships **off**, `MODEL_SAMPLES = 1`.
+
+Three conditions satisfied and one missing is not four, and the gate says all four on a measured
+run. `tests/test_band_sim.py` asserts the default is still 1, so nobody can mistake the
+simulation for the measurement.
 
 ---
 
