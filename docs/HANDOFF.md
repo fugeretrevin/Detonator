@@ -233,6 +233,22 @@ there is no visible difference to a judge opening a PR. Deploy it with the next 
 in `brain/pipeline.py` and flows only into the rendered report, so it can never move a verdict —
 the eval tables stamped at `a96c8a1` still hold and need no re-score.
 
+**Checked exhaustively at `8f2b657`, so nobody needs to repeat it.** `python
+scripts/release_ledger.py` lists every code file touched since the eval stamp, which is the right
+prompt but not the answer. Running it down, file by file:
+
+| Changed since `a96c8a1` | Moves a verdict? |
+|---|---|
+| `brain/rules.py` | **No.** Zero non-comment changed lines — a rationale block for `CPU_REVIEW_THRESHOLD_S`, which was already `None` |
+| `eval/cases.py` | **No.** One comment about the rt08 CPU measurement |
+| `brain/evidence.py` | **No.** Grounding is computed after `combine()` and feeds only the report |
+| `brain/sampling.py`, `brain/pipeline.py` | **No.** `MODEL_SAMPLES = 1`, so the band is never entered |
+| `brain/runlog.py` | **No.** Escapes a float on the dashboard |
+| `chamber/detonate.py`, `chamber/telemetry.py` | **No.** Strict input tightenings that reject nothing the harness sends; not deployed anyway |
+
+So the stamped tables are current. Re-run the eval only if `brain/rules.py`, `brain/verdict.py`,
+`brain/intent.py` or `eval/cases.py` gain a *behavioural* change.
+
 ## 6. Raw detonation results
 
 Scored outputs are committed (`eval/results.json`, `eval/REDTEAM.json`, `eval/SWEEP*.json`);
