@@ -208,6 +208,26 @@ Deploy them with the next Chamber deploy that happens for another reason. If you
 re-run one benign and one attack case afterwards — the command allowlist is on the hot path for
 every detonation.
 
+## 5c. Brain code in `main` that is NOT deployed
+
+The deployed Brain is **v33 (Nov 2, 16:45 ET)**, which predates every Brain commit after
+`a96c8a1`. Check with `python scripts\modal_cli.py app history pr-detonator` and compare against
+`git log -- brain/`. Not deployed:
+
+| Change | Effect if deployed | Effect of leaving it |
+|---|---|---|
+| `brain/evidence.py` — uncited-prose check (`e8e7098`) + its false-positive fix (`d8a3d81`) | A grounding line appears when the model's prose cites a path or port the record does not support | **`docs/SUBMISSION.md` describes a check the running Brain does not have.** Either deploy or soften that line before submitting |
+| `brain/sampling.py`, `brain/pipeline.py` — best-of-N band (`4167bb0`, `d57728b`) | None: `MODEL_SAMPLES = 1`, so the code is inert either way (W2 ships off) | None |
+| `brain/runlog.py` — `detonation_s` escaped on the dashboard | None visible; closes a gap against the file's stated invariant | None — the value is a float, so nothing can inject through it |
+
+Only the first row matters, and it is a **documentation-vs-deployment mismatch, not a bug**.
+Deploying is low-risk compared with a Chamber deploy, but W10 (§5.2) says rotate the Modal token
+first, so the cheap fix before filming is to adjust the `SUBMISSION.md` wording instead.
+
+**Verdict numbers are unaffected by any of this.** `grounding` is computed *after* `combine()`
+in `brain/pipeline.py` and flows only into the rendered report, so it can never move a verdict —
+the eval tables stamped at `a96c8a1` still hold and need no re-score.
+
 ## 6. Raw detonation results
 
 Scored outputs are committed (`eval/results.json`, `eval/REDTEAM.json`, `eval/SWEEP*.json`);
