@@ -181,19 +181,24 @@ def test_prefix_semantics_match_tetragon_deliberately():
 # --- severity is deliberately LOW until measured ---
 
 
-def test_it_ships_at_low_so_it_cannot_hard_block_an_unmeasured_signal():
-    assert FILE_PERSISTENCE_SEVERITY == Severity.LOW
+def test_it_is_high_and_that_severity_was_measured_not_assumed():
+    """Promoted on Nov 3 after the policy was deployed and the 104 benign controls were
+    re-detonated live: 0 of 104 opened any of these paths, `truncated` stayed False on all 106
+    runs, and every record carried `file_events` so the zero is a real absence rather than dead
+    tracing. It shipped at LOW until that existed."""
+    assert FILE_PERSISTENCE_SEVERITY == Severity.HIGH
     hits = evaluate(result(opened("/home/runner/.bashrc")))
-    assert hits[0].severity == Severity.LOW
+    assert hits[0].severity == Severity.HIGH
 
 
-def test_low_alone_means_needs_review_not_blocked():
+def test_high_means_the_persistence_cases_now_block():
     from brain.llm import LlmOutcome
     from brain.verdict import combine
 
     res = result(opened("/home/runner/.bashrc"))
     final = combine(evaluate(res), LlmOutcome("m", error="x", skipped=True), res)
-    assert final.title == "Needs review", "an unmeasured rule must not block a PR"
+    assert final.title == "Blocked"
+    assert final.conclusion == "failure", "gm04 and rt06 previously fired no rule at all"
 
 
 # --- the Chamber policy and these rules must not drift apart ---

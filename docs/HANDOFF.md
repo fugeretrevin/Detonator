@@ -194,36 +194,29 @@ package identifiers out of this repo (they're in the owner's sent mail).
 
 ## 5b. Chamber code in `main` that is NOT on the box
 
-### `persistence-files.yaml` — a new Tetragon policy, NOT loaded (added Nov 3)
+### `persistence-files.yaml` — DEPLOYED and measured, Nov 3
 
-`chamber/policies/persistence-files.yaml` traces opens of shell startup files, cron spools and
-systemd units. Until it is on the box, `FILE_PERSISTENCE` **cannot fire at all**, so the rule is
-inert rather than wrong, and `eval/score_rules.py` confirms it changes no recorded verdict.
+`chamber/policies/persistence-files.yaml` is **live on the Chamber** and installed to
+`/etc/tetragon/tetragon.tp.d/`, so it survives a restart. `FILE_PERSISTENCE` is at **HIGH**,
+promoted on the measurement in [`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md): **0 of 104**
+benign controls open a persistence path, `truncated` stayed false on all 106 runs, and
+`gm04-rcfile-persist` / `rt06-persist-rcfile` now **Block** where they previously fired no rule
+at all.
 
-Deploying it is additive and does not touch the working credential policy:
+It was loaded with `tetra tracingpolicy add` rather than a Tetragon restart — the existing
+sensors were never interrupted. Rollback:
 
 ```bash
-scp chamber/policies/persistence-files.yaml chamber:/tmp/
-ssh chamber 'sudo install -m 0644 /tmp/persistence-files.yaml /etc/tetragon/tetragon.tp.d/ \
-  && sudo systemctl restart tetragon && sleep 5 && sudo tetra tracingpolicy list'
+ssh chamber 'sudo tetra tracingpolicy delete persistence-files \
+  && sudo rm -f /etc/tetragon/tetragon.tp.d/persistence-files.yaml'
 ```
 
-**Then measure before trusting it.** The rule ships at **LOW** precisely because its
-false-positive rate is unknown: no recorded install contains a `file_event` for these paths, so
-the evidence that earned `EXEC_SCHEDULED_PERSISTENCE` its HIGH does not exist here. After
-deploying:
-
-1. Re-detonate the 104 benign controls and check **zero** raise `FILE_PERSISTENCE`. A
-   non-interactive `sh -c` reads none of these files, so zero is expected — expected is not
-   measured.
-2. Re-detonate `gm04-rcfile-persist` and `rt06-persist-rcfile`; both should now raise it.
-3. Check `truncated` stayed false everywhere. Event-cap flooding fails closed, so a noisy
-   policy would turn verdicts into "Could not verify" rather than failing loudly.
-4. Only then promote `FILE_PERSISTENCE_SEVERITY` to HIGH, and re-run
-   `python -m eval.score_rules <dir> --compare` to record what moved.
-
-Rollback is `rm /etc/tetragon/tetragon.tp.d/persistence-files.yaml && systemctl restart
-tetragon`; nothing else depends on it.
+**If you deploy a Tetragon policy again, do it in this order** (the earlier version of this
+section had it backwards): detonate the two or three cases that *should* fire it first, confirm
+the events arrive, and only then spend an hour on the benign denominator. And check validity
+before believing a clean false-positive count — npm reads `~/.npmrc` on every install, so a
+record with no `file_events` means tracing died, and a block of those would read as "zero false
+positives" for entirely the wrong reason.
 
 Two hardening changes to `chamber/detonate.py` are committed but **not deployed**. The running
 Chamber still has the old `validate`. Both are strict tightenings that reject nothing the Brain

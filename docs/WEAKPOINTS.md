@@ -197,6 +197,14 @@ simulation for the measurement.
 C toolchain**, so `node-gyp` cannot build. `biome` and `cypress` hit the install timeout. That
 is ~6% of mainstream packages on which we return no answer.
 
+**The timeout half is not a fixed rate (measured Nov 3).** Re-detonating all 104 benign controls
+a day later, `biome` completed in **5.8 s** and `cypress` in **40 s** — both well inside the
+240 s limit they had exceeded on Nov 2. So that run's 6 was 4 the next day, and the two timeout
+cases are a registry/CDN speed artifact rather than a property of the sandbox. The four native
+builds failed identically both times, which is the real, reproducible half of this entry. The
+stamped `eval/results.json` is deliberately left at the Nov 2 figures; see
+[`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md) for the re-run it came from.
+
 **Plan.** Two independent changes, measured separately:
 - **(a) Toolchain.** Add `build-essential` (and `pkg-config`) to the sandbox image, rebuild, and
   re-run the 104 benign set.
@@ -370,22 +378,36 @@ available.
 
 The four cases split cleanly, and only one half is safe to do without measurement:
 
-**Done (written, not deployed).** `chamber/policies/persistence-files.yaml` traces opens of
-shell startup files, cron spools and systemd units — the paths `gm04` and `rt06` append to. It
+**Done — deployed and measured, Nov 3.** `chamber/policies/persistence-files.yaml` traces opens
+of shell startup files, cron spools and systemd units — the paths `gm04` and `rt06` append to. It
 reuses `security_file_open` and the same single `file` argument as the credential policy already
-running on the Chamber, so **no new Tetragon JSON shape** is involved; `CLAUDE.md` requires a
-recorded fixture before coding against an unverified shape, and none exists for a different
-probe. It is a *separate* policy rather than extra prefixes on the credential one, so deploying
-is additive and rollback does not disturb credential tracing. `FILE_PERSISTENCE` classifies
-those paths, with `CRED_FILE_ACCESS` left for the bait files — a `.bashrc` is not "a planted
-fake credential", and the old code would have said so.
+running on the Chamber, so **no new Tetragon JSON shape** is involved. It is a *separate* policy
+rather than extra prefixes on the credential one, so deploying was additive and rollback does not
+disturb credential tracing. `FILE_PERSISTENCE` classifies those paths, with `CRED_FILE_ACCESS`
+left for the bait files — a `.bashrc` is not "a planted fake credential", and the old code would
+have said so.
 
-**Shipped at LOW, deliberately.** The rule cannot fire until the policy is on the box, so no
-recorded install contains a `file_event` for these paths and **its false-positive rate is
-unmeasured**. `EXEC_SCHEDULED_PERSISTENCE` earned HIGH on 0 matches across 604 uncurated
-packages; this has no such evidence, and blocking on an unmeasured signal is what these gates
-exist to prevent. `docs/HANDOFF.md` §5b records the deploy plus the four checks that would
-justify promoting it, and `FILE_PERSISTENCE_SEVERITY` is a single constant to flip.
+It shipped at **LOW** first, because a rule that cannot fire yet has no false-positive evidence
+at all, and blocking on an unmeasured signal is what these gates exist to prevent. It is now at
+**HIGH**, earned: full write-up in [`eval/PERSISTENCE.md`](../eval/PERSISTENCE.md).
+
+| | Result |
+|---|---|
+| Benign controls opening a persistence path | **0 of 104** (re-detonated live with the policy loaded) |
+| Runs with truncated telemetry | **0 of 106** |
+| `gm04-rcfile-persist` | no rule fired → **Blocked** (`~/.bashrc` + `~/.zshrc`) |
+| `rt06-persist-rcfile` | no rule fired → **Blocked** (`~/.bashrc`) |
+
+Validity was checked before the result: npm reads `~/.npmrc` on every install, so every traced
+record carries a file event — 0 of 104 lacked one, 0 had a blind collector, 0 failed the sensor
+witness. "0 of 104" therefore means nothing opened these paths, not that tracing was dead.
+
+Two honest notes. The policy is **host-global**, so host shell startups reading
+`/etc/bash.bashrc` post events too (7 observed, all `/bin/bash` outside any container, from SSH
+logins) — filtered by the Chamber's parser, negligible against the 200 MB export budget. And two
+benign verdicts differ from the stamped eval, **neither caused by this rule**: `biome` and
+`cypress` had hit the 240 s timeout on Nov 2 and completed on Nov 3, which makes W3's "6 could
+not verify" a property of that run rather than a fixed rate — see W3.
 
 **Still open: sibling-package tampering (`gm10`, `rt07`).** These rewrite a file inside a
 *different* `node_modules` package. Tracing that needs writes under `/work/node_modules/`, which

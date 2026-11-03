@@ -326,18 +326,25 @@ PERSISTENCE_FILE_PREFIXES = (
     "/home/runner/.config/systemd/",
 )
 
-# FILE_PERSISTENCE ships at LOW - ⚠️ needs review, mergeable - and not at HIGH, because its
-# false-positive rate is **not yet measured**. The rule cannot fire at all until
-# `persistence-files.yaml` is loaded on the Chamber, so there are no recorded `file_events` for
-# these paths in any of the 742 installs on record, which means the evidence that justified
-# EXEC_SCHEDULED_PERSISTENCE at HIGH does not exist for this one. Blocking on an unmeasured
-# signal is the mistake docs/WEAKPOINTS.md exists to prevent.
+# HIGH, earned by measurement on Nov 3 rather than assumed. The rule shipped at LOW first,
+# because it cannot fire until `persistence-files.yaml` is loaded on the Chamber and so had no
+# false-positive evidence at all. The policy was then deployed and the measurement run:
 #
-# Promotion to HIGH needs exactly what the other rules got: deploy the policy, re-detonate the
-# 104 benign controls, and confirm zero of them open one of these paths from an install script.
-# A non-interactive `sh -c` reads none of these files, so the expected count is zero - but
-# expected is not measured.
-FILE_PERSISTENCE_SEVERITY = Severity.LOW
+#   - **0 of 104** benign controls open any of these paths from an install script, re-detonated
+#     live against the registry with the policy loaded.
+#   - `gm04-rcfile-persist` (`~/.bashrc` + `~/.zshrc`) and `rt06-persist-rcfile` (`~/.bashrc`)
+#     both raise it. Before this they fired **no rule at all** and scored Clean.
+#   - `truncated` stayed False on all 106 runs, so the policy does not flood the event cap -
+#     which matters because truncation fails closed and would turn verdicts into
+#     "Could not verify" rather than failing loudly.
+#   - Validity, checked before the result: every one of the 104 records carries `file_events`
+#     (npm reads ~/.npmrc on every install), 0 had a blind collector and 0 failed the sensor
+#     witness - so a zero count means "nothing opened these paths", not "tracing was dead".
+#
+# Known and accepted: the policy is host-global, so host shell startups reading
+# `/etc/bash.bashrc` also post events (7 observed, all `/bin/bash` outside any container). The
+# Chamber's parser filters to the job's container, so they cannot reach a verdict.
+FILE_PERSISTENCE_SEVERITY = Severity.HIGH
 
 
 def _classify_file(path: str) -> str | None:
