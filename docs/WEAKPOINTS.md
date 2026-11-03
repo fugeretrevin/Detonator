@@ -376,8 +376,37 @@ fresh 100-package sweep, before and after.
 within 2 packages of today's baseline; connect *attempts* still recorded in telemetry; a
 documented rollback to the current rules.
 
-**Gate: after judging.** Changing egress two days out risks breaking benign installs across the
-whole control set with no time to re-validate — and the honest documentation is already there.
+**Measured offline, Nov 3 — the blast radius, which was the unknown blocking this.**
+`eval/egress_allowlist.py` (report: [`eval/EGRESS.md`](../eval/EGRESS.md)) predicts the cost of an
+allowlist from the host data the sweeps already recorded, with no change to the Chamber:
+
+- **All 500** packages in the 500-package sweep reach `registry.npmjs.org`; only **5** reach
+  anything else at all. The whole observed surface is **12 hosts**.
+- Blast radius by tier: registry-only puts **37/500 (7.4%)** at risk, but adding the Node and
+  GitHub release endpoints drops that to **5/500 (1.0%)**, and adding four vendor CDNs to
+  **2/500 (0.4%)**. Every one of those 5 installed cleanly anyway, so their contact was not
+  install-critical.
+- **Held-out check**, because the tiers were otherwise read off the corpus they scored: fit the
+  allowlist on the 500-package sweep, then score the 100-package sweep, which overlaps it by
+  only 8 names. Of the **92 genuinely unseen** packages, exactly **1** needs a host outside the
+  allowlist — and that one is the package pending disclosure, reaching a raw IP, which the
+  detector already returns **Blocked** and whose install did not complete. **Zero benign
+  packages affected.**
+
+So the acceptance criterion "within 2 packages of baseline" is predicted to pass with margin at
+the T1 tier and above. Pinned by `tests/test_egress_allowlist.py`, which asserts the claim
+against the committed corpora rather than restating the number.
+
+**What this does *not* establish**, and why the gate stands: an *upper bound* from observed
+contacts is not a live result. A refused connection differs from no connection — `REJECT` fails
+fast, but a `DROP` makes a client wait out its own timeout, so a package that tolerates refusal
+may still stall. And an allowlist fitted on 500 packages from one sampling of the registry says
+nothing certain about the 501st. Only the live run in the plan settles those.
+
+**Gate: still after judging.** Changing egress two days out risks breaking benign installs across
+the whole control set with no time to re-validate — and the honest documentation is already there.
+What changed is that the broker is no longer an unmeasured guess: its cost is now bounded, which
+is the part that can be done without risk.
 
 ---
 
@@ -455,6 +484,17 @@ between cohorts afterwards.
 
 **Acceptance.** Results reported with the external party named and the frozen commit recorded,
 including anything they found that we miss.
+
+**Checked Nov 3 — the wording this gate exists to control is already correct.**
+`docs/SUBMISSION.md` line 207 reads "10 red-team, written by a model that never saw our rules",
+and the phrase "independently validated" appears nowhere in it. The one remaining mention is a
+submission-checklist item about whether to add a held-out row at all. So W12 needs no action
+before submitting; what it needs is a third party, which is a scheduling problem, not a code one.
+
+Note for whoever picks this up: **this cannot be done by the agent that wrote the detector, or by
+one it spawns.** W12's acceptance requires labels fixed by someone who has not seen the rules, and
+an assistant that has read `brain/rules.py` cannot provide that however the prompt is framed — it
+would be the same blindness problem the entry already describes, one level removed.
 
 **Gate: after judging.** Until then the phrasing stays "suggested by a model that had not seen
 the rules", never "independently validated".
