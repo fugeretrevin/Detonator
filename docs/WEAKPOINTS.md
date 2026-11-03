@@ -22,7 +22,7 @@ touches the Chamber or a live check.
 | W10 | Modal token not rotated | Medium | Before (1 min) |
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
-| W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | After |
+| W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | **Closed in code Nov 3** |
 
 ---
 
@@ -537,28 +537,62 @@ a registered domain of the attacker's own. Several of them are doubly covered: `
 `ngrok.io` and `trycloudflare.com` also raise `NET_EXFIL_SERVICE`, an independent finding that
 the contract cannot touch at all.
 
-**The honest residual.** With such a domain, and a PR body whose stated purpose plausibly
-requires it, the prediction may name it and that one LOW signal is suppressed. The last line of
-defence there is a *prompt* instruction — "Never predict a host just because the text names it" —
-which is a model behaviour, not a code guarantee. **Severity is low but not nil:** under the
-default policy LOW alone is already `neutral`, which GitHub treats as passing, so suppressing it
-changes the reviewer's signal and not the merge gate. Under `needs_review: block` it would change
-the gate.
+**The residual, as it stood on Nov 3.** With such a domain, and a PR body whose stated purpose
+plausibly requires it, the prediction could name it and that one LOW signal was suppressed. The
+last line of defence was a *prompt* instruction — "Never predict a host just because the text
+names it" — which is a model behaviour, not a code guarantee.
 
-**Plan (post-judging).** Make the clearing path independent of attacker-controlled text: take the
-allowlist from the *base* branch policy (`brain/policy.py::allowed_domains`, already trusted and
-already implemented) and let the prediction only *match* against it, never extend it. That makes
-I06 a code property instead of a prompt property, at the cost of some benign "needs review"
-noise that the contract currently removes — which is exactly the trade to measure.
+### Closed in code, Nov 3 — I06 is now a property of `apply_contract`
 
-**Acceptance.** Benign "needs review" count stays within 2 of today's 3/104 with the prediction
-restricted to base-branch domains; zero attack cases become clearable; a crafted PR naming an
-attacker-registered domain cannot clear its own LOW hit.
+The gate below was moved forward deliberately (owner's call) and the fix shipped. Clearing now
+requires **two independent keys**:
 
-**Gate: after judging.** No code change now. This is a **wording fix plus a recorded residual**,
-not a live vulnerability: it cannot clear a HIGH/CRITICAL finding, cannot explain a raw IP, cannot
-use shared hosting, and cannot change mergeability under the shipped default policy. The write-up,
-README and review brief have been corrected to state the exact boundary.
+> the prediction named the host **AND** the host is on a list the PR author cannot write to
+
+The second list is `brain/intent.py::VENDOR_DOWNLOAD_DOMAINS` — six hosts that publish a
+package's own prebuilt binaries — plus any `allowed_domains` from the **base**-branch policy
+(`brain/policy.py`, already read from the base precisely because the head is the author's).
+Author text can only *select* from those lists; it can never extend them.
+
+**Admission rules for the vendor list**, enforced by `test_no_vendor_entry_is_shared_hosting_or_a_bare_registrable_domain`
+rather than left to discipline: a full hostname with ≥3 labels (`domain_allowed` matches
+subdomains, so `prisma.sh` would also accept `evil.prisma.sh`), operated by the publisher of the
+package that fetches it, and never a `SHARED_HOSTING_SUFFIXES` host. `storage.googleapis.com` is
+**deliberately excluded** even though adding it would turn `puppeteer` and `chromedriver` green:
+anyone can create a bucket there, so it is not a host the vendor owns. That exclusion has its own
+test, because the temptation is real.
+
+**Acceptance, met and measured:**
+
+| Condition | Result |
+|---|---|
+| Benign "needs review" within 2 of 3/104 | **0 change.** Still 3 |
+| Zero attack cases become clearable | **Holds by construction** — a conjunct can only shrink the cleared set |
+| A crafted PR naming an attacker-registered domain cannot clear its own LOW hit | **Asserted** (`test_an_attacker_registered_domain_cannot_clear_its_own_low_hit`, the inverted former residual test) |
+
+**Why no re-score was needed, decided from data rather than argued.** Adding a conjunct can only
+*shrink* what gets cleared, so the only way a verdict moves is if something that was cleared is
+no longer trusted. `eval/results.json` records the exact hosts cleared across all 142 cases, and
+there are three — `binaries.prisma.sh`, `cdn.playwright.dev`, `download.cypress.io` — all on the
+vendor list. `test_the_fix_changes_no_verdict_in_the_stamped_evaluation` asserts that against the
+stamped file, so the claim re-checks itself instead of relying on this paragraph.
+
+For scale: clearing moved exactly **one verdict in 142 cases** before this change (`prisma`,
+Needs review → Clean). `playwright-chromium` and `cypress` had a host cleared and kept their
+verdicts anyway. So the feature's entire measured benefit was one row, and it is preserved.
+
+The same test also fails if the vendor list grows a host **no benign control ever needed** — which
+it did on the first run, catching `playwright.download.prss.microsoft.com`, a host that was
+observed but never predicted. It was removed rather than justified.
+
+**Mutation-tested**, 3/3 caught, each by a different test: dropping the trusted-list conjunct,
+admitting shared hosting, and making the trusted list the *only* key (ignoring the prediction).
+
+**Residual after the fix.** The vendor list is a judgement call someone has to own — six hosts,
+each tied to a package in the control set. If one of those vendors were compromised at their own
+CDN, a predicted fetch from it would still be cleared. That is a supply-chain assumption, not an
+author-controlled path, and it is the assumption `DEFAULT_ALLOWED_DOMAINS` already makes about
+`registry.npmjs.org`.
 
 ---
 

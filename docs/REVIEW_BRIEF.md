@@ -146,20 +146,27 @@ benign blocks.
 - **Verdict = max(rule level, model level).** The analysis model can only escalate.
 - **The one exception, stated exactly.** `brain/intent.py::apply_contract` may clear a rule hit,
   but only a `NET_UNLISTED_DOMAIN` hit at **LOW** severity, only when the pre-observation
-  prediction named that host *before* the install ran, and only when the PR added no install
-  scripts. Raw IPs can never be explained, and a prediction naming shared hosting anyone can
+  prediction named that host *before* the install ran, only when the PR added no install
+  scripts, **and only when the host is on an allowlist the PR author cannot write to** — either
+  `brain/intent.py::VENDOR_DOWNLOAD_DOMAINS` or the repo's **base-branch**
+  `allowed_domains` (`brain/policy.py` reads policy from the base for exactly this reason).
+  Raw IPs can never be explained, and a prediction naming shared hosting anyone can
   publish under (`storage.googleapis.com`, `ngrok.io`, `webhook.site`, …) is discarded by
   `_normalize_domain`, so a PR cannot self-allowlist an easy exfil endpoint. HIGH and CRITICAL
   hits are untouched. Pinned by `test_high_and_critical_hits_are_never_cleared`,
   `test_no_clearing_when_pr_adds_install_scripts`, `test_raw_ip_can_never_be_explained` and
   `test_pipeline_puppeteer_gcs_download_stays_needs_review`.
-- **Residual risk, recorded rather than glossed.** The prediction's inputs (title, description,
-  file names) are attacker-controlled, so an attacker who registers a plausible non-shared-hosting
-  domain and writes a PR body implying the install needs it could suppress that one LOW signal.
-  The code-level defences above bound it; the remainder rests on the prediction prompt's
-  instruction never to predict a host merely because the text names it. It cannot affect
-  mergeability under the default policy, because LOW alone is already `neutral`/mergeable — but
-  it would under `needs_review: block`. See `docs/WEAKPOINTS.md` W13.
+- **Two independent keys, so author text is never sufficient.** The prediction's inputs (title,
+  description, file names) are attacker-controlled, so until Nov 3 an attacker who registered a
+  plausible non-shared-hosting domain and wrote a PR body implying the install needed it could
+  suppress that one LOW signal, with only a prompt instruction left as a defence. An independent
+  audit flagged it; the fix adds the trusted-list conjunct above, making the invariant a property
+  of the code. Asserted by
+  `test_an_attacker_registered_domain_cannot_clear_its_own_low_hit` and
+  `test_the_trusted_list_is_the_second_key_not_the_only_key`; mutation-tested 3/3. The change
+  moves **no verdict** in the 142-case eval, which
+  `test_the_fix_changes_no_verdict_in_the_stamped_evaluation` checks against the stamped
+  `eval/results.json` rather than asserting in prose. See `docs/WEAKPOINTS.md` W13.
 - ≥ high → check **failure "Blocked"**. Install did not finish (timeout/error) or any
   internal error → **failure "Could not verify"** (fail closed). Low only → **neutral
   "Needs review"** (GitHub treats neutral as passing). Nothing → **success "Clean"**.

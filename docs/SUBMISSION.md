@@ -101,8 +101,11 @@ review comment on the exact line responsible.
    output.** Precisely one narrower path exists, and it is worth stating rather than rounding
    off: the *pre-observation* prediction may clear a single **LOW** `NET_UNLISTED_DOMAIN` hit
    for a host it named **before** the install ran — and only if the PR added no install
-   scripts, the host is not shared hosting anyone can publish under, and the destination was a
-   resolved domain rather than a raw IP (those can never be explained). That is the mechanism
+   scripts, the destination was a resolved domain rather than a raw IP (those can never be
+   explained), and the host appears on an allowlist **in this repository** or in the repo's
+   **base-branch** policy. That last condition means author-written text can only *select* a
+   host from a list it cannot write to, so naming a domain you own in your own PR body clears
+   nothing. That is the mechanism
    that cut benign "needs review" from 5 to 3. Prompt injection in the PR becomes evidence
    rather than influence. Timeouts, crashes and integrity failures all fail closed — never "clean" —
    and so does the model itself: if the analysis fails, the result can't be "clean" either.

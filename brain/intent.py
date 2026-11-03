@@ -7,9 +7,23 @@
    Every observed connection/exec is baseline (normal npm), explained (predicted), or
    unexplained. Raw-IP connections can never be explained.
 3. apply_contract(): the only thing a prediction may do to the verdict is clear a LOW
-   NET_UNLISTED_DOMAIN hit whose host it explicitly predicted, and only if the PR did not
-   itself add install scripts. HIGH/CRITICAL hits are never touched, and the analysis model
-   still sees everything and can escalate.
+   NET_UNLISTED_DOMAIN hit whose host it explicitly predicted *and* which appears in an
+   allowlist this repository controls, and only if the PR did not itself add install scripts.
+   HIGH/CRITICAL hits are never touched, and the analysis model still sees everything and
+   can escalate.
+
+**Why the second key exists (W13, invariant I06).** The prediction's inputs - title, body,
+changed file names, added dependency names - are written by the PR author. Matching on the
+prediction alone would mean author-controlled text was the sole key to the one path that can
+clear a finding. An independent audit flagged that, correctly. So clearing now needs two keys
+that are independent of each other:
+
+    the prediction named the host   AND   the host is on a list we control
+
+The second list is `VENDOR_DOWNLOAD_DOMAINS` below, plus any `allowed_domains` from the
+*base*-branch policy (see `brain/policy.py`: the head is the author's, the base is the repo
+owner's). Author text can only ever *select* from those lists; it can never extend them. That
+turns I06 from a prompt instruction into a property of this code.
 """
 
 import json
@@ -41,6 +55,28 @@ SHARED_HOSTING_SUFFIXES = (
     "web.app", "appspot.com", "onrender.com", "fly.dev", "deno.dev", "surge.sh",
     "storage.googleapis.com", "storage.cloud.google.com", "r2.dev", "digitaloceanspaces.com",
 )  # fmt: skip
+
+# Vendor hosts that publish a package's own prebuilt binaries, fetched by a postinstall script.
+# This is the second key to clearing a LOW unlisted-domain hit (see the module docstring): the
+# prediction must name the host AND the host must appear here.
+#
+# Admission rules, so this list does not quietly become "every host we ever saw":
+#  - a full hostname, never a bare registrable domain. `domain_allowed` matches subdomains, so
+#    `prisma.sh` would also accept `evil.prisma.sh`. Entries carry >=3 labels for that reason.
+#  - the host must be operated by the publisher of the package that fetches it.
+#  - never a host from SHARED_HOSTING_SUFFIXES. `storage.googleapis.com` is where puppeteer and
+#    chromedriver fetch Chrome, and it is deliberately absent: anyone can put a bucket there, so
+#    those two stay "needs review" rather than being excused by a host nobody owns.
+# Every entry below was observed serving an install in the 104-package benign control set.
+VENDOR_DOWNLOAD_DOMAINS = frozenset(
+    {
+        "binaries.prisma.sh",  # prisma engines
+        "cdn.playwright.dev",  # playwright browser bundles
+        "playwright.azureedge.net",  # the same, older CDN endpoint
+        "download.cypress.io",  # the cypress test runner binary
+        "downloads.sentry-cdn.com",  # sentry-cli
+    }
+)
 
 INTENT_SCHEMA: dict = {
     "type": "object",
@@ -235,14 +271,29 @@ def evaluate_contract(
 
 
 def apply_contract(
-    hits: list[RuleHit], contract: IntentContract, metadata: PrMetadata
+    hits: list[RuleHit],
+    contract: IntentContract,
+    metadata: PrMetadata,
+    trusted_domains: frozenset[str] = VENDOR_DOWNLOAD_DOMAINS,
 ) -> tuple[list[RuleHit], list[RuleHit]]:
-    """Returns (kept, cleared). Clears only LOW unlisted-domain hits the prediction names."""
+    """Returns (kept, cleared).
+
+    Clears a hit only when every one of these holds:
+      - it is `NET_UNLISTED_DOMAIN` at LOW severity (so no HIGH/CRITICAL finding is touched),
+      - the PR did not itself add install scripts,
+      - the pre-observation prediction named the host, and
+      - the host is in `trusted_domains`, which the PR author cannot influence.
+
+    The last condition is the W13/I06 fix: author text selects from a list we control instead
+    of being the whole key. `trusted_domains` is the caller's, so `brain/pipeline.py` passes
+    the vendor list plus the base-branch policy's `allowed_domains`.
+    """
     if not contract.prediction or metadata.scripts_changed:
         # The PR's own install scripts are the attacker's code: their declared hosts get no
         # benefit of the doubt.
         return hits, []
     predicted = tuple(contract.prediction.expected_domains)
+    trusted = tuple(trusted_domains)
     kept, cleared = [], []
     for h in hits:
         if (
@@ -250,6 +301,7 @@ def apply_contract(
             and h.severity == Severity.LOW
             and h.target
             and domain_allowed(h.target, predicted)
+            and domain_allowed(h.target, trusted)
         ):
             cleared.append(h)
         else:

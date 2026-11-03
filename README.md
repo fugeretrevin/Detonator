@@ -138,7 +138,10 @@ flowchart LR
   pre-committed: the Intent Contract's prediction, made before the install runs, can clear a
   single LOW `NET_UNLISTED_DOMAIN` hit for a host it named in advance — never a raw IP, never a
   shared-hosting domain anyone can publish under, and never when the PR itself added install
-  scripts. The prompt fences untrusted content as data, and attempts to
+  scripts. Clearing needs **two independent keys**: the prediction must name the host *and* the
+  host must be on an allowlist shipped in this repo or in the repo's base-branch policy. Author
+  text selects from that list; it can never extend it, so a PR cannot allowlist a domain its
+  author registered. The prompt fences untrusted content as data, and attempts to
   break out of those fences are defanged. In our prompt-injection test, the model flagged the
   injection on its own, and the rules would have blocked the PR either way.
 - **Ground truth, not guesses.** `tcp_connect` is traced on the SYN, so even a connection to

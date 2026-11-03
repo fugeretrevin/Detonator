@@ -7,6 +7,8 @@ import pytest
 from brain.github_client import ChangedFile, PrMetadata, added_dependencies
 from brain.intent import (
     INTENT_SCHEMA,
+    SHARED_HOSTING_SUFFIXES,
+    VENDOR_DOWNLOAD_DOMAINS,
     IntentPrediction,
     PredictionOutcome,
     apply_contract,
@@ -17,7 +19,7 @@ from brain.intent import (
 from brain.llm import LlmClient, LlmOutcome
 from brain.pipeline import analyze
 from brain.report import render
-from brain.rules import Severity, evaluate
+from brain.rules import Severity, domain_allowed, evaluate
 from brain.verdict import combine
 from shared.contract import ConnectEvent, DetonateResult, ExecEvent
 from tests.conftest import NPM_EXEC
@@ -193,10 +195,18 @@ def test_high_and_critical_hits_are_never_cleared():
 
 
 def test_no_clearing_when_pr_adds_install_scripts():
-    res = result([connect("93.184.1.1", domain="telemetry.example")])
-    contract = evaluate_contract(outcome(["telemetry.example"]), res)
+    """Uses a host that *is* on the vendor list, so `scripts_changed` is the only thing
+    stopping the clear. With an untrusted host the assertion would pass for the wrong
+    reason and keep passing if the gate were deleted."""
+    res = result([connect("142.250.1.1", domain="binaries.prisma.sh")])
+    contract = evaluate_contract(outcome(["binaries.prisma.sh"]), res)
     kept, cleared = apply_contract(evaluate(res), contract, meta(scripts_changed=True))
     assert [h.rule_id for h in kept] == ["NET_UNLISTED_DOMAIN"] and cleared == []
+
+    # Control: same host, same prediction, no script change -> cleared. Proves the gate above
+    # is what did the work.
+    kept, cleared = apply_contract(evaluate(res), contract, meta(scripts_changed=False))
+    assert kept == [] and len(cleared) == 1
 
 
 # --- W13: the self-allowlisting boundary, stated adversarially ---------------------------
@@ -243,32 +253,128 @@ def test_a_pr_cannot_self_allowlist_a_shared_hosting_exfil_host(host):
     assert "NET_UNLISTED_DOMAIN" in [h.rule_id for h in kept]
 
 
-def test_an_attacker_registered_domain_can_clear_its_own_low_hit():
-    """The honest residual of W13, asserted so it cannot be mistaken for impossible.
+def test_an_attacker_registered_domain_cannot_clear_its_own_low_hit():
+    """W13 closed: the case that used to be the honest residual.
 
-    With a domain of the attacker's own - not shared hosting, not a raw IP - and a PR whose
-    stated purpose plausibly needs it, the prediction may name it and that one LOW signal is
-    suppressed. What bounds the damage is everything this does *not* do, which the asserts
-    below pin: it is one LOW rule, and the merge gate is unchanged because LOW alone is already
-    `neutral`, which GitHub treats as passing.
+    A domain of the attacker's own - not shared hosting, not a raw IP - defeated every other
+    bound, because the prediction naming it was the whole key and the prediction's inputs are
+    author-written. The only remaining defence was a *prompt* instruction. Now clearing also
+    requires the host to be on a list this repository controls, so the attacker's domain fails
+    the second key no matter how persuasive the PR body is.
 
-    The remaining defence is the prediction prompt's instruction never to predict a host merely
-    because the text names it - a model behaviour, not a code guarantee. Making it a code
-    guarantee is the W13 plan."""
+    Deliberately asserted with `apply_contract`'s default `trusted_domains`, because a test
+    that passed its own allowlist in would be testing the parameter, not the policy."""
     res = result([connect("198.51.100.7", domain="cdn.attacker-owned.example")])
     hits = evaluate(res)
     assert [h.rule_id for h in hits] == ["NET_UNLISTED_DOMAIN"]
-    assert [h.severity for h in hits] == [Severity.LOW], "only a LOW hit is ever clearable"
+    assert [h.severity for h in hits] == [Severity.LOW], "a LOW hit is the only clearable kind"
 
     contract = evaluate_contract(outcome(["cdn.attacker-owned.example"]), res)
     kept, cleared = apply_contract(hits, contract, meta())
-    assert kept == [] and len(cleared) == 1  # suppressed, as documented
+    assert cleared == [], "an author-named host must not be clearable on its own"
+    assert [h.rule_id for h in kept] == ["NET_UNLISTED_DOMAIN"]
 
-    # And the bound that matters: add any HIGH finding and clearing becomes irrelevant.
+    # And the bound that already held: add any HIGH finding and clearing is irrelevant anyway.
     worse = e4()
     contract = evaluate_contract(outcome(domains=["203.0.113.10"], binaries=["curl"]), worse)
     kept, cleared = apply_contract(evaluate(worse), contract, meta())
     assert cleared == [] and {h.rule_id for h in kept} >= {"NET_RAW_IP"}
+
+
+def test_the_trusted_list_is_the_second_key_not_the_only_key():
+    """Membership of the vendor list alone must not clear anything: the prediction still has
+    to name the host. Otherwise this change would have quietly widened
+    `DEFAULT_ALLOWED_DOMAINS` instead of adding a conjunction."""
+    res = result([connect("142.250.1.1", domain="binaries.prisma.sh")])
+    hits = evaluate(res)
+    assert [h.rule_id for h in hits] == ["NET_UNLISTED_DOMAIN"], "trusted hosts still raise it"
+
+    # Prediction names something else entirely.
+    contract = evaluate_contract(outcome(["cdn.playwright.dev"]), res)
+    kept, cleared = apply_contract(hits, contract, meta())
+    assert cleared == [] and [h.rule_id for h in kept] == ["NET_UNLISTED_DOMAIN"]
+
+
+def test_a_base_branch_policy_domain_is_trusted_but_a_head_one_is_not():
+    """`brain/policy.py` is read from the base branch, which the repo owner governs, so its
+    `allowed_domains` are a legitimate second key. This is the extension point that keeps the
+    vendor list from having to know about every company mirror."""
+    # A public address: 10.x would raise the HIGH internal-range hit instead, which is never
+    # clearable and would make this test pass for the wrong reason.
+    res = result([connect("93.184.1.1", domain="mirror.corp.example")])
+    hits = evaluate(res)
+    assert [h.rule_id for h in hits] == ["NET_UNLISTED_DOMAIN"]
+    contract = evaluate_contract(outcome(["mirror.corp.example"]), res)
+
+    kept, cleared = apply_contract(hits, contract, meta())
+    assert cleared == [], "not trusted by default"
+
+    kept, cleared = apply_contract(
+        hits, contract, meta(), VENDOR_DOWNLOAD_DOMAINS | {"mirror.corp.example"}
+    )
+    assert [h.target for h in cleared] == ["mirror.corp.example"]
+
+
+def test_no_vendor_entry_is_shared_hosting_or_a_bare_registrable_domain():
+    """The admission rules for `VENDOR_DOWNLOAD_DOMAINS`, enforced rather than documented.
+
+    `domain_allowed` matches subdomains, so a two-label entry such as `prisma.sh` would also
+    accept `evil.prisma.sh` - and a shared-hosting entry would hand the list back to anyone
+    who can create a bucket, undoing the whole fix."""
+    for host in VENDOR_DOWNLOAD_DOMAINS:
+        assert host.count(".") >= 2, f"{host} is too broad: subdomains of it would be trusted"
+        assert not any(host == s or host.endswith("." + s) for s in SHARED_HOSTING_SUFFIXES), (
+            f"{host} is shared hosting; anyone could publish under it"
+        )
+        survives = IntentPrediction(
+            summary="s", expects_install_scripts=False,
+            expected_domains=[host], expected_binaries=[],
+        ).expected_domains  # fmt: skip
+        assert survives == [host], f"{host} cannot survive its own prediction validator"
+
+
+def test_storage_googleapis_is_deliberately_absent_from_the_vendor_list():
+    """puppeteer and chromedriver fetch Chrome from `storage.googleapis.com`, so adding it
+    would turn two benign "needs review" rows green. It stays out: anyone can create a bucket
+    there, so it is not a host the vendor owns. Pinned because the temptation is real."""
+    assert "storage.googleapis.com" not in VENDOR_DOWNLOAD_DOMAINS
+    res = result([connect("142.250.1.1", domain="logs.storage.googleapis.com")])
+    contract = evaluate_contract(outcome(["logs.storage.googleapis.com"]), res)
+    _, cleared = apply_contract(evaluate(res), contract, meta())
+    assert cleared == []
+
+
+def test_the_fix_changes_no_verdict_in_the_stamped_evaluation():
+    """The acceptance condition for W13, checked against the stamped data rather than argued.
+
+    Adding a conjunct can only shrink the cleared set, so the only way a verdict moves is if
+    something that *was* cleared is no longer trusted. `eval/results.json` records the exact
+    hosts cleared in all 142 cases, so this is decidable offline with no re-detonation: if
+    every one of them is on the vendor list, the eval tables are unchanged.
+
+    It also pins the converse, which is the part that could rot: if someone adds a host to
+    `VENDOR_DOWNLOAD_DOMAINS` that no benign control ever needed, this test keeps passing, but
+    the list has grown without evidence - so the names are checked against what was observed.
+    """
+    path = Path(__file__).resolve().parents[1] / "eval" / "results.json"
+    if not path.exists():  # pragma: no cover - results are committed
+        pytest.skip("eval/results.json not present")
+    rows = json.loads(path.read_text(encoding="utf-8"))["rows"]
+
+    cleared_hosts = {host for r in rows for host in (r.get("cleared") or [])}
+    assert cleared_hosts, "if nothing was ever cleared this test proves nothing"
+    trusted = tuple(VENDOR_DOWNLOAD_DOMAINS)
+    for host in sorted(cleared_hosts):
+        assert domain_allowed(host, trusted), (
+            f"{host} was cleared in the stamped eval but is not on the vendor list, so this "
+            f"change moves a verdict and the eval tables need a re-score"
+        )
+
+    # No entry on the list is unused speculation: each one was either cleared above or named by
+    # a prediction the eval recorded.
+    predicted = {d for r in rows for d in (r.get("predicted_domains") or [])}
+    unused = {h for h in VENDOR_DOWNLOAD_DOMAINS if h not in cleared_hosts | predicted}
+    assert not unused, f"vendor entries no benign control ever needed: {sorted(unused)}"
 
 
 def test_truncation_hit_never_cleared():

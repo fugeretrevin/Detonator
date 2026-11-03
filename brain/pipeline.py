@@ -10,7 +10,13 @@ from brain.enrich import enrich_connects
 from brain.evidence import Grounding, build_index, corpus_for
 from brain.evidence import check as check_evidence
 from brain.github_client import ChangedFile, PrMetadata, added_registry_dependencies
-from brain.intent import IntentContract, PredictionOutcome, apply_contract, evaluate_contract
+from brain.intent import (
+    VENDOR_DOWNLOAD_DOMAINS,
+    IntentContract,
+    PredictionOutcome,
+    apply_contract,
+    evaluate_contract,
+)
 from brain.investigator import Investigation
 from brain.llm import LlmOutcome, Usage
 from brain.newpkg import Resolver, new_package_hits
@@ -123,7 +129,14 @@ def analyze(
         # The prediction came from text Prompt Guard flags as an injection: trust none of it.
         hits, cleared = list(rule_hits), []
     else:
-        hits, cleared = apply_contract(rule_hits, contract, metadata)
+        # The prediction may only clear a host that is *also* on a list the author cannot
+        # write to: our vendor-download list, or the base-branch policy's (W13 / I06).
+        hits, cleared = apply_contract(
+            rule_hits,
+            contract,
+            metadata,
+            VENDOR_DOWNLOAD_DOMAINS | frozenset(policy.allowed_domains),
+        )
     differential = None
     if base_result is not None:
         base_view = enrich(base_result)
