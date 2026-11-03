@@ -15,7 +15,7 @@ records the claims this project deliberately does *not* make, and why.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (949 tests, all passing). Verified reproducible
+- **[Test]** covered by the automated test suite (980 tests, all passing). Verified reproducible
   from a **fresh clone** of `origin/main` at `14b35d2` (new venv, `requirements-dev.txt`):
   771 passed / 3 skipped / exit 0, identical to the development tree, so no untracked local file
   is propping the suite up. The same clone with the `modal` package made genuinely unimportable
@@ -531,7 +531,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            949 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            980 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

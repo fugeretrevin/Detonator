@@ -3,7 +3,7 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **949 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **980 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
 merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
 every divergence and say what each one would change; neither blocks submitting. Run
@@ -244,6 +244,7 @@ The deployed Brain is **v33 (Nov 2, 16:45 ET)**, which predates every Brain comm
 |---|---|---|
 | `brain/evidence.py` — uncited-prose check (`e8e7098`) + its false-positive fix (`d8a3d81`) | A grounding line appears when the model's prose cites a path or port the record does not support | Nothing observable. See the note below |
 | `brain/sampling.py`, `brain/pipeline.py` — best-of-N band (`4167bb0`, `d57728b`) | None: `MODEL_SAMPLES = 1`, so the code is inert either way (W2 ships off) | None |
+| `brain/evidence_manifest.py` — signable provenance record (new) | None: not wired into `pipeline.py`. It is a standalone capability with a CLI verifier, gated behind coordinator review before any pipeline wiring, per the v5 plan's Ticket A | None — nothing calls it in production yet |
 | `brain/runlog.py` — `detonation_s` escaped on the dashboard | None visible; closes a gap against the file's stated invariant | None — the value is a float, so nothing can inject through it |
 
 **No action needed before submitting.** `docs/SUBMISSION.md` §grounding describes the
