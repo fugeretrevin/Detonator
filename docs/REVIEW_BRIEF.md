@@ -411,7 +411,9 @@ effect is **one case**: `prisma` for the contract, `m12-domain-exfil` for the an
   rules can't (m12: exfil to a resolvable domain, only a low "unlisted domain" for rules).
 - **What Muse explained (P1.5 ground truth):** decoded the payload in **5/5** obfuscated
   attacks and attributed **2/2** dependency-delivered attacks to the right package and file.
-- **Cost and latency:** **$0.0181 per PR** mean (muse-spark-1.3, 2516 in / 3524 out tokens
+- **Cost and latency:** **$0.0181 per PR** mean in **model API spend only** — not total cost;
+  the detonation host's compute and network are excluded and dominate at this volume
+  (muse-spark-1.3, 2516 in / 3524 out tokens
   mean; $2.57 for all 142 cases); detonation p50 5.9 s / p95 67.1 s; model latency p50 36.5 s /
   p95 66.7 s. The model, not the sandbox, dominates wall-clock: it took longer than the
   detonation in **132 of 142** cases. The Intent Contract prediction does run in parallel with
@@ -443,7 +445,7 @@ effect is **one case**: `prisma` for the contract, `m12-domain-exfil` for the an
 - **Muse, analysis:** catches what rules can't (domain exfil), explains behavior in plain
   language, flags prompt injection, and decodes obfuscated payloads onto the guilty line.
   Measured against ground truth: decoded **5/5** obfuscated payloads, attributed **2/2**
-  dependency attacks to the right package/file. Cost **~$0.015 per PR**.
+  dependency attacks to the right package/file. Model API spend **$0.0181 per PR** mean.
 - **Prompt Guard 2:** measured honestly; useful for explicit jailbreaks, not for indirect
   injection in code review; therefore scoped to "don't trust flagged text" rather than
   deciding verdicts.

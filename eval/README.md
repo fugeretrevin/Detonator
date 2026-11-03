@@ -112,7 +112,8 @@ rules/contract because `gm08-cpu-miner` hit the timeout this run; the model stil
 - **What Muse explained (ground truth, P1.5):** decoded the payload in **5/5** obfuscated
   attacks (base64, char-code, DNS-hex, and both reconstructions) and attributed **2/2**
   dependency-delivered attacks to the right package and file.
-- **Cost and latency (full pipeline):** **$0.0181 per PR** mean (muse-spark-1.3), 2516 in /
+- **Cost and latency (full pipeline):** **$0.0181 per PR** mean in **model API spend only**,
+  excluding detonation-host compute and network (muse-spark-1.3), 2516 in /
   3524 out tokens mean, $2.57 for all 142 cases; detonation p50 5.9 s / p95 67.1 s; model
   latency p50 36.5 s / p95 66.7 s. These are the figures in
   [`results.md`](results.md#cost-and-latency-full-pipeline); the smaller numbers this line used

@@ -4,7 +4,8 @@
 did against what the pull request claimed.**
 
 > **We pointed it at 100 packages published to npm minutes earlier, knowing nothing about any
-> of them. It cleared 73 of 73 that installed, and flagged one.**
+> of them. 73 installed and all 73 came back clean. Of the 27 that did not install, one was
+> blocked anyway — on evidence captured before it timed out.**
 >
 > That one connected to a hardcoded IP address on a non-standard port during `postinstall`,
 > with no DNS lookup at all. Reading its published source explained why: a fallback path

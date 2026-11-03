@@ -245,6 +245,35 @@ def test_the_demo_scripts_sweep_figures_match_the_sweep_data():
     assert "413 of the 421" in text
 
 
+@pytest.mark.parametrize("rel", ("README.md", "docs/SUBMISSION.md", "demo/DEMO_SCRIPT.md"))
+def test_the_headline_sweep_claim_does_not_mix_denominators(rel):
+    """An outside audit caught this: the flagged package is **not** one of the 73 that
+    installed. It timed out, so it sits among the 27 that never completed. Saying "cleared 73
+    of 73 that installed, and flagged one" in one breath reads as though 74 packages were
+    assessed, which a judge could call an arithmetic conflict.
+
+    Verified from the data rather than assumed, so if a future sweep changes the shape this
+    test fails instead of silently permitting the old phrasing.
+    """
+    sweep = _sweep_rows("SWEEP.json")
+    installed = [r for r in sweep if r.get("status") == "completed" and r.get("exit_code") == 0]
+    blocked = [r for r in sweep if r.get("verdict") == "Blocked"]
+    assert len(installed) == 73 and len(blocked) == 1
+    assert blocked[0] not in installed, (
+        "the flagged package now IS among those that installed; this guard needs rewriting "
+        "and the headline wording can be simplified"
+    )
+
+    text = normalised(ROOT / rel)
+    # The two denominators must both be present near the claim.
+    assert "73" in text and "27" in text, (
+        f"{rel} states the 73 without accounting for the 27 that did not install"
+    )
+    for mixed in ("73 of 73 that installed, and flagged one",
+                  "cleared 73 of 73 that installed, and flagged one"):  # fmt: skip
+        assert mixed not in text, f"{rel} still mixes the denominators: {mixed!r}"
+
+
 def test_the_demo_script_withholds_the_disclosed_package():
     """The cold open puts eval/SWEEP.md on screen. That file must keep the identifier out, and
     the script must not carry it either. W11: the name is still under embargo."""
@@ -303,8 +332,22 @@ def test_the_published_cost_per_pr_matches_the_stamped_runs(rel, rows):
     mean = statistics.mean(costs)
     text = normalised(ROOT / rel)
     assert f"{mean:.4f}" in text, f"{rel} does not carry the stamped mean cost ${mean:.4f} per PR"
-    # The figure from the earlier, smaller run.
-    assert "0.0149" not in text, f"{rel} still carries the superseded $0.0149 cost"
+    # Figures from the earlier, smaller run. `$0.015` is listed separately because rejecting
+    # only `0.0149` let a rounded restatement survive in REVIEW_BRIEF for another day: the
+    # document carried the corrected number in one place and the superseded one in another.
+    for superseded in ("0.0149", "$0.015 per PR", "~$0.015"):
+        assert superseded not in text, f"{rel} still carries the superseded cost {superseded!r}"
+
+
+@pytest.mark.parametrize("rel", ABLATION_DOCS)
+def test_the_cost_figure_is_scoped_to_model_spend(rel):
+    """An outside audit noted the figure is model API spend and excludes the detonation host's
+    compute and network, which dominates at this volume. Quoting it as "cost per PR" with no
+    scope reads as total cost of ownership."""
+    text = normalised(ROOT / rel)
+    if "0.0181" not in text:  # pragma: no cover - all three currently quote it
+        pytest.skip(f"{rel} no longer quotes the cost")
+    assert "model API spend" in text, f"{rel} quotes the cost without scoping it to API spend"
 
 
 @pytest.mark.parametrize("rel", ABLATION_DOCS)

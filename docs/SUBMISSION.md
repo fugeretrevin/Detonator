@@ -16,7 +16,10 @@ what it did against what the pull request claimed.**
 ## Open with this (the one result to lead on)
 
 We pointed it at **100 packages published to npm minutes earlier**, knowing nothing about any
-of them. It cleared 73 of 73 that installed, and flagged one — which turned out to have a real
+of them. **73 installed** on this platform and all 73 came back clean. Of the 27 that did not
+install, **one was blocked anyway** — on telemetry captured before it timed out, which is the
+point: the evidence was already conclusive without a finished install. It
+turned out to have a real
 install-time code-execution exposure: a fallback that downloads the product binary from a
 hardcoded bare IP with **TLS verification disabled**, then extracts and runs it. Not malware,
 a deliberate fallback with an unsafe default. We **reported it privately to the maintainer on
@@ -129,7 +132,9 @@ review comment on the exact line responsible.
 | **Llama Prompt Guard 2 (86M)** | Screens the PR text for jailbreaks, on CPU | **Validated before it was allowed to affect anything**: catches explicit jailbreaks (0.97–1.00) but *missed* the indirect, document-embedded injections in our own scenarios (0.00–0.32). So it is scoped to "don't trust flagged text" and never decides a verdict |
 
 Cost: **$0.0181 per pull request** mean (median $0.0169, p95 $0.025), 2516 in / 3524 out tokens
-— **$2.57 to score all 142 cases**. Detonation p50 5.9 s / p95 67.1 s; model latency p50 36.5 s
+— **$2.57 to score all 142 cases**. That figure is **model API spend only**; it excludes the
+detonation host's compute and network, which for a single always-on VM is the larger line item
+at this volume. Detonation p50 5.9 s / p95 67.1 s; model latency p50 36.5 s
 / p95 66.7 s. The Intent Contract prediction runs in parallel with the sandbox, but the
 post-run analysis cannot — it reads the telemetry — so the **model dominates wall-clock time**:
 it took longer than the detonation in 132 of 142 cases.

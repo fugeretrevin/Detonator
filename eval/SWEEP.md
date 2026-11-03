@@ -14,6 +14,14 @@
 - **7/73 ran install scripts.**
 - **0/73 contacted a host outside the npm registry and GitHub.**
 
+**Reading `SWEEP.json` directly will not reproduce this table, and that is expected.** Its
+per-row `verdict` field tallies 97 Clean / 2 Could not verify / 1 Blocked, because this run
+pre-dates the fail-closed scoring that `eval/results.json` and `SWEEP500.json` use: the 24
+packages that exited non-zero carry `"Clean"` there rather than `"Could not verify"`. The rates
+above deliberately exclude all 27 non-installing packages, so no published figure depends on
+those 24 rows. Re-score with `eval/score_rules.py` for current semantics; the 500-package sweep
+already shows them correctly (79 Could not verify, exactly its 79 non-installing packages).
+
 ## Findings (across all 100, including ones that did not finish)
 
 | Package | Verdict | Rules | Off-registry hosts | Install |
