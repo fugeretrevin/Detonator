@@ -152,6 +152,18 @@ def main(argv: list[str] | None = None) -> None:
         path = Path(args.results_dir) / f"{case.id}.json"
         if path.exists() and (not wanted or case.id in wanted):
             jobs.append((case, DetonateResult.model_validate_json(path.read_text())))
+    if not jobs:
+        # Silence here is expensive: the run reports "0 cases x N trials", every rate reads 0,
+        # and it looks like a clean pass. The usual cause is the directory nesting - the
+        # tarballs contain a folder of their own name, so the records are one level down.
+        nested = sorted(p.name for p in Path(args.results_dir).glob("*/*.json"))[:3]
+        hint = f" Found records one level down ({', '.join(nested)}…); point at that directory." \
+            if nested else ""  # fmt: skip
+        raise SystemExit(
+            f"no case records matched in {args.results_dir}"
+            + (f" for --only {args.only}" if wanted else "")
+            + f".{hint}"
+        )
 
     def one(job):
         case, result = job

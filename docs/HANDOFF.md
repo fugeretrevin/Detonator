@@ -303,9 +303,15 @@ Re-score: `.venv\Scripts\python -m eval.run_brain <dir> eval/results` (needs
 while changing a rule, because it answers "does this hard-block anything benign" with no model,
 no Modal and no cost, in about a second:
 
+**Mind the nesting.** `v3-out.tgz` contains a `v3-out/` directory, so extracting it into a
+folder of the same name gives `v3-out/v3-out/*.json`. `eval/score_rules.py` searches with
+`rglob` and finds them either way; **`eval/repeat.py` joins the path directly and will silently
+match zero cases**, printing a cheerful `0 cases × 5 trials` and spending nothing. Check the
+case count in the output before believing a clean result.
+
 ```powershell
 scp chamber:/tmp/v3-out.tgz .    # the 142-case set the current eval was scored from
-tar -xzf v3-out.tgz
+tar -xzf v3-out.tgz              # -> ./v3-out/*.json  (142 files; verify with `ls v3-out`)
 .venv\Scripts\python -m eval.score_rules v3-out --verify            # reproduces the stamp
 .venv\Scripts\python -m eval.score_rules v3-out --baseline base.json
 #   ... change a rule ...
