@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import pytest
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
@@ -125,7 +126,7 @@ def test_no_private_key_committed():
 # --- version delta ---
 
 from brain.report import esc  # noqa: E402
-from brain.sbom import behavior_delta, render_delta  # noqa: E402
+from brain.sbom import behavior_delta, render_delta, terminal_safe  # noqa: E402
 
 ENV = {"sandbox_image": "sha256:aaa", "node": "20.19.0", "npm": "10.8.2",
        "command": "npm install --no-audit --no-fund"}  # fmt: skip
@@ -226,3 +227,89 @@ def test_rendered_values_are_escaped():
     d = behavior_delta(rec(result(), "1"), rec(hostile, "2"))
     md = render_delta(d)
     assert "<img" not in md and esc("evil.example|<img src=x>`", 160) in md
+
+
+# --- the CLI renders for a terminal, not for a GitHub comment ----------------------------
+#
+# `python -m brain.sbom diff` is the live command the demo script ends on, and it was printing
+# entity-encoded markdown to the console: `color&#45;helper&#64;1&#46;0&#46;0`. Correct for a PR
+# comment, unreadable on a terminal, and it looked like a bug on camera. The escaping could not
+# simply be dropped, because the values still come from a sandbox that ran untrusted code - a
+# terminal just has a different threat than HTML does.
+
+
+def test_the_cli_output_is_readable_rather_than_entity_encoded():
+    d = behavior_delta(
+        rec(result(scripts=[script("a" * 64)]), "1.0.0"), rec(bad_release(), "1.0.1")
+    )
+    plain = render_delta(d, plain=True)
+    assert "color-helper@1.0.0 → color-helper@1.0.1" in plain
+    assert "203.0.113.10" in plain
+    assert "&#" not in plain, "entity encoding is unreadable on a console"
+
+
+def test_the_github_comment_path_is_untouched_by_the_cli_change():
+    """The regression that would matter: `plain` must default to off, so nothing rendering
+    into a PR comment can lose entity encoding by forgetting an argument."""
+    hostile = result(host="evil.example|<img src=x>`")
+    d = behavior_delta(rec(result(), "1"), rec(hostile, "2"))
+    assert render_delta(d) == render_delta(d, plain=False)
+    assert "&#" in render_delta(d) and "<img" not in render_delta(d)
+
+
+@pytest.mark.parametrize(
+    "hostile,why",
+    [
+        ("\x1b[2J\x1b[Hcleared your screen", "ANSI escape could repaint the terminal"),
+        ("\x1b]0;fake title\x07", "OSC sequence could set the window title"),
+        ("evil\rregistry.npmjs.org", "carriage return could overwrite the line just printed"),
+        ("moc.reka‮catta", "bidi override visually reverses the hostname"),
+        ("a\x08\x08\x08safe", "backspaces could rub out what we printed"),
+        ("null\x00byte", "NUL can truncate in downstream consumers"),
+    ],
+)
+def test_terminal_control_sequences_in_record_values_are_neutralized(hostile, why):
+    """A package name is attacker-chosen. On a console the danger is not markup but control
+    characters, so `terminal_safe` escapes every Unicode `C*` category rather than matching
+    ANSI patterns - which also covers the bidi override, where an ANSI regex would not."""
+    out = terminal_safe(hostile)
+    assert "\x1b" not in out and "\r" not in out and "\x00" not in out and "\x08" not in out
+    assert "‮" not in out, why
+    # The readable part survives, so neutralizing is not the same as discarding.
+    assert any(ch.isalnum() for ch in out)
+
+
+def test_terminal_safe_leaves_ordinary_values_exactly_alone():
+    """The whole point: the characters a real record contains must pass through untouched."""
+    for value in ("color-helper@1.0.1", "/work/node_modules/color-helper/install.js",
+                  "203.0.113.10", "registry.npmjs.org", "tcp:203.0.113.10:4444",
+                  "npm install --no-audit --no-fund"):  # fmt: skip
+        assert terminal_safe(value) == value
+
+
+def test_terminal_safe_truncates_like_the_comment_escaper():
+    assert len(terminal_safe("a" * 500)) == 160
+    assert terminal_safe("a" * 500, 10) == "a" * 10
+
+
+def test_the_diff_cli_actually_uses_the_plain_renderer():
+    """Asserted through `_main`, not by reading the source: the demo runs the CLI."""
+    import io
+    from contextlib import redirect_stdout
+
+    from brain.sbom import _main
+
+    buf = io.StringIO()
+    buf.reconfigure = lambda **_: None  # _main reconfigures stdout for cp1252 consoles
+    with redirect_stdout(buf):
+        rc = _main(["diff", str(SBOM_DIR / "color-helper_at_1.0.0.json"),
+                    str(SBOM_DIR / "color-helper_at_1.0.1.json"),
+                    str(SBOM_DIR / "public_key.pem")])  # fmt: skip
+    out = buf.getvalue()
+    assert rc == 0
+    assert "color-helper@1.0.0 → color-helper@1.0.1" in out
+    assert "&#" not in out
+    # The claims the demo script reads out loud, verified against the real committed records.
+    assert "old verified, new verified" in out
+    assert "new raw IP contacted at install: 203.0.113.10" in out
+    assert "partially comparable" in out

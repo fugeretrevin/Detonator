@@ -19,6 +19,7 @@ import base64
 import hashlib
 import json
 import sys
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -263,12 +264,39 @@ def behavior_delta(old: dict, new: dict, public_key_pem: bytes | None = None) ->
                          _attention(changes, scripts), sigs)  # fmt: skip
 
 
-def render_delta(d: BehaviorDelta) -> str:
-    """Markdown for a reviewer. Record content came from a sandbox running untrusted code, so
-    every value is entity-encoded exactly as PR comments are (brain.report.esc)."""
-    from brain.report import esc  # report pulls in the whole pipeline; only needed here
+def terminal_safe(raw: str, limit: int = 160) -> str:
+    """Neutralize untrusted record content for a *terminal*, not for HTML.
 
-    code = lambda s: esc(str(s), 160)  # noqa: E731
+    `brain.report.esc` entity-encodes everything that is not alphanumeric, which is right for
+    a GitHub comment and wrong for a console: it renders `color-helper@1.0.0` as
+    `color&#45;helper&#64;1&#46;0&#46;0`, which is unreadable and looks like a bug.
+
+    A terminal needs a different threat handled. Record values come from a sandbox that ran
+    untrusted code, and a package name carrying an ANSI escape could repaint the screen, hide
+    text, or forge a line of our own output; a bidi override (U+202E) could visually reverse a
+    hostname. Both are Unicode category `C*` - control, format, surrogate, private use,
+    unassigned - so that single test covers them, where an ANSI-specific regex would not.
+    """
+    out = []
+    for ch in str(raw)[:limit]:
+        out.append(ch if unicodedata.category(ch)[0] != "C" else f"\\x{ord(ch):02x}")
+    return "".join(out)
+
+
+def render_delta(d: BehaviorDelta, plain: bool = False) -> str:
+    """Markdown for a reviewer. Record content came from a sandbox running untrusted code, so
+    every value is escaped: entity-encoded exactly as PR comments are (brain.report.esc), or,
+    with `plain=True`, made terminal-safe instead for the `python -m brain.sbom diff` CLI.
+
+    The default stays entity-encoded so no caller rendering into a comment can lose that by
+    accident; only the CLI, whose output goes to a console, opts out.
+    """
+    if plain:
+        code = lambda s: terminal_safe(str(s), 160)  # noqa: E731
+    else:
+        from brain.report import esc  # report pulls in the whole pipeline; only needed here
+
+        code = lambda s: esc(str(s), 160)  # noqa: E731
     lines = [f"### Install-time behavior: {code(d.old)} → {code(d.new)}", ""]
     sig = {True: "verified", False: "**FAILED**", None: "not checked"}
     lines.append(f"Signatures: old {sig[d.signatures['old']]}, new {sig[d.signatures['new']]}. "
@@ -307,7 +335,8 @@ def _main(argv: list[str]) -> int:
         old, new = (json.loads(Path(p).read_text()) for p in argv[1:3])
         key = Path(argv[3]).read_bytes() if len(argv) == 4 else None
         sys.stdout.reconfigure(encoding="utf-8")  # Windows consoles default to cp1252
-        print(render_delta(behavior_delta(old, new, key)))
+        # plain=True: this goes to a console, where HTML entities are unreadable noise.
+        print(render_delta(behavior_delta(old, new, key), plain=True))
         return 0
     print(__doc__)
     return 2

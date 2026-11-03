@@ -185,6 +185,79 @@ def test_every_published_grounding_number_carries_its_caveat(rel):
     )
 
 
+# --- the demo script says numbers out loud, so they get the same treatment ----------------
+#
+# A wrong figure in a document can be corrected after a judge reads it. A wrong figure spoken
+# on camera cannot. The script had claimed "nothing benign hard-blocked" of the 500-package
+# sweep while eval/SWEEP500.md's own table recorded "Blocked 1/421" - the same kind of
+# self-contradiction that test_the_submission_states_the_stamped_benign_tally exists to stop,
+# in the one artefact nobody can edit afterwards.
+
+SCRIPT = ROOT / "demo" / "DEMO_SCRIPT.md"
+
+
+def _sweep_rows(name: str) -> list[dict]:
+    path = ROOT / "eval" / name
+    if not path.exists():  # pragma: no cover - committed
+        pytest.skip(f"eval/{name} not present")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data["rows"] if isinstance(data, dict) else data
+
+
+def test_the_demo_script_does_not_claim_the_500_sweep_had_no_benign_blocks():
+    """The corpus is unlabelled and one package was blocked, so neither "no false positives"
+    nor "nothing benign blocked" is supportable about it."""
+    rows = _sweep_rows("SWEEP500.json")
+    blocked = [r for r in rows if r.get("verdict") == "Blocked"]
+    assert len(blocked) == 1, "if the sweep changed, this guard needs rewriting"
+
+    text = normalised(SCRIPT).lower()
+    # The script also *forbids* these phrases in its own pre-flight notes, so a bare substring
+    # search matches the prohibition and fails on the very text that prevents the mistake.
+    # Only an occurrence that is not introduced by a "do not say"-style warning is a claim.
+    allowed_before = ("do not say", "don't say", "never say", "avoid saying", "not going to")
+    for forbidden in ("nothing benign hard-blocked", "zero false positives",
+                      "no false positives", "nothing benign blocked"):  # fmt: skip
+        for at in (m.start() for m in re.finditer(re.escape(forbidden), text)):
+            context = text[max(0, at - 60) : at]
+            assert any(w in context for w in allowed_before), (
+                f"demo script claims {forbidden!r}, but eval/SWEEP500.json records "
+                f"{len(blocked)} blocked and the corpus has no labels"
+            )
+    assert "unlabelled" in text, "the script should say the 500-package corpus is unlabelled"
+
+
+def test_the_demo_scripts_sweep_figures_match_the_sweep_data():
+    """ "73 of 73 that installed" and "413 of the 421" are spoken aloud in the cold open and
+    the evidence beat. Both are recomputed here rather than trusted."""
+    small = _sweep_rows("SWEEP.json")
+    installed = [r for r in small if r.get("status") == "completed" and r.get("exit_code") == 0]
+    clean = [r for r in installed if r.get("verdict") == "Clean"]
+    assert len(installed) == len(clean) == 73, "the 100-package sweep figures moved"
+
+    big = _sweep_rows("SWEEP500.json")
+    big_installed = [r for r in big if r.get("status") == "completed" and r.get("exit_code") == 0]
+    big_clean = [r for r in big_installed if r.get("verdict") == "Clean"]
+    assert (len(big_clean), len(big_installed)) == (413, 421)
+
+    text = normalised(SCRIPT)
+    assert "73 of 73" in text or "Seventy-three of them" in text
+    assert "413 of the 421" in text
+
+
+def test_the_demo_script_withholds_the_disclosed_package():
+    """The cold open puts eval/SWEEP.md on screen. That file must keep the identifier out, and
+    the script must not carry it either. W11: the name is still under embargo."""
+    sweep_md = (ROOT / "eval" / "SWEEP.md").read_text(encoding="utf-8")
+    assert "withheld pending disclosure" in sweep_md or "withheld" in sweep_md
+    blocked = [r for r in _sweep_rows("SWEEP.json") if r.get("verdict") == "Blocked"]
+    assert len(blocked) == 1
+    assert "withheld" in blocked[0]["package"], (
+        "the 100-package sweep's blocked row names the package pending disclosure; the demo "
+        "script shows this file on camera"
+    )
+
+
 def test_the_caveat_the_generators_emit_says_both_required_things():
     """Guards the constant itself: the per-document test above would pass vacuously if the
     generators started emitting a caveat that no longer made either point."""
