@@ -53,13 +53,49 @@ The blind case hex-encodes a hostname into a **24-character** label — real exf
 short identifier — which is under the floor, so the rule stays silent. The DNS query *is*
 captured (`613334386439643930336132.collector.invalid`); only the threshold misses it.
 
+## Full pipeline: the model arm closes all four rules-floor gaps
+
+Running the same committed telemetry through the full pipeline (model prediction + analysis),
+scored `2026-11-03`, recorded in `eval/blind_model_arm.json`:
+
+| Rules-floor miss | Full-pipeline verdict | Model verdict |
+|---|---|---|
+| bc03-git-hook | 🛑 Blocked | malicious |
+| bc04-git-alias | 🛑 Blocked | malicious |
+| bc08-dns-exfil | 🛑 Blocked | malicious |
+| bc10-git-proxy | ⚠️ Needs review | suspicious |
+
+**The model arm flags all four the deterministic rules missed** — three as Blocked, one
+(`bc10`) as Needs review. It reads the install-script source, where the `git config` command,
+the hook write and the hex-encoded DNS lookup are all visible, and reasons about them even
+though no behavioural rule fired. So at the **full-pipeline floor the held-out set is 10/10
+flagged**, 9 blocked + 1 needs-review.
+
+**This is the clearest evidence for the model earning its place.** The main 142-case ablation
+shows the analysis moving exactly one verdict (`m12`), which reads as a thin contribution. On an
+author-independent held-out set it moves **four**, precisely the cases the rules were not built
+for. The model's value is larger where the rules are weaker, which is where it matters.
+
+Three caveats, stated so the number is not oversold:
+
+1. **`bc10` is Needs review, not Blocked** — `suspicious`, which under the default policy is a
+   `neutral`, *mergeable* check. So "flagged" is honest; "blocked" would not be for that one.
+2. **Single draw.** These are one model call each, and the model's verdict has measured variance
+   (`m12` flips Blocked/Needs-review across identical telemetry). A draw of `malicious` here
+   could be `suspicious` on another; the 4/4 is not a repeatability claim. Measuring that is a
+   repeat run (more API spend) not yet done.
+3. **Not over-blocking** is established elsewhere, not by this set. All ten blind cases are
+   attacks, so this set alone cannot show the model discriminates. That it does not block benign
+   packages comes from the main eval — the analysis arm changed **zero** of 104 benign verdicts
+   while blocking 16/16 attacks. Only read together do "catches held-out attacks" and "spares
+   benign" both hold.
+
 ## What this does and does not say
 
-- **Rules floor, not the tool.** This is the deterministic layer alone. The full pipeline adds
-  the model analysis, which reads the install-script source — and for bc04 and bc10 the
-  `git config` command (raw IP included) is right there in the diff, so the model arm may well
-  flag them. Measuring that needs a model run (~API cost); it has not been done, so the honest
-  headline is **"4 of 10 get past the deterministic floor"**, not "past the tool".
+- **Two floors, both stated.** The deterministic rules alone catch 6 of 10; the full pipeline
+  (rules + model) catches all 10 (9 blocked, 1 needs-review). The honest headlines are "4 of 10
+  get past the **deterministic floor**" and "0 of 10 get past the **full pipeline**, though one
+  lands on mergeable needs-review" — with the single-draw caveat above on the second.
 - **Not a recall rate.** Ten author-independent cases are a gap-finder, not a population sample.
 - **Fixes are gated, not rushed.** None of these is fixed here. Per the project's standing rule,
   a detection change gets a frozen corpus, a measured benign false-positive rate, and a rollback

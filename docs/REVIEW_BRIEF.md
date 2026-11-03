@@ -15,7 +15,7 @@ records the claims this project deliberately does *not* make, and why.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (997 tests, all passing). Verified reproducible
+- **[Test]** covered by the automated test suite (1000 tests, all passing). Verified reproducible
   from a **fresh clone** of `origin/main` at `14b35d2` (new venv, `requirements-dev.txt`):
   771 passed / 3 skipped / exit 0, identical to the development tree, so no untracked local file
   is propping the suite up. The same clone with the `modal` package made genuinely unimportable
@@ -414,6 +414,13 @@ effect is **one case**: `prisma` for the contract, `m12-domain-exfil` for the an
 - **What each layer adds:** rules block 15/16 attacks with zero benign blocks; the contract
   cuts benign "needs review" 4 → 3 without clearing any attack; Muse catches the one attack
   rules can't (m12: exfil to a resolvable domain, only a low "unlisted domain" for rules).
+- **Model value on a held-out set** ([`eval/BLIND_RESULTS.md`](../eval/BLIND_RESULTS.md),
+  Nov 3): a 10-case corpus written *blind to the detectors* by a fresh agent. The deterministic
+  rules miss 4 (git-config/hooks tricks and a short DNS label); the **model arm flags all 4**
+  (3 blocked, 1 needs-review). The main ablation shows Muse moving one verdict; on author-
+  independent cases it moves four — the model's lift is largest exactly where the rules are
+  weakest. Caveats in the writeup: single model draw (verdicts vary), one is only mergeable
+  needs-review, and "doesn't over-block" comes from the 0/104 benign result, not this set.
 - **What Muse explained (P1.5 ground truth):** decoded the payload in **5/5** obfuscated
   attacks and attributed **2/2** dependency-delivered attacks to the right package and file.
 - **Cost and latency:** **$0.0181 per PR** mean in **model API spend only** — not total cost;
@@ -531,7 +538,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            997 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            1000 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```

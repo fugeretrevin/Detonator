@@ -850,8 +850,11 @@ rule reads `git config` arguments, and the persistence policy does not cover `.g
 - extend `persistence-files.yaml` to `.git/hooks/` and `~/.gitconfig` writes, with the same
   false-positive measurement `FILE_PERSISTENCE` got (0 of 104 benign).
 
-**The model arm may already catch `bc04`/`bc10`**, since the `git config` command is visible in
-the diff; that is unmeasured. The honest statement is that the *deterministic floor* misses them.
+**The model arm catches all three** (measured Nov 3, `eval/blind_model_arm.json`): reading the
+install-script source, it flags `bc03`, `bc04` as Blocked and `bc10` as Needs-review. So this is
+a *deterministic-floor* gap, not a full-pipeline one — the rules miss it, the model does not. The
+value of closing it in the rules too is defence in depth and not depending on a model draw
+(whose verdict has measured variance), which is why it is still worth doing, just not urgently.
 
 **Gate: after judging.** Two new rules two days out, unmeasured against the benign set, is
 exactly the trade this document refuses. Recorded now; measured later.

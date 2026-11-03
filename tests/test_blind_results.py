@@ -79,3 +79,43 @@ def test_the_writeup_is_framed_as_rules_floor_not_tool_recall(scored):
     assert "rules floor" in text or "deterministic floor" in text
     assert "not a recall rate" in text or "not a recall" in text
     assert "model" in text, "must note the model arm may catch some misses"
+
+
+# --- the full-pipeline result (model arm on the committed telemetry) ---
+
+MODEL_ARM = ROOT / "eval" / "blind_model_arm.json"
+
+
+@pytest.fixture(scope="module")
+def model_rows() -> dict[str, dict]:
+    if not MODEL_ARM.exists():  # pragma: no cover - committed
+        pytest.skip("eval/blind_model_arm.json not present")
+    import json
+
+    return {r["id"]: r for r in json.loads(MODEL_ARM.read_text(encoding="utf-8"))["rows"]}
+
+
+def test_the_full_pipeline_flags_every_rules_floor_miss(model_rows):
+    """The recorded full-pipeline run: each case the rules missed is flagged (Blocked or
+    Needs-review) once the model reads the source. If this regresses, the doc's headline is
+    wrong."""
+    for cid in EXPECTED_MISSES:
+        full = model_rows[cid]["outcomes"]["full"]
+        assert full in ("Blocked", "Needs review"), f"{cid} full-pipeline verdict is {full}"
+
+
+def test_bc10_is_recorded_as_needs_review_not_blocked(model_rows):
+    """The one case the writeup must not overstate: bc10 is suspicious -> Needs review, which is
+    mergeable under the default policy. Calling it 'blocked' would be false."""
+    assert model_rows["bc10-git-proxy"]["outcomes"]["full"] == "Needs review"
+    text = " ".join(RESULTS.read_text(encoding="utf-8").split())
+    assert "bc10" in text and "Needs review" in text
+
+
+def test_the_writeup_keeps_the_single_draw_and_no_overblock_caveats():
+    text = " ".join(RESULTS.read_text(encoding="utf-8").split()).lower()
+    assert "single draw" in text, "the one-call-per-case variance caveat must be stated"
+    assert "zero" in text and "104 benign" in text, (
+        "the 'not over-blocking' evidence (0/104 benign, from the main eval) must be cited, "
+        "since this all-attack set cannot show discrimination on its own"
+    )
