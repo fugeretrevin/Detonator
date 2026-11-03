@@ -269,8 +269,11 @@ Re-score: `.venv\Scripts\python -m eval.run_brain <dir> eval/results` (needs
 
 ## 8. Claims to keep honest
 
-- "0 blocked across 104 popular packages": true. **"104/104 clean" is not**: 97 clean,
-  3 needs review, 4 could not verify (native builds that exit 1 in this image).
+- "0 blocked across 104 popular packages": true. **"104/104 clean" is not**: 95 clean,
+  3 needs review, 6 could not verify — four native builds that exit 1 in this image
+  (`better-sqlite3`, `argon2`, `cpu-features`, `node-pty`) and two that hit the install timeout
+  (`biome`, `cypress`). Checked against `eval/results.json` at the stamped commit; an earlier
+  version of this line and of `docs/SUBMISSION.md` said 97/3/4, which was stale.
 - **19/20 red team is 95% of that cohort**, not a real-world detection rate (exact 95% CI
   roughly 75–100%).
 - The **500-package sweep can't give a false-positive rate**: the packages aren't labelled.

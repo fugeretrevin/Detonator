@@ -24,9 +24,13 @@ Nov 2, 2026**; no response or fix yet, so the name is omitted here. No advisory 
 told us to look. The behavior alone gave it away.
 
 We then scaled the sweep to **500** of the newest packages ([`eval/SWEEP500.md`](../eval/SWEEP500.md)):
-413 of 421 that installed cleared, nothing benign was hard-blocked, seven landed in *needs
-review*, and the single block was a package that downloads and runs binaries at install — the
-tiering doing its job at scale, not a wall of false alarms.
+413 of 421 that installed cleared, seven landed in *needs review*, and there was exactly **one**
+block — a package that downloads and runs binaries at install. The tiering doing its job at
+scale, not a wall of false alarms.
+
+These 500 are **unlabelled**: nobody has established that any of them is benign or malicious, so
+this measures alert volume on uncurated live traffic, not a false-positive rate. One block in 421
+is the claim; "499 confirmed clean" is not.
 
 ---
 
@@ -163,6 +167,12 @@ has known since October 2021. It cannot cover the window before an advisory exis
 the only window that matters, and it has no opinion at all about malicious code in the
 project's *own* `package.json`. PR Detonator blocked all five from behavior alone.
 
+To be clear about what that comparison is: `npm audit` is the **default tooling baseline** — what
+a team already has without adopting anything — not the state of the art. It is an advisory
+lookup, so "found 0 vulnerabilities" on a bespoke payload is the expected result rather than a
+failure on its part, and it would be dishonest to present it as a defeated competitor. See the
+related-work note under Honest limitations.
+
 ### What a blind sweep of the live registry turned up
 
 We also pointed it at packages nobody curated: the **100 most recent publishes** from npm's
@@ -246,16 +256,21 @@ trials** rather than a flat 16/16, and **19/20 red team in 4 of 5 trials, 18/20 
 A single scored run would have let us claim the better number and never know.
 
 - **Zero false blocks across all 104 popular packages**, in every arm — including the hard ones
-  that download binaries at install: puppeteer, playwright, electron, prisma, cypress,
-  chromedriver, esbuild, sharp, bcrypt, sqlite3, canvas, @sentry/cli, re2.
-- **4 of the 104 are ⏱️ "could not verify", not clean**, and we count them that way on purpose:
-  `better-sqlite3`, `argon2`, `cpu-features` and `node-pty` failed to compile in this sandbox
-  (exit 1). We did not watch a complete install, so we will not call them clean — but that is a
-  **usability limit of our sandbox, not a judgement about those packages**. So the honest
-  benign result is *97 verified clean, 3 needing review, 4 unverifiable, 0 blocked* — never
-  "104/104 clean". An earlier version of this tool reported those four as Clean; finding and
-  fixing that is in the write-up because it is the single most important thing a security tool
-  can get right.
+  that download binaries at install: puppeteer, playwright, electron, prisma, chromedriver,
+  esbuild, sharp, bcrypt, sqlite3, canvas, @sentry/cli, re2. (Not every one of the 104 produced
+  a *verdict*: six are "could not verify", itemised in the next point. "Zero blocked" is a
+  statement about false positives, not a claim that all 104 were verified clean.)
+- **6 of the 104 are ⏱️ "could not verify", not clean**, and we count them that way on purpose,
+  for two different reasons. Four failed to compile (exit 1) because the sandbox image carries
+  no C toolchain, so `node-gyp` cannot build: `better-sqlite3`, `argon2`, `cpu-features` and
+  `node-pty`. Two more hit the install timeout: `biome` and `cypress`. In neither case did we
+  watch a complete install, so we will not call them clean — but that is a **usability limit of
+  our sandbox, not a judgement about those packages**. So the honest benign result is *95
+  verified clean, 3 needing review, 6 unverifiable, 0 blocked* — never "104/104 clean". An
+  earlier version of this tool reported the four compile failures as Clean; finding and fixing
+  that is in the write-up because it is the single most important thing a security tool can get
+  right. The full accounting, including why adding a compiler to the sandbox is a security
+  trade-off rather than a free fix, is [`docs/WEAKPOINTS.md`](WEAKPOINTS.md) W3.
 - **We rebuilt two real attacks** (defanged, delivered as Dependabot-style version bumps):
   **ua-parser-js 0.7.29** (geofenced miner download) and the **Shai-Hulud worm** (downloads
   the real TruffleHog, scans for secrets, posts them to webhook.site). Both are blocked and
@@ -340,6 +355,18 @@ and reporting what it found is the point.
   a demo; a real deployment needs a pool.
 - **Model variance.** Temperature 0 but not bit-reproducible; the "full pipeline" column can
   move by about one case between runs.
+- **We are not the first to run packages and watch them.** Behavioral supply-chain analysis
+  exists: **OpenSSF Package Analysis** sandboxes packages and records their file, network and
+  process activity, and tracks behavior across releases; **Socket** reviews dependency changes
+  directly in GitHub pull requests and flags install scripts and suspicious capabilities. Any
+  claim here to be the first or only runtime package scanner would be false, and we make none.
+  What we think is genuinely different is the *combination*: a prediction of expected behavior
+  committed **before** the install runs, kernel telemetry as the ground truth it is checked
+  against, attribution back to the exact diff line, every model claim verified against the event
+  record by code, and a merge gate that fails closed. We have **not** run a head-to-head against
+  those tools — that needs matched package populations, comparable access and a scoring rule
+  agreed in advance, none of which we have — so treat this paragraph as positioning, not as a
+  measured comparison.
 
 ---
 
