@@ -26,6 +26,7 @@ from brain.prompt_guard import GuardOutcome, flagged
 from brain.report import render
 from brain.rules import DEFAULT_ALLOWED_DOMAINS, RuleHit, evaluate
 from brain.sampling import BORDERLINE_TITLES, sample_analysis
+from brain.timeline import build_timeline
 from brain.verdict import FinalVerdict, combine
 from brain.webhook import PullRequestEvent
 from shared.contract import DetonateRequest, DetonateResult
@@ -155,6 +156,9 @@ def analyze(
     # Code, not the model, decides which of its claims the kernel record supports. Report only.
     grounding = (check_evidence(outcome.verdict, build_index(view), corpus_for(view, diff))
                  if outcome.verdict else None)  # fmt: skip
+    # One ordered narrative from the four event streams. Built from the *redacted* view, after
+    # combine(), and passed only to render(): like grounding, it cannot move a verdict.
+    timeline = build_timeline(view)
     # A ⚠️ verdict means a human must decide: give them a triage note. Escalate-only.
     investigation = None
     if investigator is not None and final.title == "Needs review":
@@ -171,7 +175,7 @@ def analyze(
                     cleared=cleared, guilty=guilty, script_runs=script_runs(hits, view),
                     guard=guard, differential=differential,
                     investigation=investigation, policy=policy,
-                    grounding=grounding)  # fmt: skip
+                    grounding=grounding, timeline=timeline)  # fmt: skip
     usages = [u for u in (getattr(prediction, "usage", None), outcome.usage) if u]
     if investigation is not None:
         usages += investigation.usages

