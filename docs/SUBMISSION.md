@@ -95,7 +95,8 @@ review comment on the exact line responsible.
    executables from the PR's title, description and file names **only — never the diff**, so
    payload code can't steer the prediction. Code, not the model, then compares that prediction
    to the kernel record. This is the measurable answer to "why do you need a model": it cut
-   benign "needs review" results from 5 to 3 without clearing a single attack.
+   benign "needs review" results from 4 to 3 without clearing a single attack — one case,
+   `prisma`, whose install fetches its engines from `binaries.prisma.sh`.
 3. **Un-talk-out-able.** The post-run analysis is escalate-only: its output can raise severity
    and never lower it, so a **HIGH or CRITICAL rule hit cannot be cleared by any model
    output.** Precisely one narrower path exists, and it is worth stating rather than rounding
@@ -106,7 +107,7 @@ review comment on the exact line responsible.
    **base-branch** policy. That last condition means author-written text can only *select* a
    host from a list it cannot write to, so naming a domain you own in your own PR body clears
    nothing. That is the mechanism
-   that cut benign "needs review" from 5 to 3. Prompt injection in the PR becomes evidence
+   that cut benign "needs review" from 4 to 3. Prompt injection in the PR becomes evidence
    rather than influence. Timeouts, crashes and integrity failures all fail closed — never "clean" —
    and so does the model itself: if the analysis fails, the result can't be "clean" either.
    Every piece of evidence the model cites is checked by code against the kernel record.
@@ -122,28 +123,31 @@ review comment on the exact line responsible.
 
 | Model | Role | Measured contribution |
 |---|---|---|
-| `muse-spark-1.3` | **Intent Contract** — predicts expected install behavior from PR text alone, before the sandbox runs | Cut benign "needs review" 5 → 3 with zero attacks cleared. Runs in parallel with detonation, so it adds no latency |
+| `muse-spark-1.3` | **Intent Contract** — predicts expected install behavior from PR text alone, before the sandbox runs | Cut benign "needs review" 4 → 3 with zero attacks cleared. Runs in parallel with detonation, so it adds no latency |
 | `muse-spark-1.3` | **Behavior analysis** — compares stated intent with the kernel record, explains it, decodes obfuscation onto the guilty line | Caught the one attack rules alone miss (exfiltration to an ordinary resolvable domain). **Decoded the payload correctly in 5/5 obfuscated attacks** and named the right dependency and file in **2/2** dependency-delivered attacks |
 | `muse-spark-1.3` + tool calling | **Investigator agent** — for ⚠️ verdicts only, with three read-only tools (npm registry facts, our host classification, the captured install script) | Produces a triage note for the human: *"puppeteer, published 2013, maintainers unchanged, install.mjs only calls downloadBrowsers(); storage.googleapis.com is a known package CDN."* Can escalate to blocked, never clear |
 | **Llama Prompt Guard 2 (86M)** | Screens the PR text for jailbreaks, on CPU | **Validated before it was allowed to affect anything**: catches explicit jailbreaks (0.97–1.00) but *missed* the indirect, document-embedded injections in our own scenarios (0.00–0.32). So it is scoped to "don't trust flagged text" and never decides a verdict |
 
-Cost: **~$0.015 per pull request**. Model latency p50 12.5 s, p95 24.2 s — fully overlapped
-with the sandbox run.
+Cost: **$0.0181 per pull request** mean (median $0.0169, p95 $0.025), 2516 in / 3524 out tokens
+— **$2.57 to score all 142 cases**. Detonation p50 5.9 s / p95 67.1 s; model latency p50 36.5 s
+/ p95 66.7 s. The Intent Contract prediction runs in parallel with the sandbox, but the
+post-run analysis cannot — it reads the telemetry — so the **model dominates wall-clock time**:
+it took longer than the detonation in 132 of 142 cases.
 
 **A four-arm ablation separates the two model uses** — same 122 cases, same commit, scored by
 the production pipeline ([full table](../eval/results.md)):
 
 | Arm | Benign ⚠️ needs-review (of 104) | Attacks blocked (of 16) |
 |---|---|---|
-| rules only | 5 | 15 |
+| rules only | 4 | 15 |
 | rules + Intent Contract | **3** | 15 |
-| rules + analysis, *no* Contract | 5 | **16** |
+| rules + analysis, *no* Contract | 4 | **16** |
 | full (both) | **3** | **16** |
 
-They repair different failures and neither substitutes for the other. The **Contract** is what
-removes benign review noise and clears no attack: it explains `binaries.prisma.sh` for a Prisma
-bump and `download.cypress.io` for Cypress, because the PR's stated purpose predicts those
-hosts. The **analysis** is what closes the one detection gap and changes no benign verdict:
+They repair different failures and neither substitutes for the other, and the honest size of
+each effect is **one case**. The **Contract** removes one benign ⚠️ and clears no attack: it
+explains `binaries.prisma.sh` for a Prisma bump, because the PR's stated purpose predicts that
+host. The **analysis** closes one detection gap and changes no benign verdict:
 `m12` exfiltrates to an ordinary *resolvable* domain, which the rules can only rate LOW — so
 rules and Contract both leave it a **mergeable** ⚠️, and only reading the telemetry against the
 diff makes it Blocked. That is the argument for using a model here at all, and it is why the
@@ -325,7 +329,7 @@ and reporting what it found is the point.
 - **Per-repo policy**, read from the base branch only — never the PR's head, where the author
   could allowlist their own exfiltration host.
 
-18 deterministic rules, **918 automated tests**, and every fixture is recorded real output
+18 deterministic rules, **931 automated tests**, and every fixture is recorded real output
 (Tetragon events, dnsmasq logs, kernel firewall lines, Muse responses, GitHub patches).
 
 ---

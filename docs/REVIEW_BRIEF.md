@@ -10,7 +10,7 @@ Section 12 lists the questions the author most wants answered.
 Every claim below is labeled by how it was checked:
 - **[Live]** run end to end on real GitHub PRs, the real Chamber VM and the real Meta models.
 - **[Eval]** measured in the 42-case evaluation (Section 7).
-- **[Test]** covered by the automated test suite (918 tests, all passing). Verified reproducible
+- **[Test]** covered by the automated test suite (931 tests, all passing). Verified reproducible
   from a **fresh clone** of `origin/main` at `14b35d2` (new venv, `requirements-dev.txt`):
   771 passed / 3 skipped / exit 0, identical to the development tree, so no untracked local file
   is propping the suite up. The same clone with the `modal` package made genuinely unimportable
@@ -386,8 +386,9 @@ production).
 The ⏱️ column is new and deliberate: `better-sqlite3`, `argon2`, `cpu-features` and `node-pty`
 compile from source and exit 1 in this image, so we never observed a finished install and will
 not call them Clean. Earlier runs counted them Clean, inflating the benign clean total to
-99/101. The two model uses also separate cleanly here — the contract takes benign ⚠️ from 5 to 3
-and clears no attack, while the analysis arm blocks 16/16 and changes no benign verdict.
+99/101. The two model uses also separate cleanly here — the contract takes benign ⚠️ from 4 to 3
+and clears no attack, while the analysis arm blocks 16/16 and changes no benign verdict. Each
+effect is **one case**: `prisma` for the contract, `m12-domain-exfil` for the analysis.
 
 - **Benign set:** 104 popular packages, 35 of which run install scripts (puppeteer,
   playwright, electron, prisma, cypress, chromedriver, esbuild, @swc/core, sharp, bcrypt,
@@ -406,12 +407,15 @@ and clears no attack, while the analysis arm blocks 16/16 and changes no benign 
   DNS-label exfil, exfil to a resolvable domain, prompt injection, delayed payload, UDP exfil,
   and a stolen `$GITHUB_TOKEN` in a curl header.
 - **What each layer adds:** rules block 15/16 attacks with zero benign blocks; the contract
-  cuts benign "needs review" 5 → 3 without clearing any attack; Muse catches the one attack
+  cuts benign "needs review" 4 → 3 without clearing any attack; Muse catches the one attack
   rules can't (m12: exfil to a resolvable domain, only a low "unlisted domain" for rules).
 - **What Muse explained (P1.5 ground truth):** decoded the payload in **5/5** obfuscated
   attacks and attributed **2/2** dependency-delivered attacks to the right package and file.
-- **Cost and latency:** **$0.0149 per PR** mean (muse-spark-1.3, ~2.2k in / 2.9k out tokens);
-  detonation p50 4.5 s / p95 13.8 s; model latency p50 12.5 s / p95 24.2 s.
+- **Cost and latency:** **$0.0181 per PR** mean (muse-spark-1.3, 2516 in / 3524 out tokens
+  mean; $2.57 for all 142 cases); detonation p50 5.9 s / p95 67.1 s; model latency p50 36.5 s /
+  p95 66.7 s. The model, not the sandbox, dominates wall-clock: it took longer than the
+  detonation in **132 of 142** cases. The Intent Contract prediction does run in parallel with
+  the detonation; the post-run analysis cannot, because it reads the telemetry.
 - **Real-incident reconstructions** (defanged; delivered as Dependabot-style dependency
   bumps; sources: Sysdig, Truesec, MITRE ATT&CK S9008, BleepingComputer, CERT-EU 2021-057,
   ua-parser-js issue #536):
@@ -520,7 +524,7 @@ eval/             cases.py (26 benign, 14 attacks, 2 reconstructions), run_chamb
                   run_brain.py, results.md/json (stamped with commit), README.md
 demo/             scenarios E2–E8, DEMO_SCRIPT.md
 scripts/          probes (Muse, intent, Prompt Guard), Modal CLI wrapper, GitHub smoke test
-tests/            918 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
+tests/            931 tests; fixtures are recorded real outputs (Tetragon, dnsmasq, kernel firewall log, Muse,
                   Chamber runs, GitHub patches, Prompt Guard scores)
 README.md, ROADMAP.md (validation log), BUILD_PLAN.md, LICENSE (MIT)
 ```
