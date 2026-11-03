@@ -349,6 +349,13 @@ and reporting what it found is the point.
 - **Our attacks are our own.** 16 of the 18 are written by us, knowing the detectors. Treat
   "16 of 16" as "covers these techniques", not a real-world detection rate. A held-out set
   written by a different model is the obvious next step.
+- **The denominators are small, and we did the arithmetic rather than hoping nobody would.**
+  Exact 95% intervals ([`python -m eval.intervals`](../eval/intervals.py)): "16 of 16 attacks
+  blocked" is consistent with a true rate as low as **79%**; "19 of 20 red-team" spans
+  **75.1–99.9%**; "2 of 2 incidents" has a lower bound of 15.8% and so establishes very little
+  on its own. The benign result is the firmest: 0 of 104 blocked puts the false-block rate under
+  **3.5%**. All of these bound sampling error only — the cohorts are hand-picked, so they are a
+  floor on uncertainty, not a generalisation guarantee.
 - **Three benign packages land on ⚠️** because they download from Google Cloud Storage, where
   anyone can host a bucket. That's a deliberate trade-off: we never auto-clear shared hosting.
 - **One sandbox VM, one job at a time.** Queued pull requests wait, then fail closed. Fine for

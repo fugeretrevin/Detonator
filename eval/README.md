@@ -176,6 +176,34 @@ benign at ⚠️ instead of 3.
 - Benign installs ran without a lockfile at today's package versions.
 - Benign scripts were attributed from detonations of `npm install <pkg>` (no lockfile).
 
+## How certain are these numbers?
+
+Not very, and the denominators are the reason. Exact (Clopper-Pearson) two-sided 95% intervals,
+from `python -m eval.intervals`:
+
+| Claim | Point | 95% interval |
+|---|---|---|
+| Benign packages hard-blocked | 0/104 | 0.0% – **3.5%** |
+| …counting only the 98 we could verify | 0/98 | 0.0% – **3.7%** |
+| Designed attacks blocked | 16/16 | **79.4%** – 100% |
+| Incident reconstructions blocked | 2/2 | **15.8%** – 100% |
+| Author red-team blocked | 9/10 | **55.5%** – 99.7% |
+| Model-suggested red-team blocked | 10/10 | **69.2%** – 100% |
+| Red-team blocked, both sets | 19/20 | **75.1%** – 99.9% |
+| Sweep blocks (unlabelled) | 1/421 | 0.0% – **1.3%** |
+
+Read the attack rows carefully: "16 of 16" is consistent with a true block rate as low as
+**79%**, and "2 of 2" says almost nothing — its lower bound is 15.8%. Normal-approximation
+intervals are not used because they are invalid at exactly these proportions, where they give
+zero width.
+
+These bound **sampling error only**, and assume the cases were drawn independently from the
+population being described. They were not: the benign set is hand-picked popular packages, the
+attacks are author-written, and repeated trials of one case are not independent. So each
+interval is a **floor on uncertainty, not a generalisation guarantee**. A genuinely blind,
+externally labelled set would do more for confidence here than any amount of extra arithmetic
+(see [`docs/WEAKPOINTS.md`](../docs/WEAKPOINTS.md) W12).
+
 ## Reproduce
 
 ```
