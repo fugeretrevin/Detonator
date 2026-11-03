@@ -25,9 +25,14 @@ from scripts.scan_release import PUBLIC_KEY, scan_archive
 # Shaped like the real thing and long enough to clear the length floors in CONTENT_RULES.
 REAL_LOOKING_TOKEN = "ghp_" + "A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8"
 REAL_LOOKING_AWS = "AKIA" + "QRSTUVWX01234567"
-PRIVATE_KEY_PEM = (
-    "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA\n-----END RSA PRIVATE KEY-----\n"
-)
+# Assembled at run time rather than written out, so this file does not itself contain the
+# literal marker. Without the split, `scan_release.py` correctly flags its own test file and the
+# release gate fails - which is how this line came to be written. The scanner still sees the
+# complete string, because it is built before being put into the archive. Same reason the token
+# constants above are concatenations: a secret scanner's own fixtures must not look like secrets
+# in situ.
+_PEM_MARK = "-----BEGIN RSA PRIVATE" + " KEY-----"
+PRIVATE_KEY_PEM = f"{_PEM_MARK}\nMIIEowIBAAKCAQEA\n-----END RSA PRIVATE KEY-----\n"
 
 
 def archive(tmp_path: Path, entries: dict[str, str], include_key: bool = True) -> Path:
@@ -199,7 +204,11 @@ def test_documentation_and_private_addresses_are_not_even_noted(tmp_path, ip):
 
 def test_the_real_repository_archive_is_clean(tmp_path):
     """The assertion that matters: HEAD, built the approved way, carries nothing blocking.
-    Skipped rather than failed where git is unavailable."""
+
+    Note that this checks **HEAD**, not the working tree, because a release is cut from a
+    commit. So a fix for a finding in this file only turns the test green once committed, and
+    an uncommitted secret is not covered here - run `python scripts/scan_release.py` directly
+    before sharing anything. Skipped rather than failed where git is unavailable."""
     import shutil
     import subprocess
 

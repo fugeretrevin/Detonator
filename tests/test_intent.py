@@ -17,7 +17,7 @@ from brain.intent import (
 from brain.llm import LlmClient, LlmOutcome
 from brain.pipeline import analyze
 from brain.report import render
-from brain.rules import evaluate
+from brain.rules import Severity, evaluate
 from brain.verdict import combine
 from shared.contract import ConnectEvent, DetonateResult, ExecEvent
 from tests.conftest import NPM_EXEC
@@ -197,6 +197,78 @@ def test_no_clearing_when_pr_adds_install_scripts():
     contract = evaluate_contract(outcome(["telemetry.example"]), res)
     kept, cleared = apply_contract(evaluate(res), contract, meta(scripts_changed=True))
     assert [h.rule_id for h in kept] == ["NET_UNLISTED_DOMAIN"] and cleared == []
+
+
+# --- W13: the self-allowlisting boundary, stated adversarially ---------------------------
+#
+# The prediction's inputs (title, description, file names, dependency names) are all written by
+# the PR author, and the prediction is the one model output that can clear a rule hit. So the
+# question is not "does clearing work" but "what can an author clear by describing it". These
+# tests go through the real `IntentPrediction` validator rather than hand-built domain lists,
+# because the shared-hosting defence lives in that validator and bypassing it in a test would
+# prove the wrong thing. See docs/WEAKPOINTS.md W13.
+
+
+@pytest.mark.parametrize(
+    "host",
+    [
+        "webhook.site",
+        "evil.ngrok.io",
+        "exfil.pages.dev",
+        "drop.workers.dev",
+        "bucket.s3.amazonaws.com",
+        "attacker.github.io",
+        "x.trycloudflare.com",
+        "logs.storage.googleapis.com",
+    ],
+)
+def test_a_pr_cannot_self_allowlist_a_shared_hosting_exfil_host(host):
+    """These are the cheap endpoints: no domain registration, free, instantly disposable. A
+    prediction naming one is discarded at the schema boundary, so the hit survives even though
+    the author asked for the host by name.
+
+    Some of these (`webhook.site`, `ngrok.io`, `trycloudflare.com`) additionally fire
+    `NET_EXFIL_SERVICE`, a dedicated rule for known drop services — a second, independent
+    reason they cannot be talked away. The assertion is therefore that nothing was cleared and
+    the unlisted-domain hit is still there, not that it is the only hit."""
+    predicted = IntentPrediction(
+        summary="s", expects_install_scripts=True, expected_domains=[host], expected_binaries=[]
+    )
+    assert predicted.expected_domains == [], f"{host} should never survive normalization"
+
+    res = result([connect("93.184.1.1", domain=host)])
+    contract = evaluate_contract(outcome([host]), res)
+    kept, cleared = apply_contract(evaluate(res), contract, meta())
+    assert cleared == []
+    assert "NET_UNLISTED_DOMAIN" in [h.rule_id for h in kept]
+
+
+def test_an_attacker_registered_domain_can_clear_its_own_low_hit():
+    """The honest residual of W13, asserted so it cannot be mistaken for impossible.
+
+    With a domain of the attacker's own - not shared hosting, not a raw IP - and a PR whose
+    stated purpose plausibly needs it, the prediction may name it and that one LOW signal is
+    suppressed. What bounds the damage is everything this does *not* do, which the asserts
+    below pin: it is one LOW rule, and the merge gate is unchanged because LOW alone is already
+    `neutral`, which GitHub treats as passing.
+
+    The remaining defence is the prediction prompt's instruction never to predict a host merely
+    because the text names it - a model behaviour, not a code guarantee. Making it a code
+    guarantee is the W13 plan."""
+    res = result([connect("198.51.100.7", domain="cdn.attacker-owned.example")])
+    hits = evaluate(res)
+    assert [h.rule_id for h in hits] == ["NET_UNLISTED_DOMAIN"]
+    assert [h.severity for h in hits] == [Severity.LOW], "only a LOW hit is ever clearable"
+
+    contract = evaluate_contract(outcome(["cdn.attacker-owned.example"]), res)
+    kept, cleared = apply_contract(hits, contract, meta())
+    assert kept == [] and len(cleared) == 1  # suppressed, as documented
+
+    # And the bound that matters: add any HIGH finding and clearing becomes irrelevant.
+    worse = e4()
+    contract = evaluate_contract(outcome(domains=["203.0.113.10"], binaries=["curl"]), worse)
+    kept, cleared = apply_contract(evaluate(worse), contract, meta())
+    assert cleared == [] and {h.rule_id for h in kept} >= {"NET_RAW_IP"}
 
 
 def test_truncation_hit_never_cleared():

@@ -133,8 +133,12 @@ flowchart LR
 ## Why it's hard to fool
 
 - **The AI can explain, but it can't be talked out of kernel facts.** PR title, body, and
-  diff are attacker-controlled, so the model only *escalates*: deterministic rules set a
-  floor it can never lower. The prompt fences untrusted content as data, and attempts to
+  diff are attacker-controlled, so the post-run analysis only *escalates*: a HIGH or CRITICAL
+  rule hit cannot be cleared by any model output. The one exception is deliberately narrow and
+  pre-committed: the Intent Contract's prediction, made before the install runs, can clear a
+  single LOW `NET_UNLISTED_DOMAIN` hit for a host it named in advance — never a raw IP, never a
+  shared-hosting domain anyone can publish under, and never when the PR itself added install
+  scripts. The prompt fences untrusted content as data, and attempts to
   break out of those fences are defanged. In our prompt-injection test, the model flagged the
   injection on its own, and the rules would have blocked the PR either way.
 - **Ground truth, not guesses.** `tcp_connect` is traced on the SYN, so even a connection to

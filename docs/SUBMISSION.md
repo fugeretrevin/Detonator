@@ -92,9 +92,15 @@ review comment on the exact line responsible.
    payload code can't steer the prediction. Code, not the model, then compares that prediction
    to the kernel record. This is the measurable answer to "why do you need a model": it cut
    benign "needs review" results from 5 to 3 without clearing a single attack.
-3. **Un-talk-out-able.** Model output can only ever *raise* severity. Deterministic rules set
-   a floor no model can lower. Prompt injection in the PR becomes evidence rather than
-   influence. Timeouts, crashes and integrity failures all fail closed — never "clean" —
+3. **Un-talk-out-able.** The post-run analysis is escalate-only: its output can raise severity
+   and never lower it, so a **HIGH or CRITICAL rule hit cannot be cleared by any model
+   output.** Precisely one narrower path exists, and it is worth stating rather than rounding
+   off: the *pre-observation* prediction may clear a single **LOW** `NET_UNLISTED_DOMAIN` hit
+   for a host it named **before** the install ran — and only if the PR added no install
+   scripts, the host is not shared hosting anyone can publish under, and the destination was a
+   resolved domain rather than a raw IP (those can never be explained). That is the mechanism
+   that cut benign "needs review" from 5 to 3. Prompt injection in the PR becomes evidence
+   rather than influence. Timeouts, crashes and integrity failures all fail closed — never "clean" —
    and so does the model itself: if the analysis fails, the result can't be "clean" either.
    Every piece of evidence the model cites is checked by code against the kernel record.
 4. **The guilty line.** When a PR is blocked, code walks the flagged process back to the npm

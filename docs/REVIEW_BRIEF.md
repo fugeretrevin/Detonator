@@ -45,8 +45,10 @@ sandbox and judges what it actually did**, using kernel-level tracing (eBPF):
 2. **Intent Contract:** before seeing any telemetry, Muse predicts what the PR *should* do at
    install time, from its title, description and file names only. Code (not the model)
    compares the prediction to the kernel record.
-3. **Un-talk-out-able:** the model's verdict can only make things stricter. Deterministic
-   rules set a floor it can never lower; prompt injection in the PR becomes evidence.
+3. **Un-talk-out-able:** the post-run analysis can only make things stricter, so a HIGH or
+   CRITICAL rule hit cannot be cleared by any model output; prompt injection in the PR becomes
+   evidence. The single narrower path is the pre-observation prediction clearing one LOW
+   `NET_UNLISTED_DOMAIN` hit — see §4.2.
 4. **The guilty line:** the verdict lands as an inline review comment on the exact diff line
    responsible, including "this version bump brought in a dependency whose install script
    did X".
@@ -141,7 +143,23 @@ benign blocks.
 
 - Rule level = highest rule severity. Model level: `malicious` with confidence ≥ 0.85 →
   critical, other `malicious` → high, `suspicious` → low, `benign` → none.
-- **Verdict = max(rule level, model level).** The model can only escalate.
+- **Verdict = max(rule level, model level).** The analysis model can only escalate.
+- **The one exception, stated exactly.** `brain/intent.py::apply_contract` may clear a rule hit,
+  but only a `NET_UNLISTED_DOMAIN` hit at **LOW** severity, only when the pre-observation
+  prediction named that host *before* the install ran, and only when the PR added no install
+  scripts. Raw IPs can never be explained, and a prediction naming shared hosting anyone can
+  publish under (`storage.googleapis.com`, `ngrok.io`, `webhook.site`, …) is discarded by
+  `_normalize_domain`, so a PR cannot self-allowlist an easy exfil endpoint. HIGH and CRITICAL
+  hits are untouched. Pinned by `test_high_and_critical_hits_are_never_cleared`,
+  `test_no_clearing_when_pr_adds_install_scripts`, `test_raw_ip_can_never_be_explained` and
+  `test_pipeline_puppeteer_gcs_download_stays_needs_review`.
+- **Residual risk, recorded rather than glossed.** The prediction's inputs (title, description,
+  file names) are attacker-controlled, so an attacker who registers a plausible non-shared-hosting
+  domain and writes a PR body implying the install needs it could suppress that one LOW signal.
+  The code-level defences above bound it; the remainder rests on the prediction prompt's
+  instruction never to predict a host merely because the text names it. It cannot affect
+  mergeability under the default policy, because LOW alone is already `neutral`/mergeable — but
+  it would under `needs_review: block`. See `docs/WEAKPOINTS.md` W13.
 - ≥ high → check **failure "Blocked"**. Install did not finish (timeout/error) or any
   internal error → **failure "Could not verify"** (fail closed). Low only → **neutral
   "Needs review"** (GitHub treats neutral as passing). Nothing → **success "Clean"**.
