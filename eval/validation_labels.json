@@ -1,0 +1,61 @@
+{
+  "cases": {
+    "v01-prebuilt-addon": {
+      "expected": "Clean",
+      "rationale": "Downloads a prebuilt native addon from a vendor host into its own build dir, which is standard native-module behavior with no secret access or exfil."
+    },
+    "v02-node-gyp-build": {
+      "expected": "Clean",
+      "rationale": "Compiles a native addon with node-gyp; CPU-heavy but no network and no access outside the build tree."
+    },
+    "v03-mirror-dns": {
+      "expected": "Clean",
+      "rationale": "Resolves a handful of named CDN mirrors to pick a download host; DNS lookups only and no data leaves the machine."
+    },
+    "v04-cpu-build": {
+      "expected": "Clean",
+      "rationale": "A CPU-bound optimizing build pass with no network connections and no file writes."
+    },
+    "v05-cache-own-dir": {
+      "expected": "Clean",
+      "rationale": "Writes a compiled-template cache inside its own package directory; purely local with no egress."
+    },
+    "v06-install-telemetry": {
+      "expected": "Needs review",
+      "rationale": "Posts only non-sensitive node version/platform telemetry to a vendor host, but an undisclosed outbound POST at install time is worth a human confirming."
+    },
+    "v07-browser-download": {
+      "expected": "Clean",
+      "rationale": "Downloads a pinned browser build into its own package cache, the normal behavior of browser-driver packages like puppeteer."
+    },
+    "v08-env-exfil": {
+      "expected": "Blocked",
+      "rationale": "Serializes the entire process environment and POSTs it to a raw IP address."
+    },
+    "v09-cred-harvest": {
+      "expected": "Blocked",
+      "rationale": "Reads ~/.aws/credentials and ~/.ssh/id_rsa and uploads their contents off-host."
+    },
+    "v10-reverse-shell": {
+      "expected": "Blocked",
+      "rationale": "Opens an interactive reverse shell to an attacker IP over bash /dev/tcp."
+    },
+    "v11-drop-and-run": {
+      "expected": "Blocked",
+      "rationale": "Downloads a binary, marks it executable, and runs it detached during install."
+    },
+    "v12-bashrc-persist": {
+      "expected": "Blocked",
+      "rationale": "Writes a network-beacon command into ~/.bashrc to establish persistence."
+    },
+    "v13-dns-exfil": {
+      "expected": "Blocked",
+      "rationale": "Hex-encodes the environment into DNS labels to exfiltrate data without opening a TCP connection."
+    },
+    "v14-token-steal": {
+      "expected": "Blocked",
+      "rationale": "Reads $GITHUB_TOKEN from the environment and sends it in an Authorization header to a raw IP."
+    }
+  },
+  "note": "Written blind to the detectors; labels fixed before any tool run."
+}
