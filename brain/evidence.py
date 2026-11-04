@@ -185,6 +185,10 @@ _PATH_RE = re.compile(
     r"(?<![\w/])(?:~/[\w.@+-]+(?:/[\w.@+-]+)*|/[\w.-]+(?:/[\w.@+-]+)+)"
 )
 _PORT_RE = re.compile(r"(?:\bport\s+|:)(\d{2,5})\b")
+# A path at the end of a clause carries the sentence's punctuation ("...wrote to ~/.bashrc.").
+# A trailing '.', ')' or quote is not part of the filename; leaving it attached turned an
+# on-record path into a phantom uncited claim (seen on bc09 in eval/blind_telemetry).
+_PATH_TRAIL = ".,;:!?)]}'\"`"
 
 
 def _normalise_path(p: str) -> str:
@@ -192,6 +196,20 @@ def _normalise_path(p: str) -> str:
     # quote a relative tail of a longer path. Compare on the last two segments.
     parts = [seg for seg in p.replace("~", "").split("/") if seg]
     return "/".join(parts[-2:]) if len(parts) >= 2 else "/".join(parts)
+
+
+def _path_on_record(path: str, tail: str, haystack: str) -> bool:
+    if tail in haystack or path.lower() in haystack:
+        return True
+    # Source code assembles paths from separate string literals - `path.join(home, ".local",
+    # "bin")` then `path.join(bin, "git")` - so the finished `~/.local/bin/git` never appears
+    # contiguously even though every segment is quoted right there in the diff. The model that
+    # reads the source and names the real path is then accused of inventing it (the bc09 false
+    # positive). Mirror the port check's looseness: treat the path as on record when each of its
+    # segments is a token in the corpus. A path whose distinctive segment is simply absent - a
+    # claimed `~/.ssh/authorized_keys` the record never touched - still fails and is flagged.
+    segs = [s for s in tail.split("/") if s]
+    return bool(segs) and all(re.search(rf"(?<!\w){re.escape(s)}(?!\w)", haystack) for s in segs)
 
 
 def uncited_claims(prose: str, corpus: str, index: dict[str, Item]) -> list[str]:
@@ -205,9 +223,10 @@ def uncited_claims(prose: str, corpus: str, index: dict[str, Item]) -> list[str]
     found: list[str] = []
 
     for raw in _PATH_RE.findall(prose):
-        tail = _normalise_path(raw).lower()
-        if tail and tail not in haystack and raw.lower() not in haystack and raw not in found:
-            found.append(raw)
+        path = raw.rstrip(_PATH_TRAIL)
+        tail = _normalise_path(path).lower()
+        if tail and not _path_on_record(path, tail, haystack) and path not in found:
+            found.append(path)
 
     ports = {str(item.text.split(":")[-2]) for item in index.values() if item.source == "connect"}
     ports |= {p for item in index.values() for p in re.findall(r":(\d{2,5})\b", item.text)}

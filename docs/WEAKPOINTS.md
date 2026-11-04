@@ -12,8 +12,8 @@ touches the Chamber or a live check.
 |---|---|---|---|
 | W1 | No demo video | **Highest** (25% of score, lowest-scoring category) | Before |
 | W2 | `m12` verdict is a coin flip | High (our headline number) | Ships **off**; 3 of 4 conditions now measured |
-| W3 | 6 of 104 benign unverifiable | Medium | After |
-| W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
+| W3 | 6 of 104 benign unverifiable | Medium | **Characterized & defended Nov 3** (offline, coverage unchanged); rebuild still After |
+| W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3; (b) checker extended, swept over all committed telemetry, one false-positive class closed Nov 3** |
 | W5 | `rt08` open miss | Medium | After |
 | W6 | Single Chamber VM, no tested restore | Medium — **Nov 4: drill demonstrated** — an AMI-launched instance detonated with `pre_seen==true`; only EIP-reassociation over pinned TLS remains a console step | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
@@ -267,6 +267,48 @@ there is no state to unwind.
 **Gate: after judging.** It changes the image every number in the eval was measured on, and
 acceptance 4 could *open* a gap we would then have to disclose mid-submission.
 
+### Characterized & defended, Nov 3 — offline, coverage unchanged
+
+The rebuild above is still **after judging**. What was done now is the safe, report-only half:
+turn the open "6 cannot be verified" into a precisely-accounted-for, deliberate posture. **No
+image change, no re-score, no verdict moved** — coverage is exactly the stamped numbers.
+
+**The six, split by cause** (from the committed `eval/results.json` fields):
+
+- **Four native-build failures — reproducible, by design.** `better-sqlite3`, `argon2`,
+  `node-pty`, `cpu-features` each `status: completed, exit_code: 1`. Three fetch Node headers
+  from `nodejs.org` — the `node-gyp` configure step — then the build step fails because the slim
+  image has `python3` but **no `cc`/`g++`/`make`**. The node-gyp path itself is committed as
+  telemetry in `eval/validation_telemetry/v02-node-gyp-build.json` (exec chain
+  `sh -c "node-gyp rebuild"` → `gyp_main.py`, with the `gyp ERR!` stderr tail). Failed identically
+  on Nov 2 and Nov 3.
+- **Two CDN-speed timeouts — an artifact, not a sandbox property.** `biome` and `cypress` hit the
+  240 s timeout on Nov 2 and completed in **5.8 s** and **40 s** on the Nov 3 re-run
+  (`eval/PERSISTENCE.md`). Neither touches the toolchain.
+
+So the six are **4 unsupported-toolchain + 2 CDN-timeout + 0 genuine failures**, every one
+accounted for.
+
+**The compiler tradeoff, now quantified rather than asserted.** Adding `build-essential` hands
+every payload a compiler, and a local compile-from-source produces a native artifact with **no
+fetch, no connection, no dropped-binary exec** — defeating `EXEC_DROPPED_BINARY` (the central
+one: it needs a binary that *arrived over the network* and is run from a drop dir) plus
+`EXEC_NET_TOOL`, `NET_RAW_IP`, `NET_UNLISTED_DOMAIN`, `NET_EXFIL_SERVICE`, the DNS witness, and
+(secondarily) the `RES_CPU_HEAVY` build-tool exemption, which a present compiler makes reachable
+to launder a miner as a build. Full enumeration and the decision memo:
+[`eval/TOOLCHAIN_TRADEOFF.md`](../eval/TOOLCHAIN_TRADEOFF.md).
+
+**Recommendation (adopted): keep the no-compiler default and reclassify the four native cases as a
+by-design `unsupported-toolchain` outcome — a deliberately smaller blast radius, not a failure to
+verify.** The honest statement, all six covered, is: *98/104 verified; 4 require a C toolchain we
+deliberately exclude for a smaller blast radius; 2 were CDN-speed timeouts that pass on re-run; 0
+blocked.* `eval/toolchain.py` (report-only, pinned by `tests/test_toolchain.py`) produces this
+split mechanically from telemetry and cannot change any verdict.
+
+**Coverage is unchanged.** This did not raise verification to 100%; it made the existing limitation
+fully accounted-for and the compiler tradeoff measured. The rebuild remains the gated, after-judging
+decision.
+
 ---
 
 ## W4 — The grounding metric is narrower than "452/452" sounds
@@ -340,6 +382,70 @@ acceptance condition "produces a non-trivial count" now **fails**, and the hones
 That is a weaker claim than the commit that added it implied, and it is the claim the docs now
 make. The acceptance condition earned its keep: without it I would have shipped a check whose
 only output was 33 false accusations against our own model.
+
+### Swept over all committed telemetry Nov 3 — one more false-positive class, now closed
+
+The earlier "fires on nothing" was 8 inspected calls across three cases. Re-running the check
+across **every committed grounding summary** (822 analyses in `eval/results.json`,
+`eval/REPEAT*.json`, `eval/blind_model_arm.json`) widens that. Only the runs stamped *after* the
+uncited check was added carry its field at all — the blind set (10), `REPEAT_W2` (420) and
+`REPEAT_W2_NATIVE` (30), 460 analyses — and the raw per-case model prose was never committed, so
+this is a sweep of the recorded counts, not a live re-score (a full re-score is the $25 the gates
+forbid pre-judging).
+
+What the sweep found:
+
+- **`REPEAT_W2`: 42 uncited fires — the pre-fix port bug above.** That run was stamped at
+  `4167bb0`, *before* the port fix `d8a3d81`, so its counts are the colon-port false positives
+  already dissected (`rt06`, `rt09`, `rt10`, `gm04`, `gm09`). Historical, not a current result.
+- **The blind corpus: exactly one fire, `bc09-path-shadow`, and it is a false positive too.**
+  This is the one uncited fire in the *post*-fix committed telemetry. Hand-audited against
+  `eval/blind_telemetry/bc09-path-shadow.json`: the payload builds its git-shim path with
+  `path.join(os.homedir(), ".local", "bin")` then `path.join(bin, "git")`, so `~/.local/bin/git`
+  **never appears as one contiguous string** in the corpus even though every segment is quoted
+  right there in the script. The model read the source and named the real path; the check accused
+  it of inventing it — the same "source assembles the value in pieces" root cause as the port
+  bug, one data type over. A second, smaller cause showed up beside it: a path ending a sentence
+  (`~/.bashrc.`) kept the trailing period, which is not in the corpus, so an on-record path read
+  as invented.
+- **Host/IP mentions (the W4(a) half): 4 fires across the 792 analyses that ran it**, all on
+  benign browser-download packages (`puppeteer`, `playwright-chromium`) in a minority of trials,
+  naming a CDN download host that was not literally in that trial's corpus. Benign model phrasing
+  variance, not a hallucinated destination.
+
+**Fix (report-only, same loose philosophy).** A path now counts as on record when every segment
+of its tail is a *token* in the corpus (not only when the whole path is one substring), and a
+trailing sentence punctuation is stripped before the check. `bc09`'s correct descriptions stop
+being flagged; a path whose distinctive segment is simply absent — a claimed
+`~/.ssh/authorized_keys` the record never touched — is still flagged. Mutation-tested 4/4 (drop
+the punctuation strip; `all`→`any`; segment check always true; token-match → substring-match).
+After the fix the check fires on **nothing** across the committed telemetry.
+
+**Proving it still fires (the acceptance's other half).** A `0` on honest output is the intended
+regression-guard result, but a check that returns `0` on an actual falsehood is not checking
+anything. `tests/test_evidence.py::test_planted_false_prose_is_flagged_for_both_a_path_and_a_port`
+plants a verdict claiming it wrote `~/.bashrc` and used `port 4444` against a record containing
+neither, and asserts both are caught and the verdict is untouched.
+
+**Decision on the remaining candidate classes — not added, by design.** The plan listed
+"package names" and "process/binary names". Both are declined, and the reason is the philosophy,
+not effort:
+
+- They are not reliably *extractable* from prose. A back-ticked token is as often a function, a
+  flag, a filename or a code fragment as an executed binary, and package/binary names are
+  ordinary words (`color`, `helper`, `node`, `git`). There is no pattern that isolates "a binary
+  the model claims ran" without sweeping in honest prose.
+- The model legitimately names binaries and packages it reasons about *from the diff* that never
+  executed (`source_inferred` evidence). Flagging those is precisely "telling a reviewer a true
+  statement was unsupported", the one outcome this check exists to avoid.
+- Decisively, it could not be *measured*: the 142-case model prose was never persisted, so a new
+  class cannot be scored on the committed eval, and a live re-score is the spend the gates hold
+  back. Shipping an unmeasured, false-positive-prone class is exactly what these gates prevent.
+
+So the checked classes stay **file paths, ports, hostnames and IPs** — the concrete identifiers
+that either appear in the corpus or demonstrably do not. The honest status is unchanged from the
+line above and now holds against a wider sweep: a **regression guard**, with its two measured
+false-positive classes (ports, paths) both closed, and no real hallucination to its name.
 
 ---
 
