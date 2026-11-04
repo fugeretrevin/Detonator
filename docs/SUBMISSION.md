@@ -54,6 +54,23 @@ talked out of a finding by text the attacker also controls.
 
 ---
 
+## Theme fit
+
+**Build for Your World** — this is a problem we know firsthand. Every developer and CI runner
+`npm install`s code from strangers, and the review that would catch a malicious install script
+is exactly the work nobody has time for. PR Detonator takes that off the human's plate: it runs
+the install, watches the kernel, and hands back an attributed decision on the pull request — the
+mental-space-freeing automation the theme asks for, on a problem anyone who ships software has.
+
+It also reaches into **Push the Frontier** in one specific way: the Intent Contract gives the
+model a capability it does not usually have — it must state, from the PR text alone and *before*
+any code runs, what the install should do, and then plain code checks that falsifiable
+prediction against the kernel's record. That is a model making a commitment that reality can
+refute, not a model being asked "does this look bad". Using Meta's model as a *predictor the
+kernel verifies*, rather than a classifier you hope is right, is the frontier bit.
+
+---
+
 ## The window everything else is blind in
 
 `npm audit` and every advisory-based tool can only know about an attack after someone
@@ -157,6 +174,23 @@ host. The **analysis** closes one detection gap and changes no benign verdict:
 rules and Contract both leave it a **mergeable** ⚠️, and only reading the telemetry against the
 diff makes it Blocked. That is the argument for using a model here at all, and it is why the
 rules still set an independent floor underneath both.
+
+**Where the model's value shows up most: on cases we did not write.** The one-verdict effect
+above is on *our own* eval, where the rules were built against the same attacks. To find where
+the model actually earns its place, we had a fresh model — cold to our detectors — write a
+10-case attack set, then measured what each layer caught ([`eval/BLIND_RESULTS.md`](../eval/BLIND_RESULTS.md)).
+The deterministic rules missed **4 of 10** (git-config persistence, a short DNS-exfil label —
+techniques the rules were never shaped for). **The model caught all four**, reading the
+install-script source and reasoning about behavior no rule had a pattern for. On an
+author-independent set the model moved **four** verdicts, not one — its contribution is largest
+exactly where the hand-written rules are weakest, which is the unexpected, and the useful, part.
+(We then closed two of those four gaps with new measured rules, so the floor is stronger too;
+the held-out set found real holes and we fixed them.)
+
+Separately, against a 14-case set whose verdicts a cold agent **froze before any run**
+([`eval/VALIDATION_RESULT.md`](../eval/VALIDATION_RESULT.md)), the full pipeline blocked **7 of 7**
+attacks with **zero** benign hard-blocks — a check against a judgement the detectors did not
+shape.
 
 ---
 
