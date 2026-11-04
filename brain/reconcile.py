@@ -1,4 +1,4 @@
-"""Stale-check reconciliation: no check run stays in progress forever (HANDOFF 5.2b).
+"""Stale-check reconciliation: no check run stays in progress forever.
 
 `detonate_job` completes its check on every path it controls, but a hard Modal timeout or a
 killed container skips the exception handler and leaves the check "in progress". The webhook

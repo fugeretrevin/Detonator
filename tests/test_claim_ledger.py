@@ -108,7 +108,7 @@ def test_the_not_claimed_list_is_substantive(text):
 def test_no_public_document_makes_a_disclaimed_claim(forbidden):
     """The ledger disclaims these; the documents must not then make them. Checked outside the
     ledger itself, which necessarily quotes them in order to disclaim them."""
-    for rel in ("README.md", "docs/SUBMISSION.md", "docs/REVIEW_BRIEF.md", "demo/DEMO_SCRIPT.md"):
+    for rel in ("README.md", "docs/SUBMISSION.md", "demo/DEMO_SCRIPT.md"):
         body = " ".join((ROOT / rel).read_text(encoding="utf-8").split()).lower()
         assert forbidden not in body, f"{rel} makes a claim the ledger disclaims: {forbidden!r}"
 

@@ -1,4 +1,4 @@
-"""Evaluation cases (ROADMAP P1): popular benign installs vs simulated install-time attacks.
+"""Evaluation cases: popular benign installs vs simulated install-time attacks.
 
 Payloads only reach TEST-NET-3 (203.0.113.10, routes nowhere), the cloud metadata address
 (rejected by the Chamber's own iptables), a `.invalid` name (never resolves), or example.com
@@ -524,7 +524,7 @@ INCIDENTS = [
     ),
 ]  # fmt: skip
 
-# --- red-team set (HARDENING_PLAN P1.3, gap-targeting) ---
+# --- red-team set ---
 # Author-designed, aimed at the detector's known blind spots rather than at rules it already
 # passes. rt01-rt05 are controls the rules catch. rt06-rt10 target the gaps: they involve no
 # network, or only dormant/indirect network, which is the point — an honest red-team row names
@@ -622,7 +622,7 @@ if (!process.env.CI && !process.env.GITHUB_ACTIONS) {{
 """), note="GAP: sandbox-aware; dormant when CI is detected"),
 ]  # fmt: skip
 
-# --- independent red-team set (HARDENING_PLAN P1.3, genuinely held-out) ---
+# --- independent red-team set ---
 # These ten categories were produced by Gemini Pro from eval/REDTEAM_PROMPT.md on 2026-11-02;
 # the model had not seen this repo or its rules, so unlike REDTEAM above this row is a true
 # held-out test of coverage. One harmless stand-in per category, same safety envelope as the

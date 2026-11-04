@@ -21,8 +21,8 @@ cannot reproduce the committed numbers from the committed telemetry, nothing it 
     python -m eval.score_rules <telemetry-dir> --baseline b.json
     python -m eval.score_rules <telemetry-dir> --compare b.json # what my change moved
 
-Telemetry is one `<case-id>.json` DetonateResult per file; see `docs/HANDOFF.md` section 6 for
-where to get it. The contents are untrusted (a sandbox ran attacker code to produce them), so
+Telemetry is one `<case-id>.json` DetonateResult per file, pulled off the Chamber.
+The contents are untrusted (a sandbox ran attacker code to produce them), so
 this module only ever parses and reads them.
 """
 

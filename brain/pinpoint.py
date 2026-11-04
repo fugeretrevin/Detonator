@@ -1,4 +1,4 @@
-"""Point blocking findings at the diff lines that caused them (ROADMAP P1, "guilty line").
+"""Point blocking findings at the diff lines that caused them.
 
 Deterministic, from kernel facts:
 1. Walk the offending process up to the npm lifecycle `sh -c <script>` that started it and

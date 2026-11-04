@@ -1,4 +1,4 @@
-"""Per-run summary records and the read-only dashboard (HARDENING_PLAN P1.6).
+"""Per-run summary records and the read-only dashboard.
 
 Every detonation writes one record (best effort, never fails the job). The dashboard renders
 recent runs, verdict counts, and a behavior atlas (package -> hosts seen, binaries run): the

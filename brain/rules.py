@@ -1,4 +1,4 @@
-"""Deterministic severity rules over Chamber telemetry (BUILD_PLAN A3, solo rule set).
+"""Deterministic severity rules over Chamber telemetry.
 
 These set the verdict floor: the LLM can escalate but never clear a hit. All inputs here
 are attacker-influenced (args, binaries), so evidence strings must be escaped when rendered.

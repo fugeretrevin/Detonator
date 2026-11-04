@@ -305,7 +305,7 @@ def test_no_untrusted_model_prose_can_inject_raw_markup_into_the_report():
     assert hostile.count(COMMENT_MARKER) == 1
 
 
-# --- run history in the one PR comment (HARDENING_PLAN P0.6) ---
+# --- run history in the one PR comment ---
 
 from brain.report import parse_runs, with_run_history  # noqa: E402
 

@@ -1,4 +1,4 @@
-"""Prompt injection screening with Meta's Llama Prompt Guard 2 (86M) (ROADMAP P2).
+"""Prompt injection screening with Meta's Llama Prompt Guard 2 (86M).
 
 A small classifier scores the attacker-controlled text an LLM will read (PR title, body, and
 the diff's added lines) in overlapping 512-token windows. It is a second, independent
@@ -27,7 +27,7 @@ WINDOW_TOKENS = 512
 STRIDE_TOKENS = 384  # overlap so an injection straddling a boundary is seen whole once
 MAX_WINDOWS = 64  # per PR; past this the rest is unscanned (reported)
 MAX_DIFF_CHARS = 30_000
-# Set from validation (scripts/probe_prompt_guard.py): see ROADMAP validation log.
+# Set from validation (scripts/probe_prompt_guard.py).
 THRESHOLD = 0.9
 
 

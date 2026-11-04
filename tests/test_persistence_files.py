@@ -8,7 +8,7 @@ one cause: `file_events` only reported the four planted *credential* paths, so
 **Why it is reached through the existing kprobe.** `chamber/policies/persistence-files.yaml`
 uses the same `security_file_open` call and the same single `file` argument as the credential
 policy that already works on the Chamber, so no new Tetragon JSON shape is involved -
-`CLAUDE.md` requires a recorded fixture before coding against an unverified shape, and there is
+the project requires a recorded fixture before coding against an unverified shape, and there is
 no committed fixture carrying a different one.
 
 **Why it is LOW and not HIGH.** It cannot fire until that policy is loaded on the Chamber, so
@@ -241,7 +241,7 @@ def test_the_two_policies_do_not_overlap():
 def test_the_new_policy_reuses_the_already_verified_event_shape():
     """It must stay on `security_file_open` with one `file` arg at index 0 - the shape
     `chamber/telemetry.py` parses and the comment there says was verified on the Chamber. A new
-    kprobe would need a recorded fixture first (CLAUDE.md)."""
+    kprobe would need a recorded fixture first."""
     doc = yaml.safe_load((POLICY_DIR / "persistence-files.yaml").read_text(encoding="utf-8"))
     existing = yaml.safe_load((POLICY_DIR / "credential-files.yaml").read_text(encoding="utf-8"))
     new_probes, old_probes = doc["spec"]["kprobes"], existing["spec"]["kprobes"]

@@ -32,8 +32,8 @@ before.
 
 The two attack cases were detonated **before** the 104 benign, deliberately. If the policy had
 not produced the expected events there was no point spending an hour on the false-positive
-denominator. (The runbook in `docs/HANDOFF.md` §5b originally listed benign first; that was the
-wrong order and has been corrected.)
+denominator. (An earlier runbook listed benign first; that was the wrong order and has been
+corrected.)
 
 | Case | File events captured | Rules | Verdict before | Verdict after |
 |---|---|---|---|---|

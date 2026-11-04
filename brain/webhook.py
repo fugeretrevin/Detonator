@@ -1,4 +1,4 @@
-"""GitHub webhook verification, event parsing, allowlist and dedupe (BUILD_PLAN A1).
+"""GitHub webhook verification, event parsing, allowlist and dedupe.
 
 Kept free of Modal/FastAPI so the whole accept/reject decision is unit-testable.
 """

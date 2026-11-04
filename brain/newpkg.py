@@ -1,4 +1,4 @@
-"""New / nonexistent dependency signal (HARDENING_PLAN P2.5).
+"""New / nonexistent dependency signal.
 
 AI coding agents increasingly add dependencies that are brand new, or that don't exist at all
 (hallucinated names an attacker can then register — "slopsquatting"). A deterministic npm

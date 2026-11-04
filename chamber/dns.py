@@ -1,4 +1,4 @@
-"""dnsmasq query log -> contract DNS records for one sandbox (BUILD_PLAN B4).
+"""dnsmasq query log -> contract DNS records for one sandbox.
 
 Format verified on the Chamber (tests/fixtures/dnsmasq_probe.log, dnsmasq 2.92 with
 log-queries=extra): every line of one lookup shares a serial number, and a CNAME chain is

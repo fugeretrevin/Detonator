@@ -1,4 +1,4 @@
-"""Registry-scale sweep: detonate packages published to npm minutes ago (HARDENING_PLAN #2).
+"""Registry-scale sweep: detonate packages published to npm minutes ago.
 
 The curated benign set in cases.py is packages *we* chose. This instead takes whatever npm
 published most recently and detonates it, so the false-positive number comes from real-world

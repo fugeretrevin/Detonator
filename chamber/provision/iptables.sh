@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Egress controls for sandbox containers (BUILD_PLAN B3). Idempotent; run as root after docker.
+# Egress controls for sandbox containers. Idempotent; run as root after docker.
 # Observe, don't block: internet egress is allowed and traced. Only metadata and private
 # ranges are refused, and only for traffic *leaving* the dedicated det0 bridge, so replies
 # to the container and the host's own traffic are untouched.

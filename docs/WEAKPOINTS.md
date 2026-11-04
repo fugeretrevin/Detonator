@@ -496,7 +496,7 @@ threshold is chosen. Signal must separate them with **zero** benign hard blocks 
 
 ### Nov 3: the gap is now measured, and it is telemetry, not rules
 
-With the raw telemetry pulled off the Chamber (`docs/HANDOFF.md` §6) and re-scored offline by
+With the raw telemetry pulled off the Chamber and re-scored offline by
 `eval/score_rules.py`, the rules-level misses are no longer a guess. Ten attack cases are not
 Blocked by rules alone, and they fall into three groups:
 

@@ -12,7 +12,7 @@ themselves. Two properties matter most, and both are tested here:
 2. **Its drift list cannot hide a regression.** `KNOWN_DRIFT` is strict both ways: an
    unexplained disagreement fails, and so does an entry that no longer disagrees.
 
-The telemetry itself is not committed (see `docs/HANDOFF.md` section 6), so these tests use the
+The telemetry itself is not committed, so these tests use the
 committed real fixtures and synthetic score dicts rather than the full corpus.
 """
 

@@ -1,4 +1,4 @@
-"""Combine rule severity and LLM verdict into a check conclusion (BUILD_PLAN A5).
+"""Combine rule severity and LLM verdict into a check conclusion.
 
 final = max(rule_level, llm_level, investigator_level). Model output can raise severity but
 never lower a rule hit.

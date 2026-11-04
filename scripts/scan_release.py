@@ -1,6 +1,6 @@
 """Build the release archive and prove it carries no secrets, before it is shared.
 
-`CLAUDE.md` requires the public artifact to be produced with `git archive` and never by zipping
+The public artifact must be produced with `git archive` and never by zipping
 the working directory - zipping ignores `.gitignore` and ships `.env`, `.git/` and `.venv/`.
 That rule has been broken on this project once already: a live `.env` left the machine inside a
 folder ZIP, which is the origin of the Modal token rotation item (W10). An independent audit in
@@ -19,7 +19,7 @@ Usage:
 
 `--extra-patterns` takes a file of one regex per line, for identifiers that must not appear but
 must not be committed either - specifically the embargoed package name and address from the
-November 2 disclosure, which `docs/HANDOFF.md` section 4 keeps out of this repository. Keep that
+November 2 disclosure, which are kept out of this repository. Keep that
 file outside the repo (or in an ignored path) and pass it at release time.
 
 Deliberately **not** silenced: this prints every finding with its file and a short excerpt. A
@@ -42,7 +42,7 @@ from pathlib import Path
 PUBLIC_KEY = "eval/sbom/public_key.pem"
 REQUIRED_ENTRIES = (PUBLIC_KEY,)
 
-# Committed on purpose and required by CLAUDE.md to stay current. It holds variable *names*
+# Committed on purpose and kept current. It holds variable *names*
 # with placeholder values, which is the opposite of a secret, so it is exempt from the
 # `.env` name rule rather than from the content rules - a real value pasted into it is still
 # caught by those.

@@ -1,8 +1,8 @@
 """`scripts.scan_release` - the gate on what leaves the machine.
 
 A release scanner that reports "clean" is worthless until it is shown to fail on bad input, so
-most of this file feeds it archives that *must* be rejected. The rule it exists to enforce is in
-`CLAUDE.md`: build the artifact with `git archive`, never by zipping the working directory. That
+most of this file feeds it archives that *must* be rejected. The rule it exists to enforce:
+build the artifact with `git archive`, never by zipping the working directory. That
 rule has already been broken once on this project (a live `.env` left the machine inside a folder
 ZIP, which is why W10 exists), and an independent audit in November 2026 received another folder
 ZIP containing `.env`, `.git` and `.venv`.

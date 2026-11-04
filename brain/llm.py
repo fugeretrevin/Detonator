@@ -1,4 +1,4 @@
-"""LLM intent-vs-behavior analysis (BUILD_PLAN A4).
+"""LLM intent-vs-behavior analysis.
 
 Talks to Meta's OpenAI-compatible Model API (api.meta.ai, dev.meta.ai keys). The JSON comes
 back in choices[0].message.content. The model can only escalate the rules floor (verdict.py);

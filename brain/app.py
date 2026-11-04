@@ -79,15 +79,15 @@ SECRETS = [
 ]
 
 deliveries = modal.Dict.from_name("pr-detonator-deliveries", create_if_missing=True)
-# Chamber health history, written every 10 minutes (HARDENING_PLAN P0.5).
+# Chamber health history, written every 10 minutes.
 health_log = modal.Dict.from_name("pr-detonator-health", create_if_missing=True)
 HEALTH_HISTORY = 144  # 24 h at one check per 10 min
-# Per-run summaries for the dashboard (HARDENING_PLAN P1.6).
+# Per-run summaries for the dashboard.
 run_log = modal.Dict.from_name("pr-detonator-runs", create_if_missing=True)
 RUN_LOG_HISTORY = 200
 # Base-branch detonation results, cached by SHA for differential detonation (P2.1).
 base_cache = modal.Dict.from_name("pr-detonator-base-cache", create_if_missing=True)
-# Check runs created but not yet completed; the reconciler fails stale ones closed (HANDOFF 5.2b).
+# Check runs created but not yet completed; the reconciler fails stale ones closed.
 pending_checks = modal.Dict.from_name("pr-detonator-pending-checks", create_if_missing=True)
 
 
@@ -367,7 +367,7 @@ def chamber_health() -> dict:
 
 @app.function(image=image, secrets=SECRETS, schedule=modal.Period(minutes=5), timeout=120)
 def reconcile_checks() -> dict[str, str]:
-    """Fail closed on check runs whose job died without completing them (HANDOFF 5.2b)."""
+    """Fail closed on check runs whose job died without completing them."""
     actions = reconcile(dict(pending_checks.items()), github(), time.time())
     for key, action in actions.items():
         if action not in ("waiting", "retry"):

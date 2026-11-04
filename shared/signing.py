@@ -1,6 +1,6 @@
-"""HMAC signing for Brain <-> Chamber calls (BUILD_PLAN §3).
+"""HMAC signing for Brain <-> Chamber calls.
 
-Requests: HMAC(secret, "{ts}." + body). Responses (HARDENING_PLAN P0.1): HMAC(secret,
+Requests: HMAC(secret, "{ts}." + body). Responses: HMAC(secret,
 "{ts}.{job_id}." + body), so a result can't be altered in transit or replayed for another
 job. The two can't collide: a request body starts with "{", a job id never does.
 """

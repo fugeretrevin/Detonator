@@ -1,4 +1,4 @@
-"""Markdown forensic report for the PR comment and check-run summary (BUILD_PLAN A6).
+"""Markdown forensic report for the PR comment and check-run summary.
 
 Every string that came from the PR, the sandbox, or the LLM is attacker-influenced, so it
 goes through esc(): punctuation becomes HTML entities, which GitHub renders literally and

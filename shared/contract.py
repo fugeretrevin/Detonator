@@ -1,4 +1,4 @@
-"""Brain <-> Chamber interface. Single source of truth; change only by agreement (BUILD_PLAN §3)."""
+"""Brain <-> Chamber interface. Single source of truth; change only by agreement."""
 
 from typing import Literal
 

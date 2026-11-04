@@ -1,6 +1,6 @@
 """The headline numbers in the write-up must match `eval/results.json`.
 
-Written after finding that `docs/SUBMISSION.md` and `docs/HANDOFF.md` both claimed "97 clean,
+Written after finding that `docs/SUBMISSION.md` claimed "97 clean,
 3 needs review, 4 could not verify" for the 104 benign controls while the stamped evaluation
 said 95/3/6 - and while `docs/WEAKPOINTS.md` W3, in the same repository, was titled "6 of 104
 benign packages cannot be verified". The prose had been written when the count was 4 and never
@@ -75,14 +75,6 @@ def test_the_submission_states_the_stamped_benign_tally(benign):
 def test_the_submission_states_the_right_number_of_unverifiable_cases(benign):
     text = normalised(ROOT / "docs" / "SUBMISSION.md")
     assert f"{benign['Could not verify']} of the 104 are" in text
-
-
-def test_the_handoff_honest_claims_match_the_same_tally(benign):
-    expected = (
-        f"{benign['Clean']} clean, {benign['Needs review']} needs review, "
-        f"{benign['Could not verify']} could not verify"
-    )
-    assert expected in normalised(ROOT / "docs" / "HANDOFF.md"), expected
 
 
 def test_the_weakpoints_w3_heading_counts_the_same_cases(benign):
@@ -296,7 +288,7 @@ def test_the_demo_script_withholds_the_disclosed_package():
 # "5 -> 3" one mattered most: it made the model's contribution look twice its real size, in the
 # section whose whole job is justifying the model.
 
-ABLATION_DOCS = ("docs/SUBMISSION.md", "docs/REVIEW_BRIEF.md", "eval/README.md")
+ABLATION_DOCS = ("docs/SUBMISSION.md", "eval/README.md")
 
 
 @pytest.mark.parametrize("rel", ABLATION_DOCS)
@@ -333,8 +325,8 @@ def test_the_published_cost_per_pr_matches_the_stamped_runs(rel, rows):
     text = normalised(ROOT / rel)
     assert f"{mean:.4f}" in text, f"{rel} does not carry the stamped mean cost ${mean:.4f} per PR"
     # Figures from the earlier, smaller run. `$0.015` is listed separately because rejecting
-    # only `0.0149` let a rounded restatement survive in REVIEW_BRIEF for another day: the
-    # document carried the corrected number in one place and the superseded one in another.
+    # only `0.0149` let a rounded restatement survive for another day: a document can carry
+    # the corrected number in one place and the superseded one in another.
     for superseded in ("0.0149", "$0.015 per PR", "~$0.015"):
         assert superseded not in text, f"{rel} still carries the superseded cost {superseded!r}"
 

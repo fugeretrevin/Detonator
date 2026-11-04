@@ -1,4 +1,4 @@
-"""GitHub App auth, check runs, PR diff/metadata and comments (BUILD_PLAN A2)."""
+"""GitHub App auth, check runs, PR diff/metadata and comments."""
 
 import re
 import time

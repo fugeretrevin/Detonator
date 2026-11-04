@@ -62,5 +62,5 @@ Recorded because the temptation exists and an audit asked for it explicitly.
 | "The maintainer fixed it" | No response and no fix as of this commit |
 | "We beat Socket / OpenSSF Package Analysis" | No head-to-head has been run. Dynamic package analysis is established prior art |
 | "The model never hallucinates" | 452/452 measures citation validity, not semantic truth |
-| "Everything in the repo is live" | `docs/HANDOFF.md` §5b/§5c enumerate what is deployed versus committed; `scripts/release_ledger.py` prints the identifiers |
+| "Everything in the repo is live" | `scripts/release_ledger.py` enumerates and prints what is deployed versus only committed |
 | "Sampling improves stability, so it is on" | It ships **off**. Acceptance 1 is unmeasured for the band, and the cost gate rejected the unconditional version |

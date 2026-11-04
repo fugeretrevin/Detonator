@@ -1,4 +1,4 @@
-"""Canary credentials and decoy tools, Brain side (HARDENING_PLAN P1.2).
+"""Canary credentials and decoy tools, Brain side.
 
 The Chamber plants per-run fake tokens (env, ~/.npmrc, ~/.aws) and decoy CLIs on PATH, and
 returns the values in the signed result. A decoy value showing up in what the sandbox did

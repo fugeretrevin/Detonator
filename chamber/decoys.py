@@ -1,4 +1,4 @@
-"""Per-run canary credentials and decoy tools (HARDENING_PLAN P1.2).
+"""Per-run canary credentials and decoy tools.
 
 The sandbox should look like a developer or CI machine worth robbing: CI env vars, tokens in
 the environment and in ~/.npmrc / ~/.aws, and AI/cloud CLIs on PATH. Every value is random

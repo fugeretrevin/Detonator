@@ -121,8 +121,8 @@ def test_every_package_in_the_sweep_reached_the_registry():
 
 
 def test_the_report_renders_and_keeps_the_embargoed_identifiers_redacted():
-    """docs/HANDOFF.md section 4 keeps the disclosed package's name and address out of this
-    repo. The sweep data stores them redacted; the report must not reconstruct them."""
+    """The disclosed package's name and address are kept out of this repo. The sweep data
+    stores them redacted; the report must not reconstruct them."""
     text = report()
     assert "# Egress allowlist" in text and "Held-out check" in text
     assert "<withheld pending disclosure>" in text  # redaction carried through, not resolved

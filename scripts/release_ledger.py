@@ -187,10 +187,7 @@ def main(argv: list[str] | None = None) -> int:
         for k, cmd in todo:
             print(f"  {k.ljust(width)}  TODO")
             print(f"  {' '.ljust(width)}    -> {cmd}")
-        print(
-            "\nReminder: a feature present in this commit is not necessarily deployed."
-            "\nSee docs/HANDOFF.md sections 5b and 5c for the current divergence."
-        )
+        print("\nReminder: a feature present in this commit is not necessarily deployed.")
     return 0
 
 

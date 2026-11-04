@@ -1,4 +1,4 @@
-"""Per-repository policy, `.github/detonator.yml` (HARDENING_PLAN P2.3).
+"""Per-repository policy, `.github/detonator.yml`.
 
 **Read from the base branch only.** The PR author controls the head, so a policy read from
 there would let an attacker allowlist their own exfil host. The base branch is what the repo

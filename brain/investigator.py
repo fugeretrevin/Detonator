@@ -1,4 +1,4 @@
-"""Investigator agent for "needs review" PRs only (HARDENING_PLAN P2.2).
+"""Investigator agent for "needs review" PRs only.
 
 A ⚠️ verdict means "a human should look". This gives that human a head start: Muse gets
 three read-only tools (npm registry facts, our own host classification, the scripts the

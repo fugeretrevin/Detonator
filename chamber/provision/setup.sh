@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Idempotent Chamber VM bootstrap (BUILD_PLAN B0). Run from a checkout of the repo:
+# Idempotent Chamber VM bootstrap. Run from a checkout of the repo:
 #   sudo bash chamber/provision/setup.sh
 # Rebuilds a burned VM in a few minutes. Prints nothing secret.
 set -euo pipefail

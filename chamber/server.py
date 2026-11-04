@@ -1,4 +1,4 @@
-"""Chamber HTTP API (BUILD_PLAN B8). Run: uvicorn chamber.server:app --host 0.0.0.0 --port 8443"""
+"""Chamber HTTP API. Run: uvicorn chamber.server:app --host 0.0.0.0 --port 8443"""
 
 import os
 import shutil

@@ -1,4 +1,4 @@
-"""Tetragon export log -> contract events for one container (BUILD_PLAN B7).
+"""Tetragon export log -> contract events for one container.
 
 Shapes verified in the B1 spike (tests/fixtures/tetragon_smoke.jsonl): container processes
 carry process.docker = first 31 chars of the container ID; host processes have none.

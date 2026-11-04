@@ -1,4 +1,4 @@
-"""Copy out the files install-time processes executed (HARDENING_PLAN P1.1).
+"""Copy out the files install-time processes executed.
 
 A dependency attack's diff is one version-bump line; the code that ran lives in
 node_modules. After the run (the container has stopped), read the script files named in exec
