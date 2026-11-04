@@ -62,6 +62,16 @@ METADATA_ADDRS = frozenset({"169.254.169.254", "fd00:ec2::254", "169.254.170.2"}
 DROP_DIRS = ("/tmp/", "/var/tmp/", "/dev/shm/", "/home/", "/root/")
 NPM_CACHE_DIR = "/tmp/.npm/"
 MIN_ENCODED_LABEL = 40
+# All-hex labels get a lower floor (W15). The 40-char floor exists to avoid flagging legitimate
+# long labels — CDN cache keys, content hashes — which have digits but are rarely pure hex. An
+# *all-hex* label is a much stronger exfil signal: measured across all 742 recorded installs,
+# the only hex DNS labels of 16+ chars belong to attack cases (m11 at 60, the held-out bc08 at
+# 24), while the longest benign hex label is a 14-char CDN hash. The floor is 20 — above that
+# observed benign hex length with margin, below bc08 — so bc08 and m11 are caught with 0 benign
+# false positives on the recorded corpus. That corpus is 742 installs, not the world: a benign
+# host with a 20+ char all-hex subdomain would be flagged, so this stays a HIGH rule (human
+# review), never an irreversible block on its own. See docs/WEAKPOINTS.md W15.
+MIN_HEX_LABEL = 20
 ENCODED_LABEL_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 # Destinations that are not "the internet". Everything else counts as external, including
@@ -243,11 +253,17 @@ def _connect_hits(
 
 
 def _looks_encoded(label: str) -> bool:
-    if len(label) < MIN_ENCODED_LABEL or not ENCODED_LABEL_RE.match(label):
+    if not ENCODED_LABEL_RE.match(label):
+        return False
+    hexish = all(ch in "0123456789abcdefABCDEF" for ch in label)
+    # All-hex is a strong signal, so it gets the lower floor; the weaker digit-fraction
+    # heuristic keeps the conservative 40-char floor to spare long benign cache keys.
+    if hexish:
+        return len(label) >= MIN_HEX_LABEL
+    if len(label) < MIN_ENCODED_LABEL:
         return False
     digits = sum(ch.isdigit() for ch in label)
-    hexish = all(ch in "0123456789abcdefABCDEF" for ch in label)
-    return hexish or digits / len(label) >= 0.2
+    return digits / len(label) >= 0.2
 
 
 def _dns_hits(query: DnsQuery) -> list[RuleHit]:

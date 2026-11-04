@@ -181,6 +181,39 @@ def test_ordinary_dns_names_not_flagged(domain):
     assert evaluate(dns_result(domain)) == []
 
 
+def test_short_hex_dns_label_is_flagged_w15():
+    """W15: the held-out bc08 hex-encodes a short identifier into a 24-char label, which was
+    under the old 40-char floor and slipped past. An all-hex label is a strong exfil signal, so
+    it now trips at 20 chars. Measured 0 benign false positives across 742 recorded installs."""
+    # bc08's exact recorded label (24 hex chars).
+    domain = "613334386439643930336132.collector.invalid"
+    hits = evaluate(dns_result(domain))
+    assert [(h.rule_id, h.severity) for h in hits] == [("DNS_ENCODED_LABEL", Severity.HIGH)]
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        "d1a2b3c4d5e6f7",  # 14-char hex CDN hash — benign, below the floor
+        "a1b2c3",  # short hex
+        "abc123def",  # 9 chars
+        "0123456789abcdef",  # 16 hex, still below the 20 floor
+    ],
+)
+def test_short_hex_labels_below_the_floor_are_not_flagged(label):
+    """The floor protects legitimate short hex subdomains (CDN hashes). Anything under 20 all-hex
+    chars stays quiet, so the common benign case is unaffected."""
+    assert evaluate(dns_result(f"{label}.cloudfront.net")) == []
+
+
+def test_the_digit_heuristic_still_needs_the_long_floor():
+    """Only the *all-hex* path got the lower floor. A label that is merely digit-heavy (a cache
+    key with letters) still needs the conservative 40-char floor, so a 24-char mixed label does
+    not trip."""
+    mixed = "abc123def456ghi789jkl012"  # 24 chars, ~50% digits, not all-hex
+    assert evaluate(dns_result(f"{mixed}.cloudfront.net")) == []
+
+
 def test_ipv4_mapped_ipv6_is_classified_by_ipv4():
     assert not is_external("::ffff:127.0.0.1")
     assert is_external("::ffff:203.0.113.10")

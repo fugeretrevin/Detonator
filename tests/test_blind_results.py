@@ -15,10 +15,11 @@ from eval.score_blind import DEFAULT_DIR, score
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "eval" / "BLIND_RESULTS.md"
 
-# What the CURRENT deterministic rules miss on the blind set. bc04 and bc10 were in the original
-# miss set but are now caught by EXEC_GIT_CONFIG_PERSIST (W14), so only two remain. If the rules
-# change again, this is what must be reconciled with the doc.
-EXPECTED_MISSES = {"bc03-git-hook", "bc08-dns-exfil"}
+# What the CURRENT deterministic rules miss on the blind set. Of the original four, bc04/bc10
+# are now caught by EXEC_GIT_CONFIG_PERSIST (W14) and bc08 by the lowered hex-label floor (W15),
+# leaving only bc03 (a .git/hooks file write, which needs a Chamber tracing change). If the
+# rules change again, this is what must be reconciled with the doc.
+EXPECTED_MISSES = {"bc03-git-hook"}
 # The misses as first detonated, which the model-arm run (blind_model_arm.json) was scored
 # against. Frozen record, so this stays four.
 ORIGINAL_MISSES = {"bc03-git-hook", "bc04-git-alias", "bc08-dns-exfil", "bc10-git-proxy"}
@@ -45,10 +46,10 @@ def test_the_rules_floor_split_matches_the_writeup(scored):
 
 def test_the_writeup_states_the_current_rules_floor_split(scored):
     caught = sum(1 for v in scored.values() if v["verdict"] in ("Blocked", "Needs review"))
-    assert caught == 8, f"current rules floor is {caught}/10; update the doc and this test"
+    assert caught == 9, f"current rules floor is {caught}/10; update the doc and this test"
     text = " ".join(RESULTS.read_text(encoding="utf-8").split())
-    assert f"{caught} of 10" in text, "the doc must state the current 8/10 rules floor"
-    assert "6 of 10" in text, "the doc should still record the original 6/10 before the fix"
+    assert f"{caught} of 10" in text, "the doc must state the current 9/10 rules floor"
+    assert "6 of 10" in text, "the doc should still record the original 6/10 before the fixes"
 
 
 def test_every_missed_case_was_actually_observed_not_just_unrecorded(scored):
@@ -68,9 +69,12 @@ def test_the_git_config_cases_are_now_caught_by_the_rule(scored):
     assert "EXEC_GIT_CONFIG_PERSIST" in scored["bc10-git-proxy"]["rules"]
 
 
-def test_the_dns_miss_captured_the_query(scored):
-    """W15's claim: the DNS query is captured, only the length floor misses it."""
+def test_the_dns_case_is_now_caught_by_the_lowered_floor(scored):
+    """W15 closed: bc08's 24-char hex label was under the old 40-char floor; the all-hex path
+    now trips at 20, so it blocks. The query was always captured — only the threshold missed."""
     assert scored["bc08-dns-exfil"]["dns"] >= 1
+    assert scored["bc08-dns-exfil"]["verdict"] == "Blocked"
+    assert "DNS_ENCODED_LABEL" in scored["bc08-dns-exfil"]["rules"]
 
 
 def test_persistence_rule_caught_a_held_out_case(scored):

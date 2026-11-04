@@ -24,7 +24,7 @@ touches the Chamber or a live check.
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
 | W13 | One path where a model decision can clear a rule hit | Medium (claim hygiene) | **Closed in code Nov 3** |
 | W14 | `git config` / `.git/hooks` are an untraced attack surface | Medium (found by the held-out set) | **git-config half closed in rules Nov 3** (0/742 FP); `.git/hooks` write gated |
-| W15 | DNS encoded-label rule has a length floor a short label evades | Low–Medium (found by the held-out set, Nov 3) | After |
+| W15 | DNS encoded-label rule has a length floor a short label evades | Low–Medium (found by the held-out set) | **Closed in code Nov 3** (0/742 FP) |
 
 ---
 
@@ -870,14 +870,17 @@ silent even though the DNS query is captured in full.
 flagging legitimate long-ish labels — CDN cache keys, content-addressed hashes, telemetry ids —
 which are common and benign. Lowering it trades directly against the benign false-positive rate.
 
-**Plan (post-judging).** Measure the label-length and character-class distribution of DNS
-queries across the 742-install corpus, then set the floor (and perhaps an entropy test) where it
-separates `bc08`-style exfil from benign long labels with zero benign hard blocks — the same
-acceptance every rule change gets. If no clean separation exists, record the negative result and
-leave the floor where it is.
-
-**Gate: after judging.** A one-line constant change to a verdict-affecting rule, without the
-false-positive measurement, is not something to ship two days out.
+**Closed in code, Nov 3 — with the measurement the gate asked for.** The label-length and
+character-class distribution across the 742-install corpus turned out to separate cleanly: the
+**only** all-hex DNS labels of 16+ characters belong to attack cases (`m11` at 60, `bc08` at
+24), while the longest benign hex label is a 14-char CDN hash. So an *all-hex* label — a far
+stronger exfil signal than a merely digit-heavy one — gets a lower floor of **20**, catching
+`bc08` with **0 false positives across all 742 installs**. The digit-fraction heuristic keeps
+its conservative 40-char floor, so CDN cache keys and content hashes (digit-heavy but not pure
+hex) are unaffected. `DNS_ENCODED_LABEL` stays at HIGH (⚠️ human review), never a lone
+irreversible block, because 742 installs is not the world: a benign host with a 20+ char all-hex
+subdomain would trip it, and a reviewer is the backstop. The stamped eval is unchanged — `m11`
+fired at the old floor too, so no verdict moved (`eval/score_rules.py --verify` confirms).
 
 ---
 

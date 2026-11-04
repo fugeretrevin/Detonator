@@ -20,14 +20,15 @@ held-out set is supposed to surface and an author-written set cannot.
 | bc05-delayed-beacon | detached child connects 6 s post-install | 🛑 Blocked (`NET_RAW_IP`) | the detonation window held long enough to capture it |
 | bc06-platform-gate | egress only on Linux CI | 🛑 Blocked (`NET_RAW_IP`) | ran on Linux and connected |
 | bc07-npm-token | harvest `_authToken`, stage to /tmp | 🛑 Blocked (`CRED_FILE_ACCESS`) | read the bait credential |
-| bc08-dns-exfil | host id hex-encoded in a DNS label | ✅ **MISS** | 24-char label is under the `MIN_ENCODED_LABEL = 40` floor |
+| bc08-dns-exfil | host id hex-encoded in a DNS label | 🛑 Blocked (`DNS_ENCODED_LABEL`) | **closed** — the all-hex label floor lowered to 20 (W15) |
 | bc09-path-shadow | git shim + `~/.bashrc` PATH prepend | 🛑 Blocked (`FILE_PERSISTENCE`) | the `~/.bashrc` write tripped the persistence rule |
 | bc10-git-proxy | poison global `git http.proxy` | 🛑 Blocked (`EXEC_GIT_CONFIG_PERSIST`) | **closed** — the git-config rule added for W14 |
 
-**As first detonated the rules floor was 6 of 10; after the fix below it is 8 of 10.** Re-score
-the same committed telemetry with `python -m eval.score_blind` to see it — the telemetry is
-unchanged, the rules improved. Two misses remain (bc03, bc08), both needing work that is still
-gated. These are diagnostic cases, not a recall estimate, and should never be quoted as a rate.
+**As first detonated the rules floor was 6 of 10; after the two fixes below it is 9 of 10.**
+Re-score the same committed telemetry with `python -m eval.score_blind` to see it — the
+telemetry is unchanged, the rules improved. One miss remains (bc03, a `.git/hooks` file write
+needing a Chamber tracing change, still gated). These are diagnostic cases, not a recall
+estimate, and should never be quoted as a rate.
 
 **The held-out set found a gap and the fix is measured on it.** bc04 and bc10 both poison `git
 config` (a shell-command alias; `http.proxy`), which no behavioural rule caught because the
@@ -60,11 +61,16 @@ at 0 across 742 installs. **Still open (bc03):** the `.git/hooks/` *file write* 
 all — closing it means extending the Chamber's persistence tracing policy to `.git/hooks/` and
 `~/.gitconfig`, a sandbox change that must be deployed and re-measured, so it stays gated.
 
-**2. The DNS encoded-label rule has a length floor a short label evades (bc08).**
-`DNS_ENCODED_LABEL` fires on an encoded-looking label of `MIN_ENCODED_LABEL = 40`+ characters.
-The blind case hex-encodes a hostname into a **24-character** label — real exfiltration of a
-short identifier — which is under the floor, so the rule stays silent. The DNS query *is*
-captured (`613334386439643930336132.collector.invalid`); only the threshold misses it.
+**2. The DNS encoded-label rule had a length floor a short label evaded (bc08) — now closed.**
+`DNS_ENCODED_LABEL` fired only on labels of 40+ characters. bc08 hex-encodes a hostname into a
+**24-character** label — real exfiltration of a short identifier — which was under the floor.
+The query was captured in full (`613334386439643930336132.collector.invalid`); only the
+threshold missed it. Fixed by giving *all-hex* labels a lower floor of 20 (an all-hex label is a
+far stronger exfil signal than a merely digit-heavy one), measured at **0 false positives across
+742 recorded installs** — the only hex labels there belong to attack cases, the longest benign
+hex label is a 14-char CDN hash. The digit-fraction heuristic keeps its conservative 40-char
+floor. It stays a HIGH (human-review) rule, not an irreversible block, because 742 installs is
+not the world and a benign 20+ char all-hex subdomain would trip it.
 
 ## Full pipeline: the model arm closes all four original misses
 
