@@ -595,6 +595,21 @@ and all non-TCP, and sinkholes known exfil services — then ends in `RETURN`, s
 TCP is allowed. A payload can still reach a novel destination. "Network isolated" would be false;
 the write-up says so plainly, which is the right position for now.
 
+**Nov 3 — the policy is written; the live test is the owner's VM.** `chamber/provision/egress-policy-v2.sh`
+implements the DNS-name allowlist: dnsmasq adds the allowlisted names' resolved IPs to an ipset,
+and iptables allows the set and **logs + REJECTs** everything else, so an exfil attempt is
+recorded rather than completed. The allowlist and its tiers (T0 registry / T1 + node & github /
+T2 + vetted vendor CDNs) come straight from `eval/egress_allowlist.py`, whose offline analysis
+predicted the blast radius — at T1 only ~1% of 500 swept packages reach anything else and 0
+benign controls are affected. REJECT (not DROP) is chosen so a refused optional fetch fails fast
+instead of stalling a benign install into "Could not verify". Syntax-checked; **not** wired into
+provisioning and **not** for the live Chamber during judging.
+
+What it still needs is the thing that cannot be done from the dev machine: a **sacrificial
+second instance** running the full Chamber stack, to run the acceptance below live. There is no
+AWS tooling or credential on the dev box and no AMI to launch from, so this is an owner console
+operation — launch a replica (ideally after the W6 AMI exists), apply the script, run the test.
+
 **Plan (post-judging).** An egress broker: allow the npm registry and a vetted vendor-download
 list, drop everything else **after logging the attempt**, so the attempt remains evidence rather
 than vanishing. Then measure install success and review rate on the *same* 104 benign set plus a
