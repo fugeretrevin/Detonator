@@ -27,3 +27,4 @@ Thumbs.db
 # ~16k files; git archive only ships tracked files, but an accidental git add -A would
 # balloon the repo and the release artifact.
 detonator-motion-source/node_modules/
+detonator-motion-source/out/
