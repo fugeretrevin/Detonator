@@ -15,7 +15,7 @@ touches the Chamber or a live check.
 | W3 | 6 of 104 benign unverifiable | Medium | After |
 | W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
-| W6 | Single Chamber VM, no tested restore | Medium — **Nov 3: AMI taken (`ami-0aaee946a04551341`) + Elastic IP, so recovery is launch-from-AMI + reattach**; only the restore *drill* is unproven | Before |
+| W6 | Single Chamber VM, no tested restore | Medium — **Nov 4: drill demonstrated** — an AMI-launched instance detonated with `pre_seen==true`; only EIP-reassociation over pinned TLS remains a console step | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
 | W8 | Sandbox egress is open TCP | Medium (honestly documented) | **Allowlist validated live on a sacrificial replica Nov 4** — exfil refused, 0 benign regression; still off the judged Chamber |
 | W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
@@ -540,6 +540,23 @@ it. That remains an AWS-console action, and the drill in step 3 remains unrehear
 
 Severity is accordingly lower than it was — the failure mode is now "rebuild from scratch under
 time pressure" rather than "rebuild and then discover TLS no longer verifies".
+
+### Nov 4: the drill ran as a side effect of the W8 test — restore demonstrated
+
+The W8 sacrificial replica (`chamber-test`) **was** a launch-from-`ami-0aaee946a04551341`
+instance, and it ran real detonations end to end. One benign record from it
+(`lodash-benign.json`) shows `sensor.pre_seen == true`, `exit_code == 0`, with the full
+exec/connect/file/dns witness present — i.e. an instance restored from the AMI came up, started
+its services, and completed a detonation with the per-job sensor witness intact. That is the core
+of the step-3 drill: **launch from AMI → services run → detonation completes with
+`pre_seen == true`.**
+
+What this did *not* exercise: reassociating the production Elastic IP onto the restored box (the
+replica kept its own address) and therefore the pinned-TLS path end to end — but the EIP
+mechanics were separately confirmed Nov 3, and the cert stays valid precisely because the address
+is Elastic. So the remaining unproven sliver is "reassociate the EIP and hit `/health` over the
+pinned cert," a console action, not a from-scratch rebuild. The drill's expensive unknown —
+does an AMI-launched Chamber actually detonate? — is now answered yes.
 
 ---
 
