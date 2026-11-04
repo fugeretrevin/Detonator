@@ -28,3 +28,5 @@ Thumbs.db
 # balloon the repo and the release artifact.
 detonator-motion-source/node_modules/
 detonator-motion-source/out/
+# Release artifact built by scripts/scan_release.py --keep; never committed.
+/detonator-submission.zip
