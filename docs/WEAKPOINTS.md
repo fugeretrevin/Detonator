@@ -18,7 +18,7 @@ touches the Chamber or a live check.
 | W6 | Single Chamber VM, no tested restore | Medium — **Nov 4: drill demonstrated** — an AMI-launched instance detonated with `pre_seen==true`; only EIP-reassociation over pinned TLS remains a console step | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
 | W8 | Sandbox egress is open TCP | Medium (honestly documented) | **Allowlist validated live on a sacrificial replica Nov 4** — exfil refused, 0 benign regression; still off the judged Chamber |
-| W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
+| W9 | Private-repo path never exercised | Low–Medium — **Nov 4: exercised live** on a private repo — check concluded, public dashboard stayed empty, no token in the comment; only mid-run token-revocation untested | Before (cheap) |
 | W10 | Modal token not rotated | Medium | Before (1 min) |
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
 | W12 | Red-team set is not blind | Medium (claim hygiene) | After |
@@ -833,6 +833,28 @@ rows naming that repo, verified by loading it signed-out.
 
 **Gate: before the deadline — it is cheap and it closes a "never demonstrated" row in the
 audit.** Needs you to create the repo.
+
+### Exercised live, Nov 4 — three of the four checks pass on a real private repo
+
+A throwaway **private** repo (`pr-detonator-demo/tes`, under the allowlisted org, now to be
+deleted) got a one-line dependency-bump PR (`lodash` 4.17.20 → 4.17.21). On the live system:
+
+- **The check ran and concluded** on a private repo: `PR Detonator — completed / success`
+  (Clean, the correct call for a benign bump). The private-repo clone path (host-side read-only
+  token, pinned TLS, token never entering the sandbox) therefore works end to end on real GitHub.
+- **The public dashboard stayed empty for it.** Fetched signed-out, the dashboard contains no row
+  for the repo — no slug `pr-detonator-demo/tes`, no PR title, no head SHA, no job id. This is
+  `build_record` returning `None` for a private repo (`brain/runlog.py`), confirmed live rather
+  than only unit-tested: a private repo's name, PR title and contacted hosts never reach the
+  shared, unauthenticated Dict.
+- **No secret leaked into the PR comment.** The posted comment carries only public registry IPs,
+  the package name and a job UUID; the canary `~/.npmrc` read is shown as a file *open* with no
+  value, and no GitHub/clone token appears. All untrusted fields are HTML-escaped as designed.
+
+**The one sub-check not exercised:** revoking the installation token mid-run to confirm a clean
+*Could not verify* rather than a crash. It is hard to time by hand and low-value next to the
+three above; the fail-closed path it would exercise is already covered by `unverified_reason`
+and its tests. Recorded as the remaining open sliver, not claimed as done.
 
 ---
 
