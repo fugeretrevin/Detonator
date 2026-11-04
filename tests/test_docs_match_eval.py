@@ -383,13 +383,17 @@ def test_the_documented_rule_count_matches_the_code():
         ids |= set(re.findall(r"""hit\(\s*["']([A-Z][A-Z0-9_]+)""", src))
     assert len(ids) >= 10, f"the rule-id scan found only {sorted(ids)}; the pattern has rotted"
 
-    text = normalised(ROOT / "docs" / "SUBMISSION.md")
-    m = re.search(r"(\d+) deterministic rules", text)
-    assert m, "SUBMISSION no longer states a rule count"
-    assert int(m.group(1)) == len(ids), (
-        f"SUBMISSION says {m.group(1)} deterministic rules; brain/ defines {len(ids)}: "
-        f"{', '.join(sorted(ids))}"
-    )
+    # Every document that states a rule count must agree with the source. SUBMISSION once said
+    # 15 while the code had 16; the claim ledger once said 18 while the code had 19 — the ledger
+    # was not covered, so it drifted. Now both are.
+    for rel in ("docs/SUBMISSION.md", "eval/CLAIM_LEDGER.md"):
+        text = normalised(ROOT / rel)
+        m = re.search(r"(\d+) deterministic rules", text)
+        assert m, f"{rel} no longer states a rule count"
+        assert int(m.group(1)) == len(ids), (
+            f"{rel} says {m.group(1)} deterministic rules; brain/ defines {len(ids)}: "
+            f"{', '.join(sorted(ids))}"
+        )
 
 
 def test_the_caveat_the_generators_emit_says_both_required_things():
