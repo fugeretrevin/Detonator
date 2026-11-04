@@ -25,7 +25,12 @@ set -euo pipefail
 BRIDGE=det0
 CHAIN=DETONATOR-EGRESS
 ALLOW_SET=detonator-allow
-DNSMASQ_D=/etc/dnsmasq.d/detonator-egress-allow.conf
+# The Chamber's dnsmasq runs with a single --conf-file and no drop-in directory (verified on the
+# box), so the ipset directives are appended to that file between markers and removed on
+# rollback, rather than dropped into a non-existent /etc/dnsmasq.d.
+DNSMASQ_CONF=/etc/pr-detonator/dnsmasq.conf
+MARK_BEGIN="# >>> detonator-egress-allow (managed by egress-policy-v2.sh)"
+MARK_END="# <<< detonator-egress-allow"
 TIER="${EGRESS_TIER:-T2}"
 
 REGISTRY=(registry.npmjs.org registry.yarnpkg.com)
@@ -47,13 +52,23 @@ command -v ipset >/dev/null || { echo "ipset not installed (apt-get install ipse
 ipset create "$ALLOW_SET" hash:ip timeout 1800 2>/dev/null || ipset flush "$ALLOW_SET"
 
 # 2. Tell the Chamber's dnsmasq to populate the set for exactly the allowlist names. The
-#    detonator-dns service already routes sandbox DNS through dnsmasq, so this is additive.
+#    detonator-dns service already routes sandbox DNS through dnsmasq, so this is additive. The
+#    directives go between markers in the one conf file; a prior block is stripped first so this
+#    is idempotent, and `--rollback` (below) removes it.
+sed -i "/^${MARK_BEGIN}$/,/^${MARK_END}$/d" "$DNSMASQ_CONF"
+if [ "${1:-}" = "--rollback" ]; then
+  ipset destroy "$ALLOW_SET" 2>/dev/null || true
+  systemctl restart detonator-dns.service 2>/dev/null || true
+  bash "$(dirname "$0")/iptables.sh" >/dev/null && echo "rolled back to baseline iptables" && exit 0
+fi
 {
-  echo "# EXPERIMENTAL W8 egress allowlist ($TIER). Managed by egress-policy-v2.sh."
+  echo "$MARK_BEGIN"
+  echo "# EXPERIMENTAL W8 egress allowlist ($TIER)."
   for h in "${HOSTS[@]}"; do
     echo "ipset=/$h/$ALLOW_SET"
   done
-} > "$DNSMASQ_D"
+  echo "$MARK_END"
+} >> "$DNSMASQ_CONF"
 systemctl restart detonator-dns.service 2>/dev/null || systemctl restart dnsmasq 2>/dev/null || true
 
 # 3. Rewrite the egress chain: keep the existing refusals, then ALLOW the allowlisted set and

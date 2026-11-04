@@ -17,7 +17,7 @@ touches the Chamber or a live check.
 | W5 | `rt08` open miss | Medium | After |
 | W6 | Single Chamber VM, no tested restore | Medium — **Nov 3: AMI taken (`ami-0aaee946a04551341`) + Elastic IP, so recovery is launch-from-AMI + reattach**; only the restore *drill* is unproven | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
-| W8 | Sandbox egress is open TCP | Medium (honestly documented) | After |
+| W8 | Sandbox egress is open TCP | Medium (honestly documented) | **Allowlist validated live on a sacrificial replica Nov 4** — exfil refused, 0 benign regression; still off the judged Chamber |
 | W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
 | W10 | Modal token not rotated | Medium | Before (1 min) |
 | W11 | Disclosed package unfixed; name in git history | Medium (ethical) | Ongoing |
@@ -618,6 +618,8 @@ What it still needs is the thing that cannot be done from the dev machine: a **s
 second instance** running the full Chamber stack, to run the acceptance below live. There is no
 AWS tooling or credential on the dev box and no AMI to launch from, so this is an owner console
 operation — launch a replica (ideally after the W6 AMI exists), apply the script, run the test.
+*(Done Nov 4 — the owner launched the replica and the live result is in "Validated live" at the
+bottom of this section.)*
 
 **Plan (post-judging).** An egress broker: allow the npm registry and a vetted vendor-download
 list, drop everything else **after logging the attempt**, so the attempt remains evidence rather
@@ -655,10 +657,37 @@ fast, but a `DROP` makes a client wait out its own timeout, so a package that to
 may still stall. And an allowlist fitted on 500 packages from one sampling of the registry says
 nothing certain about the 501st. Only the live run in the plan settles those.
 
-**Gate: still after judging.** Changing egress two days out risks breaking benign installs across
-the whole control set with no time to re-validate — and the honest documentation is already there.
-What changed is that the broker is no longer an unmeasured guess: its cost is now bounded, which
-is the part that can be done without risk.
+**Validated live, Nov 4 — the acceptance test, on a sacrificial replica.** The owner launched a
+second EC2 instance from the Chamber AMI (`chamber-test`, now terminated). Over SSH I installed
+`ipset`, took a baseline, applied `egress-policy-v2.sh` at tier T2, and re-detonated the same
+manifest: two benign installs (`lodash`, `esbuild`) and one exfil payload (`v08-env-exfil`,
+which opens a TCP connection to `203.0.113.10` — a TEST-NET-3 address that is *not* on the
+allowlist).
+
+- **Exfil refused and recorded.** With the policy active, the firewall logged and rejected the
+  attempt: `DETONATOR-DENIED-EGRESS ... SRC=10.250.0.10 DST=203.0.113.10 ... PROTO=TCP DPT=80 ...
+  SYN`. The SYN hit the final `REJECT --reject-with tcp-reset`, so the connection never
+  established and the attempt survives as evidence — exactly the "attempt becomes evidence"
+  behaviour the plan asked for. Baseline (open-TCP) policy left the same connection unflagged.
+- **Zero benign regression.** `lodash` and `esbuild` both installed at `exit=0` under the
+  allowlist, identical to baseline — 0 packages lost, inside the "within 2 of baseline"
+  criterion. 12 allowlist hosts resolved into the `detonator-allow` ipset, so the registry and
+  CDN fetches went through untouched.
+- **A real integration bug the live run caught.** The first apply failed: the script assumed a
+  `/etc/dnsmasq.d/` drop-in directory, but the Chamber's dnsmasq runs with a single
+  `--conf-file=/etc/pr-detonator/dnsmasq.conf` and no drop-in dir. Fixed to append the `ipset=`
+  directives between managed markers in that one file (with a `--rollback` that strips them and
+  restores baseline iptables). This is the kind of defect only a live apply surfaces, which is
+  why the gate held the change until there was a sacrificial box to try it on.
+
+Every acceptance criterion is now met on a live replica: zero unapproved transmission, benign
+success within 2 of baseline, attempts recorded in the firewall log, documented rollback.
+
+**Gate: the policy stays off the judged Chamber.** The result lifts this from "honestly
+documented open egress" to "allowlist demonstrated to work on a replica," but swapping egress on
+the live Chamber two days out still risks a benign-install regression the full control set has no
+time to re-validate against. The validated script and its result are the deliverable; flipping it
+on is a post-judging change with a now-measured, bounded cost.
 
 ---
 
