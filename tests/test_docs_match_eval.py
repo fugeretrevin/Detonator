@@ -386,7 +386,7 @@ def test_the_documented_rule_count_matches_the_code():
     # Every document that states a rule count must agree with the source. SUBMISSION once said
     # 15 while the code had 16; the claim ledger once said 18 while the code had 19 — the ledger
     # was not covered, so it drifted. Now both are.
-    for rel in ("docs/SUBMISSION.md", "eval/CLAIM_LEDGER.md"):
+    for rel in ("docs/SUBMISSION.md", "eval/CLAIM_LEDGER.md", "docs/FRAMING.md"):
         text = normalised(ROOT / rel)
         m = re.search(r"(\d+) deterministic rules", text)
         assert m, f"{rel} no longer states a rule count"
