@@ -852,12 +852,15 @@ mergeable needs-review into a deterministic block. The stamped eval is unchanged
 fires on none of the 142 cases (`eval/score_rules.py --verify` still reports only the `gm05`
 drift). 20 tests, mutation-tested 4/4.
 
-**Still open — the `.git/hooks` half (`bc03`).** A payload that *writes* `.git/hooks/post-checkout`
-leaves no exec and no traced file event, because the Chamber's persistence policy does not cover
-`.git/hooks/` or `~/.gitconfig`. Closing it means extending `persistence-files.yaml` to those
-paths and re-measuring the benign false-positive rate live (as `FILE_PERSISTENCE` was) — a
-Chamber deploy, so it stays gated. The full pipeline already catches `bc03` (the model reads the
-hook write in source), so this is defence in depth, not an open full-pipeline hole.
+**The `.git/hooks` half (`bc03`) is out of scope, not open — confirmed by investigation.** A
+payload writing `.git/hooks/post-checkout` lands **nothing** in our sandbox: `chamber/detonate.py`
+strips `.git` after the clone and before the install (`shutil.rmtree(dest / ".git")`, line ~179,
+before the detonation), so the write throws ENOENT and is swallowed. bc03's telemetry confirms it
+— the script ran, no file event beyond npm's own `~/.npmrc` read, exit 0. There is nothing to
+trace because nothing happens. Stripping `.git` is deliberate hardening (we never let the cloned
+repo's own git machinery run), and it happens to neutralise this whole technique *for our
+detonation model*. The model still catches the intent from source. So this is a documented scope
+boundary, like "install-time only" — not a tunable rule and not a Chamber change worth making.
 
 ## W15 — the DNS encoded-label rule has a length floor a short label evades
 

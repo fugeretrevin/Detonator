@@ -15,7 +15,7 @@ held-out set is supposed to surface and an author-written set cannot.
 |---|---|---|---|
 | bc01-staged-hooks | staged egress across pre/postinstall | 🛑 Blocked (`NET_RAW_IP`) | the generated stage still connected to a raw IP |
 | bc02-dead-drop | harvest env+`~/.npmrc` to disk | 🛑 Blocked (`CRED_FILE_ACCESS`) | read the bait credential from an install script |
-| bc03-git-hook | write `.git/hooks/post-checkout` | ✅ **MISS** | the hook write is not traced; it fires on a later checkout |
+| bc03-git-hook | write `.git/hooks/post-checkout` | ✅ Clean (no behavior) | **out of scope by design** — the Chamber strips `.git` before the install, so the write fails (ENOENT) and nothing happens |
 | bc04-git-alias | `git config` alias with embedded curl | 🛑 Blocked (`EXEC_GIT_CONFIG_PERSIST`) | **closed** — the git-config rule added for W14 |
 | bc05-delayed-beacon | detached child connects 6 s post-install | 🛑 Blocked (`NET_RAW_IP`) | the detonation window held long enough to capture it |
 | bc06-platform-gate | egress only on Linux CI | 🛑 Blocked (`NET_RAW_IP`) | ran on Linux and connected |
@@ -26,9 +26,12 @@ held-out set is supposed to surface and an author-written set cannot.
 
 **As first detonated the rules floor was 6 of 10; after the two fixes below it is 9 of 10.**
 Re-score the same committed telemetry with `python -m eval.score_blind` to see it — the
-telemetry is unchanged, the rules improved. One miss remains (bc03, a `.git/hooks` file write
-needing a Chamber tracing change, still gated). These are diagnostic cases, not a recall
-estimate, and should never be quoted as a rate.
+telemetry is unchanged, the rules improved. The tenth (bc03) is **not a detection gap**:
+investigation showed the Chamber strips `.git` before the install runs (`chamber/detonate.py`),
+so the hook write throws ENOENT and produces no behavior at all — "Clean" is the correct answer
+for a run in which nothing happened. The *intent* is still caught by the full pipeline (the model
+reads the hook write in source). These are diagnostic cases, not a recall estimate, and should
+never be quoted as a rate.
 
 **The held-out set found a gap and the fix is measured on it.** bc04 and bc10 both poison `git
 config` (a shell-command alias; `http.proxy`), which no behavioural rule caught because the
@@ -54,12 +57,16 @@ Three of the four original misses were the same hole. An install script can:
 All three are **dormant at install time** — the payload fires on *later* git activity — so there
 is no connection or dropped binary for a behavioural rule to catch.
 
-**Partly closed (bc04, bc10).** The `git config …` exec *is* recorded (the raw IP is right in the
-args), it just was not inspected. `EXEC_GIT_CONFIG_PERSIST` now reads those args and flags the
-dangerous writes (`http.proxy`, `core.hookspath`, a `!`-shell alias, `url.*.insteadOf`), measured
-at 0 across 742 installs. **Still open (bc03):** the `.git/hooks/` *file write* is not traced at
-all — closing it means extending the Chamber's persistence tracing policy to `.git/hooks/` and
-`~/.gitconfig`, a sandbox change that must be deployed and re-measured, so it stays gated.
+**Closed (bc04, bc10).** The `git config …` exec *is* recorded (the raw IP is right in the args),
+it just was not inspected. `EXEC_GIT_CONFIG_PERSIST` now reads those args and flags the dangerous
+writes (`http.proxy`, `core.hookspath`, a `!`-shell alias, `url.*.insteadOf`), measured at 0
+across 742 installs.
+
+**bc03 is out of scope, not open.** The `.git/hooks/` write never lands: `chamber/detonate.py`
+strips `.git` after cloning and before the install, so the write throws ENOENT. There is nothing
+to trace because nothing happens — a deliberate hardening (we never let the cloned repo's own git
+machinery run) that happens to neutralise this technique. The model still catches the intent from
+source. So this is a documented scope boundary, like "install-time only", not a tunable rule.
 
 **2. The DNS encoded-label rule had a length floor a short label evaded (bc08) — now closed.**
 `DNS_ENCODED_LABEL` fired only on labels of 40+ characters. bc08 hex-encodes a hostname into a

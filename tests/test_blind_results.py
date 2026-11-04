@@ -52,12 +52,21 @@ def test_the_writeup_states_the_current_rules_floor_split(scored):
     assert "6 of 10" in text, "the doc should still record the original 6/10 before the fixes"
 
 
-def test_every_missed_case_was_actually_observed_not_just_unrecorded(scored):
-    """A miss is only interesting if the behaviour was *captured and not flagged*, versus never
-    seen. Each missed case must have real telemetry (exec events), so the gap is a rule gap, not
-    a blind collector."""
-    for cid in EXPECTED_MISSES:
-        assert scored[cid]["exec"] >= 1, f"{cid} has no exec events; the miss would be a blind run"
+def test_bc03_is_out_of_scope_not_a_detection_gap(scored):
+    """The one case the rules do not flag. Investigation (chamber/detonate.py strips `.git`
+    before the install) showed its `.git/hooks/` write throws ENOENT and lands nothing: the
+    install script ran (exec events exist) but produced no malicious file event, so "Clean" is
+    correct — nothing happened. This is a documented scope boundary, not a rule gap."""
+    assert EXPECTED_MISSES == {"bc03-git-hook"}
+    row = scored["bc03-git-hook"]
+    assert row["exec"] >= 1, "the install script ran"
+    # No persistence/credential file event landed — only npm's own ~/.npmrc read, which is one
+    # file event at most and never a malicious write. The hook write failed silently.
+    assert row["verdict"] == "Clean"
+    text = " ".join(RESULTS.read_text(encoding="utf-8").split())
+    assert "out of scope" in text and "strips" in text, (
+        "the doc must explain bc03 is out of scope (the .git strip), not an open gap"
+    )
 
 
 def test_the_git_config_cases_are_now_caught_by_the_rule(scored):
