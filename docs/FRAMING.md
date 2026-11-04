@@ -22,6 +22,12 @@ laptop and CI runner that installs it — *before* anyone imports a line of its 
 event-stream (2018), ua-parser-js (2021) and the Shai-Hulud worm (2025) spread. The pull request
 that lets one in is usually a **one-line version bump**, so there is nothing in the diff to review.
 
+The surface is enormous. npm hosts on the order of **6 million packages** serving **billions of
+downloads a week**, and roughly **half of that traffic flows through packages maintained by a
+single person** — the exact account-takeover vector Shai-Hulud used. A typical project pulls in
+hundreds of transitive dependencies, any one of which can execute code at install time.
+(Ecosystem figures: ecosyste.ms, Oct 2026; npm supply-chain audit, Q2 2026.)
+
 And increasingly nobody reviews it anyway: **AI coding agents now open the PRs and pick the
 dependencies** — sometimes packages that do not exist yet, which attackers then register
 (slopsquatting). Machine-written dependency changes exploded exactly as human review became the
@@ -216,6 +222,12 @@ the product binary from a hardcoded bare IP with **TLS verification disabled** (
 false`), then extracts and runs it. A behavioral rule found a real-world weakness with zero prior
 knowledge, and the signal that caught it — a connection that skipped DNS — is one only this
 architecture can see.
+
+That is one unplanned hit from a 100-package glance at a registry of ~6 million. It is not a
+widespread 0-day — the package is niche and the exposure needs an on-path attacker or control of
+that address — but it is the point in miniature: across a surface that large, with billions of
+weekly installs running code before anyone reads it, behavioral detonation surfaces real
+install-time exposure that advisory lookups and source review structurally miss.
 
 ---
 
