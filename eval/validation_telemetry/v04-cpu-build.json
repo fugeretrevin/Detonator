@@ -1,0 +1,91 @@
+{
+ "job_id": "4c85e0fe-09be-42f4-8146-f4d576a1f008",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 9.0,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:25.497587376Z",
+   "pid": 289157,
+   "ppid": 289132,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-4453884964dabd53; \"$@\"; rc=$?; /bin/true post-4453884964dabd53; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v04-cpu-build",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:25.505981310Z",
+   "pid": 289197,
+   "ppid": 289157,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v04-cpu-build",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:25.507305373Z",
+   "pid": 289197,
+   "ppid": 289197,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v04-cpu-build",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:25.986992119Z",
+   "pid": 289217,
+   "ppid": 289197,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v04-cpu-build"
+  },
+  {
+   "ts": "2026-11-04T00:40:25.988263987Z",
+   "pid": 289218,
+   "ppid": 289217,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v04-cpu-build"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:25.630032111Z",
+   "pid": 289197,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v04-cpu-build/scripts/setup.js",
+   "package": null,
+   "sha256": "4db508bfa9a849749f6d093d816ba87a6aef830f17023721ca5f8dabc2a5d7ce",
+   "content": "// Simulate a CPU-bound optimizing build pass. No network, no file access.\nconst end = Date.now() + 6000;\nlet x = 0;\nwhile (Date.now() < end) { x += Math.sqrt(x + 1) % 7; }\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v04@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 6s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 6.66,
+  "peak_memory_mb": 41.5,
+  "samples": 14
+ }
+}

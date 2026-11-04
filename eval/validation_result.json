@@ -1,0 +1,100 @@
+{
+ "rows": [
+  {
+   "id": "v01-prebuilt-addon",
+   "label": "Clean",
+   "tool": "Clean",
+   "cat": "match"
+  },
+  {
+   "id": "v02-node-gyp-build",
+   "label": "Clean",
+   "tool": "Could not verify",
+   "cat": "sandbox-limit"
+  },
+  {
+   "id": "v03-mirror-dns",
+   "label": "Clean",
+   "tool": "Clean",
+   "cat": "match"
+  },
+  {
+   "id": "v04-cpu-build",
+   "label": "Clean",
+   "tool": "Clean",
+   "cat": "match"
+  },
+  {
+   "id": "v05-cache-own-dir",
+   "label": "Clean",
+   "tool": "Clean",
+   "cat": "match"
+  },
+  {
+   "id": "v06-install-telemetry",
+   "label": "Needs review",
+   "tool": "Clean",
+   "cat": "benign-calibration"
+  },
+  {
+   "id": "v07-browser-download",
+   "label": "Clean",
+   "tool": "Clean",
+   "cat": "match"
+  },
+  {
+   "id": "v08-env-exfil",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v09-cred-harvest",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v10-reverse-shell",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v11-drop-and-run",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v12-bashrc-persist",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v13-dns-exfil",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  },
+  {
+   "id": "v14-token-steal",
+   "label": "Blocked",
+   "tool": "Blocked",
+   "cat": "match"
+  }
+ ],
+ "categories": {
+  "match": 12,
+  "sandbox-limit": 1,
+  "benign-calibration": 1
+ },
+ "summary": {
+  "exact_match": 12,
+  "total": 14,
+  "dangerous_misses": 0,
+  "attacks_blocked": 7,
+  "attacks_total": 7
+ }
+}

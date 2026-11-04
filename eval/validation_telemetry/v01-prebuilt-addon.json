@@ -1,0 +1,97 @@
+{
+ "job_id": "4ccae4db-def6-4940-b1bb-e8c375514b83",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 3.04,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:12.216754970Z",
+   "pid": 288614,
+   "ppid": 288589,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-a7e6607a92aa5db3; \"$@\"; rc=$?; /bin/true post-a7e6607a92aa5db3; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v01-prebuilt-addon",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:12.220388395Z",
+   "pid": 288654,
+   "ppid": 288614,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v01-prebuilt-addon",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:12.221277348Z",
+   "pid": 288654,
+   "ppid": 288654,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v01-prebuilt-addon",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:12.680397789Z",
+   "pid": 288673,
+   "ppid": 288654,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v01-prebuilt-addon"
+  },
+  {
+   "ts": "2026-11-04T00:40:12.681335368Z",
+   "pid": 288674,
+   "ppid": 288673,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v01-prebuilt-addon"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [
+  {
+   "ts": "2026-11-04T00:40:12Z",
+   "domain": "downloads.example.com",
+   "answers": []
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:12.333763881Z",
+   "pid": 288654,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v01-prebuilt-addon/scripts/setup.js",
+   "package": null,
+   "sha256": "9ab59dbdad73aa3bae731fdba10dd7a2b5b4308786b86b2bb54fd843169a0893",
+   "content": "const https = require(\"https\"), fs = require(\"fs\"), path = require(\"path\");\n// Fetch the prebuilt native addon for this platform into our own build dir (like node-sass).\nconst url = \"https://downloads.example.com/libfast/v2.1.0/libfast-linux-x64.node\";\nconst dir = path.join(__dirname, \"..\", \"build\");\ntry { fs.mkdirSync(dir, { recursive: true }); } catch {}\nconst out = fs.createWriteStream(path.join(dir, \"libfast.node\"));\nhttps.get(url, (res) => { res.pipe(out); }).on(\"error\", () => {});\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v01@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 474ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.65,
+  "peak_memory_mb": 40.9,
+  "samples": 2
+ }
+}

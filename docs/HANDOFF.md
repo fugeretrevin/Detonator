@@ -3,7 +3,7 @@
 **Written 2026-11-02 (evening), for the next session on the workstation.** Submission
 deadline: **Wed 2026-11-04, 9:00 pm ET**. Plan to submit by mid-afternoon Nov 4.
 
-**State at this commit:** `main` is pushed and clean; **1043 tests pass**, `ruff check` clean
+**State at this commit:** `main` is pushed and clean; **1054 tests pass**, `ruff check` clean
 (Windows; one symlink test only runs on Linux). Two feature branches are pushed and **not
 merged** (§3). **`main` is ahead of what is deployed** — §5b (Chamber) and §5c (Brain) name
 every divergence and say what each one would change; neither blocks submitting. Run

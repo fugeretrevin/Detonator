@@ -1,0 +1,97 @@
+{
+ "job_id": "4181faba-d77f-44d8-b40b-e9eb4e2daefe",
+ "status": "completed",
+ "exit_code": 0,
+ "duration_s": 3.09,
+ "exec_events": [
+  {
+   "ts": "2026-11-04T00:40:38.895409494Z",
+   "pid": 289520,
+   "ppid": 289496,
+   "binary": "/usr/local/bin/docker-entrypoint.sh",
+   "args": "/usr/local/bin/docker-entrypoint.sh /bin/sh -c \"/bin/true pre-3e45587b28900552; \"$@\"; rc=$?; /bin/true post-3e45587b28900552; exit $rc\" detonator-witness npm install --no-audit --no-fund --prefix payloads/v06-install-telemetry",
+   "parent_binary": "/usr/bin/containerd-shim-runc-v2",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:38.900429312Z",
+   "pid": 289559,
+   "ppid": 289520,
+   "binary": "/usr/local/bin/npm",
+   "args": "node /usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v06-install-telemetry",
+   "parent_binary": "/bin/sh",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:38.901537998Z",
+   "pid": 289559,
+   "ppid": 289559,
+   "binary": "/usr/local/bin/node",
+   "args": "/usr/local/bin/npm install --no-audit --no-fund --prefix payloads/v06-install-telemetry",
+   "parent_binary": "/usr/local/bin/npm",
+   "uid": 10001,
+   "cwd": "/work"
+  },
+  {
+   "ts": "2026-11-04T00:40:39.359675840Z",
+   "pid": 289578,
+   "ppid": 289559,
+   "binary": "/usr/bin/sh",
+   "args": "-c \"node scripts/setup.js\"",
+   "parent_binary": "/usr/local/bin/node",
+   "uid": 10001,
+   "cwd": "/work/payloads/v06-install-telemetry"
+  },
+  {
+   "ts": "2026-11-04T00:40:39.360626704Z",
+   "pid": 289579,
+   "ppid": 289578,
+   "binary": "/usr/local/bin/node",
+   "args": "scripts/setup.js",
+   "parent_binary": "/usr/bin/sh",
+   "uid": 10001,
+   "cwd": "/work/payloads/v06-install-telemetry"
+  }
+ ],
+ "connect_events": [],
+ "dns_queries": [
+  {
+   "ts": "2026-11-04T00:40:39Z",
+   "domain": "telemetry.example.com",
+   "answers": []
+  }
+ ],
+ "file_events": [
+  {
+   "ts": "2026-11-04T00:40:39.012294037Z",
+   "pid": 289559,
+   "binary": "/usr/local/bin/node",
+   "path": "/home/runner/.npmrc"
+  }
+ ],
+ "executed_scripts": [
+  {
+   "path": "/work/payloads/v06-install-telemetry/scripts/setup.js",
+   "package": null,
+   "sha256": "ed3a194a53e0a043c5150d966e19f6c41062a81cbfe1ce4c60da31f959c6730d",
+   "content": "const https = require(\"https\");\n// Anonymous install telemetry: node version + platform only, no env, no secrets.\nconst body = JSON.stringify({\n  node: process.version, platform: process.platform, arch: process.arch,\n});\nconst r = https.request(\n  { host: \"telemetry.example.com\", method: \"POST\", path: \"/install\", timeout: 3000 });\nr.on(\"error\", () => {}); r.on(\"timeout\", () => r.destroy());\nr.end(body);\n",
+   "truncated": false
+  }
+ ],
+ "decoys": {},
+ "stdout_tail": "\n> v06@1.0.0 postinstall\n> node scripts/setup.js\n\n\nup to date in 464ms\n",
+ "stderr_tail": "",
+ "truncated": false,
+ "error": null,
+ "sensor": {
+  "pre_seen": true,
+  "post_seen": true
+ },
+ "resources": {
+  "cpu_s": 0.65,
+  "peak_memory_mb": 40.5,
+  "samples": 2
+ }
+}

@@ -15,7 +15,7 @@ touches the Chamber or a live check.
 | W3 | 6 of 104 benign unverifiable | Medium | After |
 | W4 | Grounding metric narrower than it sounds | Medium (we overstated it) | **(a) wording done Nov 3**; (b) checker after judging |
 | W5 | `rt08` open miss | Medium | After |
-| W6 | Single Chamber VM, no tested restore | High (demo-day risk) — **lower since Nov 3: the IP is Elastic, so TLS pinning survives a reboot**; the missing AMI is what's left | Before |
+| W6 | Single Chamber VM, no tested restore | Medium — **Nov 3: AMI taken (`ami-0aaee946a04551341`) + Elastic IP, so recovery is launch-from-AMI + reattach**; only the restore *drill* is unproven | Before |
 | W7 | Reconciler deployed but never fired | Medium | Before |
 | W8 | Sandbox egress is open TCP | Medium (honestly documented) | After |
 | W9 | Private-repo path never exercised | Low–Medium | Before (cheap) |
@@ -511,6 +511,15 @@ doesn't cost money or confuse the Brain.
 
 **Gate: before the deadline.** It costs one snapshot and about half an hour, and it is the
 difference between a bad hour and a lost submission. **Ask before creating any AWS resource.**
+
+### Nov 3: AMI snapshot taken — `ami-0aaee946a04551341`
+
+The snapshot exists (owner took it while the Chamber was idle), so the "nothing to restore from"
+half of W6 is closed. Recovery is now the fast path: launch an instance from
+`ami-0aaee946a04551341`, **reassociate the Elastic IP** (below), restart the services, hit
+`/health`. No from-scratch provisioning, and because the address is Elastic the pinned TLS cert
+stays valid — no cert regeneration or Modal-secret update. What remains unproven is the *drill*
+(launching from it end-to-end once), which is quick but not yet done.
 
 ### Nov 3: the address is an **Elastic IP** — owner confirmed
 

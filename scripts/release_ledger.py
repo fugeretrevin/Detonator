@@ -115,6 +115,14 @@ def model_facts() -> dict[str, str]:
     return {"Model(s) in the stamped eval": ", ".join(sorted(models)) or "unknown"}
 
 
+# Facts the owner has supplied (no local command answers these; recorded here once known).
+OWNER_KNOWN: tuple[tuple[str, str], ...] = (
+    # W6 AMI snapshot, taken 2026-11-03 while the Chamber was idle. The address is an Elastic IP
+    # (3.223.99.234), so a replica launched from this AMI with the EIP reattached keeps the
+    # pinned TLS cert valid — recovery is launch-from-AMI + reassociate, no cert regeneration.
+    ("AMI snapshot id", "ami-0aaee946a04551341"),
+)
+
 # Fields no local command can answer, with the command that does.
 _SSH = "ssh to the Chamber, then: "
 OWNER_FIELDS: tuple[tuple[str, str], ...] = (
@@ -124,12 +132,6 @@ OWNER_FIELDS: tuple[tuple[str, str], ...] = (
         "Sandbox image digest",
         _SSH + "docker image inspect --format '{{index .RepoDigests 0}}' detonator-sandbox:latest",
     ),
-    (
-        "AMI snapshot id",
-        "AWS console (W6) — the last open half of W6; the address question is "
-        "settled: 3.223.99.234 is an Elastic IP, so TLS pinning survives a "
-        "reboot",
-    ),  # fmt: skip
     ("Demo video URL", "paste into docs/SUBMISSION.md, then confirm it plays signed out (W1)"),
     ("Demo PR head SHAs", "the exact SHAs the recorded check runs belong to"),
     ("Modal token rotated", "owner confirms; do before any deploy (W10)"),
@@ -163,6 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     known.update(eval_facts())
     known.update(model_facts())
     known.update(sbom_facts())
+    known.update(dict(OWNER_KNOWN))
 
     todo = list(OWNER_FIELDS)
     if args.modal:
