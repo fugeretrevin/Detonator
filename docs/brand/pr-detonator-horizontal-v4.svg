@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 256" width="920" height="256"
+     role="img" aria-labelledby="title">
+  <title id="title">PR Detonator</title>
+  <g id="icon">
+  <defs>
+    <!-- Costume: union of an ellipse and 12 puffs. Stroked pass below, fill pass on
+         top, so only the outer edge carries the outline. -->
+    <g id="wool">
+      <ellipse cx="128" cy="136" rx="80" ry="88"/>
+      <circle cx="149.2" cy="49.1" r="22"/>
+      <circle cx="186.0" cy="72.4" r="22"/>
+      <circle cx="207.2" cy="112.7" r="22"/>
+      <circle cx="207.2" cy="159.3" r="22"/>
+      <circle cx="186.0" cy="199.6" r="22"/>
+      <circle cx="149.2" cy="222.9" r="22"/>
+      <circle cx="106.8" cy="222.9" r="22"/>
+      <circle cx="70.0" cy="199.6" r="22"/>
+      <circle cx="48.8" cy="159.3" r="22"/>
+      <circle cx="48.8" cy="112.7" r="22"/>
+      <circle cx="70.0" cy="72.4" r="22"/>
+      <circle cx="106.8" cy="49.1" r="22"/>
+    </g>
+    <g id="paws">
+      <ellipse cx="91" cy="214" rx="10" ry="12"/>
+      <circle cx="101" cy="205" r="4.5"/>
+      <circle cx="103.5" cy="214" r="4.5"/>
+      <circle cx="101" cy="223" r="4.5"/>
+      <ellipse cx="165" cy="214" rx="10" ry="12"/>
+      <circle cx="155" cy="205" r="4.5"/>
+      <circle cx="152.5" cy="214" r="4.5"/>
+      <circle cx="155" cy="223" r="4.5"/>
+    </g>
+  </defs>
+
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- Wolf ears, tucked behind the hood -->
+    <g id="wolf-ears" fill="#4B4C54" stroke="#151518" stroke-width="6">
+      <path d="M74 64 L78 4 L116 40 Z"/>
+      <path d="M182 64 L178 4 L140 40 Z"/>
+    </g>
+
+    <!-- Sheep costume -->
+    <use href="#wool" fill="#151518" stroke="#151518" stroke-width="12"/>
+    <use href="#wool" fill="#FFFFFF"/>
+
+    <!-- Wolf face: rounded brow tapering to a long snout -->
+    <path id="wolf-face" fill="#4B4C54" stroke="#151518" stroke-width="6"
+          d="M84 92 C84 70 104 60 128 60 C152 60 172 70 172 92
+             L180 116 L154 122 L141 146 Q141 165 128 165 Q115 165 115 146 L102 122 L76 116 Z"/>
+    <path id="nose" fill="#151518" d="M120 130 H136 Q134 139 128 141 Q122 139 120 130 Z"/>
+    <ellipse id="mouth" fill="#151518" cx="128" cy="154" rx="6.5" ry="8"/>
+
+    <!-- Shock: eyes popped wide, pinpoint pupils locked on the bomb, brows at the hairline -->
+    <g id="eyes">
+      <ellipse fill="#FFFFFF" cx="107" cy="103" rx="13" ry="16"/>
+      <ellipse fill="#FFFFFF" cx="149" cy="103" rx="13" ry="16"/>
+      <circle fill="#151518" cx="109" cy="111" r="2.5"/>
+      <circle fill="#151518" cx="147" cy="111" r="2.5"/>
+    </g>
+    <g id="brows" fill="none" stroke="#FFFFFF" stroke-width="6">
+      <path d="M95 80 Q105 70 118 75"/>
+      <path d="M161 80 Q151 70 138 75"/>
+    </g>
+    <!-- Shock lines -->
+    <g id="shock-lines" fill="none" stroke="#151518" stroke-width="6">
+      <path d="M42 26 L54 40"/>
+      <path d="M28 50 L44 56"/>
+      <path d="M214 26 L202 40"/>
+      <path d="M228 50 L212 56"/>
+    </g>
+    <!-- Sweat drops -->
+    <path id="sweat-left" fill="#FFFFFF" stroke="#151518" stroke-width="5"
+          d="M66 72 Q72 82 72 86 A6 6 0 0 1 60 86 Q60 82 66 72 Z"/>
+    <path id="sweat" fill="#FFFFFF" stroke="#151518" stroke-width="5"
+          d="M186 62 Q195 76 195 81 A9 9 0 0 1 177 81 Q177 76 186 62 Z"/>
+
+    <!-- Bomb -->
+    <g id="bomb" transform="translate(0 4)">
+      <path id="fuse-knockout" fill="none" stroke="#FFFFFF" stroke-width="14"
+            d="M150 176 Q160 160 174 162"/>
+      <path id="fuse" fill="none" stroke="#151518" stroke-width="6"
+            d="M150 176 Q160 160 174 162"/>
+      <circle id="bomb-knockout" cx="128" cy="202" r="38" fill="#FFFFFF"/>
+      <rect id="fuse-cap" x="138" y="170" width="18" height="12" rx="2"
+            fill="#151518" transform="rotate(42 147 176)"/>
+      <circle id="bomb-body" cx="128" cy="202" r="32" fill="#151518"/>
+      <path id="bomb-glint" fill="none" stroke="#FFFFFF" stroke-width="6"
+            d="M106 196 A22 22 0 0 1 116 183"/>
+      <path id="spark" fill="#E5382D"
+            d="M182 148 Q183.5 160.5 196 162 Q183.5 163.5 182 176 Q180.5 163.5 168 162 Q180.5 160.5 182 148 Z"/>
+    </g>
+
+    <!-- Paws: knockout, outline, fill -->
+    <g transform="translate(0 4)">
+      <use href="#paws" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="18"/>
+      <use href="#paws" fill="#151518" stroke="#151518" stroke-width="12"/>
+      <use href="#paws" fill="#4B4C54"/>
+    </g>
+  </g>
+  </g>
+  <text id="wordmark" x="284" y="160" fill="#151518"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="92" font-weight="600" letter-spacing="-1.5">PR Detonator</text>
+</svg>

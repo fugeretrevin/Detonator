@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 984 264" width="984" height="264"
+     role="img" aria-labelledby="title">
+  <title id="title">PR Detonator</title>
+  <g id="icon">
+  <defs>
+    <!-- Sheep costume: a union of circles. Drawn twice: thick ink stroke underneath,
+         white fill on top, so only the outer silhouette gets an outline. -->
+    <g id="wool">
+      <circle cx="128.0" cy="186.0" r="46"/>
+      <circle cx="175.3" cy="177.7" r="18"/>
+      <circle cx="171.5" cy="206.3" r="18"/>
+      <circle cx="152.0" cy="227.6" r="18"/>
+      <circle cx="128.0" cy="234.0" r="18"/>
+      <circle cx="104.0" cy="227.6" r="18"/>
+      <circle cx="84.5" cy="206.3" r="18"/>
+      <circle cx="80.7" cy="177.7" r="18"/>
+      <circle cx="128.0" cy="90.0" r="52"/>
+      <circle cx="93.3" cy="131.4" r="19"/>
+      <circle cx="77.9" cy="110.2" r="19"/>
+      <circle cx="74.3" cy="84.4" r="19"/>
+      <circle cx="83.2" cy="59.8" r="19"/>
+      <circle cx="102.6" cy="42.3" r="19"/>
+      <circle cx="128.0" cy="36.0" r="19"/>
+      <circle cx="153.4" cy="42.3" r="19"/>
+      <circle cx="172.8" cy="59.8" r="19"/>
+      <circle cx="181.7" cy="84.4" r="19"/>
+      <circle cx="178.1" cy="110.2" r="19"/>
+      <circle cx="162.7" cy="131.4" r="19"/>
+    </g>
+    <g id="paws">
+      <ellipse cx="88" cy="218" rx="10" ry="12"/>
+      <circle cx="98" cy="208" r="5"/>
+      <circle cx="101" cy="218" r="5"/>
+      <circle cx="98" cy="228" r="5"/>
+      <ellipse cx="168" cy="218" rx="10" ry="12"/>
+      <circle cx="158" cy="208" r="5"/>
+      <circle cx="155" cy="218" r="5"/>
+      <circle cx="158" cy="228" r="5"/>
+    </g>
+  </defs>
+
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <!-- Wolf ears (behind the hood, poking out) -->
+    <g id="wolf-ears" fill="#4A4B53" stroke="#141416" stroke-width="8">
+      <path d="M66 62 L76 2 L118 40 Z"/>
+      <path d="M190 62 L180 2 L138 40 Z"/>
+    </g>
+    <g id="wolf-ears-inner" fill="#141416">
+      <path d="M80 44 L82 20 L100 36 Z"/>
+      <path d="M176 44 L174 20 L156 36 Z"/>
+    </g>
+
+    <!-- Floppy sheep ears on the hood -->
+    <g id="sheep-ears" fill="#FFFFFF" stroke="#141416" stroke-width="8">
+      <ellipse cx="46" cy="104" rx="22" ry="11" transform="rotate(28 46 104)"/>
+      <ellipse cx="210" cy="104" rx="22" ry="11" transform="rotate(-28 210 104)"/>
+    </g>
+
+    <!-- Sheep costume: outline pass, then fill pass -->
+    <use href="#wool" fill="#141416" stroke="#141416" stroke-width="16"/>
+    <use href="#wool" fill="#FFFFFF"/>
+
+    <!-- Wolf face in the hood opening -->
+    <path id="wolf-face" fill="#4A4B53" stroke="#141416" stroke-width="8"
+          d="M128 58 C150 58 168 68 172 88 L182 110 L162 114 L136 156 Q128 164 120 156
+             L94 114 L74 110 L84 88 C88 68 106 58 128 58 Z"/>
+    <!-- Muzzle (negative space) -->
+    <path id="muzzle" fill="#FFFFFF" d="M110 122 Q128 114 146 122 L134 152 Q128 158 122 152 Z"/>
+    <!-- Nose -->
+    <path id="nose" fill="#141416" d="M118 144 Q128 138 138 144 Q135 156 128 160 Q121 156 118 144 Z"/>
+    <!-- Sly eyes: heavy lids slanting toward the nose, pupils glancing sideways -->
+    <g id="eyes">
+      <path fill="#FFFFFF" d="M94 90 L122 102 Q110 111 99 105 Q94 99 94 90 Z"/>
+      <path fill="#FFFFFF" d="M161 86 L134 99 Q146 111 157 105 Q162 98 161 86 Z"/>
+      <circle fill="#141416" cx="114" cy="103" r="4.5"/>
+      <circle fill="#141416" cx="152" cy="103" r="4.5"/>
+      <path fill="none" stroke="#141416" stroke-width="6" d="M91 88 L124 101"/>
+      <path fill="none" stroke="#141416" stroke-width="6" d="M166 83 L132 98"/>
+    </g>
+
+    <!-- Bomb -->
+    <g id="bomb">
+      <!-- white knockout keeps the fuse readable where it crosses the outline -->
+      <path id="fuse-knockout" fill="none" stroke="#FFFFFF" stroke-width="12"
+            d="M154 180 C160 168 172 172 170 162 C168 154 174 148 180 148"/>
+      <path id="fuse" fill="none" stroke="#141416" stroke-width="6"
+            d="M154 180 C160 168 172 172 170 162 C168 154 174 148 180 148"/>
+      <circle id="bomb-knockout" cx="128" cy="208" r="38" fill="#FFFFFF"/>
+      <rect id="fuse-cap" x="140" y="174" width="20" height="14" rx="3"
+            fill="#141416" transform="rotate(42 150 181)"/>
+      <circle id="bomb-body" cx="128" cy="208" r="33" fill="#141416"/>
+      <path id="bomb-glint" fill="none" stroke="#FFFFFF" stroke-width="6"
+            d="M106 200 A23 23 0 0 1 116.5 188.1"/>
+      <path id="spark" fill="#E0352B"
+            d="M184 134 L187 142 L195 140 L189 146 L195 152 L187 150 L184 158
+               L181 150 L173 152 L179 146 L173 140 L181 142 Z"/>
+    </g>
+
+    <!-- Paws gripping the bomb -->
+    <!-- Paws gripping the bomb: palm + three toes, white knockout, outline, fill -->
+    <use href="#paws" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="20"/>
+    <use href="#paws" fill="#141416" stroke="#141416" stroke-width="12"/>
+    <use href="#paws" fill="#4A4B53"/>
+  </g>
+  </g>
+  <text id="wordmark" x="292" y="168" fill="#141416"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="100" font-weight="700" letter-spacing="-2">PR Detonator</text>
+</svg>

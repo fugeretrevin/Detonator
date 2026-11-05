@@ -1,0 +1,4 @@
+node_modules/
+out/
+# Camera footage (faces) and PR screenshots: kept local, never committed or shipped.
+public/media/
